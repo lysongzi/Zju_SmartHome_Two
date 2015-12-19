@@ -203,16 +203,16 @@
 }
 
 //代理方法
-//家居
+//家居(现在实际是场景)
 -(void)furnitureClick
 {
-  CYFFurnitureViewController *jyVc=[[CYFFurnitureViewController alloc]init];
-  [self.navigationController pushViewController:jyVc animated:YES];
+  [MBProgressHUD showError:@"场景功能尚未开通"];
 }
-//办公室
+//办公室(现在实际是家居)
 -(void)officeClick
 {
-  [MBProgressHUD showError:@"办公室功能尚未开通"];
+    CYFFurnitureViewController *jyVc=[[CYFFurnitureViewController alloc]init];
+    [self.navigationController pushViewController:jyVc animated:YES];
 }
 //单品
 -(void)productClick
@@ -243,13 +243,14 @@
   CLGeocoder* geocoder = [[CLGeocoder alloc] init];
   [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
     
-    if(error || placemarks.count == 0){
-      NSLog(@"error = %@",error);
-    }else{
+    if(error || placemarks.count == 0)
+    {
+      
+    }
+    else
+    {
       
       CLPlacemark* placemark = placemarks.firstObject;
-      NSLog(@"城市:%@",[[placemark addressDictionary] objectForKey:@"City"]);
-      NSLog(@"国家:%@",[[placemark addressDictionary] objectForKey:@"Country"]);
       
       NSString *city = [[placemark addressDictionary] objectForKey:@"City"];
       NSString *country = [[placemark addressDictionary] objectForKey:@"Country"];
@@ -257,12 +258,6 @@
       
       self.mainView.cityLabel.text = city;
       self.mainView.countryLabel.text = country;
-      
-      
-      //      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"你的位置" message:[[placemark addressDictionary] objectForKey:@"City"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-      //
-      //      [alert show];
-      
     }
     
   }];
@@ -295,26 +290,20 @@
   NSString *isFirstInstall = [defaults valueForKey:@"isFirstInstall"];
   NSString *isSettedPhoto = [defaults valueForKey:@"isSettedPhoto"];
   
-
-  NSLog(@"是否已经安装：%@",isFirstInstall);
-  
   //重新设置头像；
-  if (isFirstInstall  == nil || isSettedPhoto == nil) {
+  if (isFirstInstall  == nil || isSettedPhoto == nil)
+  {
     //第一次安装；
     [self.leftBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
     [defaults setValue:@"installed" forKey:@"isFirstInstall"];
-    NSLog(@"第一次安装");
     
-  }else{
+  }
+  else
+  {
     
     //已经安装；
     [self.leftBtn setBackgroundImage:[[CYFImageStore sharedStore] imageForKey:@"CYFStore"] forState:UIControlStateNormal];
-    NSLog(@"不是第一次安装");
   }
-  
-  
-  
-  
 }
 
 

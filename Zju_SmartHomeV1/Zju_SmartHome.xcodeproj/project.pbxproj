@@ -440,6 +440,7 @@
 				712C523D1C082F520014F9CB /* Controller */,
 			);
 			name = QRCatcher;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		712C523D1C082F520014F9CB /* Controller */ = {
@@ -579,6 +580,7 @@
 		9D6568441BEB7244006D9507 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				712C523A1C082F2B0014F9CB /* QRCatcher */,
 				71DD8E121C102801000E1639 /* Reachability */,
 				7174E39D1BEFAEC500170AAA /* MBProgressHUD */,
 				446AF33F1C005BF10081C798 /* RESideMenu */,
@@ -673,9 +675,7 @@
 		9D7D5A7A1BE4740100E1E1EF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				712C523A1C082F2B0014F9CB /* QRCatcher */,
-				9D1CB9D91C0B0F8B00725A63 /* HttpUtils */,
-				9D1CB9D51C0B0F7100725A63 /* XMLParser */,
+				9DC709DB1C254A0500E5ECA5 /* Utils */,
 				9D6568441BEB7244006D9507 /* Libs */,
 				9D7D5A811BE4740100E1E1EF /* Other */,
 				9D7D5A7B1BE4740100E1E1EF /* Login */,
@@ -756,6 +756,15 @@
 				9DBE55621C1EAFE800A91E6D /* PhotoViewController.m */,
 			);
 			name = Photo;
+			sourceTree = "<group>";
+		};
+		9DC709DB1C254A0500E5ECA5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9D1CB9D91C0B0F8B00725A63 /* HttpUtils */,
+				9D1CB9D51C0B0F7100725A63 /* XMLParser */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		9DFF736B1C0870300061EFBF /* DLHandAddFurniture */ = {
