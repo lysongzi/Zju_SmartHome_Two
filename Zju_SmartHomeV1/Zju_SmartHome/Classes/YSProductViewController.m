@@ -145,29 +145,38 @@ NS_ENUM(NSInteger, ProductType)
     
     [self getDataFromRemote];
     
-    //更新ScrollView的高度
-    [self updateScrollView];
 }
 
 - (void)updateScrollView
 {
-    //计算collectionView的高度
-    float collectionHeight = 0;
-    if ([self.products count] % SECTION_COLUMN == 0)
-    {
-        collectionHeight = (UISCREEN_WIDTH / SECTION_COLUMN) * ([self.products count] / SECTION_COLUMN);
-    }
-    else
-    {
-        collectionHeight = (UISCREEN_WIDTH / SECTION_COLUMN) * ([self.products count] / SECTION_COLUMN + 1);
-    }
+//    //计算collectionView的高度
+//    float collectionHeight = 0;
+//    if ([self.products count] % SECTION_COLUMN == 0)
+//    {
+//        collectionHeight = (UISCREEN_WIDTH / SECTION_COLUMN) * ([self.products count] / SECTION_COLUMN);
+//    }
+//    else
+//    {
+//        collectionHeight = (UISCREEN_WIDTH / SECTION_COLUMN) * ([self.products count] / SECTION_COLUMN + 1);
+//    }
+//    
+//    NSLog(@"collectionHeight : %f", collectionHeight);
+//    NSLog(@"[self.products count] : %ld", [self.products count]);
+//    
+//    NSLog(@"screen width : %f", UISCREEN_WIDTH);
+//    NSLog(@"screen width2 : %f", [[UIScreen mainScreen] bounds].size.width);
+//    NSLog(@"screen height : %f", UISCREEN_HEIGHT);
+//    
+//    //设置collectionView的大小
+//    self.collectionView.frame = CGRectMake(0, self.mainImageView.frame.size.height - STATUS_HEIGHT, UISCREEN_WIDTH, collectionHeight);
+//    
+//    //设置mainScrollView的大小
+//    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + collectionHeight - STATUS_HEIGHT);
+//    NSLog(@"screen contentSize : %f %f", self.mainScrollView.contentSize.width, self.mainScrollView.contentSize.height);
+//    self.mainScrollView.frame = CGRectMake(0, 0, UISCREEN_WIDTH, self.mainScrollView.contentSize.height);
     
-    //设置collectionView的大小
-    self.collectionView.frame = CGRectMake(0, self.mainImageView.frame.size.height - STATUS_HEIGHT, UISCREEN_WIDTH, collectionHeight);
-    
-    //设置mainScrollView的大小
-    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + collectionHeight - STATUS_HEIGHT);
-    self.mainScrollView.frame = CGRectMake(0, 0, UISCREEN_WIDTH, UISCREEN_HEIGHT);
+    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height - 64);
+    self.collectionView.frame = CGRectMake(0, self.mainImageView.frame.size.height - 64, UISCREEN_WIDTH, self.collectionView.contentSize.height);
 }
 
 #pragma mark - UICollectionViewDataSource 协议的实现
@@ -208,6 +217,7 @@ NS_ENUM(NSInteger, ProductType)
         //NSLog(@"这里隐藏了右边的线段");为神马隐藏失败了？！
     }
     
+    [self updateScrollView];
     return cell;
 }
 
@@ -366,7 +376,6 @@ NS_ENUM(NSInteger, ProductType)
         }
         
         [self appendBtnAdd];
-        [self updateScrollView];
         [self addLongPressGestureToCell];
         [self.collectionView reloadData];
         
