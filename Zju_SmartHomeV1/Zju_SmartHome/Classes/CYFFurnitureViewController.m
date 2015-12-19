@@ -325,9 +325,11 @@ NS_ENUM(NSInteger, ProviderEditingState)
     self.section1=indexPath.section;
     
     UIAlertController *alertController=[UIAlertController alertControllerWithTitle:@"提示 " message:@"请选择注册方式" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"手动输入" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
+    [alertController addAction:[UIAlertAction actionWithTitle:@"手动输入" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+      {
       [self addNewFurniture];
     }]];
+      
     [alertController addAction:[UIAlertAction actionWithTitle:@"扫码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
       
       QRCatchViewController *qrCatcherVC=[[QRCatchViewController alloc]init];

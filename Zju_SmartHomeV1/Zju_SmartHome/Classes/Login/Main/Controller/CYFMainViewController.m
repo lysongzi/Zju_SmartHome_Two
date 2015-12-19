@@ -9,6 +9,7 @@
 #import "CYFMainViewController.h"
 #import "JYMainView.h"
 #import "CYFFurnitureViewController.h"
+#import "YSProductViewController.h"
 #import "RESideMenu.h"
 #import "HttpRequest.h"
 #import "InternalGateIPXMLParser.h"
@@ -217,7 +218,8 @@
 //单品
 -(void)productClick
 {
-  [MBProgressHUD showError:@"单品功能尚未开通"];
+    YSProductViewController *pvc = [[YSProductViewController alloc] init];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 //自定义
 -(void)customClick
