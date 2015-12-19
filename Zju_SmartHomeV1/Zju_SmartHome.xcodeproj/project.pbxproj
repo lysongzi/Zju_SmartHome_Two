@@ -86,6 +86,10 @@
 		9DB7CC941BE8FD7C0044AA75 /* JYRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7CC931BE8FD7C0044AA75 /* JYRegisterViewController.m */; };
 		9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE55621C1EAFE800A91E6D /* PhotoViewController.m */; };
 		9DBE55651C1EAFF000A91E6D /* PhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE55641C1EAFF000A91E6D /* PhotoViewController.xib */; };
+		9DDC64F71C25782C00C3872A /* YSProductViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64F51C25782C00C3872A /* YSProductViewCell.m */; };
+		9DDC64F81C25782C00C3872A /* YSProductViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64F61C25782C00C3872A /* YSProductViewCell.xib */; };
+		9DDC64FC1C25783D00C3872A /* YSProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64FA1C25783D00C3872A /* YSProductViewController.m */; };
+		9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */; };
 		9DFCF3971C05A208004F7124 /* JYFurnitureSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFCF3961C05A208004F7124 /* JYFurnitureSection.m */; };
 		9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF735D1C07E4B00061EFBF /* JYFurnitureView.m */; };
 		9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DFF735F1C07E4C80061EFBF /* JYFurnitureViewXib.xib */; };
@@ -251,6 +255,12 @@
 		9DBE55611C1EAFE800A91E6D /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		9DBE55621C1EAFE800A91E6D /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		9DBE55641C1EAFF000A91E6D /* PhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoViewController.xib; sourceTree = "<group>"; };
+		9DDC64F41C25782C00C3872A /* YSProductViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductViewCell.h; sourceTree = "<group>"; };
+		9DDC64F51C25782C00C3872A /* YSProductViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductViewCell.m; sourceTree = "<group>"; };
+		9DDC64F61C25782C00C3872A /* YSProductViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSProductViewCell.xib; sourceTree = "<group>"; };
+		9DDC64F91C25783D00C3872A /* YSProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductViewController.h; sourceTree = "<group>"; };
+		9DDC64FA1C25783D00C3872A /* YSProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductViewController.m; sourceTree = "<group>"; };
+		9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSProductViewController.xib; sourceTree = "<group>"; };
 		9DFCF3951C05A208004F7124 /* JYFurnitureSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYFurnitureSection.h; sourceTree = "<group>"; };
 		9DFCF3961C05A208004F7124 /* JYFurnitureSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYFurnitureSection.m; sourceTree = "<group>"; };
 		9DFF735C1C07E4B00061EFBF /* JYFurnitureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYFurnitureView.h; sourceTree = "<group>"; };
@@ -682,6 +692,7 @@
 				446AF3361C0055BB0081C798 /* LeftSlideView */,
 				9D6568681BEBA04B006D9507 /* Main */,
 				9D564DAB1BFF67140062700D /* Furniture */,
+				9DDC64F11C25777E00C3872A /* Product */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -765,6 +776,43 @@
 				9D1CB9D51C0B0F7100725A63 /* XMLParser */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		9DDC64F11C25777E00C3872A /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				9DDC64FE1C25784C00C3872A /* Model */,
+				9DDC64F31C2577B300C3872A /* Controller */,
+				9DDC64F21C25779F00C3872A /* View */,
+			);
+			name = Product;
+			sourceTree = "<group>";
+		};
+		9DDC64F21C25779F00C3872A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9DDC64F41C25782C00C3872A /* YSProductViewCell.h */,
+				9DDC64F51C25782C00C3872A /* YSProductViewCell.m */,
+				9DDC64F61C25782C00C3872A /* YSProductViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		9DDC64F31C2577B300C3872A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9DDC64F91C25783D00C3872A /* YSProductViewController.h */,
+				9DDC64FA1C25783D00C3872A /* YSProductViewController.m */,
+				9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		9DDC64FE1C25784C00C3872A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		9DFF736B1C0870300061EFBF /* DLHandAddFurniture */ = {
@@ -929,11 +977,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DDC64F81C25782C00C3872A /* YSProductViewCell.xib in Resources */,
 				446AF3011C001F060081C798 /* SMS_SDKLocalizable.strings in Resources */,
 				9DBE55651C1EAFF000A91E6D /* PhotoViewController.xib in Resources */,
 				6108792F1C145F3700890CC1 /* JYUpdateFurnitureName.xib in Resources */,
 				6181B1811C0D793E00567DE5 /* CYFYWControllerViewController.xib in Resources */,
 				9D7D5A8C1BE4748200E1E1EF /* loginXib.xib in Resources */,
+				9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */,
 				9D564D581BFEAD220062700D /* JYMainXib.xib in Resources */,
 				9D564DBF1BFF69A10062700D /* CYFFurnitureViewController.xib in Resources */,
 				9D7D5A571BE472D300E1E1EF /* LaunchScreen.storyboard in Resources */,
@@ -1022,6 +1072,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DDC64FC1C25783D00C3872A /* YSProductViewController.m in Sources */,
 				61645BBF1C108290007462EC /* ZQSlider.m in Sources */,
 				712C52601C0C29450014F9CB /* InternalGateIPXMLParser.m in Sources */,
 				9D7D5A521BE472D300E1E1EF /* Zju_SmartHome.xcdatamodeld in Sources */,
@@ -1050,6 +1101,7 @@
 				9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */,
 				9DFF73751C087AA20061EFBF /* DLAddDeviceView.m in Sources */,
 				9D6568671BEB8861006D9507 /* JYUserData.m in Sources */,
+				9DDC64F71C25782C00C3872A /* YSProductViewCell.m in Sources */,
 				446AF3201C0025330081C798 /* SMS_MBProgressHUD+Add.m in Sources */,
 				9D564DBA1BFF68DD0062700D /* CYFCollectionReusableView.m in Sources */,
 				712C52441C08323B0014F9CB /* NSString+Tools.m in Sources */,
