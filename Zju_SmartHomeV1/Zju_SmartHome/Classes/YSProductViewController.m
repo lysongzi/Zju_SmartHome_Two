@@ -18,6 +18,7 @@
 #import "DLAddDeviceView.h"
 #import "LogicIdXMLParser.h"
 #import "JYUpdateFurnitureName.h"
+#import "YSPatternViewController.h"
 
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define UISCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
@@ -128,20 +129,19 @@ NS_ENUM(NSInteger, ProductType)
     [super viewDidLoad];
     
     //进行CollectionView和Cell的绑定
-    UINib *nib = [UINib nibWithNibName:@"YSProductViewCell" bundle:nil];
-    [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"YSProductViewCell"];
+    [self.collectionView registerClass:[YSProductViewCell class] forCellWithReuseIdentifier:@"YSProductViewCell"];
     
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    self.collectionView.showsVerticalScrollIndicator = false;
+    //self.collectionView.showsVerticalScrollIndicator = false;
     
     [self setNaviBarItemButton];
     
-    self.mainScrollView.showsVerticalScrollIndicator = false;
-    self.collectionView.showsVerticalScrollIndicator = false;
+    self.mainScrollView.showsVerticalScrollIndicator = NO;
+    self.collectionView.showsVerticalScrollIndicator = NO;
     
     [self getDataFromRemote];
     
@@ -149,33 +149,8 @@ NS_ENUM(NSInteger, ProductType)
 
 - (void)updateScrollView
 {
-//    //计算collectionView的高度
-//    float collectionHeight = 0;
-//    if ([self.products count] % SECTION_COLUMN == 0)
-//    {
-//        collectionHeight = (UISCREEN_WIDTH / SECTION_COLUMN) * ([self.products count] / SECTION_COLUMN);
-//    }
-//    else
-//    {
-//        collectionHeight = (UISCREEN_WIDTH / SECTION_COLUMN) * ([self.products count] / SECTION_COLUMN + 1);
-//    }
-//    
-//    NSLog(@"collectionHeight : %f", collectionHeight);
-//    NSLog(@"[self.products count] : %ld", [self.products count]);
-//    
-//    NSLog(@"screen width : %f", UISCREEN_WIDTH);
-//    NSLog(@"screen width2 : %f", [[UIScreen mainScreen] bounds].size.width);
-//    NSLog(@"screen height : %f", UISCREEN_HEIGHT);
-//    
-//    //设置collectionView的大小
-//    self.collectionView.frame = CGRectMake(0, self.mainImageView.frame.size.height - STATUS_HEIGHT, UISCREEN_WIDTH, collectionHeight);
-//    
-//    //设置mainScrollView的大小
-//    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + collectionHeight - STATUS_HEIGHT);
-//    NSLog(@"screen contentSize : %f %f", self.mainScrollView.contentSize.width, self.mainScrollView.contentSize.height);
-//    self.mainScrollView.frame = CGRectMake(0, 0, UISCREEN_WIDTH, self.mainScrollView.contentSize.height);
-    
     self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height - 64);
+    
     self.collectionView.frame = CGRectMake(0, self.mainImageView.frame.size.height - 64, UISCREEN_WIDTH, self.collectionView.contentSize.height);
 }
 
@@ -212,21 +187,25 @@ NS_ENUM(NSInteger, ProductType)
     cell.bottomLine.hidden = NO;
     
     //行末尾，则不显示右侧的线
-    if (indexPath.row % SECTION_COLUMN == (SECTION_COLUMN - 1)) {
+    if (indexPath.row % SECTION_COLUMN == (SECTION_COLUMN - 1))
+    {
         cell.rightLine.hidden = YES;
-        //NSLog(@"这里隐藏了右边的线段");为神马隐藏失败了？！
     }
     
+    [cell.closeButton addTarget:self action:@selector(deleteCellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
     [self updateScrollView];
     return cell;
 }
+
+#pragma mark - UICollectionViewDelegate 协议的实现
 
 //Cell点击触发的事件
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //点击添加按钮
-    if (indexPath.row == (self.products.count - 1)) {
-        
+    if (indexPath.row == (self.products.count - 1))
+    {
         UIAlertController *alertController=[UIAlertController alertControllerWithTitle:@"提示 " message:@"请选择注册方式" preferredStyle:UIAlertControllerStyleAlert];
         
         //手动输入
@@ -246,12 +225,8 @@ NS_ENUM(NSInteger, ProductType)
         
         UIAlertAction *actionCode = [UIAlertAction actionWithTitle:@"扫码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
         {
+            //打开扫码界面
             QRCatchViewController *qrCatcherVC=[[QRCatchViewController alloc]init];
-//            qrCatcherVC.area = self.area;
-//            qrCatcherVC.section1 = self.section1;
-//            qrCatcherVC.row = self.row;
-//            qrCatcherVC.section = self.section;
-            
             [self.navigationController pushViewController:qrCatcherVC animated:YES];
         }];
         
@@ -259,8 +234,10 @@ NS_ENUM(NSInteger, ProductType)
         
         [self presentViewController:alertController animated:true completion:nil];
     }
-    else {
-        
+    else
+    {
+        JYFurniture * furniture = self.products[indexPath.row];
+        [self.navigationController pushViewController:furniture.controller animated:YES];
     }
 }
 
@@ -360,11 +337,11 @@ NS_ENUM(NSInteger, ProductType)
                 
                 if ([furniture.deviceType isEqualToString:@"40"]) {
                     furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
-                    furniture.controller = nil;
+                    furniture.controller = [[YSPatternViewController alloc] init];
                 }
                 else if ([furniture.deviceType isEqualToString:@"41"]) {
                     furniture.imageStr = self.imageDic[@(YWLIGHT_ON)];
-                    furniture.controller = nil;
+                    furniture.controller = [[YSPatternViewController alloc] init];
                 }
                 else {
                     furniture.imageStr = self.imageDic[@(TV_ON)];
@@ -444,6 +421,8 @@ NS_ENUM(NSInteger, ProductType)
 
 
 #pragma mark - 导航栏
+
+//设置导航条
 - (void)setNaviBarItemButton
 {
     UILabel *titleView=[[UILabel alloc]init];
@@ -473,6 +452,7 @@ NS_ENUM(NSInteger, ProductType)
     
 }
 
+//左侧返回按钮操作
 - (void)leftBtnClicked
 {
     for (UIViewController *controller in self.navigationController.viewControllers)
@@ -484,6 +464,7 @@ NS_ENUM(NSInteger, ProductType)
     }
 }
 
+//单行条右边按钮操作
 - (void)rightBtnClicked
 {
     //此时你要删除cell了；
@@ -516,6 +497,12 @@ NS_ENUM(NSInteger, ProductType)
         
         [self.collectionView reloadData];
     }
+}
+
+//删除单品操作
+- (void)deleteCellButtonPressed:(id)sender
+{
+    NSLog(@"dsffsdfsdf");
 }
 
 @end

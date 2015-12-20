@@ -2,7 +2,7 @@
 //  YSProductViewCell.h
 //  Zju_SmartHome
 //
-//  Created by lysongzi on 15/12/18.
+//  Created by lysongzi on 15/12/20.
 //  Copyright © 2015年 GJY. All rights reserved.
 //
 
@@ -10,10 +10,10 @@
 
 @interface YSProductViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
-@property (weak, nonatomic) IBOutlet UIButton *closeButton;
-@property (weak, nonatomic) IBOutlet UIView *bottomLine;
-@property (weak, nonatomic) IBOutlet UIView *rightLine;
+@property (weak, nonatomic) UIImageView *imageView;
+@property (weak, nonatomic) UILabel *descLabel;
+@property (weak, nonatomic) UIButton *closeButton;
+@property (weak, nonatomic) UIView *bottomLine;
+@property (weak, nonatomic) UIView *rightLine;
 
 @end
