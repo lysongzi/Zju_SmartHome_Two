@@ -83,11 +83,17 @@
 		9D7D5A8A1BE4744000E1E1EF /* JYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D7D5A891BE4744000E1E1EF /* JYLoginViewController.m */; };
 		9D7D5A8C1BE4748200E1E1EF /* loginXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D7D5A8B1BE4748200E1E1EF /* loginXib.xib */; };
 		9D7D5A8F1BE474BD00E1E1EF /* JYLoginXib.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D7D5A8E1BE474BD00E1E1EF /* JYLoginXib.m */; };
+		9D9F9C1A1C2647D20031F886 /* YSPatternViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F9C181C2647D20031F886 /* YSPatternViewCell.m */; };
+		9D9F9C1B1C2647D20031F886 /* YSPatternViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D9F9C191C2647D20031F886 /* YSPatternViewCell.xib */; };
+		9D9F9C1E1C264C110031F886 /* YSPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F9C1D1C264C110031F886 /* YSPattern.m */; };
+		9D9F9C281C2652E00031F886 /* YSPatternViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F9C261C2652E00031F886 /* YSPatternViewController.m */; };
+		9D9F9C291C2652E00031F886 /* YSPatternViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D9F9C271C2652E00031F886 /* YSPatternViewController.xib */; };
+		9D9F9C2C1C268A2E0031F886 /* YSProductViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9F9C2B1C268A2E0031F886 /* YSProductViewCell.m */; };
 		9DB7CC941BE8FD7C0044AA75 /* JYRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB7CC931BE8FD7C0044AA75 /* JYRegisterViewController.m */; };
 		9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBE55621C1EAFE800A91E6D /* PhotoViewController.m */; };
 		9DBE55651C1EAFF000A91E6D /* PhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DBE55641C1EAFF000A91E6D /* PhotoViewController.xib */; };
-		9DDC64F71C25782C00C3872A /* YSProductViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64F51C25782C00C3872A /* YSProductViewCell.m */; };
-		9DDC64F81C25782C00C3872A /* YSProductViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64F61C25782C00C3872A /* YSProductViewCell.xib */; };
+		9DDC64F71C25782C00C3872A /* YSProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64F51C25782C00C3872A /* YSProductView.m */; };
+		9DDC64F81C25782C00C3872A /* YSProductView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64F61C25782C00C3872A /* YSProductView.xib */; };
 		9DDC64FC1C25783D00C3872A /* YSProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64FA1C25783D00C3872A /* YSProductViewController.m */; };
 		9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */; };
 		9DFCF3971C05A208004F7124 /* JYFurnitureSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFCF3961C05A208004F7124 /* JYFurnitureSection.m */; };
@@ -250,14 +256,24 @@
 		9D7D5A8B1BE4748200E1E1EF /* loginXib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginXib.xib; sourceTree = "<group>"; };
 		9D7D5A8D1BE474BD00E1E1EF /* JYLoginXib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYLoginXib.h; sourceTree = "<group>"; };
 		9D7D5A8E1BE474BD00E1E1EF /* JYLoginXib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYLoginXib.m; sourceTree = "<group>"; };
+		9D9F9C171C2647D20031F886 /* YSPatternViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSPatternViewCell.h; sourceTree = "<group>"; };
+		9D9F9C181C2647D20031F886 /* YSPatternViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSPatternViewCell.m; sourceTree = "<group>"; };
+		9D9F9C191C2647D20031F886 /* YSPatternViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSPatternViewCell.xib; sourceTree = "<group>"; };
+		9D9F9C1C1C264C110031F886 /* YSPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSPattern.h; sourceTree = "<group>"; };
+		9D9F9C1D1C264C110031F886 /* YSPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSPattern.m; sourceTree = "<group>"; };
+		9D9F9C251C2652E00031F886 /* YSPatternViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSPatternViewController.h; sourceTree = "<group>"; };
+		9D9F9C261C2652E00031F886 /* YSPatternViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSPatternViewController.m; sourceTree = "<group>"; };
+		9D9F9C271C2652E00031F886 /* YSPatternViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSPatternViewController.xib; sourceTree = "<group>"; };
+		9D9F9C2A1C268A2E0031F886 /* YSProductViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductViewCell.h; sourceTree = "<group>"; };
+		9D9F9C2B1C268A2E0031F886 /* YSProductViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductViewCell.m; sourceTree = "<group>"; };
 		9DB7CC921BE8FD7C0044AA75 /* JYRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegisterViewController.h; sourceTree = "<group>"; };
 		9DB7CC931BE8FD7C0044AA75 /* JYRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegisterViewController.m; sourceTree = "<group>"; };
 		9DBE55611C1EAFE800A91E6D /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		9DBE55621C1EAFE800A91E6D /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		9DBE55641C1EAFF000A91E6D /* PhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoViewController.xib; sourceTree = "<group>"; };
-		9DDC64F41C25782C00C3872A /* YSProductViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductViewCell.h; sourceTree = "<group>"; };
-		9DDC64F51C25782C00C3872A /* YSProductViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductViewCell.m; sourceTree = "<group>"; };
-		9DDC64F61C25782C00C3872A /* YSProductViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSProductViewCell.xib; sourceTree = "<group>"; };
+		9DDC64F41C25782C00C3872A /* YSProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductView.h; sourceTree = "<group>"; };
+		9DDC64F51C25782C00C3872A /* YSProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductView.m; sourceTree = "<group>"; };
+		9DDC64F61C25782C00C3872A /* YSProductView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSProductView.xib; sourceTree = "<group>"; };
 		9DDC64F91C25783D00C3872A /* YSProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductViewController.h; sourceTree = "<group>"; };
 		9DDC64FA1C25783D00C3872A /* YSProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductViewController.m; sourceTree = "<group>"; };
 		9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSProductViewController.xib; sourceTree = "<group>"; };
@@ -791,9 +807,14 @@
 		9DDC64F21C25779F00C3872A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9DDC64F41C25782C00C3872A /* YSProductViewCell.h */,
-				9DDC64F51C25782C00C3872A /* YSProductViewCell.m */,
-				9DDC64F61C25782C00C3872A /* YSProductViewCell.xib */,
+				9D9F9C2A1C268A2E0031F886 /* YSProductViewCell.h */,
+				9D9F9C2B1C268A2E0031F886 /* YSProductViewCell.m */,
+				9DDC64F41C25782C00C3872A /* YSProductView.h */,
+				9DDC64F51C25782C00C3872A /* YSProductView.m */,
+				9DDC64F61C25782C00C3872A /* YSProductView.xib */,
+				9D9F9C171C2647D20031F886 /* YSPatternViewCell.h */,
+				9D9F9C181C2647D20031F886 /* YSPatternViewCell.m */,
+				9D9F9C191C2647D20031F886 /* YSPatternViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -804,6 +825,9 @@
 				9DDC64F91C25783D00C3872A /* YSProductViewController.h */,
 				9DDC64FA1C25783D00C3872A /* YSProductViewController.m */,
 				9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */,
+				9D9F9C251C2652E00031F886 /* YSPatternViewController.h */,
+				9D9F9C261C2652E00031F886 /* YSPatternViewController.m */,
+				9D9F9C271C2652E00031F886 /* YSPatternViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -811,6 +835,8 @@
 		9DDC64FE1C25784C00C3872A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9D9F9C1C1C264C110031F886 /* YSPattern.h */,
+				9D9F9C1D1C264C110031F886 /* YSPattern.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -977,7 +1003,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DDC64F81C25782C00C3872A /* YSProductViewCell.xib in Resources */,
+				9DDC64F81C25782C00C3872A /* YSProductView.xib in Resources */,
 				446AF3011C001F060081C798 /* SMS_SDKLocalizable.strings in Resources */,
 				9DBE55651C1EAFF000A91E6D /* PhotoViewController.xib in Resources */,
 				6108792F1C145F3700890CC1 /* JYUpdateFurnitureName.xib in Resources */,
@@ -985,9 +1011,11 @@
 				9D7D5A8C1BE4748200E1E1EF /* loginXib.xib in Resources */,
 				9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */,
 				9D564D581BFEAD220062700D /* JYMainXib.xib in Resources */,
+				9D9F9C291C2652E00031F886 /* YSPatternViewController.xib in Resources */,
 				9D564DBF1BFF69A10062700D /* CYFFurnitureViewController.xib in Resources */,
 				9D7D5A571BE472D300E1E1EF /* LaunchScreen.storyboard in Resources */,
 				61645BAD1C101BA5007462EC /* JYChangePwdViewController.xib in Resources */,
+				9D9F9C1B1C2647D20031F886 /* YSPatternViewCell.xib in Resources */,
 				9DFF73721C08781C0061EFBF /* DLAddDeviceViewXib.xib in Resources */,
 				446AF3321C003FB10081C798 /* country.plist in Resources */,
 				446AF3291C002FB70081C798 /* Localizable.strings in Resources */,
@@ -1089,6 +1117,7 @@
 				6181B1851C0D7B7C00567DE5 /* JYOtherViewController.m in Sources */,
 				9DFF73781C0932F80061EFBF /* JYFurnitureBack.m in Sources */,
 				9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */,
+				9D9F9C1A1C2647D20031F886 /* YSPatternViewCell.m in Sources */,
 				9DB7CC941BE8FD7C0044AA75 /* JYRegisterViewController.m in Sources */,
 				9D6568641BEB846F006D9507 /* JYLoginStatus.m in Sources */,
 				712C52431C08323B0014F9CB /* NSObject+Macro.m in Sources */,
@@ -1100,14 +1129,17 @@
 				9D5292121C118F5800205CFD /* DLLampControlGuestModeViewController.m in Sources */,
 				9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */,
 				9DFF73751C087AA20061EFBF /* DLAddDeviceView.m in Sources */,
+				9D9F9C1E1C264C110031F886 /* YSPattern.m in Sources */,
 				9D6568671BEB8861006D9507 /* JYUserData.m in Sources */,
-				9DDC64F71C25782C00C3872A /* YSProductViewCell.m in Sources */,
+				9DDC64F71C25782C00C3872A /* YSProductView.m in Sources */,
 				446AF3201C0025330081C798 /* SMS_MBProgressHUD+Add.m in Sources */,
 				9D564DBA1BFF68DD0062700D /* CYFCollectionReusableView.m in Sources */,
 				712C52441C08323B0014F9CB /* NSString+Tools.m in Sources */,
 				446AF3481C005BF10081C798 /* UIViewController+RESideMenu.m in Sources */,
 				9D564D5B1BFEAD630062700D /* JYMainView.m in Sources */,
 				610879321C145F8F00890CC1 /* JYUpdateFurnitureName.m in Sources */,
+				9D9F9C2C1C268A2E0031F886 /* YSProductViewCell.m in Sources */,
+				9D9F9C281C2652E00031F886 /* YSPatternViewController.m in Sources */,
 				714854F01C127C300001347F /* CYFChangeMailViewController.m in Sources */,
 				71A7988E1C0D8C0B006F8D7B /* AllUtils.m in Sources */,
 				71E7A2EF1C1489B40091B86A /* CYFImageStore.m in Sources */,
