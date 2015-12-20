@@ -150,6 +150,7 @@ NS_ENUM(NSInteger, ProductType)
 - (void)updateScrollView
 {
     self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height - 64);
+    
     self.collectionView.frame = CGRectMake(0, self.mainImageView.frame.size.height - 64, UISCREEN_WIDTH, self.collectionView.contentSize.height);
 }
 
@@ -186,9 +187,9 @@ NS_ENUM(NSInteger, ProductType)
     cell.bottomLine.hidden = NO;
     
     //行末尾，则不显示右侧的线
-    if (indexPath.row % SECTION_COLUMN == (SECTION_COLUMN - 1)) {
+    if (indexPath.row % SECTION_COLUMN == (SECTION_COLUMN - 1))
+    {
         cell.rightLine.hidden = YES;
-        //NSLog(@"这里隐藏了右边的线段");为神马隐藏失败了？！
     }
     
     [cell.closeButton addTarget:self action:@selector(deleteCellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -203,8 +204,8 @@ NS_ENUM(NSInteger, ProductType)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //点击添加按钮
-    if (indexPath.row == (self.products.count - 1)) {
-        
+    if (indexPath.row == (self.products.count - 1))
+    {
         UIAlertController *alertController=[UIAlertController alertControllerWithTitle:@"提示 " message:@"请选择注册方式" preferredStyle:UIAlertControllerStyleAlert];
         
         //手动输入
@@ -224,12 +225,8 @@ NS_ENUM(NSInteger, ProductType)
         
         UIAlertAction *actionCode = [UIAlertAction actionWithTitle:@"扫码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
         {
+            //打开扫码界面
             QRCatchViewController *qrCatcherVC=[[QRCatchViewController alloc]init];
-//            qrCatcherVC.area = self.area;
-//            qrCatcherVC.section1 = self.section1;
-//            qrCatcherVC.row = self.row;
-//            qrCatcherVC.section = self.section;
-            
             [self.navigationController pushViewController:qrCatcherVC animated:YES];
         }];
         
@@ -237,7 +234,8 @@ NS_ENUM(NSInteger, ProductType)
         
         [self presentViewController:alertController animated:true completion:nil];
     }
-    else {
+    else
+    {
         JYFurniture * furniture = self.products[indexPath.row];
         [self.navigationController pushViewController:furniture.controller animated:YES];
     }
