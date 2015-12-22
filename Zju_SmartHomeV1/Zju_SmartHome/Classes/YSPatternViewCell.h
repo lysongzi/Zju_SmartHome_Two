@@ -10,7 +10,9 @@
 
 @interface YSPatternViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *patternName;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
+@property (weak, nonatomic) IBOutlet UILabel *patternName;
+@property (weak, nonatomic) IBOutlet UIImageView *picture;
+@property (weak, nonatomic) IBOutlet UIImageView *checkPic;
 
 @end

@@ -341,7 +341,7 @@ NS_ENUM(NSInteger, ProductType)
                 }
                 else if ([furniture.deviceType isEqualToString:@"41"]) {
                     furniture.imageStr = self.imageDic[@(YWLIGHT_ON)];
-                    furniture.controller = [[YSPatternViewController alloc] init];
+                    furniture.controller = nil;
                 }
                 else {
                     furniture.imageStr = self.imageDic[@(TV_ON)];
