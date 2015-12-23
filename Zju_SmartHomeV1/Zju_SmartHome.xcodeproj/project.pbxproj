@@ -35,6 +35,8 @@
 		61645BB91C10827E007462EC /* DLLampControllYWModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61645BB21C10827E007462EC /* DLLampControllYWModeViewController.m */; };
 		61645BBA1C10827E007462EC /* DLLampControllYWModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61645BB31C10827E007462EC /* DLLampControllYWModeViewController.xib */; };
 		61645BBF1C108290007462EC /* ZQSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 61645BBE1C108290007462EC /* ZQSlider.m */; };
+		61D6068A1C2A2D4B0026E23D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D606891C2A2D4B0026E23D /* libsqlite3.tbd */; };
+		61D6068D1C2A2D930026E23D /* JYSqliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6068C1C2A2D930026E23D /* JYSqliteViewController.m */; };
 		712A99FA1BEF849E00FE90FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712A99F91BEF849E00FE90FE /* CoreLocation.framework */; };
 		712C52431C08323B0014F9CB /* NSObject+Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = 712C52401C08323B0014F9CB /* NSObject+Macro.m */; };
 		712C52441C08323B0014F9CB /* NSString+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 712C52421C08323B0014F9CB /* NSString+Tools.m */; };
@@ -92,12 +94,12 @@
 		9DDC64F81C25782C00C3872A /* YSProductView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64F61C25782C00C3872A /* YSProductView.xib */; };
 		9DDC64FC1C25783D00C3872A /* YSProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64FA1C25783D00C3872A /* YSProductViewController.m */; };
 		9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */; };
-		9DE6E1181C278FD30035E8DC /* DLLampControlRGBModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1161C278FD30035E8DC /* DLLampControlRGBModeViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9DE6E1191C278FD30035E8DC /* DLLampControlRGBModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E1171C278FD30035E8DC /* DLLampControlRGBModeViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		9DE6E11D1C2790450035E8DC /* CYFYWControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E11B1C2790450035E8DC /* CYFYWControllerViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9DE6E11E1C2790450035E8DC /* CYFYWControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E11C1C2790450035E8DC /* CYFYWControllerViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		9DE6E1221C2790660035E8DC /* JYOtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1201C2790660035E8DC /* JYOtherViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9DE6E1231C2790660035E8DC /* JYOtherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E1211C2790660035E8DC /* JYOtherViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		9DE6E1181C278FD30035E8DC /* DLLampControlRGBModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1161C278FD30035E8DC /* DLLampControlRGBModeViewController.m */; };
+		9DE6E1191C278FD30035E8DC /* DLLampControlRGBModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E1171C278FD30035E8DC /* DLLampControlRGBModeViewController.xib */; };
+		9DE6E11D1C2790450035E8DC /* CYFYWControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E11B1C2790450035E8DC /* CYFYWControllerViewController.m */; };
+		9DE6E11E1C2790450035E8DC /* CYFYWControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E11C1C2790450035E8DC /* CYFYWControllerViewController.xib */; };
+		9DE6E1221C2790660035E8DC /* JYOtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1201C2790660035E8DC /* JYOtherViewController.m */; };
+		9DE6E1231C2790660035E8DC /* JYOtherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E1211C2790660035E8DC /* JYOtherViewController.xib */; };
 		9DFCF3971C05A208004F7124 /* JYFurnitureSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFCF3961C05A208004F7124 /* JYFurnitureSection.m */; };
 		9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF735D1C07E4B00061EFBF /* JYFurnitureView.m */; };
 		9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DFF735F1C07E4C80061EFBF /* JYFurnitureViewXib.xib */; };
@@ -173,6 +175,9 @@
 		61645BB31C10827E007462EC /* DLLampControllYWModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLLampControllYWModeViewController.xib; sourceTree = "<group>"; };
 		61645BBD1C108290007462EC /* ZQSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZQSlider.h; sourceTree = "<group>"; };
 		61645BBE1C108290007462EC /* ZQSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQSlider.m; sourceTree = "<group>"; };
+		61D606891C2A2D4B0026E23D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		61D6068B1C2A2D930026E23D /* JYSqliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSqliteViewController.h; sourceTree = "<group>"; };
+		61D6068C1C2A2D930026E23D /* JYSqliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSqliteViewController.m; sourceTree = "<group>"; };
 		712A99F91BEF849E00FE90FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		712C523F1C08323B0014F9CB /* NSObject+Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Macro.h"; sourceTree = "<group>"; };
 		712C52401C08323B0014F9CB /* NSObject+Macro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Macro.m"; sourceTree = "<group>"; };
@@ -302,6 +307,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61D6068A1C2A2D4B0026E23D /* libsqlite3.tbd in Frameworks */,
 				71DD8D671C0F1F3C000E1639 /* QuartzCore.framework in Frameworks */,
 				446AF30D1C00206D0081C798 /* libicucore.A.dylib in Frameworks */,
 				446AF30B1C0020120081C798 /* libstdc++.tbd in Frameworks */,
@@ -461,6 +467,64 @@
 				61645BB31C10827E007462EC /* DLLampControllYWModeViewController.xib */,
 			);
 			name = YW;
+			sourceTree = "<group>";
+		};
+		61D606831C2A2BAE0026E23D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				61D606861C2A2BD00026E23D /* Controller */,
+				61D606851C2A2BCA0026E23D /* View */,
+				61D606841C2A2BC20026E23D /* Model */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		61D606841C2A2BC20026E23D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		61D606851C2A2BCA0026E23D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9D9F9C2A1C268A2E0031F886 /* YSProductViewCell.h */,
+				9D9F9C2B1C268A2E0031F886 /* YSProductViewCell.m */,
+				9DDC64F41C25782C00C3872A /* YSProductView.h */,
+				9DDC64F51C25782C00C3872A /* YSProductView.m */,
+				9DDC64F61C25782C00C3872A /* YSProductView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		61D606861C2A2BD00026E23D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9DDC64F91C25783D00C3872A /* YSProductViewController.h */,
+				9DDC64FA1C25783D00C3872A /* YSProductViewController.m */,
+				9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		61D606871C2A2C060026E23D /* Pattern */ = {
+			isa = PBXGroup;
+			children = (
+				9DDC64F31C2577B300C3872A /* Controller */,
+				9DDC64FE1C25784C00C3872A /* Model */,
+				9DDC64F21C25779F00C3872A /* View */,
+			);
+			name = Pattern;
+			sourceTree = "<group>";
+		};
+		61D606881C2A2CD20026E23D /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				61D6068B1C2A2D930026E23D /* JYSqliteViewController.h */,
+				61D6068C1C2A2D930026E23D /* JYSqliteViewController.m */,
+			);
+			name = SQLite;
 			sourceTree = "<group>";
 		};
 		712C523A1C082F2B0014F9CB /* QRCatcher */ = {
@@ -805,9 +869,9 @@
 		9DDC64F11C25777E00C3872A /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				9DDC64FE1C25784C00C3872A /* Model */,
-				9DDC64F31C2577B300C3872A /* Controller */,
-				9DDC64F21C25779F00C3872A /* View */,
+				61D606881C2A2CD20026E23D /* SQLite */,
+				61D606831C2A2BAE0026E23D /* Products */,
+				61D606871C2A2C060026E23D /* Pattern */,
 			);
 			name = Product;
 			sourceTree = "<group>";
@@ -815,11 +879,6 @@
 		9DDC64F21C25779F00C3872A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9D9F9C2A1C268A2E0031F886 /* YSProductViewCell.h */,
-				9D9F9C2B1C268A2E0031F886 /* YSProductViewCell.m */,
-				9DDC64F41C25782C00C3872A /* YSProductView.h */,
-				9DDC64F51C25782C00C3872A /* YSProductView.m */,
-				9DDC64F61C25782C00C3872A /* YSProductView.xib */,
 				9D9F9C171C2647D20031F886 /* YSPatternViewCell.h */,
 				9D9F9C181C2647D20031F886 /* YSPatternViewCell.m */,
 				9D9F9C191C2647D20031F886 /* YSPatternViewCell.xib */,
@@ -830,9 +889,6 @@
 		9DDC64F31C2577B300C3872A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9DDC64F91C25783D00C3872A /* YSProductViewController.h */,
-				9DDC64FA1C25783D00C3872A /* YSProductViewController.m */,
-				9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */,
 				9D9F9C251C2652E00031F886 /* YSPatternViewController.h */,
 				9D9F9C261C2652E00031F886 /* YSPatternViewController.m */,
 				9D9F9C271C2652E00031F886 /* YSPatternViewController.xib */,
@@ -889,6 +945,7 @@
 		AA1C67C6D1B3A41B26503294 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61D606891C2A2D4B0026E23D /* libsqlite3.tbd */,
 				71DD8D661C0F1F3C000E1639 /* QuartzCore.framework */,
 				446AF30C1C00206D0081C798 /* libicucore.A.dylib */,
 				446AF30A1C0020120081C798 /* libstdc++.tbd */,
@@ -1154,6 +1211,7 @@
 				714854F01C127C300001347F /* CYFChangeMailViewController.m in Sources */,
 				71A7988E1C0D8C0B006F8D7B /* AllUtils.m in Sources */,
 				71E7A2EF1C1489B40091B86A /* CYFImageStore.m in Sources */,
+				61D6068D1C2A2D930026E23D /* JYSqliteViewController.m in Sources */,
 				446AF3241C0025C90081C798 /* SectionsViewController.m in Sources */,
 				446AF34B1C005F180081C798 /* DLLeftSlideMenuViewController.m in Sources */,
 				9D564DBE1BFF69A10062700D /* CYFFurnitureViewController.m in Sources */,

@@ -43,7 +43,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     //注册cell
     UINib *nib = [UINib nibWithNibName:@"YSPatternViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"YSPatternViewCell"];
@@ -66,17 +65,21 @@
 //初始化默认的四个模式
 - (void)initDefultPattern
 {
+    //柔和模式
     YSPattern *soft = [[YSPattern alloc] initWithPatternName:@"柔和模式" desc:@"Soft" picture:@"soft_background"];
     soft.isCheck = YES;
     self.checkedPattern = soft;
     [self.patterns addObject:soft];
     
+    //明亮模式
     YSPattern *bright = [[YSPattern alloc] initWithPatternName:@"明亮模式" desc:@"Bright" picture:@"bright_background"];
     [self.patterns addObject:bright];
     
+    //温暖模式
     YSPattern *warm = [[YSPattern alloc] initWithPatternName:@"温暖模式" desc:@"Warm" picture:@"warm_background"];
     [self.patterns addObject:warm];
     
+    //跳跃模式
     YSPattern *jump = [[YSPattern alloc] initWithPatternName:@"跳跃模式" desc:@"Jump" picture:@"shining_background"];
     [self.patterns addObject:jump];
 }
