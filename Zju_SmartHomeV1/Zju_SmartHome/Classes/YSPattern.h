@@ -24,6 +24,7 @@
 @property (assign) BOOL isCheck;
 
 - (instancetype)initWithPatternName:(NSString *)name desc:(NSString *)desc;
+- (instancetype)initWithPatternName:(NSString *)name desc:(NSString *)desc picture:(NSString *)picture;
 - (void)setThumbnailFromImage;
 
 @end

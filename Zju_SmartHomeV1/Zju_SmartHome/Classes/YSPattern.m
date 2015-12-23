@@ -12,10 +12,17 @@
 
 - (instancetype)initWithPatternName:(NSString *)name desc:(NSString *)desc
 {
+    return [self initWithPatternName:name desc:desc picture:nil];
+}
+
+- (instancetype)initWithPatternName:(NSString *)name desc:(NSString *)desc picture:(NSString *)picture
+{
     self = [super init];
     if (self) {
         _patternName = name;
         _descLabel = desc;
+        _imgKey = picture;
+        _isCheck = NO;
     }
     return self;
 }
