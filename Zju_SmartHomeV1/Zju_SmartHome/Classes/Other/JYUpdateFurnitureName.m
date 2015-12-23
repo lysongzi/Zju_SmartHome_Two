@@ -40,4 +40,11 @@
         [self.delegate cancelUpdate];
     }
 }
+
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    
+    [self.furnitureName resignFirstResponder];
+    [self.okUPdate resignFirstResponder];
+}
 @end

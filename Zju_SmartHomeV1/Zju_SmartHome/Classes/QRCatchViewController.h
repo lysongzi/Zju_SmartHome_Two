@@ -17,5 +17,6 @@
 @property(nonatomic,assign) NSInteger section1;
 
 @property(nonatomic,strong) JYFurnitureSection *section;
+@property(nonatomic,assign)int tag;
 
 @end

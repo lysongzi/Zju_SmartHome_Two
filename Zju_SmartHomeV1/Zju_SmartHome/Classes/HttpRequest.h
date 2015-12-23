@@ -22,11 +22,19 @@
 //从服务器获得所有的注册设备；
 + (void)findAllDeviceFromServer :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
 
+//从单品中获取所有注册电器
++ (void)findAllDeviceFromServerProduct :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
+//从单品中注册所有电器
++ (void)registerDeviceToServerProduct:(NSString*)logicId deviceName:(NSString*)deviceName  type:(NSString*)type success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
+
+
 //从网关获取内网IP；
 + (void)getInternalNetworkGateIP:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
 
 //删除设备
 + (void)deleteDeviceFromServer:(NSString*)logicId success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
+//单品删除设备
++ (void)deleteDeviceFromServerProduct:(NSString*)logicId success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
 
 //YW灯冷暖
 + (void)sendYWWarmColdToServer:(NSString *)logicId warmcoldValue:(NSString*)warmcoldValue success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;

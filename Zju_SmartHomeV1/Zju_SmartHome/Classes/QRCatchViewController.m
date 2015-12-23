@@ -19,6 +19,7 @@
 
 #import "DLAddDeviceView.h"
 #import "CYFFurnitureViewController.h"
+#import "YSProductViewController.h"
 
 
 #define MY_SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
@@ -49,6 +50,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
   
   [self setupAVFoundation];
   [self setupLabelBorder];
@@ -64,7 +66,6 @@
   NSLog(@"扫码界面的area:%@",self.area);
   NSLog(@"传过来的Section：%ld，row=%ld",(long)self.section1,(long)self.row);
 
-  
 }
 
 
@@ -186,42 +187,57 @@
       else
       {
         self.stringLabel.text = metadata.stringValue;
-        
+         
         //调用这里；
         //不为空跳到转增加设备提示框；
-        if (![self.stringLabel.text isEqualToString:@""] && self.isScaned == false) {
+        if (![self.stringLabel.text isEqualToString:@""] && self.isScaned == false)
+        {
           
           self.isScaned = true;
-          
-          //跳到CYFFurnitureViewController;
-//          CYFFurnitureViewController *furi = [[CYFFurnitureViewController alloc] init];
-//          furi.macFromQRCatcher = metadata.stringValue;
-//          furi.area = self.area;
-//          furi.section1 = self.section1;
-//          furi.row = self.row;
-//          furi.section = self.section;
-//          
-//          [self.navigationController pushViewController:furi animated:true];
-
-          for (UIViewController *controller in self.navigationController.viewControllers) {
-            
-            if ([controller isKindOfClass:[CYFFurnitureViewController class]])
+            if(self.tag==0)
             {
-              
-              CYFFurnitureViewController *vc=[[CYFFurnitureViewController alloc]init];
-              vc=(CYFFurnitureViewController *)controller;
-              
-              vc.macFromQRCatcher=metadata.stringValue;
-              vc.area=self.area;
-              vc.section1=self.section1;
-              vc.row=self.row;
-              vc.section=self.section;
-              [self.navigationController popToViewController:controller animated:YES];
-              
+                //跳到CYFFurnitureViewController;
+                for (UIViewController *controller in self.navigationController.viewControllers)
+                {
+                    
+                    if ([controller isKindOfClass:[CYFFurnitureViewController class]])
+                    {
+                        CYFFurnitureViewController *vc=[[CYFFurnitureViewController alloc]init];
+                        vc=(CYFFurnitureViewController *)controller;
+                        
+                        vc.macFromQRCatcher=metadata.stringValue;
+                        vc.area=self.area;
+                        vc.section1=self.section1;
+                        vc.row=self.row;
+                        vc.section=self.section;
+                        [self.navigationController popToViewController:controller animated:YES];
+                        
+                    }
+                    
+                }
+
             }
-            
-          }
+            else
+            {
+                for (UIViewController *controller in self.navigationController.viewControllers)
+                {
+                    
+                    if ([controller isKindOfClass:[YSProductViewController class]])
+                    {
+                        YSProductViewController *vc=[[YSProductViewController alloc]init];
+                        vc=(YSProductViewController *)controller;
+                        
+                        vc.macFromQRCatcher=metadata.stringValue;
+
+                        [self.navigationController popToViewController:controller animated:YES];
+                        
+                    }
+                }
+                
+
+            }
           
+            
         }//if();
         
       }

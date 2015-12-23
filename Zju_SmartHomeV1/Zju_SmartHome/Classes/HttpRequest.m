@@ -18,6 +18,7 @@
 #pragma mark - 从网关获取逻辑ID的方法
 + (void)getLogicIdfromMac:(NSString*)macValue success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
   
+    [MBProgressHUD showMessage:@"正在注册..."];
   //增加这几行代码；
   AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
   [securityPolicy setAllowInvalidCertificates:YES];
@@ -68,7 +69,7 @@
 
 #pragma mark - 把设备注册到服务器的方法
 + (void)registerDeviceToServer:(NSString*)logicId deviceName:(NSString*)deviceName sectionName:(NSString*)sectionName type:(NSString*)type success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
-  
+
   //1.创建请求管理对象
   AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
   
@@ -99,8 +100,34 @@
   // NSLog(@"使用外网 向服务器注册设备");
 }
 
-
-#pragma mark - 从服务器获取所有设备的方法
+//****************
+//单品中添加家具
++ (void)registerDeviceToServerProduct:(NSString*)logicId deviceName:(NSString*)deviceName  type:(NSString*)type success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
+    
+    //1.创建请求管理对象
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+    
+    //2.说明服务器返回的是json参数
+    manager.responseSerializer=[AFHTTPResponseSerializer serializer];
+    
+    
+    NSDictionary *params = @{@"is_app":@"1",
+                             @"is_sample":@"1",
+                             @"equipment.name":deviceName,
+                             @"equipment.logic_id":logicId,
+                             @"equipment.type":type
+                             };
+    
+    //外网发送请求
+    [manager POST:@"http://60.12.220.16:8888/paladin/Equipment/create"
+       parameters:params
+          success:success
+          failure:failure];
+    
+    // NSLog(@"使用外网 向服务器注册设备");
+}
+//****************
+#pragma mark - 从服务器获取家具所有设备的方法
 + (void)findAllDeviceFromServer :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
   
   //  [MBProgressHUD showMessage:@"正在加载..."];
@@ -125,6 +152,35 @@
   
   
 }
+
+//从单品中获取所有电器
++ (void)findAllDeviceFromServerProduct :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
+    
+    //  [MBProgressHUD showMessage:@"正在加载..."];
+    //1.创建请求管理对象
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+    
+    //2.说明服务器返回的是json参数
+    manager.responseSerializer=[AFJSONResponseSerializer serializer];
+    
+    //3.封装请求参数
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    params[@"is_app"]=@"1";
+    params[@"is_sample"]=@"1";
+    
+    
+    //外网；
+    [manager POST:@"http://60.12.220.16:8888/paladin/Equipment/find"
+       parameters:params
+          success:success
+          failure:failure];
+    
+    // NSLog(@"使用外网从服务器获取所有注册设备");
+    
+    
+}
+
+
 
 #pragma mark - 获取内网地址的方法
 + (void)getInternalNetworkGateIP:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
@@ -180,6 +236,31 @@
   //  NSLog(@"使用外网 向服务器注册设备");
   
 }
+
+//单品删除电器
++ (void)deleteDeviceFromServerProduct:(NSString*)logicId success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
+    
+    //1.创建请求管理对象
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+    
+    //2.说明服务器返回的是json参数
+    manager.responseSerializer=[AFHTTPResponseSerializer serializer];
+    
+    // NSLog(@"====PPPPP %@",logicId);
+    NSDictionary *params = @{@"is_app":@"1",
+                             @"is_sample":@"1",
+                             @"equipment.logic_id":logicId
+                             };
+    //外网发送请求
+    [manager POST:@"http://60.12.220.16:8888/paladin/Equipment/delete"
+       parameters:params
+          success:success
+          failure:failure];
+    
+    //  NSLog(@"使用外网 向服务器注册设备");
+    
+}
+
 
 #pragma mark - 向服务器发送YW灯冷暖的方法
 + (void)sendYWWarmColdToServer:(NSString *)logicId warmcoldValue:(NSString*)warmcoldValue success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{

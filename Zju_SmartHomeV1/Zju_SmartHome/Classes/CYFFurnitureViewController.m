@@ -333,6 +333,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
     [alertController addAction:[UIAlertAction actionWithTitle:@"扫码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
       
       QRCatchViewController *qrCatcherVC=[[QRCatchViewController alloc]init];
+      qrCatcherVC.tag=0;
       qrCatcherVC.area = self.area;
       qrCatcherVC.section1 = self.section1;
       qrCatcherVC.row = self.row;
@@ -401,7 +402,6 @@ NS_ENUM(NSInteger, ProviderEditingState)
                                       }
                                       [self.view addSubview:addDeviceView];
                                        self.navigationItem.hidesBackButton=YES;
-                                        NSLog(@"yayaya");
                                       
                                     }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"扫码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
@@ -545,7 +545,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
     {
         [HttpRequest getLogicIdfromMac:deviceMac success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
-             
+             [MBProgressHUD hideHUD];
              //表示从网关返回逻辑ID成功；需要解析这个逻辑ID，并发送到服务器；
              NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
              
@@ -647,6 +647,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
                      
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error)
                   {
+                      [MBProgressHUD hideHUD];
                       [MBProgressHUD showError:@"设备注册失败"];
                   }];
              }
