@@ -11,11 +11,10 @@
 #import "AFNetworking.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
-#import "CYFFurnitureViewController.h"
-
 #import "AppDelegate.h"
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
+#import "CYFFurnitureViewController.h"
 
 
 @interface DLLampControlGuestModeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate>

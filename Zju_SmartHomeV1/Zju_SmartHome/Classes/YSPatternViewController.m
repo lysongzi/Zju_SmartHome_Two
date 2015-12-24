@@ -12,6 +12,8 @@
 #import "YSProductViewController.h"
 #import "YSPattern.h"
 #import "MBProgressHUD+MJ.h"
+#import "JYSqlite.h"
+#import "DLLampControlRGBModeViewController.h"
 
 #define TABLE_SECTION 1;
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
@@ -26,6 +28,7 @@
 @property (strong, nonatomic) NSMutableArray *patterns;
 
 @property (weak, nonatomic) YSPattern *checkedPattern;
+@property(nonatomic,strong)JYSqlite *jySqlite;
 
 @end
 
@@ -41,8 +44,10 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
+    NSLog(@"我看看这个逻辑id是否传递过来了%@",self.logic_id);
     //注册cell
     UINib *nib = [UINib nibWithNibName:@"YSPatternViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"YSPatternViewCell"];
@@ -65,23 +70,87 @@
 //初始化默认的四个模式
 - (void)initDefultPattern
 {
-    //柔和模式
-    YSPattern *soft = [[YSPattern alloc] initWithPatternName:@"柔和模式" desc:@"Soft" picture:@"soft_background"];
-    soft.isCheck = YES;
-    self.checkedPattern = soft;
-    [self.patterns addObject:soft];
+//    //柔和模式
+//    YSPattern *soft = [[YSPattern alloc] initWithPatternName:@"柔和模式" desc:@"Soft" picture:@"soft_background"];
+//    soft.isCheck = YES;
+//    self.checkedPattern = soft;
+//    [self.patterns addObject:soft];
+//    
+//    //明亮模式
+//    YSPattern *bright = [[YSPattern alloc] initWithPatternName:@"明亮模式" desc:@"Bright" picture:@"bright_background"];
+//    [self.patterns addObject:bright];
+//    
+//    //温暖模式
+//    YSPattern *warm = [[YSPattern alloc] initWithPatternName:@"温暖模式" desc:@"Warm" picture:@"warm_background"];
+//    [self.patterns addObject:warm];
+//    
+//    //跳跃模式
+//    YSPattern *jump = [[YSPattern alloc] initWithPatternName:@"跳跃模式" desc:@"Jump" picture:@"shining_background"];
+//    [self.patterns addObject:jump];
     
-    //明亮模式
-    YSPattern *bright = [[YSPattern alloc] initWithPatternName:@"明亮模式" desc:@"Bright" picture:@"bright_background"];
-    [self.patterns addObject:bright];
+
+    //初始化
+    JYSqlite *jySqlite=[[JYSqlite alloc]init];
+    jySqlite.patterns=[[NSMutableArray alloc]init];
+    self.jySqlite=jySqlite;
     
-    //温暖模式
-    YSPattern *warm = [[YSPattern alloc] initWithPatternName:@"温暖模式" desc:@"Warm" picture:@"warm_background"];
-    [self.patterns addObject:warm];
+    //打开数据库
+    [self.jySqlite openDB];
+    //创建表（如果已经存在时不会再创建的）
+    [self.jySqlite createTable];
+    //获取表中所有记录
+    [self.jySqlite getAllRecord];
     
-    //跳跃模式
-    YSPattern *jump = [[YSPattern alloc] initWithPatternName:@"跳跃模式" desc:@"Jump" picture:@"shining_background"];
-    [self.patterns addObject:jump];
+    //self.patterns=jySqlite.patterns;
+    if(self.jySqlite.patterns.count==0)
+    {
+        NSLog(@"暂时还没有数据");
+        [self.jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"柔和模式" andField2:@"desc" field2Value:@"Soft" andField3:@"img" field3Value:@"soft_background" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"99" andField6:@"bValue" field6Value:@"98"];
+        
+        [self.jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"明亮模式" andField2:@"desc" field2Value:@"Bright" andField3:@"img" field3Value:@"bright_background" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"99" andField6:@"bValue" field6Value:@"98"];
+        
+        [self.jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"温暖模式" andField2:@"desc" field2Value:@"Bright" andField3:@"img" field3Value:@"warm_background" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"99" andField6:@"bValue" field6Value:@"98"];
+        
+        [self.jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"跳跃模式" andField2:@"desc" field2Value:@"Bright" andField3:@"img" field3Value:@"shining_background" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"99" andField6:@"bValue" field6Value:@"98"];
+        [self.jySqlite getAllRecord];
+        self.patterns=self.jySqlite.patterns;
+        for(int i=0;i<self.patterns.count;i++)
+        {
+            YSPattern *pattern=self.patterns[i];
+            if(i==0)
+            {
+                pattern.isCheck=YES;
+                self.checkedPattern =pattern;
+
+            }
+            else
+            {
+                pattern.isCheck=NO;
+                
+            }
+        }
+       // NSLog(@"长度%ld",self.patterns.count);
+    }
+    else
+    {
+        NSLog(@"已经有数据了");
+        self.patterns=self.jySqlite.patterns;
+        //NSLog(@"长度%ld",self.patterns.count);
+        for(int i=0;i<self.patterns.count;i++)
+        {
+            YSPattern *pattern=self.patterns[i];
+            if(i==0)
+            {
+                pattern.isCheck=YES;
+                 self.checkedPattern =pattern;
+            }
+            else
+            {
+                pattern.isCheck=NO;
+            }
+        }
+    }
+   
 }
 
 - (void)updateScrollView
@@ -108,20 +177,23 @@
     YSPatternViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"YSPatternViewCell"
                                                                    forIndexPath:indexPath];
     YSPattern *pattern = self.patterns[indexPath.row];
+
     cell.patternName.text = pattern.patternName;
     cell.descLabel.text = pattern.descLabel;
     cell.picture.image = [UIImage imageNamed:pattern.imgKey];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (pattern.isCheck) {
+    if (pattern.isCheck)
+    {
         cell.checkPic.hidden = NO;
     }
-    else {
+    else
+    {
         cell.checkPic.hidden = YES;
     }
-    
+    [cell.changeRgbGo addTarget:self action:@selector(clickGO:) forControlEvents:UIControlEventTouchUpInside];
+
     [self updateScrollView];
-    
     return cell;
 }
 
@@ -130,10 +202,10 @@
 {
     YSPattern *selectedPattern = self.patterns[indexPath.row];
     //当前已经是被选中的
-    if (selectedPattern.isCheck) {
+    if (selectedPattern.isCheck)
+    {
         return;
     }
-    
     //设置原来被选中的为未选中
     self.checkedPattern.isCheck = NO;
     //设定新的选中cell
@@ -142,6 +214,7 @@
     [self.tableView reloadData];
     
     //接下来是各种控制灯的实现
+    NSLog(@"开始控制灯咯");
 }
 
 #pragma mark - UITableViewDelegate 协议的实现
@@ -219,5 +292,38 @@
     NSLog(@"编辑操作...");
 }
 
+
+-(void)clickGO:(id)sender
+{
+    NSLog(@"111");
+    UIView *v = [sender superview];//获取父类view
+    YSPatternViewCell *cell = (YSPatternViewCell *)[v superview];//获取cell
+     NSIndexPath *indexpath = [self.tableView indexPathForCell:cell];//获取cell对应的indexpath;
+    YSPattern *pattern=self.patterns[indexpath.row];
+
+    NSLog(@"我看看点击的是哪一个%ld  %@",indexpath.row,pattern.patternName);
+    
+    DLLampControlRGBModeViewController *rgbController=[[DLLampControlRGBModeViewController alloc]init];
+    rgbController.logic_id=self.logic_id;
+    rgbController.patternName=pattern.patternName;
+    [self.navigationController pushViewController:rgbController animated:YES];
+
+}
+////修改模式RGB值的代理方法
+//-(void)changeRgbGoGoGo
+//{
+////    NSLog(@"修改模式RGB值的代理方法");
+////    
+////    UIView *v = [sender superview];//获取父类view
+////    CYFCollectionViewCell *cell = (CYFCollectionViewCell *)[v superview];//获取cell
+////    
+////    NSIndexPath *indexpath = [self.collectionView indexPathForCell:cell];//获取cell对应的indexpath;
+//
+//    
+//    DLLampControlRGBModeViewController *rgbController=[[DLLampControlRGBModeViewController alloc]init];
+//    rgbController.logic_id=self.logic_id;
+//    [self.navigationController pushViewController:rgbController animated:YES];
+//    
+//}
 
 @end

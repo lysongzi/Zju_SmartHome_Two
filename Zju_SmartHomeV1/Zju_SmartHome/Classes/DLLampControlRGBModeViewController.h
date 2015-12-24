@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface DLLampControlRGBModeViewController : UIViewController
+//逻辑id
 @property(nonatomic,copy)NSString *logic_id;
+//模式名称
+@property(nonatomic,copy)NSString *patternName;
 
 @end

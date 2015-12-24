@@ -19,9 +19,13 @@
 //背景图标识
 @property (copy, nonatomic) NSString *imgKey;
 //缩略图
-@property (weak, nonatomic) UIImage *thumbnail;
+//@property (weak, nonatomic) UIImage *thumbnail;
 //是否被选中
 @property (assign) BOOL isCheck;
+
+@property(nonatomic,copy)NSString *rValue;
+@property(nonatomic,copy)NSString *gValue;
+@property(nonatomic,copy)NSString *bValue;
 
 - (instancetype)initWithPatternName:(NSString *)name desc:(NSString *)desc;
 - (instancetype)initWithPatternName:(NSString *)name desc:(NSString *)desc picture:(NSString *)picture;

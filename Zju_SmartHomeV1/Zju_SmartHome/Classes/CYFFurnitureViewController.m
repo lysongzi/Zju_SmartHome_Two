@@ -362,19 +362,19 @@ NS_ENUM(NSInteger, ProviderEditingState)
       {
         DLLampControlGuestModeViewController *dlVc=(DLLampControlGuestModeViewController *)furniture.controller;
         dlVc.logic_id=furniture.logic_id;
-        [self.navigationController pushViewController:dlVc animated:dlVc];
+        [self.navigationController pushViewController:dlVc animated:YES];
       }
       else if([furniture.deviceType isEqualToString:@"41"])
       {
         DLLampControllYWModeViewController *cyfVc=(DLLampControllYWModeViewController *)furniture.controller;
         cyfVc.logic_id=furniture.logic_id;
-        [self.navigationController pushViewController:cyfVc animated:cyfVc];
+        [self.navigationController pushViewController:cyfVc animated:YES];
       }
       else
       {
         JYOtherViewController *jyVc=(JYOtherViewController *)furniture.controller;
         jyVc.logic_id=furniture.logic_id;
-        [self.navigationController pushViewController:jyVc animated:jyVc];
+        [self.navigationController pushViewController:jyVc animated:YES];
       }
     }
     else

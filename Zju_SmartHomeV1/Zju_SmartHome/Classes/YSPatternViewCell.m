@@ -10,7 +10,8 @@
 
 @implementation YSPatternViewCell
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     // Initialization code
 }
 
@@ -19,5 +20,6 @@
 
     // Configure the view for the selected state
 }
+
 
 @end

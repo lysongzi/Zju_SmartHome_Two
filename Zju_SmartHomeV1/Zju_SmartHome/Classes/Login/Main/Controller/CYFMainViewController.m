@@ -276,7 +276,9 @@
 }
 -(void)productTap
 {
-  [MBProgressHUD showError:@"单品功能尚未开通"];
+    YSProductViewController *pvc = [[YSProductViewController alloc] init];
+    [self.navigationController pushViewController:pvc animated:YES];
+
 }
 -(void)customTap
 {

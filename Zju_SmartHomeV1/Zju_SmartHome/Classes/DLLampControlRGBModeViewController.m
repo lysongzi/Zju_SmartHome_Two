@@ -10,7 +10,7 @@
 #import "ZQSlider.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD+MJ.h"
-#import "CYFFurnitureViewController.h"
+#import "YSPatternViewController.h"
 #import "AppDelegate.h"
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
@@ -39,6 +39,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"控制rgb灯的界面逻辑id值和模式值传递过来了吗?%@ %@",self.logic_id,self.patternName);
   [super viewDidLoad];
    //设置导航条
   [self setNavigationBar];
@@ -394,7 +395,7 @@
   
   for (UIViewController *controller in self.navigationController.viewControllers) {
     
-    if ([controller isKindOfClass:[CYFFurnitureViewController class]]) {
+    if ([controller isKindOfClass:[YSPatternViewController class]]) {
       
       [self.navigationController popToViewController:controller animated:YES];
       
