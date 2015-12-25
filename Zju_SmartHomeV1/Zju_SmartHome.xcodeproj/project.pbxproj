@@ -30,6 +30,8 @@
 		446AF34B1C005F180081C798 /* DLLeftSlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446AF34A1C005F180081C798 /* DLLeftSlideMenuViewController.m */; };
 		6108792F1C145F3700890CC1 /* JYUpdateFurnitureName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6108792E1C145F3700890CC1 /* JYUpdateFurnitureName.xib */; };
 		610879321C145F8F00890CC1 /* JYUpdateFurnitureName.m in Sources */ = {isa = PBXBuildFile; fileRef = 610879311C145F8F00890CC1 /* JYUpdateFurnitureName.m */; };
+		615C37D41C2D0A9D002663C5 /* STSaveSceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C37D21C2D0A9D002663C5 /* STSaveSceneView.m */; };
+		615C37D51C2D0A9D002663C5 /* STSaveSceneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615C37D31C2D0A9D002663C5 /* STSaveSceneView.xib */; };
 		61645BAC1C101BA5007462EC /* JYChangePwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61645BAA1C101BA5007462EC /* JYChangePwdViewController.m */; };
 		61645BAD1C101BA5007462EC /* JYChangePwdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61645BAB1C101BA5007462EC /* JYChangePwdViewController.xib */; };
 		61645BB91C10827E007462EC /* DLLampControllYWModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61645BB21C10827E007462EC /* DLLampControllYWModeViewController.m */; };
@@ -100,7 +102,7 @@
 		9DE6E11E1C2790450035E8DC /* CYFYWControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E11C1C2790450035E8DC /* CYFYWControllerViewController.xib */; };
 		9DE6E1221C2790660035E8DC /* JYOtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1201C2790660035E8DC /* JYOtherViewController.m */; };
 		9DE6E1231C2790660035E8DC /* JYOtherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E1211C2790660035E8DC /* JYOtherViewController.xib */; };
-		9DE6E1721C2ADF640035E8DC /* JYSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1711C2ADF640035E8DC /* JYSqlite.m */; settings = {ASSET_TAGS = (); }; };
+		9DE6E1721C2ADF640035E8DC /* JYSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1711C2ADF640035E8DC /* JYSqlite.m */; };
 		9DFCF3971C05A208004F7124 /* JYFurnitureSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFCF3961C05A208004F7124 /* JYFurnitureSection.m */; };
 		9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF735D1C07E4B00061EFBF /* JYFurnitureView.m */; };
 		9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DFF735F1C07E4C80061EFBF /* JYFurnitureViewXib.xib */; };
@@ -168,6 +170,9 @@
 		6108792E1C145F3700890CC1 /* JYUpdateFurnitureName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYUpdateFurnitureName.xib; sourceTree = "<group>"; };
 		610879301C145F8F00890CC1 /* JYUpdateFurnitureName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUpdateFurnitureName.h; sourceTree = "<group>"; };
 		610879311C145F8F00890CC1 /* JYUpdateFurnitureName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUpdateFurnitureName.m; sourceTree = "<group>"; };
+		615C37D11C2D0A9D002663C5 /* STSaveSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STSaveSceneView.h; sourceTree = "<group>"; };
+		615C37D21C2D0A9D002663C5 /* STSaveSceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STSaveSceneView.m; sourceTree = "<group>"; };
+		615C37D31C2D0A9D002663C5 /* STSaveSceneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSaveSceneView.xib; sourceTree = "<group>"; };
 		61645BA91C101BA5007462EC /* JYChangePwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangePwdViewController.h; sourceTree = "<group>"; };
 		61645BAA1C101BA5007462EC /* JYChangePwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangePwdViewController.m; sourceTree = "<group>"; };
 		61645BAB1C101BA5007462EC /* JYChangePwdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYChangePwdViewController.xib; sourceTree = "<group>"; };
@@ -472,6 +477,16 @@
 			name = YW;
 			sourceTree = "<group>";
 		};
+		615C37D01C2D0A86002663C5 /* Add Pattern */ = {
+			isa = PBXGroup;
+			children = (
+				615C37D11C2D0A9D002663C5 /* STSaveSceneView.h */,
+				615C37D21C2D0A9D002663C5 /* STSaveSceneView.m */,
+				615C37D31C2D0A9D002663C5 /* STSaveSceneView.xib */,
+			);
+			name = "Add Pattern";
+			sourceTree = "<group>";
+		};
 		61D606831C2A2BAE0026E23D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +507,7 @@
 		61D606851C2A2BCA0026E23D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				615C37D01C2D0A86002663C5 /* Add Pattern */,
 				9D9F9C2A1C268A2E0031F886 /* YSProductViewCell.h */,
 				9D9F9C2B1C268A2E0031F886 /* YSProductViewCell.m */,
 				9DDC64F41C25782C00C3872A /* YSProductView.h */,
@@ -1095,6 +1111,7 @@
 				9D7D5A571BE472D300E1E1EF /* LaunchScreen.storyboard in Resources */,
 				9DE6E1191C278FD30035E8DC /* DLLampControlRGBModeViewController.xib in Resources */,
 				61645BAD1C101BA5007462EC /* JYChangePwdViewController.xib in Resources */,
+				615C37D51C2D0A9D002663C5 /* STSaveSceneView.xib in Resources */,
 				9D9F9C1B1C2647D20031F886 /* YSPatternViewCell.xib in Resources */,
 				9DFF73721C08781C0061EFBF /* DLAddDeviceViewXib.xib in Resources */,
 				446AF3321C003FB10081C798 /* country.plist in Resources */,
@@ -1222,6 +1239,7 @@
 				610879321C145F8F00890CC1 /* JYUpdateFurnitureName.m in Sources */,
 				9D9F9C2C1C268A2E0031F886 /* YSProductViewCell.m in Sources */,
 				9D9F9C281C2652E00031F886 /* YSPatternViewController.m in Sources */,
+				615C37D41C2D0A9D002663C5 /* STSaveSceneView.m in Sources */,
 				714854F01C127C300001347F /* CYFChangeMailViewController.m in Sources */,
 				71A7988E1C0D8C0B006F8D7B /* AllUtils.m in Sources */,
 				71E7A2EF1C1489B40091B86A /* CYFImageStore.m in Sources */,
