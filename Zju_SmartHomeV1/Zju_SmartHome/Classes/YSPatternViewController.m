@@ -52,6 +52,7 @@
     UINib *nib = [UINib nibWithNibName:@"YSPatternViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"YSPatternViewCell"];
     
+    
     //设置数据源和委托对象
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -70,7 +71,7 @@
 //初始化默认的四个模式
 - (void)initDefultPattern
 {
-//    //柔和模式
+    //柔和模式
 //    YSPattern *soft = [[YSPattern alloc] initWithPatternName:@"柔和模式" desc:@"Soft" picture:@"soft_background"];
 //    soft.isCheck = YES;
 //    self.checkedPattern = soft;
@@ -174,7 +175,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"动态高度计算了几次?");
     YSPatternViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"YSPatternViewCell"
                                                                    forIndexPath:indexPath];
     YSPattern *pattern = self.patterns[indexPath.row];
