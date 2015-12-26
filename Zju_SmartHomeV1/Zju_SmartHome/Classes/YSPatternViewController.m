@@ -82,6 +82,19 @@
     //获取表中所有记录
     [self.jySqlite getAllRecord];
     self.patterns=self.jySqlite.patterns;
+    for(int i=0;i<self.patterns.count;i++)
+    {
+        YSPattern *pattern=self.patterns[i];
+        if(i==0)
+        {
+            pattern.isCheck=YES;
+            self.checkedPattern =pattern;
+        }
+        else
+        {
+            pattern.isCheck=NO;
+        }
+    }
     
     [self.tableView reloadData];
 
@@ -334,6 +347,5 @@
     [self.navigationController pushViewController:rgbController animated:YES];
 
 }
-
 
 @end
