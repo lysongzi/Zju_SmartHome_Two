@@ -68,6 +68,25 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    JYSqlite *jySqlite=[[JYSqlite alloc]init];
+    jySqlite.patterns=[[NSMutableArray alloc]init];
+    self.jySqlite=jySqlite;
+    
+    //打开数据库
+    [self.jySqlite openDB];
+    //创建表（如果已经存在时不会再创建的）
+    [self.jySqlite createTable];
+    //获取表中所有记录
+    [self.jySqlite getAllRecord];
+    self.patterns=self.jySqlite.patterns;
+    
+    [self.tableView reloadData];
+
+}
+
 //初始化默认的四个模式
 - (void)initDefultPattern
 {
@@ -227,7 +246,13 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        YSPattern *pattern=self.patterns[indexPath.row];
+        //打开数据库
+        [self.jySqlite openDB];
+        [self.jySqlite deleteRecordWithName:pattern.patternName];
+        
         [self.patterns removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -296,7 +321,6 @@
 
 -(void)clickGO:(id)sender
 {
-    NSLog(@"111");
     UIView *v = [sender superview];//获取父类view
     YSPatternViewCell *cell = (YSPatternViewCell *)[v superview];//获取cell
      NSIndexPath *indexpath = [self.tableView indexPathForCell:cell];//获取cell对应的indexpath;
@@ -310,5 +334,6 @@
     [self.navigationController pushViewController:rgbController animated:YES];
 
 }
+
 
 @end
