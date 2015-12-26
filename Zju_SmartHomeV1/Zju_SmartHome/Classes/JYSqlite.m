@@ -168,7 +168,7 @@
             pattern.rValue=rValue;
             pattern.gValue=gValue;
             pattern.bValue=bValue;
-            //NSLog(@"====%@",pattern.patternName);
+            NSLog(@"====%@",pattern.patternName);
             
             [self.patterns addObject:pattern];
         }

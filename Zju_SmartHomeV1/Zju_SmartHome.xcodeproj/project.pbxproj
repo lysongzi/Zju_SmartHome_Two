@@ -507,7 +507,6 @@
 		61D606851C2A2BCA0026E23D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				615C37D01C2D0A86002663C5 /* Add Pattern */,
 				9D9F9C2A1C268A2E0031F886 /* YSProductViewCell.h */,
 				9D9F9C2B1C268A2E0031F886 /* YSProductViewCell.m */,
 				9DDC64F41C25782C00C3872A /* YSProductView.h */,
@@ -898,6 +897,7 @@
 		9DDC64F21C25779F00C3872A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				615C37D01C2D0A86002663C5 /* Add Pattern */,
 				9D9F9C171C2647D20031F886 /* YSPatternViewCell.h */,
 				9D9F9C181C2647D20031F886 /* YSPatternViewCell.m */,
 				9D9F9C191C2647D20031F886 /* YSPatternViewCell.xib */,

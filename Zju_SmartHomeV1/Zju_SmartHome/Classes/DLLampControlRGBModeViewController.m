@@ -14,8 +14,12 @@
 #import "AppDelegate.h"
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
+#import "STSaveSceneView.h"
+#import "JYSqlite.h"
 
-@interface DLLampControlRGBModeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
+#define SCREEN_WIDTH self.view.frame.size.width
+#define SCREEN_HEIGHT self.view.frame.size.height
+@interface DLLampControlRGBModeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate,STSaveSceneViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *rValue;
 @property (weak, nonatomic) IBOutlet UILabel *gValue;
 @property (weak, nonatomic) IBOutlet UILabel *bValue;
@@ -33,6 +37,8 @@
 //有关照片取色的属性；
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (nonatomic,strong) UIAlertController *alert;
+
+@property(nonatomic,strong)STSaveSceneView *stView;
 @end
 
 @implementation DLLampControlRGBModeViewController
@@ -408,48 +414,15 @@
 -(void)rightBtnClicked
 {
   NSLog(@"开关按钮点击事件");
-  //说明灯是关着的
-  if(self.switchTag==0)
-  {
-    self.switchTag++;
+  NSLog(@"===%@ %@ %@ %@ %@",self.logic_id,self.patternName,self.rValue.text,self.gValue.text,self.bValue.text);
+
     
-    [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"100"
-                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                     
-                                     NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                     NSLog(@"成功: %@", string);
-                                     
-                                   }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     
-                                     NSLog(@"失败: %@", error);
-                                     [MBProgressHUD showError:@"请检查网关"];
-                                     
-                                   }];
-    
-  }
-  else if (self.switchTag==1)
-  {
-    self.switchTag--;
-    
-    [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"0"
-                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                     
-                                     NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                     NSLog(@"成功: %@", string);
-                                     
-                                   }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     
-                                     NSLog(@"失败: %@", error);
-                                     [MBProgressHUD showError:@"请检查网关"];
-                                     
-                                     
-                                   }];
-    
-    
-  }
-  
+  STSaveSceneView *stView=[STSaveSceneView initWithSaveScene];
+  stView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+  stView.delegate=self;
+  self.stView=stView;
+  [self.view addSubview:stView];
+  self.navigationItem.rightBarButtonItem.enabled=NO;
 }
 
 #pragma mark - 左上角按钮点击，照片取色
@@ -532,6 +505,7 @@
     [leftButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     [leftButton addTarget:self action:@selector(leftBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    
     self.navigationItem.leftBarButtonItem = leftItem;
     UILabel *titleView=[[UILabel alloc]init];
     [titleView setText:@"RGB灯"];
@@ -540,12 +514,12 @@
     [titleView setTextColor:[UIColor whiteColor]];
     titleView.textAlignment=NSTextAlignmentCenter;
     self.navigationItem.titleView=titleView;
-    UIButton *rightButton=[[UIButton alloc]init];
-    [rightButton setImage:[UIImage imageNamed:@"ct_icon_switch"] forState:UIControlStateNormal];
-    rightButton.frame=CGRectMake(0, 0, 30, 30);
-    [rightButton setImageEdgeInsets:UIEdgeInsetsMake(-4, 6, 4, -10)];
-    [rightButton addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    
+    //保存按钮
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"保存"
+                                                                  style:UIBarButtonItemStyleDone
+                                                                 target:self
+                                                                 action:@selector(rightBtnClicked)];
     self.navigationItem.rightBarButtonItem=rightItem;
 }
 
@@ -633,5 +607,44 @@
     [self.panelView addSubview:viewColorPickerPositionIndicator];
     [self.panelView addSubview:btnPlay];
     [self.panelView addSubview:slider];
+}
+
+-(void)cancelSaveScene
+{
+    [self.stView removeFromSuperview];
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+}
+-(void)noSaveScene
+{
+   [self.stView removeFromSuperview];
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+}
+-(void)saveNewScene:(NSString *)newSceneName
+{
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+    NSLog(@"－－－－%@",newSceneName);
+    
+    JYSqlite *jySqlite=[[JYSqlite alloc]init];
+    jySqlite.patterns=[[NSMutableArray alloc]init];
+    
+    //打开数据库
+    [jySqlite openDB];
+    //创建表（如果已经存在时不会再创建的）
+    [jySqlite createTable];
+    //获取表中所有记录
+    [jySqlite getAllRecord];
+    
+    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:newSceneName andField2:@"desc" field2Value:@"???" andField3:@"img" field3Value:@"soft_background" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
+    
+    NSLog(@"**********************************");
+    [jySqlite getAllRecord];
+    
+    for (UIViewController *controller in self.navigationController.viewControllers)
+    {
+        if ([controller isKindOfClass:[YSPatternViewController class]])
+        {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 @end

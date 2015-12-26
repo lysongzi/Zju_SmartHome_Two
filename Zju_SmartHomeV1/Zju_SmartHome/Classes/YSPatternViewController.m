@@ -55,7 +55,7 @@
     //设置数据源和委托对象
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.showsVerticalScrollIndicator = NO;
+    //self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.bounces = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -153,10 +153,10 @@
    
 }
 
-- (void)updateScrollView
-{
-    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.tableView.contentSize.height + self.addPatternBtn.frame.size.height + 14);
-}
+//- (void)updateScrollView
+//{
+//    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.tableView.contentSize.height + self.addPatternBtn.frame.size.height + 14);
+//}
 
 #pragma mark - UITableViewDataSource 协议的实现
 
@@ -174,6 +174,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"动态高度计算了几次?");
     YSPatternViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"YSPatternViewCell"
                                                                    forIndexPath:indexPath];
     YSPattern *pattern = self.patterns[indexPath.row];
@@ -193,7 +194,7 @@
     }
     [cell.changeRgbGo addTarget:self action:@selector(clickGO:) forControlEvents:UIControlEventTouchUpInside];
 
-    [self updateScrollView];
+    //[self updateScrollView];
     return cell;
 }
 
@@ -309,21 +310,5 @@
     [self.navigationController pushViewController:rgbController animated:YES];
 
 }
-////修改模式RGB值的代理方法
-//-(void)changeRgbGoGoGo
-//{
-////    NSLog(@"修改模式RGB值的代理方法");
-////    
-////    UIView *v = [sender superview];//获取父类view
-////    CYFCollectionViewCell *cell = (CYFCollectionViewCell *)[v superview];//获取cell
-////    
-////    NSIndexPath *indexpath = [self.collectionView indexPathForCell:cell];//获取cell对应的indexpath;
-//
-//    
-//    DLLampControlRGBModeViewController *rgbController=[[DLLampControlRGBModeViewController alloc]init];
-//    rgbController.logic_id=self.logic_id;
-//    [self.navigationController pushViewController:rgbController animated:YES];
-//    
-//}
 
 @end
