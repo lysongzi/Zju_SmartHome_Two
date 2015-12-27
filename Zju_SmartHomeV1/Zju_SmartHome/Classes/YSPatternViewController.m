@@ -39,7 +39,7 @@
     self = [super init];
     if (self) {
         self.patterns = [NSMutableArray array];
-        [self initDefultPattern];
+        //[self initDefultPattern];
     }
     return self;
 }
@@ -71,30 +71,31 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    JYSqlite *jySqlite=[[JYSqlite alloc]init];
-    jySqlite.patterns=[[NSMutableArray alloc]init];
-    self.jySqlite=jySqlite;
-    
-    //打开数据库
-    [self.jySqlite openDB];
-    //创建表（如果已经存在时不会再创建的）
-    [self.jySqlite createTable];
-    //获取表中所有记录
-    [self.jySqlite getAllRecord];
-    self.patterns=self.jySqlite.patterns;
-    for(int i=0;i<self.patterns.count;i++)
-    {
-        YSPattern *pattern=self.patterns[i];
-        if(i==0)
-        {
-            pattern.isCheck=YES;
-            self.checkedPattern =pattern;
-        }
-        else
-        {
-            pattern.isCheck=NO;
-        }
-    }
+//    JYSqlite *jySqlite=[[JYSqlite alloc]init];
+//    jySqlite.patterns=[[NSMutableArray alloc]init];
+//    self.jySqlite=jySqlite;
+//    
+//    //打开数据库
+//    [self.jySqlite openDB];
+//    //创建表（如果已经存在时不会再创建的）
+//    [self.jySqlite createTable];
+//    //获取表中所有记录
+//    [self.jySqlite getAllRecord];
+//    self.patterns=self.jySqlite.patterns;
+//    for(int i=0;i<self.patterns.count;i++)
+//    {
+//        YSPattern *pattern=self.patterns[i];
+//        if(i==0)
+//        {
+//            pattern.isCheck=YES;
+//            self.checkedPattern =pattern;
+//        }
+//        else
+//        {
+//            pattern.isCheck=NO;
+//        }
+//    }
+    [self initDefultPattern];
     
     [self.tableView reloadData];
 
