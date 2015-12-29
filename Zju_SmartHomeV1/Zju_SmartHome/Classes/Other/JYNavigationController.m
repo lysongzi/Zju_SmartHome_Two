@@ -31,7 +31,7 @@
         if([view isKindOfClass:NSClassFromString(@"_UINavigationBarBackground")])
         {
             //[view removeFromSuperview];
-            view.alpha=0.8;
+            view.alpha=1;
         }
     }
 }
@@ -57,7 +57,7 @@
     
     UINavigationBar *navBar=[UINavigationBar appearance];
     navBar.tintColor = [UIColor whiteColor];
-    [navBar setBarTintColor:[UIColor blackColor]];
+    [navBar setBarTintColor:[UIColor colorWithRed:(0/255.0f) green:(0/255.0f) blue:(0/255.0f) alpha:1]];
     navBar.translucent = YES;
    
 

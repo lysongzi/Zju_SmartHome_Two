@@ -28,6 +28,8 @@
 		446AF3461C005BF10081C798 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 446AF3411C005BF10081C798 /* RECommonFunctions.m */; };
 		446AF3481C005BF10081C798 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 446AF3451C005BF10081C798 /* UIViewController+RESideMenu.m */; };
 		446AF34B1C005F180081C798 /* DLLeftSlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 446AF34A1C005F180081C798 /* DLLeftSlideMenuViewController.m */; };
+		610452B41C32C31E00753411 /* STHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 610452B31C32C31E00753411 /* STHomeView.xib */; };
+		610452BA1C32C35400753411 /* STHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 610452B91C32C35400753411 /* STHomeView.m */; };
 		6108792F1C145F3700890CC1 /* JYUpdateFurnitureName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6108792E1C145F3700890CC1 /* JYUpdateFurnitureName.xib */; };
 		610879321C145F8F00890CC1 /* JYUpdateFurnitureName.m in Sources */ = {isa = PBXBuildFile; fileRef = 610879311C145F8F00890CC1 /* JYUpdateFurnitureName.m */; };
 		615C37D41C2D0A9D002663C5 /* STSaveSceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C37D21C2D0A9D002663C5 /* STSaveSceneView.m */; };
@@ -167,6 +169,9 @@
 		446AF3491C005F180081C798 /* DLLeftSlideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLeftSlideMenuViewController.h; sourceTree = "<group>"; };
 		446AF34A1C005F180081C798 /* DLLeftSlideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLeftSlideMenuViewController.m; sourceTree = "<group>"; };
 		5C2168D92BC3D6A7F5365A43 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		610452B31C32C31E00753411 /* STHomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STHomeView.xib; sourceTree = "<group>"; };
+		610452B81C32C35400753411 /* STHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STHomeView.h; path = "../../../../../../Desktop/gujinyue iOS/STHome/STHome/STHomeView.h"; sourceTree = "<group>"; };
+		610452B91C32C35400753411 /* STHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STHomeView.m; path = "../../../../../../Desktop/gujinyue iOS/STHome/STHome/STHomeView.m"; sourceTree = "<group>"; };
 		6108792E1C145F3700890CC1 /* JYUpdateFurnitureName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYUpdateFurnitureName.xib; sourceTree = "<group>"; };
 		610879301C145F8F00890CC1 /* JYUpdateFurnitureName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUpdateFurnitureName.h; sourceTree = "<group>"; };
 		610879311C145F8F00890CC1 /* JYUpdateFurnitureName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUpdateFurnitureName.m; sourceTree = "<group>"; };
@@ -631,6 +636,9 @@
 		9D564D561BFEAD050062700D /* VIew */ = {
 			isa = PBXGroup;
 			children = (
+				610452B31C32C31E00753411 /* STHomeView.xib */,
+				610452B81C32C35400753411 /* STHomeView.h */,
+				610452B91C32C35400753411 /* STHomeView.m */,
 				9D564D571BFEAD220062700D /* JYMainXib.xib */,
 			);
 			name = VIew;
@@ -1115,6 +1123,7 @@
 				9D9F9C1B1C2647D20031F886 /* YSPatternViewCell.xib in Resources */,
 				9DFF73721C08781C0061EFBF /* DLAddDeviceViewXib.xib in Resources */,
 				446AF3321C003FB10081C798 /* country.plist in Resources */,
+				610452B41C32C31E00753411 /* STHomeView.xib in Resources */,
 				446AF3291C002FB70081C798 /* Localizable.strings in Resources */,
 				9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */,
 				9D5292131C118F5800205CFD /* DLLampControlGuestModeViewController.xib in Resources */,
@@ -1218,6 +1227,7 @@
 				9D6568641BEB846F006D9507 /* JYLoginStatus.m in Sources */,
 				712C52431C08323B0014F9CB /* NSObject+Macro.m in Sources */,
 				446AF31F1C0025330081C798 /* SMS_HYZBadgeView.m in Sources */,
+				610452BA1C32C35400753411 /* STHomeView.m in Sources */,
 				9D1CB9D81C0B0F8600725A63 /* LogicIdXMLParser.m in Sources */,
 				446AF3111C0024AB0081C798 /* RegViewController.m in Sources */,
 				9DE6E11D1C2790450035E8DC /* CYFYWControllerViewController.m in Sources */,

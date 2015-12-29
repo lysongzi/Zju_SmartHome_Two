@@ -7,7 +7,7 @@
 //
 
 #import "CYFMainViewController.h"
-#import "JYMainView.h"
+//#import "JYMainView.h"
 #import "CYFFurnitureViewController.h"
 #import "YSProductViewController.h"
 #import "RESideMenu.h"
@@ -17,15 +17,17 @@
 #import "AllUtils.h"
 #import "MBProgressHUD+MJ.h"
 #import <CoreLocation/CoreLocation.h>
+#import "STHomeView.h"
 
 #import "CYFImageStore.h"
 
-@interface CYFMainViewController ()<JYMainViewDelegate,CLLocationManagerDelegate>
+@interface CYFMainViewController ()<STHomeViewDelegate,CLLocationManagerDelegate>
 
 
 @property (nonatomic, strong) CLLocationManager* locationManager;
 
-@property(nonatomic,strong) JYMainView *mainView;
+@property(nonatomic,strong) STHomeView *homeView;
+//@property(nonatomic,strong) JYMainView *mainView;
 
 @property (nonatomic,strong) UIButton *leftBtn;
 
@@ -40,32 +42,32 @@
   [super viewDidLoad];
   
   
-  
   //设置显示的view
-  JYMainView *jyMainView=[JYMainView mainViewXib];
+  STHomeView *sthomeView=[STHomeView initWithHomeView];
+    sthomeView.backgroundColor=[UIColor whiteColor];
   
-  jyMainView.officeLabel.userInteractionEnabled=YES;
-  UITapGestureRecognizer *officeTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(officeLabelTap)];
-  [jyMainView.officeLabel addGestureRecognizer:officeTap];
-  
-  jyMainView.furnitureLabel.userInteractionEnabled=YES;
-  UITapGestureRecognizer *furnitureTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(furnitureTap)];
-  [jyMainView.furnitureLabel addGestureRecognizer:furnitureTap];
-  
-  jyMainView.productLabel.userInteractionEnabled=YES;
-  UITapGestureRecognizer *productTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(productTap)];
-  [jyMainView.productLabel addGestureRecognizer:productTap];
-  
-  jyMainView.customLabel.userInteractionEnabled=YES;
-  UITapGestureRecognizer *customTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(customTap)];
-  [jyMainView.customLabel addGestureRecognizer:customTap];
+//  jyMainView.officeLabel.userInteractionEnabled=YES;
+//  UITapGestureRecognizer *officeTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(officeLabelTap)];
+//  [jyMainView.officeLabel addGestureRecognizer:officeTap];
+//  
+//  jyMainView.furnitureLabel.userInteractionEnabled=YES;
+//  UITapGestureRecognizer *furnitureTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(furnitureTap)];
+//  [jyMainView.furnitureLabel addGestureRecognizer:furnitureTap];
+//  
+//  jyMainView.productLabel.userInteractionEnabled=YES;
+//  UITapGestureRecognizer *productTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(productTap)];
+//  [jyMainView.productLabel addGestureRecognizer:productTap];
+//  
+//  jyMainView.customLabel.userInteractionEnabled=YES;
+//  UITapGestureRecognizer *customTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(customTap)];
+//  [jyMainView.customLabel addGestureRecognizer:customTap];
   
   
   
   //设置代理
-  jyMainView.delegate=self;
-  self.mainView = jyMainView;
-  self.view =jyMainView;
+  sthomeView.delegate=self;
+  self.homeView = sthomeView;
+  self.view =sthomeView;
   
   //设置导航栏
   [self setupNavgationItem];
@@ -205,24 +207,24 @@
 
 //代理方法
 //家居(现在实际是场景)
--(void)furnitureClick
+-(void)officeClick
 {
   [MBProgressHUD showError:@"场景功能尚未开通"];
 }
 //办公室(现在实际是家居)
--(void)officeClick
+-(void)homeClick
 {
     CYFFurnitureViewController *jyVc=[[CYFFurnitureViewController alloc]init];
     [self.navigationController pushViewController:jyVc animated:YES];
 }
 //单品
--(void)productClick
+-(void)singleClick
 {
     YSProductViewController *pvc = [[YSProductViewController alloc] init];
     [self.navigationController pushViewController:pvc animated:YES];
 }
 //自定义
--(void)customClick
+-(void)universalClick
 {
   [MBProgressHUD showError:@"自定义功能尚未开通"];
 }
@@ -258,8 +260,8 @@
       NSString *country = [[placemark addressDictionary] objectForKey:@"Country"];
       
       
-      self.mainView.cityLabel.text = city;
-      self.mainView.countryLabel.text = country;
+      self.homeView.cityLabel.text = city;
+      self.homeView.countryLabel.text = country;
     }
     
   }];
