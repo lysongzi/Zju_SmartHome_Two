@@ -169,6 +169,7 @@ static BOOL _isPoping;
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
 }
+
 - (void)viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
