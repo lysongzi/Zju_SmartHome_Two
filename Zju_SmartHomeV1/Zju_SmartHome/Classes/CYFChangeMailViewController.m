@@ -20,6 +20,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *confirmNewMail;
 
+@property (weak, nonatomic) IBOutlet UIView *originView;
+@property (weak, nonatomic) IBOutlet UIView *xinView;
+@property (weak, nonatomic) IBOutlet UIView *sureView;
+
 @end
 
 @implementation CYFChangeMailViewController
@@ -32,8 +36,13 @@
   self.oldMail.delegate=self;
   self.mail.delegate=self;
   self.confirmNewMail.delegate=self;
-  
-  
+    
+    self.originView.layer.cornerRadius=20;
+    self.originView.clipsToBounds=YES;
+    self.xinView.layer.cornerRadius=20;
+    self.xinView.clipsToBounds=YES;
+    self.sureView.layer.cornerRadius=20;
+    self.sureView.clipsToBounds=YES;
 }
 
 -(void)setNavigationBar

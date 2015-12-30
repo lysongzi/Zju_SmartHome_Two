@@ -18,6 +18,11 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *confirmNewPwd;
 - (IBAction)changePwd:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIView *originPwdView;
+@property (weak, nonatomic) IBOutlet UIView *xinPwdView;
+@property (weak, nonatomic) IBOutlet UIView *surePwdView;
+
 @end
 
 @implementation JYChangePwdViewController
@@ -30,6 +35,13 @@
     self.oldPwd.delegate=self;
     self.password.delegate=self;
     self.confirmNewPwd.delegate=self;
+    
+    self.originPwdView.layer.cornerRadius=20;
+    self.originPwdView.clipsToBounds=YES;
+    self.xinPwdView.layer.cornerRadius=20;
+    self.xinPwdView.clipsToBounds=YES;
+    self.surePwdView.layer.cornerRadius=20;
+    self.surePwdView.clipsToBounds=YES;
     
 }
 
