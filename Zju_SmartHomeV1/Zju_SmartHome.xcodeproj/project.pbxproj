@@ -59,6 +59,8 @@
 		9D1CB9D81C0B0F8600725A63 /* LogicIdXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9D71C0B0F8600725A63 /* LogicIdXMLParser.m */; };
 		9D1CB9DC1C0B0FA000725A63 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9DB1C0B0FA000725A63 /* HttpRequest.m */; };
 		9D1CB9DF1C0B0FDC00725A63 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9DE1C0B0FDC00725A63 /* Constants.m */; };
+		9D41EA581C33D7B600E31239 /* YSPatternNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D41EA561C33D7B600E31239 /* YSPatternNewViewController.m */; };
+		9D41EA591C33D7B600E31239 /* YSPatternNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D41EA571C33D7B600E31239 /* YSPatternNewViewController.xib */; };
 		9D5292121C118F5800205CFD /* DLLampControlGuestModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5292101C118F5800205CFD /* DLLampControlGuestModeViewController.m */; };
 		9D5292131C118F5800205CFD /* DLLampControlGuestModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5292111C118F5800205CFD /* DLLampControlGuestModeViewController.xib */; };
 		9D564D4F1BFEAB840062700D /* CYFMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D564D4E1BFEAB840062700D /* CYFMainViewController.m */; };
@@ -221,6 +223,9 @@
 		9D1CB9DB1C0B0FA000725A63 /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		9D1CB9DD1C0B0FDC00725A63 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9D1CB9DE1C0B0FDC00725A63 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		9D41EA551C33D7B600E31239 /* YSPatternNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSPatternNewViewController.h; sourceTree = "<group>"; };
+		9D41EA561C33D7B600E31239 /* YSPatternNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSPatternNewViewController.m; sourceTree = "<group>"; };
+		9D41EA571C33D7B600E31239 /* YSPatternNewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSPatternNewViewController.xib; sourceTree = "<group>"; };
 		9D52920F1C118F5800205CFD /* DLLampControlGuestModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLampControlGuestModeViewController.h; sourceTree = "<group>"; };
 		9D5292101C118F5800205CFD /* DLLampControlGuestModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLampControlGuestModeViewController.m; sourceTree = "<group>"; };
 		9D5292111C118F5800205CFD /* DLLampControlGuestModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLLampControlGuestModeViewController.xib; sourceTree = "<group>"; };
@@ -531,14 +536,14 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		61D606871C2A2C060026E23D /* Pattern */ = {
+		61D606871C2A2C060026E23D /* Pattern_origin */ = {
 			isa = PBXGroup;
 			children = (
 				9DDC64F31C2577B300C3872A /* Controller */,
 				9DDC64FE1C25784C00C3872A /* Model */,
 				9DDC64F21C25779F00C3872A /* View */,
 			);
-			name = Pattern;
+			name = Pattern_origin;
 			sourceTree = "<group>";
 		};
 		61D606881C2A2CD20026E23D /* SQLite */ = {
@@ -631,6 +636,40 @@
 				9D1CB9DB1C0B0FA000725A63 /* HttpRequest.m */,
 			);
 			name = HttpUtils;
+			sourceTree = "<group>";
+		};
+		9D41EA511C33D74400E31239 /* Pattern */ = {
+			isa = PBXGroup;
+			children = (
+				9D41EA541C33D77D00E31239 /* View */,
+				9D41EA531C33D77100E31239 /* Controller */,
+				9D41EA521C33D76A00E31239 /* Model */,
+			);
+			name = Pattern;
+			sourceTree = "<group>";
+		};
+		9D41EA521C33D76A00E31239 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9D41EA531C33D77100E31239 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9D41EA551C33D7B600E31239 /* YSPatternNewViewController.h */,
+				9D41EA561C33D7B600E31239 /* YSPatternNewViewController.m */,
+				9D41EA571C33D7B600E31239 /* YSPatternNewViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		9D41EA541C33D77D00E31239 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		9D564D561BFEAD050062700D /* VIew */ = {
@@ -894,9 +933,10 @@
 		9DDC64F11C25777E00C3872A /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				9D41EA511C33D74400E31239 /* Pattern */,
 				61D606881C2A2CD20026E23D /* SQLite */,
 				61D606831C2A2BAE0026E23D /* Products */,
-				61D606871C2A2C060026E23D /* Pattern */,
+				61D606871C2A2C060026E23D /* Pattern_origin */,
 				9DE6E1731C2B97750035E8DC /* RGB */,
 			);
 			name = Product;
@@ -1105,6 +1145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D41EA591C33D7B600E31239 /* YSPatternNewViewController.xib in Resources */,
 				9DE6E1231C2790660035E8DC /* JYOtherViewController.xib in Resources */,
 				9DDC64F81C25782C00C3872A /* YSProductView.xib in Resources */,
 				446AF3011C001F060081C798 /* SMS_SDKLocalizable.strings in Resources */,
@@ -1247,6 +1288,7 @@
 				446AF3481C005BF10081C798 /* UIViewController+RESideMenu.m in Sources */,
 				9D564D5B1BFEAD630062700D /* JYMainView.m in Sources */,
 				610879321C145F8F00890CC1 /* JYUpdateFurnitureName.m in Sources */,
+				9D41EA581C33D7B600E31239 /* YSPatternNewViewController.m in Sources */,
 				9D9F9C2C1C268A2E0031F886 /* YSProductViewCell.m in Sources */,
 				9D9F9C281C2652E00031F886 /* YSPatternViewController.m in Sources */,
 				615C37D41C2D0A9D002663C5 /* STSaveSceneView.m in Sources */,
