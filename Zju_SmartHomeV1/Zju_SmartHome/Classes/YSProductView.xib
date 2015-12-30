@@ -25,7 +25,7 @@
                     <inset key="contentEdgeInsets" minX="-1" minY="-5" maxX="-16" maxY="8"/>
                     <state key="normal" image="delete-button-red"/>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="single_btn_yw_off" id="ait-31-NMI" userLabel="ImageButton">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="single_btn_yw_on" id="ait-31-NMI" userLabel="ImageButton">
                     <rect key="frame" x="28" y="18" width="36" height="36"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -42,6 +42,6 @@
     </objects>
     <resources>
         <image name="delete-button-red" width="30" height="30"/>
-        <image name="single_btn_yw_off" width="37" height="37"/>
+        <image name="single_btn_yw_on" width="59" height="59"/>
     </resources>
 </document>
