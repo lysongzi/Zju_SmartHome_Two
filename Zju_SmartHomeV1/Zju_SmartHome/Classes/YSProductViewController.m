@@ -18,7 +18,7 @@
 #import "DLAddDeviceView.h"
 #import "LogicIdXMLParser.h"
 #import "JYUpdateFurnitureName.h"
-#import "YSPatternViewController.h"
+#import "YSRGBPatternViewController.h"
 
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define UISCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
@@ -280,9 +280,9 @@ static BOOL _isPoping;
         
         if([furniture.deviceType isEqualToString:@"40"])
         {
-//            YSPatternViewController *ysPattern=(YSPatternViewController *)furniture.controller;
-//            ysPattern.logic_id=furniture.logic_id;
-//            [self.navigationController pushViewController:ysPattern animated:YES];
+            //YSPatternViewController *ysPattern=(YSPatternViewController *)furniture.controller;
+            //ysPattern.logic_id=furniture.logic_id;
+            [self.navigationController pushViewController:[[YSRGBPatternViewController alloc] init] animated:YES];
         }
         else if([furniture.deviceType isEqualToString:@"41"])
         {
@@ -353,7 +353,7 @@ static BOOL _isPoping;
                           if([furniture.deviceType isEqualToString:@"40"])
                           {
                               furniture.imageStr=@"rgb_light_on";
-                              furniture.controller = [[YSPatternViewController alloc] init];
+                              //furniture.controller = [[YSPatternViewController alloc] init];
                           }
                           else if([furniture.deviceType isEqualToString:@"41"])
                           {
@@ -446,7 +446,7 @@ static BOOL _isPoping;
                 if ([furniture.deviceType isEqualToString:@"40"])
                 {
                     furniture.imageStr = self.imageDic[@(RGBLIGHT_OFF)];
-                    furniture.controller = [[YSPatternViewController alloc] init];
+                    //furniture.controller = [[YSPatternViewController alloc] init];
                 }
                 else if ([furniture.deviceType isEqualToString:@"41"])
                 {
