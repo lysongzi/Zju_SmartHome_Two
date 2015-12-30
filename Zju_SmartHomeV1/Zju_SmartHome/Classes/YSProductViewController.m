@@ -23,6 +23,8 @@
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define UISCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 #define STATUS_HEIGHT 64
+#define GAP_WIDTH 36
+#define GAP_HEIGHT 12
 #define SECTION_COLUMN 3
 #define SECTION_COUNT 1
 
@@ -67,7 +69,7 @@ NS_ENUM(NSInteger, ProductType)
 @property (strong, nonatomic) NSMutableDictionary *imageDic;
 @property (assign) enum productEditingState currentEditState;
 
-@property(nonatomic,assign)NSInteger updaterow;
+@property (nonatomic,assign)NSInteger updaterow;
 
 @end
 
@@ -88,47 +90,47 @@ NS_ENUM(NSInteger, ProductType)
 {
     if (self.products) {
         JYFurniture *add = [[JYFurniture alloc] init];
-        add.imageStr = @"equipment_add";
+        add.imageStr = @"single_btn_add";
         add.descLabel = @"添加";
         add.registed = NO;
         [self.products addObject:add];
     }
 }
 
-
 - (void)initImageDictionary
 {
     if (self.imageDic == nil) {
         self.imageDic = [NSMutableDictionary dictionary];
-        self.imageDic[@(YWLIGHT_ON)] = @"yw_light_on";
-        self.imageDic[@(YWLIGHT_OFF)] = @"yw_light_off";
+        self.imageDic[@(YWLIGHT_ON)] = @"single_btn_yw_on";
+        self.imageDic[@(YWLIGHT_OFF)] = @"single_btn_yw_off";
         
-        self.imageDic[@(RGBLIGHT_ON)] = @"rgb_light_on";
-        self.imageDic[@(RGBLIGHT_OFF)] = @"rgb_light_off";
+        self.imageDic[@(RGBLIGHT_ON)] = @"single_btn_rgb_on";
+        self.imageDic[@(RGBLIGHT_OFF)] = @"single_btn_rgb_off";
         
-        self.imageDic[@(FRIDGE_ON)] = @"fridge_on";
-        self.imageDic[@(FRIDGE_OFF)] = @"fridge_off";
+        self.imageDic[@(FRIDGE_ON)] = @"single_btn_firdge_on";
+        self.imageDic[@(FRIDGE_OFF)] = @"single_btn_firdge_off";
         
-        self.imageDic[@(BEDLIGHT_ON)] = @"yw_light_on";
-        self.imageDic[@(BEDLIGHT_OFF)] = @"yw_light_off";
+        self.imageDic[@(BEDLIGHT_ON)] = @"single_btn_yw_on";
+        self.imageDic[@(BEDLIGHT_OFF)] = @"single_btn_yw_off";
         
         self.imageDic[@(PURIFER_ON)] = @"purifer_on";
         self.imageDic[@(PURIFER_OFF)] = @"purifer_off";
         
-        self.imageDic[@(AIRCONDITION_ON)] = @"aircondition_on";
-        self.imageDic[@(AIRCONDITION_OFF)] = @"aircondition_off";
+        self.imageDic[@(AIRCONDITION_ON)] = @"single_btn_ac_on";
+        self.imageDic[@(AIRCONDITION_OFF)] = @"single_btn_ac_off";
         
-        self.imageDic[@(SOUND_ON)] = @"sound_on";
-        self.imageDic[@(SOUND_OFF)] = @"sound_off";
+        self.imageDic[@(SOUND_ON)] = @"single_btn_music_on";
+        self.imageDic[@(SOUND_OFF)] = @"single_btn_music_off";
         
-        self.imageDic[@(TV_ON)] = @"tv_on";
-        self.imageDic[@(TV_OFF)] = @"tv_off";
+        self.imageDic[@(TV_ON)] = @"single_btn_tv_on";
+        self.imageDic[@(TV_OFF)] = @"single_btn_tv_off";
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     //进行CollectionView和Cell的绑定
     [self.collectionView registerClass:[YSProductViewCell class] forCellWithReuseIdentifier:@"YSProductViewCell"];
     
@@ -143,6 +145,7 @@ NS_ENUM(NSInteger, ProductType)
     
     self.mainScrollView.showsVerticalScrollIndicator = NO;
     self.collectionView.showsVerticalScrollIndicator = NO;
+    self.collectionView.backgroundColor = [UIColor blackColor];
     
     [self getDataFromRemote];
 }
@@ -161,9 +164,10 @@ NS_ENUM(NSInteger, ProductType)
 
 - (void)updateScrollView
 {
-    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height - 64);
+    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height + 20);
     
-    self.collectionView.frame = CGRectMake(0, self.mainImageView.frame.size.height - 64, UISCREEN_WIDTH, self.collectionView.contentSize.height);
+    self.collectionView.frame = CGRectMake(GAP_WIDTH / 2, self.mainImageView.frame.size.height + GAP_HEIGHT, UISCREEN_WIDTH - GAP_WIDTH, self.collectionView.contentSize.height + GAP_WIDTH / 2);
+    self.collectionView.backgroundColor = [UIColor blackColor];
 }
 
 #pragma mark - UICollectionViewDataSource 协议的实现
@@ -255,9 +259,9 @@ NS_ENUM(NSInteger, ProductType)
         
         if([furniture.deviceType isEqualToString:@"40"])
         {
-            YSPatternViewController *ysPattern=(YSPatternViewController *)furniture.controller;
-            ysPattern.logic_id=furniture.logic_id;
-            [self.navigationController pushViewController:ysPattern animated:YES];
+//            YSPatternViewController *ysPattern=(YSPatternViewController *)furniture.controller;
+//            ysPattern.logic_id=furniture.logic_id;
+//            [self.navigationController pushViewController:ysPattern animated:YES];
         }
         else if([furniture.deviceType isEqualToString:@"41"])
         {
@@ -299,6 +303,8 @@ NS_ENUM(NSInteger, ProductType)
              [MBProgressHUD hideHUD];
              //表示从网关返回逻辑ID成功；需要解析这个逻辑ID，并发送到服务器；
              NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+             
+             NSLog(@"===DAYIN %@",result);
              //这里需要进行XML解析；
              LogicIdXMLParser *logicIdXMLParser = [[LogicIdXMLParser alloc] initWithXMLString:result];
              
@@ -364,9 +370,6 @@ NS_ENUM(NSInteger, ProductType)
              [MBProgressHUD showError:@"获取逻辑ID失败，请检查网关"];
         }];
         
-        
-        
-        
     }
 }
 
@@ -378,7 +381,7 @@ NS_ENUM(NSInteger, ProductType)
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(UISCREEN_WIDTH / SECTION_COLUMN, UISCREEN_WIDTH / SECTION_COLUMN);
+    return CGSizeMake((UISCREEN_WIDTH - GAP_WIDTH) / SECTION_COLUMN - 0.5, (UISCREEN_WIDTH - GAP_WIDTH) / SECTION_COLUMN - 0.5);
 }
 
 //设置每个Cell的间距
@@ -394,7 +397,7 @@ NS_ENUM(NSInteger, ProductType)
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0;
+    return 11;
 }
 
 #pragma mark - 网络数据获取与处理
@@ -404,44 +407,44 @@ NS_ENUM(NSInteger, ProductType)
     [HttpRequest findAllDeviceFromServerProduct:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         NSLog(@"返回数据%@",responseObject);
-                self.furnitureBackStatus = [JYFurnitureBackStatus statusWithDict:responseObject];
+        self.furnitureBackStatus = [JYFurnitureBackStatus statusWithDict:responseObject];
         
-                NSMutableArray *backProducts = self.furnitureBackStatus.furnitureArray;
-                //NSLog(@"backProducts : %ld", [backProducts count]);
-        
-                if (backProducts && [backProducts count] > 0)
-                {
-                    for (JYFurnitureBack *fb in backProducts)
-                    {
-                        JYFurniture *furniture = [[JYFurniture alloc] init];
-                        furniture.descLabel = fb.name;
-                        furniture.registed = YES;
-                        furniture.logic_id = fb.logic_id;
-                        furniture.deviceType = fb.deviceType;
+        NSMutableArray *backProducts = self.furnitureBackStatus.furnitureArray;
+        //NSLog(@"backProducts : %ld", [backProducts count]);
+    
+        if (backProducts && [backProducts count] > 0)
+        {
+            for (JYFurnitureBack *fb in backProducts)
+            {
+                JYFurniture *furniture = [[JYFurniture alloc] init];
+                furniture.descLabel = fb.name;
+                furniture.registed = YES;
+                furniture.logic_id = fb.logic_id;
+                furniture.deviceType = fb.deviceType;
                            
-                        if ([furniture.deviceType isEqualToString:@"40"])
-                            {
-                                furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
-                                furniture.controller = [[YSPatternViewController alloc] init];
-                            }
-                            else if ([furniture.deviceType isEqualToString:@"41"])
-                            {
-                                furniture.imageStr = self.imageDic[@(YWLIGHT_ON)];
-                                furniture.controller = nil;
-                            }
-                            else
-                            {
-                                furniture.imageStr = self.imageDic[@(TV_ON)];
-                                furniture.controller = nil;
-                            }
-                            
-                            [self.products addObject:furniture];
-                    }
+                if ([furniture.deviceType isEqualToString:@"40"])
+                {
+                    furniture.imageStr = self.imageDic[@(RGBLIGHT_OFF)];
+                    furniture.controller = [[YSPatternViewController alloc] init];
+                }
+                else if ([furniture.deviceType isEqualToString:@"41"])
+                {
+                    furniture.imageStr = self.imageDic[@(YWLIGHT_OFF)];
+                    furniture.controller = nil;
+                }
+                else
+                {
+                    furniture.imageStr = self.imageDic[@(TV_ON)];
+                    furniture.controller = nil;
                 }
                 
-                [self appendBtnAdd];
-                [self addLongPressGestureToCell];
-                [self.collectionView reloadData];
+                [self.products addObject:furniture];
+            }
+        }
+        
+        [self appendBtnAdd];
+        [self addLongPressGestureToCell];
+        [self.collectionView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
     {
         [MBProgressHUD showError:@"服务器加载数据失败"];

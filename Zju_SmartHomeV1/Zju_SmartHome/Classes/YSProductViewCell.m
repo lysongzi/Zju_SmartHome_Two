@@ -44,7 +44,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    self.productView.frame = CGRectMake(0, 0, UISCREEN_WIDTH/ 3, UISCREEN_WIDTH/ 3);
+    self.productView.frame = CGRectMake(0, 0, (UISCREEN_WIDTH - 36)/ 3 - 0.5,  (UISCREEN_WIDTH - 36)/ 3 - 0.5);
 }
 
 @end
