@@ -1,5 +1,5 @@
 //
-//  YSPatternNewViewController.h
+//  YSRGBPatternViewController.h
 //  Zju_SmartHome
 //
 //  Created by lysongzi on 15/12/30.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YSPatternNewViewController : UIViewController
+@interface YSRGBPatternViewController : UIViewController
 
 @end
