@@ -24,6 +24,11 @@
 - (IBAction)forgetPassword;
 - (IBAction)register;
 
+//用户名view
+@property (weak, nonatomic) IBOutlet UIView *userNameView;
+//密码view
+@property (weak, nonatomic) IBOutlet UIView *pwdView;
+
 @end
 @implementation JYLoginXib
 
@@ -31,6 +36,10 @@
 {
     JYLoginXib *loginXib=[[[NSBundle mainBundle]loadNibNamed:@"loginXib" owner:nil options:nil]lastObject];
     loginXib.eyePicture.hidden=YES;
+    loginXib.userNameView.layer.cornerRadius=20;
+    loginXib.userNameView.clipsToBounds=YES;
+    loginXib.pwdView.layer.cornerRadius=20;
+    loginXib.pwdView.clipsToBounds=YES;
     return loginXib;
 }
 
@@ -42,7 +51,7 @@
     if(self.password.secureTextEntry)
     {
         self.password.secureTextEntry=NO;
-        [self.eyePicture setImage:[UIImage imageNamed:@"login_Browse"] forState:UIControlStateNormal];
+        [self.eyePicture setImage:[UIImage imageNamed:@"login_icon_Browse"] forState:UIControlStateNormal];
         [self.eyePicture setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
         
     }

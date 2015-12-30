@@ -18,6 +18,12 @@
 //@property (weak, nonatomic) IBOutlet UIButton *eyePicture;
 
 - (IBAction)backClick:(id)sender;
+//用户名view
+@property (weak, nonatomic) IBOutlet UIView *userNameView;
+//密码view
+@property (weak, nonatomic) IBOutlet UIView *pwdView;
+//邮箱view
+@property (weak, nonatomic) IBOutlet UIView *emailView;
 
 @end
 
@@ -27,6 +33,14 @@
 {
     JYRegisterXib *registerXib=[[[NSBundle mainBundle]loadNibNamed:@"JYRegister" owner:nil options:nil]lastObject];
     registerXib.eyePicture.hidden=YES;
+    
+    registerXib.userNameView.layer.cornerRadius=20;
+    registerXib.userNameView.clipsToBounds=YES;
+    registerXib.pwdView.layer.cornerRadius=20;
+    registerXib.pwdView.clipsToBounds=YES;
+    registerXib.emailView.layer.cornerRadius=20;
+    registerXib.emailView.clipsToBounds=YES;
+    
     return registerXib;
 }
 
@@ -43,7 +57,7 @@
     if(self.password.secureTextEntry)
     {
         
-        [self.eyePicture setImage:[UIImage imageNamed:@"login_Browse"] forState:UIControlStateNormal];
+        [self.eyePicture setImage:[UIImage imageNamed:@"login_icon_Browse"] forState:UIControlStateNormal];
         self.password.secureTextEntry=NO;
     }
     else
