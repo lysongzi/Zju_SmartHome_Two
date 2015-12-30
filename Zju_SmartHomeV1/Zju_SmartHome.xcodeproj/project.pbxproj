@@ -39,6 +39,8 @@
 		61645BBA1C10827E007462EC /* DLLampControllYWModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61645BB31C10827E007462EC /* DLLampControllYWModeViewController.xib */; };
 		61645BBF1C108290007462EC /* ZQSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 61645BBE1C108290007462EC /* ZQSlider.m */; };
 		61726E631C33B08D000BF2C6 /* STHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61726E621C33B08D000BF2C6 /* STHomeView.m */; };
+		61726E671C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61726E641C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.xib */; };
+		61726E681C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61726E661C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.m */; };
 		61D6068A1C2A2D4B0026E23D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D606891C2A2D4B0026E23D /* libsqlite3.tbd */; };
 		61D6068D1C2A2D930026E23D /* JYSqliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6068C1C2A2D930026E23D /* JYSqliteViewController.m */; };
 		712A99FA1BEF849E00FE90FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712A99F91BEF849E00FE90FE /* CoreLocation.framework */; };
@@ -98,8 +100,6 @@
 		9DDC64F81C25782C00C3872A /* YSProductView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64F61C25782C00C3872A /* YSProductView.xib */; };
 		9DDC64FC1C25783D00C3872A /* YSProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64FA1C25783D00C3872A /* YSProductViewController.m */; };
 		9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */; };
-		9DE6E1181C278FD30035E8DC /* DLLampControlRGBModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1161C278FD30035E8DC /* DLLampControlRGBModeViewController.m */; };
-		9DE6E1191C278FD30035E8DC /* DLLampControlRGBModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E1171C278FD30035E8DC /* DLLampControlRGBModeViewController.xib */; };
 		9DE6E11D1C2790450035E8DC /* CYFYWControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E11B1C2790450035E8DC /* CYFYWControllerViewController.m */; };
 		9DE6E11E1C2790450035E8DC /* CYFYWControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E11C1C2790450035E8DC /* CYFYWControllerViewController.xib */; };
 		9DE6E1221C2790660035E8DC /* JYOtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1201C2790660035E8DC /* JYOtherViewController.m */; };
@@ -186,6 +186,9 @@
 		61645BBE1C108290007462EC /* ZQSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZQSlider.m; sourceTree = "<group>"; };
 		61726E611C33B08D000BF2C6 /* STHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHomeView.h; sourceTree = "<group>"; };
 		61726E621C33B08D000BF2C6 /* STHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHomeView.m; sourceTree = "<group>"; };
+		61726E641C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLLampControlRGBModeViewController.xib; sourceTree = "<group>"; };
+		61726E651C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLampControlRGBModeViewController.h; sourceTree = "<group>"; };
+		61726E661C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLampControlRGBModeViewController.m; sourceTree = "<group>"; };
 		61D606891C2A2D4B0026E23D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		61D6068B1C2A2D930026E23D /* JYSqliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSqliteViewController.h; sourceTree = "<group>"; };
 		61D6068C1C2A2D930026E23D /* JYSqliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSqliteViewController.m; sourceTree = "<group>"; };
@@ -289,9 +292,6 @@
 		9DDC64F91C25783D00C3872A /* YSProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductViewController.h; sourceTree = "<group>"; };
 		9DDC64FA1C25783D00C3872A /* YSProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductViewController.m; sourceTree = "<group>"; };
 		9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSProductViewController.xib; sourceTree = "<group>"; };
-		9DE6E1151C278FD30035E8DC /* DLLampControlRGBModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLampControlRGBModeViewController.h; sourceTree = "<group>"; };
-		9DE6E1161C278FD30035E8DC /* DLLampControlRGBModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLampControlRGBModeViewController.m; sourceTree = "<group>"; };
-		9DE6E1171C278FD30035E8DC /* DLLampControlRGBModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLLampControlRGBModeViewController.xib; sourceTree = "<group>"; };
 		9DE6E11A1C2790450035E8DC /* CYFYWControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYFYWControllerViewController.h; sourceTree = "<group>"; };
 		9DE6E11B1C2790450035E8DC /* CYFYWControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYFYWControllerViewController.m; sourceTree = "<group>"; };
 		9DE6E11C1C2790450035E8DC /* CYFYWControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CYFYWControllerViewController.xib; sourceTree = "<group>"; };
@@ -935,9 +935,9 @@
 		9DE6E1731C2B97750035E8DC /* RGB */ = {
 			isa = PBXGroup;
 			children = (
-				9DE6E1151C278FD30035E8DC /* DLLampControlRGBModeViewController.h */,
-				9DE6E1161C278FD30035E8DC /* DLLampControlRGBModeViewController.m */,
-				9DE6E1171C278FD30035E8DC /* DLLampControlRGBModeViewController.xib */,
+				61726E651C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.h */,
+				61726E661C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.m */,
+				61726E641C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.xib */,
 			);
 			name = RGB;
 			sourceTree = "<group>";
@@ -1117,7 +1117,6 @@
 				9D9F9C291C2652E00031F886 /* YSPatternViewController.xib in Resources */,
 				9D564DBF1BFF69A10062700D /* CYFFurnitureViewController.xib in Resources */,
 				9D7D5A571BE472D300E1E1EF /* LaunchScreen.storyboard in Resources */,
-				9DE6E1191C278FD30035E8DC /* DLLampControlRGBModeViewController.xib in Resources */,
 				61645BAD1C101BA5007462EC /* JYChangePwdViewController.xib in Resources */,
 				615C37D51C2D0A9D002663C5 /* STSaveSceneView.xib in Resources */,
 				9D9F9C1B1C2647D20031F886 /* YSPatternViewCell.xib in Resources */,
@@ -1131,6 +1130,7 @@
 				714854F11C127C300001347F /* CYFChangeMailViewController.xib in Resources */,
 				9D5FF5AB1BE9930B004371E5 /* JYRegister.xib in Resources */,
 				61645BBA1C10827E007462EC /* DLLampControllYWModeViewController.xib in Resources */,
+				61726E671C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.xib in Resources */,
 				7174E3A41BEFAEC500170AAA /* MBProgressHUD.bundle in Resources */,
 				712C524D1C0832900014F9CB /* QRCatchViewController.xib in Resources */,
 			);
@@ -1220,6 +1220,7 @@
 				71DD8E151C102812000E1639 /* Reachability.m in Sources */,
 				9DE6E1721C2ADF640035E8DC /* JYSqlite.m in Sources */,
 				442E7EB41C07402300E3C84C /* RESideMenu.m in Sources */,
+				61726E681C33D6A1000BF2C6 /* DLLampControlRGBModeViewController.m in Sources */,
 				9DFF73781C0932F80061EFBF /* JYFurnitureBack.m in Sources */,
 				9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */,
 				9D9F9C1A1C2647D20031F886 /* YSPatternViewCell.m in Sources */,
@@ -1233,7 +1234,6 @@
 				9DE6E11D1C2790450035E8DC /* CYFYWControllerViewController.m in Sources */,
 				446AF31E1C0025330081C798 /* NSDictionary-DeepMutableCopy.m in Sources */,
 				9D5FF5AE1BE9942A004371E5 /* JYRegisterXib.m in Sources */,
-				9DE6E1181C278FD30035E8DC /* DLLampControlRGBModeViewController.m in Sources */,
 				9D5292121C118F5800205CFD /* DLLampControlGuestModeViewController.m in Sources */,
 				9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */,
 				9DFF73751C087AA20061EFBF /* DLAddDeviceView.m in Sources */,

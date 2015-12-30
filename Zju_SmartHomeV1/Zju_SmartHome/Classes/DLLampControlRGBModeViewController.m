@@ -20,20 +20,26 @@
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
 @interface DLLampControlRGBModeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate,STSaveSceneViewDelegate>
+//RGB三个颜色值
 @property (weak, nonatomic) IBOutlet UILabel *rValue;
 @property (weak, nonatomic) IBOutlet UILabel *gValue;
 @property (weak, nonatomic) IBOutlet UILabel *bValue;
 @property (weak, nonatomic) IBOutlet UIView *panelView;
+//上方显示选中颜色的View
 @property (weak, nonatomic) IBOutlet UIView *colorPreview;
+
 
 @property (nonatomic, weak) UIImageView *imgView;
 @property (nonatomic, assign) CGPoint *touchPoint;
-@property (nonatomic, weak) UISlider *slider;
+//滑动条
+@property (nonatomic, weak) UISlider *mySlider;
+//存储滑动值的临时变量
+@property(nonatomic,assign)int temp;
 
+@property(nonatomic,strong)UISlider *mySlider2;
 @property(nonatomic,assign)int tag;
+//开关标记
 @property(nonatomic,assign)int switchTag;
-@property(nonatomic,assign)int sliderValueTemp;
-
 //有关照片取色的属性；
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (nonatomic,strong) UIAlertController *alert;
@@ -53,41 +59,6 @@
   [self initView];
 }
 
-//改变亮度
--(void)sliderValueChanged
-{
-    if(fabsf(self.slider.value-self.sliderValueTemp)>9)
-    {
-        if(self.slider.value<=10)
-        {
-            self.slider.value=0;
-        }
-        if(self.slider.value>=90)
-        {
-            self.slider.value=100;
-        }
-        int value = (int)self.slider.value;
-        NSLog(@"哪个被发送请求的啊%d",value);
-        self.sliderValueTemp=self.slider.value;
-        [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:[NSString stringWithFormat:@"%f", self.slider.value]
-                                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                           
-                                           NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                           NSLog(@"成功: %@", string);
-                                       }
-                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           NSLog(@"失败: %@", error);
-                                           [MBProgressHUD showError:@"请检查网关"];
-                                       }];
-        
-    }
-}
-
--(void)sliderTouchUpInside
-{
-    NSLog(@"还原");
-    self.sliderValueTemp=0;
-}
 /**
  *  判断点触位置，如果点触位置在颜色区域内的话，才返回点触的控件为UIImageView *imgView
  *  除此之外，点触位置落在小圆内部或者大圆外部，都返回nil
@@ -162,6 +133,8 @@
       NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[self.bValue.text intValue]]];
       
       self.colorPreview.backgroundColor = [self getPixelColorAtLocation:touchLocation];
+      self.mySlider.backgroundColor=[self getPixelColorAtLocation:touchLocation];
+      self.mySlider2.backgroundColor=[self getPixelColorAtLocation:touchLocation];
       viewColorPickerPositionIndicator.center = CGPointMake(touchLocation.x + 35, touchLocation.y + 35);
       viewColorPickerPositionIndicator.backgroundColor = [self getPixelColorAtLocation:touchLocation];
         
@@ -223,6 +196,9 @@
       NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[self.bValue.text intValue]]];
       
       self.colorPreview.backgroundColor = [self getPixelColorAtLocation:touchLocation];
+      self.mySlider.backgroundColor=[self getPixelColorAtLocation:touchLocation];
+      self.mySlider2.backgroundColor=[self getPixelColorAtLocation:touchLocation];
+        
       viewColorPickerPositionIndicator.center = CGPointMake(touchLocation.x + 35, touchLocation.y + 35);
       viewColorPickerPositionIndicator.backgroundColor = [self getPixelColorAtLocation:touchLocation];
     
@@ -286,10 +262,11 @@
       self.bValue.text = [NSString stringWithFormat:@"%d", (int)(components[2] * 255)];
       NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[self.rValue.text intValue]]];
       NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[self.gValue.text intValue]]];
-      
       NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[self.bValue.text intValue]]];
-      
+        
+      self.mySlider2.backgroundColor=[self getPixelColorAtLocation:touchLocation];
       self.colorPreview.backgroundColor = [self getPixelColorAtLocation:touchLocation];
+      self.mySlider.backgroundColor=[self getPixelColorAtLocation:touchLocation];
       viewColorPickerPositionIndicator.center = CGPointMake(touchLocation.x + 35, touchLocation.y + 35);
       viewColorPickerPositionIndicator.backgroundColor = [self getPixelColorAtLocation:touchLocation];
       
@@ -530,33 +507,47 @@
     imgView.tag = 10086;
     UIView *viewColorPickerPositionIndicator = [[UIView alloc]init];
     viewColorPickerPositionIndicator.tag = 10087;
-    UIButton *btnPlay = [[UIButton alloc] init];
+    UIImageView *btnPlay = [[UIImageView alloc] init];
     
-    ZQSlider *slider = [[ZQSlider alloc] init];
-    slider.backgroundColor = [UIColor clearColor];
+    UISlider *mySlider=[[UISlider alloc]init];
+    self.mySlider=mySlider;
+    UIColor *newColor=[UIColor colorWithRed:125/255.0f green:120/255.0f blue:86/255.0f alpha:1];
+    self.mySlider.backgroundColor=newColor;
+    // 设置UISlider的最小值和最大值
+    self.mySlider.minimumValue = 0;
+    self.mySlider.maximumValue = 100;
     
-    slider.minimumValue = 0;
-    slider.maximumValue = 100;
-    slider.value = 100;
+    // 为UISlider添加事件方法
+    [self.mySlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    _mySlider.minimumTrackTintColor = [UIColor clearColor];
+    _mySlider.maximumTrackTintColor = [UIColor clearColor];
+    [_mySlider setThumbImage:[UIImage imageNamed:@"point"] forState:UIControlStateNormal];
+    //设置圆角
+    _mySlider.layer.cornerRadius=4;
+    _mySlider.layer.masksToBounds=YES;
+    [self.view addSubview:self.mySlider];
     
-    [slider setMaximumTrackImage:[UIImage imageNamed:@"blackblue"] forState:UIControlStateNormal];
-    [slider setMinimumTrackImage:[UIImage imageNamed:@"blackblue"] forState:UIControlStateNormal];
-    [slider setThumbImage:[UIImage imageNamed:@"sliderPoint"] forState:UIControlStateNormal];
-    [slider setThumbImage:[UIImage imageNamed:@"sliderPoint"] forState:UIControlStateNormal];
+    UISlider *mySlider2=[[UISlider alloc]init];
+    self.mySlider2=mySlider2;
+    UIColor *newColor2=[UIColor colorWithRed:125/255.0f green:120/255.0f blue:86/255.0f alpha:1];
+    self.mySlider2.backgroundColor=newColor2;
+    // 设置UISlider的最小值和最大值
+    self.mySlider2.minimumValue = 0;
+    self.mySlider2.maximumValue = 100;
     
-    slider.continuous = YES;
+    // 为UISlider添加事件方法
+    [self.mySlider2 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    _mySlider2.minimumTrackTintColor = [UIColor clearColor];
+    _mySlider2.maximumTrackTintColor = [UIColor clearColor];
+    [_mySlider2 setThumbImage:[UIImage imageNamed:@"point"] forState:UIControlStateNormal];
+    //设置圆角
+    _mySlider2.layer.cornerRadius=4;
+    _mySlider2.layer.masksToBounds=YES;
+    [self.view addSubview:self.mySlider2];
     
-    self.slider = slider;
-    [slider addTarget:self action:@selector(sliderValueChanged) forControlEvents:UIControlEventValueChanged];
-    [slider addTarget:self action:@selector(sliderTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
     
     if (fabs(([[UIScreen mainScreen] bounds].size.height - 480)) < 1) {
         // 4 & 4s
-        //        imgView.image = [UIImage imageNamed:@"circle_5"];
-        //        viewColorPickerPositionIndicator.frame = CGRectMake(70, 70, 16, 16);
-        //        viewColorPickerPositionIndicator.layer.cornerRadius = 8;
-        //        viewColorPickerPositionIndicator.layer.borderWidth = 2;
-        //        btnPlay.frame = CGRectMake(111, 111, 60, 60);
     }
     if (fabs(([[UIScreen mainScreen] bounds].size.height - 568)) < 1){
         // 5 & 5s & 5c
@@ -565,7 +556,8 @@
         viewColorPickerPositionIndicator.layer.cornerRadius = 8;
         viewColorPickerPositionIndicator.layer.borderWidth = 2;
         btnPlay.frame = CGRectMake(111, 111, 60, 60);
-        slider.frame = CGRectMake(40, 260, 200, 10);
+        self.mySlider.frame=CGRectMake(50, 440, 220, 8);
+        self.mySlider2.frame=CGRectMake(50, 483, 220, 8);
         
     }else if (fabs(([[UIScreen mainScreen] bounds].size.height - 667)) < 1) {
         // 6 & 6s
@@ -574,7 +566,8 @@
         viewColorPickerPositionIndicator.layer.cornerRadius = 10;
         viewColorPickerPositionIndicator.layer.borderWidth = 2;
         btnPlay.frame = CGRectMake(135, 135, 60, 60);
-        slider.frame = CGRectMake(50, 310, 225, 10);
+        self.mySlider.frame=CGRectMake(55, 516, 265, 9);
+        self.mySlider2.frame=CGRectMake(55, 565, 265, 9);
         
     }else if (fabs(([[UIScreen mainScreen] bounds].size.height - 736)) < 1){
         // 6p & 6sp
@@ -583,7 +576,8 @@
         viewColorPickerPositionIndicator.layer.cornerRadius = 12;
         viewColorPickerPositionIndicator.layer.borderWidth = 2;
         btnPlay.frame = CGRectMake(150, 150, 60, 60);
-        slider.frame = CGRectMake(85, 340, 200, 10);
+        self.mySlider.frame=CGRectMake(60, 571, 295, 10);
+        self.mySlider2.frame=CGRectMake(60, 624, 295, 10);
         
     }
     
@@ -601,12 +595,12 @@
     viewColorPickerPositionIndicator.backgroundColor = [UIColor clearColor];
     
     
-    [btnPlay setBackgroundImage:[UIImage imageNamed:@"ct_icon_buttonbreak-off"] forState:UIControlStateNormal];
+    [btnPlay setImage:[UIImage imageNamed:@"logo1"]];
     
     [self.panelView addSubview:imgView];
     [self.panelView addSubview:viewColorPickerPositionIndicator];
     [self.panelView addSubview:btnPlay];
-    [self.panelView addSubview:slider];
+
 }
 
 -(void)cancelSaveScene
@@ -636,7 +630,6 @@
     
     [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:newSceneName andField2:@"desc" field2Value:@"???" andField3:@"img" field3Value:@"soft_background" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
     
-    NSLog(@"**********************************");
     [jySqlite getAllRecord];
     
     for (UIViewController *controller in self.navigationController.viewControllers)
@@ -647,4 +640,28 @@
         }
     }
 }
+
+
+- (void)sliderValueChanged:(id)sender
+{
+    if ([sender isKindOfClass:[UISlider class]])
+    {
+        UISlider * slider = (UISlider *)sender;
+        if(fabs(slider.value-self.temp)>=8)
+        {
+            if(slider.value<=8)
+            {
+                slider.value=0;
+            }
+            else if(slider.value>=92)
+            {
+                slider.value=100;
+            }
+            self.temp=(int)slider.value;
+            NSLog(@"可以发送请求%d",(int)slider.value);
+        }
+        
+    }
+}
+
 @end

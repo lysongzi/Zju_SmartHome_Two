@@ -149,10 +149,30 @@ NS_ENUM(NSInteger, ProductType)
     
     [self getDataFromRemote];
 }
+
+/**
+ *  是否正在手势返回中的标示状态
+ */
+static BOOL _isPoping;
+
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    if (!_isPoping) {
+        _isPoping = YES;
+        return YES;
+    }
+    return NO;
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //开启ios右滑返回
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
 - (void)viewDidAppear:(BOOL)animated{
     
     [super viewDidAppear:animated];
-    
+    _isPoping=NO;
     //扫描Mac值成功，传递过来Mac值，不为空，所以弹出增加设备的提示框；
     if (self.macFromQRCatcher != nil) {
         
