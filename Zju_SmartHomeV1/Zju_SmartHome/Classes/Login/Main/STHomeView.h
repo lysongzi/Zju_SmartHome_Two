@@ -1,20 +1,32 @@
 //
 //  STHomeView.h
-//  STHome
+//  Zju_SmartHome
 //
-//  Created by gujinyue on 15/12/29.
-//  Copyright © 2015年 gujinyue. All rights reserved.
+//  Created by 顾金跃 on 15/12/30.
+//  Copyright © 2015年 GJY. All rights reserved.
 //
-
 #import <UIKit/UIKit.h>
 
+@protocol STHomeViewDelegate <NSObject>
+
+@optional
+-(void)officeClick;
+-(void)homeClick;
+-(void)universalClick;
+-(void)singleClick;
+
+@end
+
 @interface STHomeView : UIView
-@property (weak, nonatomic) IBOutlet UILabel *posLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *countryLabel;
 
 - (IBAction)officeClick:(id)sender;
 - (IBAction)homeClick:(id)sender;
 - (IBAction)universalClick:(id)sender;
 - (IBAction)singleClick:(id)sender;
 
-+(instancetype)initWithSThomeView;
+@property(nonatomic,weak)id<STHomeViewDelegate> delegate;
+
++(instancetype)initWithHomeView;
 @end
