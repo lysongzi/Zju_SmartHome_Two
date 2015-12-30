@@ -26,6 +26,8 @@
 - (IBAction)universalClick:(id)sender;
 - (IBAction)singleClick:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIImageView *headerView;
+
 @property(nonatomic,weak)id<STHomeViewDelegate> delegate;
 
 +(instancetype)initWithHomeView;

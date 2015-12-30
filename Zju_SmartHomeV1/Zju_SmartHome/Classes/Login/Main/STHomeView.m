@@ -44,7 +44,18 @@
 +(instancetype)initWithHomeView
 {
     STHomeView *homeView=[[[NSBundle mainBundle]loadNibNamed:@"STHomeView" owner:nil options:nil]lastObject];
-    
+    if([UIScreen mainScreen].bounds .size.width==320 )
+    {
+        homeView.headerView.frame=CGRectMake(0, 64, 320, 150);
+    }
+    else if ([UIScreen mainScreen].bounds.size.width==375)
+    {
+        homeView.headerView.frame=CGRectMake(0, 54, 375, 160);
+    }
+    else if([UIScreen mainScreen].bounds.size.width==414)
+    {
+        homeView.headerView.frame=CGRectMake(0, 44, 414, 170);
+    }
     return homeView;
 }
 @end

@@ -44,7 +44,7 @@
   
   //设置显示的view
   STHomeView *sthomeView=[STHomeView initWithHomeView];
-    sthomeView.backgroundColor=[UIColor whiteColor];
+  sthomeView.backgroundColor=[UIColor whiteColor];
   
 //  jyMainView.officeLabel.userInteractionEnabled=YES;
 //  UITapGestureRecognizer *officeTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(officeLabelTap)];
@@ -260,7 +260,7 @@
       NSString *country = [[placemark addressDictionary] objectForKey:@"Country"];
       
       
-      self.homeView.cityLabel.text = city;
+      self.homeView.cityLabel.text = [NSString stringWithFormat:@"%@，",city];
       self.homeView.countryLabel.text = country;
     }
     
