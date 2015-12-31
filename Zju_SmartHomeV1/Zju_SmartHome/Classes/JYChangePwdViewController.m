@@ -71,7 +71,6 @@
 - (void)leftBtnClicked{
     
     for (UIViewController *controller in self.navigationController.viewControllers) {
-        
         if ([controller isKindOfClass:[RESideMenu class]]) {
             controller.navigationController.navigationBar.hidden=YES;
             [self.navigationController popToViewController:controller animated:YES];

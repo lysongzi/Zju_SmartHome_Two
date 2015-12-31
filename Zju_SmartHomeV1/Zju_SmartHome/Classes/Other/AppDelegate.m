@@ -18,7 +18,7 @@
 #define appKey @"c879b326344c"
 #define appSecret @"82810facbfba262d63c14ed5dcc5998c"
 
-#import "JYSqliteViewController.h"
+#import "DLLampControlRGBModeViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -59,7 +59,7 @@
     //self.window.rootViewController=navVc;
     self.window.rootViewController=[[JYLoginViewController alloc]init];
 
-    //self.window.rootViewController=[[JYSqliteViewController alloc]init];
+    //self.window.rootViewController=[[DLLampControlRGBModeViewController alloc]init];
     //}
     application.statusBarStyle=UIStatusBarStyleLightContent;
     [self.window makeKeyAndVisible];

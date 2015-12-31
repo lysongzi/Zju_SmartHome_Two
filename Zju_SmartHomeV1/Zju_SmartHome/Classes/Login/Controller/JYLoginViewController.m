@@ -114,10 +114,12 @@
         {
             //移除遮盖
             [MBProgressHUD hideHUD];
+            
             DLLeftSlideMenuViewController *leftSlideMenuViewController = [[DLLeftSlideMenuViewController alloc] init];
             CYFMainViewController *cyfVc=[[CYFMainViewController alloc]init];
             
             JYNavigationController *navVc=[[JYNavigationController alloc]initWithRootViewController:cyfVc];
+            
             RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:navVc
                                                                             leftMenuViewController:leftSlideMenuViewController
                                                                            rightMenuViewController:nil];

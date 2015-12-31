@@ -39,17 +39,7 @@
   float centerX = screen.size.width / 2;
   self.view.backgroundColor = [UIColor colorWithRed:0.224 green:0.231 blue:0.278 alpha:0.8];
   
-  /*
-   /*
-   [view.layer setCornerRadius:CGRectGetHeight([view bounds]) / 2];
-   view.layer.masksToBounds = YES;
    
-   view.layer.borderWidth = 5;
-   view.layer.borderColor = [[UIColor whiteColor] CGColor];
-   view.layer.contents = (id)[[UIImage imageNamed:@"backgroundImage.png"] CGImage];
-   
-   */
-  
   //头像图片
   self.userPhoto = [[UIImageView alloc]init];
   self.userPhoto.image = [UIImage imageNamed:@"UserPhoto.jpg"];
@@ -326,8 +316,6 @@
   NSString *isFirstInstall = [defaults valueForKey:@"isFirstInstall"];
   NSString *isSettedPhoto = [defaults valueForKey:@"isSettedPhoto"];
   
-  NSLog(@"是否已经安装：%@",isFirstInstall);
-  
   //重新设置头像；
   if (isFirstInstall  == nil || isSettedPhoto == nil) {
     //第一次安装；
@@ -342,8 +330,6 @@
     self.userPhoto.image = image;
     
   }
-  
-  
 }
 
 @end

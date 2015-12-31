@@ -44,25 +44,7 @@
   
   //设置显示的view
   STHomeView *sthomeView=[STHomeView initWithHomeView];
-  sthomeView.backgroundColor=[UIColor whiteColor];
-  
-//  jyMainView.officeLabel.userInteractionEnabled=YES;
-//  UITapGestureRecognizer *officeTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(officeLabelTap)];
-//  [jyMainView.officeLabel addGestureRecognizer:officeTap];
-//  
-//  jyMainView.furnitureLabel.userInteractionEnabled=YES;
-//  UITapGestureRecognizer *furnitureTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(furnitureTap)];
-//  [jyMainView.furnitureLabel addGestureRecognizer:furnitureTap];
-//  
-//  jyMainView.productLabel.userInteractionEnabled=YES;
-//  UITapGestureRecognizer *productTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(productTap)];
-//  [jyMainView.productLabel addGestureRecognizer:productTap];
-//  
-//  jyMainView.customLabel.userInteractionEnabled=YES;
-//  UITapGestureRecognizer *customTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(customTap)];
-//  [jyMainView.customLabel addGestureRecognizer:customTap];
-  
-  
+  //sthomeView.backgroundColor=[UIColor whiteColor];
   
   //设置代理
   sthomeView.delegate=self;
@@ -155,17 +137,7 @@
   
   self.leftBtn=[[UIButton alloc]init];
   
-  /*
-   [view.layer setCornerRadius:CGRectGetHeight([view bounds]) / 2];
-   view.layer.masksToBounds = YES;
-   
-   
-   view.layer.borderWidth = 5;
-   view.layer.borderColor = [[UIColor whiteColor] CGColor];
-   view.layer.contents = (id)[[UIImage imageNamed:@"backgroundImage.png"] CGImage];
-   
-   */
-  //设置用户头像,同时要使这个按钮为圆形；
+//设置用户头像,同时要使这个按钮为圆形；
   
   
   //以下三行代码是设置该按钮为圆形的代码；
@@ -206,12 +178,12 @@
 }
 
 //代理方法
-//家居(现在实际是场景)
+
 -(void)officeClick
 {
-  [MBProgressHUD showError:@"场景功能尚未开通"];
+  [MBProgressHUD showError:@"办公室功能尚未开通"];
 }
-//办公室(现在实际是家居)
+
 -(void)homeClick
 {
     CYFFurnitureViewController *jyVc=[[CYFFurnitureViewController alloc]init];
@@ -226,7 +198,7 @@
 //自定义
 -(void)universalClick
 {
-  [MBProgressHUD showError:@"自定义功能尚未开通"];
+  [MBProgressHUD showError:@"通用功能尚未开通"];
 }
 
 #pragma mark - CLLocationManangerDelegate
