@@ -21,6 +21,7 @@
 #import "DLLeftSlideMenuViewController.h"
 #import "AppDelegate.h"
 #import "Reachability.h"
+#import "STLeftSliderController.h"
 
 @interface JYLoginViewController ()<LoginXibDelegate,UITextFieldDelegate>
 
@@ -115,18 +116,20 @@
             //移除遮盖
             [MBProgressHUD hideHUD];
             
-            DLLeftSlideMenuViewController *leftSlideMenuViewController = [[DLLeftSlideMenuViewController alloc] init];
+//            DLLeftSlideMenuViewController *leftSlideMenuViewController = [[DLLeftSlideMenuViewController alloc] init];
+            //STLeftSliderController *leftSlideMenuViewController=[[STLeftSliderController alloc]init];
+            
             CYFMainViewController *cyfVc=[[CYFMainViewController alloc]init];
             
             JYNavigationController *navVc=[[JYNavigationController alloc]initWithRootViewController:cyfVc];
             
-            RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:navVc
-                                                                            leftMenuViewController:leftSlideMenuViewController
-                                                                           rightMenuViewController:nil];
+//            RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:navVc
+//                                                                            leftMenuViewController:leftSlideMenuViewController
+//                                                                           rightMenuViewController:nil];
            
-            JYNavigationController *navVc1=[[JYNavigationController alloc]initWithRootViewController:sideMenuViewController];
-            navVc1.navigationBar.hidden=YES;
-            self.view.window.rootViewController=navVc1;
+//            JYNavigationController *navVc1=[[JYNavigationController alloc]initWithRootViewController:sideMenuViewController];
+            //navVc.navigationBar.hidden=YES;
+            self.view.window.rootViewController=navVc;
             //[self.navigationController pushViewController:navVc1 animated:YES];
 
         }
