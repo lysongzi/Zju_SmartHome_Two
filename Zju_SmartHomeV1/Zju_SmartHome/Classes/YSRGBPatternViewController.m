@@ -91,6 +91,8 @@
     //然后这里加载已保存的自定义的模式
     //。。。。。。。。。。。。。。。。
     [self addPatternToScrollView:[[YSNewPattern alloc] initWithName:@"自定义1" logoName:@"mingliang_icon" bkgName:@"mingliang_bg"]];
+    [self addPatternToScrollView:[[YSNewPattern alloc] initWithName:@"自定义2" logoName:@"mingliang_icon" bkgName:@"mingliang_bg"]];
+    [self addPatternToScrollView:[[YSNewPattern alloc] initWithName:@"自定义3" logoName:@"mingliang_icon" bkgName:@"mingliang_bg"]];
     
     //最后一个自定义按钮
     [self.patterns addObject:[[YSNewPattern alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
@@ -130,6 +132,7 @@
         UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.cellWidth - 10, self.cellWidth - 10)];
         image.image = [UIImage imageNamed:[self.patterns[i-2] logoName]];
         image.tag = i - 2;
+        view.tag = i -2;
         [image setUserInteractionEnabled:YES];
         
         //添加按钮添加触摸手势
@@ -152,7 +155,7 @@
         }
         
         [view addSubview:image];
-        [self.cellsView addObject:image];
+        [self.cellsView addObject:view];
         [self.scrollView addSubview:view];
     }
     
@@ -216,15 +219,41 @@
 - (void)swipeToDeletePattern:(UIGestureRecognizer *)gr
 {
     NSLog(@"向上滑动删除函数进来了");
-    UIImageView *image = (UIImageView *)gr.self.view;
+    UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
-    if (image.tag != self.selectedIndex || self.selectedIndex < DEFAULT_CELL_NUMBER || image.tag == self.patterns.count - 1)
+    if (view.tag != self.selectedIndex || self.selectedIndex < DEFAULT_CELL_NUMBER || view.tag == self.patterns.count - 1)
     {
         return;
     }
     
-    NSLog(@"接下来开始删除了");
+    //从模型中删除
+    [self.patterns removeObjectAtIndex:view.tag];
+    
+    [self.cellsView[view.tag] setHidden:YES];
+    
+    //NSLog(@"%ld %ld", view.tag, self.cellsView.count);
+    
+    UIView * changeView;
+    for (long i = view.tag + 1; i < self.cellsView.count; i++)
+    {
+        changeView = (UIView *)self.cellsView[i];
+        changeView.tag -= 1;
+        UIImageView *subImage = [[changeView subviews] lastObject];
+        subImage.tag -= 1;
+        
+        CGPoint point = changeView.center;
+        point.x -= self.cellWidth;
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+        [changeView setCenter:point];
+        [UIView commitAnimations];
+    }
+    
+    //移除该cell的视图
+    [self.cellsView removeObjectAtIndex:view.tag];
+    //更新背景和文字
+    [self updateCellBackground:(int)view.tag];
 }
 
 //点击图片取色按钮的响应事件
@@ -344,36 +373,43 @@
     titleView.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titleView;
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ct_icon_switch-unpress"] style:UIBarButtonItemStyleDone target:self action:@selector(rightButtonClick:)];
-    rightButton.tag = 0;
+    UIButton *rightButton = [[UIButton alloc] init];
+    [rightButton setImage:[UIImage imageNamed:@"ct_icon_switch-unpress"] forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(0, 0, 40, 40);
+    rightButton.tag = 1;
+    [rightButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -20)];
+    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     
     UIButton *leftButton = [[UIButton alloc] init];
     [leftButton setImage:[UIImage imageNamed:@"ct_icon_leftbutton"] forState:UIControlStateNormal];
     leftButton.frame = CGRectMake(0, 0, 25, 25);
     [leftButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     [leftButton addTarget:self action:@selector(leftBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
-    self.navigationItem.rightBarButtonItem = rightButton;
+    self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 
 - (void)rightButtonClick:(id)sender
 {
     //0表示为关灯状态，1表示开灯状态
-    UIBarButtonItem *swichButton = (UIBarButtonItem *)sender;
-    NSLog(@"%ld", swichButton.tag);
+    UIButton *swichButton = (UIButton *)sender;
+    //NSLog(@"%ld", swichButton.tag);
     
     //关灯变开灯
     if (!swichButton.tag)
     {
         swichButton.tag = 1;
+        [swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-unpress"] forState:UIControlStateNormal];
         //[swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-press"]];
     }
     //开灯变关灯
     else
     {
         swichButton.tag = 0;
+        [swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-press"] forState:UIControlStateNormal];
         //[swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-unpress"]];
     }
 }
