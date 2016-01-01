@@ -130,13 +130,13 @@
         UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.cellWidth - 10, self.cellWidth - 10)];
         image.image = [UIImage imageNamed:[self.patterns[i-2] logoName]];
         image.tag = i - 2;
+        [image setUserInteractionEnabled:YES];
         
         //添加按钮添加触摸手势
         if (i == self.patterns.count + 1)
         {
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTapGestureEvent:)];
             [image addGestureRecognizer:tap];
-            [image setUserInteractionEnabled:YES];
         }
         //别的模式点击进入模式编辑和向上删除滑动删除手势
         else
@@ -149,8 +149,6 @@
             UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToDeletePattern:)];
             [swipeGesture setDirection:UISwipeGestureRecognizerDirectionUp];
             [image addGestureRecognizer:swipeGesture];
-            
-            [image setUserInteractionEnabled:YES];
         }
         
         [view addSubview:image];
@@ -181,8 +179,9 @@
     //被点击的不是居中的元素，则进行滑动
     if (image.tag != self.selectedIndex)
     {
-        float destination = self.scrollView.contentOffset.x + (image.tag - self.selectedIndex) * self.cellHeight;
+        float destination = self.scrollView.contentOffset.x + (image.tag - self.selectedIndex) * self.cellWidth;
         self.selectedIndex = image.tag;
+        [self.scrollView setUserInteractionEnabled:NO];
         [self.scrollView setContentOffset:CGPointMake(destination, 0) animated:YES];
     }
     //否则就是点击了居中的元素
@@ -190,6 +189,7 @@
     {
         NSLog(@"进入添加新模式的界面");
     }
+    
 }
 
 //编辑模式事件
@@ -200,14 +200,15 @@
     //被点击的不是居中的元素，则进行滑动
     if (image.tag != self.selectedIndex)
     {
-        float destination = self.scrollView.contentOffset.x + (image.tag - self.selectedIndex) * self.cellHeight;
+        float destination = self.scrollView.contentOffset.x + (image.tag - self.selectedIndex) * self.cellWidth;
         self.selectedIndex = image.tag;
+        [self.scrollView setUserInteractionEnabled:NO];
         [self.scrollView setContentOffset:CGPointMake(destination, 0) animated:YES];
     }
     //否则就是点击了居中的元素
     else
     {
-        NSLog(@"进入编辑模式的界面");
+        //NSLog(@"进入编辑模式的界面");
     }
 }
 
@@ -279,7 +280,7 @@
     else if(targetContentOffset->x <= 0)
     {
         //变得太快了
-        //[self updateCellBackground:0];
+        [self updateCellBackground:0];
     }
 }
 
@@ -294,6 +295,8 @@
 {
     //根据居中的选项更新背景和文字
     [self updateCellBackground:(int)self.selectedIndex];
+    //[self openGesture];
+    [self.scrollView setUserInteractionEnabled:YES];
 }
 
 //计算位置，居中选中的cell
