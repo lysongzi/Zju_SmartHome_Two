@@ -64,6 +64,12 @@
 		9D41EA601C33FEF400E31239 /* YSRGBPatternViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D41EA5E1C33FEF400E31239 /* YSRGBPatternViewController.m */; };
 		9D41EA611C33FEF400E31239 /* YSRGBPatternViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D41EA5F1C33FEF400E31239 /* YSRGBPatternViewController.xib */; };
 		9D41EA641C34077E00E31239 /* YSNewPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D41EA631C34077E00E31239 /* YSNewPattern.m */; };
+		9D4F31B31C3693930096B3FD /* STLeftSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F31B11C3693930096B3FD /* STLeftSliderView.m */; settings = {ASSET_TAGS = (); }; };
+		9D4F31B41C3693930096B3FD /* STLeftSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4F31B21C3693930096B3FD /* STLeftSliderView.xib */; settings = {ASSET_TAGS = (); }; };
+		9D4F31B81C3693A10096B3FD /* STSliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F31B61C3693A10096B3FD /* STSliderCell.m */; settings = {ASSET_TAGS = (); }; };
+		9D4F31B91C3693A10096B3FD /* STSliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4F31B71C3693A10096B3FD /* STSliderCell.xib */; settings = {ASSET_TAGS = (); }; };
+		9D4F31BC1C3693B10096B3FD /* STLeftSliderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F31BB1C3693B10096B3FD /* STLeftSliderController.m */; settings = {ASSET_TAGS = (); }; };
+		9D4F31BF1C3693C10096B3FD /* UIImage+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F31BE1C3693C10096B3FD /* UIImage+ST.m */; settings = {ASSET_TAGS = (); }; };
 		9D5292121C118F5800205CFD /* DLLampControlGuestModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5292101C118F5800205CFD /* DLLampControlGuestModeViewController.m */; };
 		9D5292131C118F5800205CFD /* DLLampControlGuestModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5292111C118F5800205CFD /* DLLampControlGuestModeViewController.xib */; };
 		9D564D4F1BFEAB840062700D /* CYFMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D564D4E1BFEAB840062700D /* CYFMainViewController.m */; };
@@ -232,6 +238,16 @@
 		9D41EA5F1C33FEF400E31239 /* YSRGBPatternViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSRGBPatternViewController.xib; sourceTree = "<group>"; };
 		9D41EA621C34077E00E31239 /* YSNewPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSNewPattern.h; sourceTree = "<group>"; };
 		9D41EA631C34077E00E31239 /* YSNewPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSNewPattern.m; sourceTree = "<group>"; };
+		9D4F31B01C3693930096B3FD /* STLeftSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLeftSliderView.h; sourceTree = "<group>"; };
+		9D4F31B11C3693930096B3FD /* STLeftSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STLeftSliderView.m; sourceTree = "<group>"; };
+		9D4F31B21C3693930096B3FD /* STLeftSliderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STLeftSliderView.xib; sourceTree = "<group>"; };
+		9D4F31B51C3693A10096B3FD /* STSliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STSliderCell.h; sourceTree = "<group>"; };
+		9D4F31B61C3693A10096B3FD /* STSliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STSliderCell.m; sourceTree = "<group>"; };
+		9D4F31B71C3693A10096B3FD /* STSliderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSliderCell.xib; sourceTree = "<group>"; };
+		9D4F31BA1C3693B10096B3FD /* STLeftSliderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLeftSliderController.h; sourceTree = "<group>"; };
+		9D4F31BB1C3693B10096B3FD /* STLeftSliderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STLeftSliderController.m; sourceTree = "<group>"; };
+		9D4F31BD1C3693C10096B3FD /* UIImage+ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ST.h"; sourceTree = "<group>"; };
+		9D4F31BE1C3693C10096B3FD /* UIImage+ST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ST.m"; sourceTree = "<group>"; };
 		9D52920F1C118F5800205CFD /* DLLampControlGuestModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLampControlGuestModeViewController.h; sourceTree = "<group>"; };
 		9D5292101C118F5800205CFD /* DLLampControlGuestModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLampControlGuestModeViewController.m; sourceTree = "<group>"; };
 		9D5292111C118F5800205CFD /* DLLampControlGuestModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLLampControlGuestModeViewController.xib; sourceTree = "<group>"; };
@@ -429,6 +445,14 @@
 		446AF3371C0056120081C798 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9D4F31BD1C3693C10096B3FD /* UIImage+ST.h */,
+				9D4F31BE1C3693C10096B3FD /* UIImage+ST.m */,
+				9D4F31B51C3693A10096B3FD /* STSliderCell.h */,
+				9D4F31B61C3693A10096B3FD /* STSliderCell.m */,
+				9D4F31B71C3693A10096B3FD /* STSliderCell.xib */,
+				9D4F31B01C3693930096B3FD /* STLeftSliderView.h */,
+				9D4F31B11C3693930096B3FD /* STLeftSliderView.m */,
+				9D4F31B21C3693930096B3FD /* STLeftSliderView.xib */,
 				61645BAB1C101BA5007462EC /* JYChangePwdViewController.xib */,
 				714854EF1C127C300001347F /* CYFChangeMailViewController.xib */,
 			);
@@ -438,6 +462,8 @@
 		446AF3381C00562A0081C798 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9D4F31BA1C3693B10096B3FD /* STLeftSliderController.h */,
+				9D4F31BB1C3693B10096B3FD /* STLeftSliderController.m */,
 				446AF3491C005F180081C798 /* DLLeftSlideMenuViewController.h */,
 				446AF34A1C005F180081C798 /* DLLeftSlideMenuViewController.m */,
 				61645BA91C101BA5007462EC /* JYChangePwdViewController.h */,
@@ -1169,6 +1195,7 @@
 				617C75C51C34BB0900E8AD6E /* DLLampControlRGBModeViewController.xib in Resources */,
 				9DFF73721C08781C0061EFBF /* DLAddDeviceViewXib.xib in Resources */,
 				446AF3321C003FB10081C798 /* country.plist in Resources */,
+				9D4F31B91C3693A10096B3FD /* STSliderCell.xib in Resources */,
 				610452B41C32C31E00753411 /* STHomeView.xib in Resources */,
 				446AF3291C002FB70081C798 /* Localizable.strings in Resources */,
 				9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */,
@@ -1177,6 +1204,7 @@
 				714854F11C127C300001347F /* CYFChangeMailViewController.xib in Resources */,
 				9D5FF5AB1BE9930B004371E5 /* JYRegister.xib in Resources */,
 				61645BBA1C10827E007462EC /* DLLampControllYWModeViewController.xib in Resources */,
+				9D4F31B41C3693930096B3FD /* STLeftSliderView.xib in Resources */,
 				7174E3A41BEFAEC500170AAA /* MBProgressHUD.bundle in Resources */,
 				712C524D1C0832900014F9CB /* QRCatchViewController.xib in Resources */,
 			);
@@ -1264,9 +1292,13 @@
 				9D1CB9DF1C0B0FDC00725A63 /* Constants.m in Sources */,
 				7174E3A31BEFAEC500170AAA /* MBProgressHUD+MJ.m in Sources */,
 				9DFF737B1C0936C40061EFBF /* JYFurnitureBackStatus.m in Sources */,
+				9D4F31B31C3693930096B3FD /* STLeftSliderView.m in Sources */,
 				9D7D5A8F1BE474BD00E1E1EF /* JYLoginXib.m in Sources */,
+				9D4F31B81C3693A10096B3FD /* STSliderCell.m in Sources */,
 				71DD8E151C102812000E1639 /* Reachability.m in Sources */,
+				9D4F31BF1C3693C10096B3FD /* UIImage+ST.m in Sources */,
 				9DE6E1721C2ADF640035E8DC /* JYSqlite.m in Sources */,
+				9D4F31BC1C3693B10096B3FD /* STLeftSliderController.m in Sources */,
 				442E7EB41C07402300E3C84C /* RESideMenu.m in Sources */,
 				9DFF73781C0932F80061EFBF /* JYFurnitureBack.m in Sources */,
 				9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */,

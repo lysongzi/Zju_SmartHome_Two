@@ -18,7 +18,7 @@
 #import "MBProgressHUD+MJ.h"
 #import <CoreLocation/CoreLocation.h>
 #import "STHomeView.h"
-
+#import "STLeftSliderController.h"
 #import "CYFImageStore.h"
 
 @interface CYFMainViewController ()<STHomeViewDelegate,CLLocationManagerDelegate>
@@ -166,7 +166,8 @@
   //  }
   
   
-  [self.leftBtn addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
+  [self.leftBtn addTarget:self action:@selector(leftPortraitClick) forControlEvents:UIControlEventTouchUpInside];
+    
   UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithCustomView:self.leftBtn];
   self.navigationItem.leftBarButtonItem=leftItem;
 }
@@ -174,7 +175,9 @@
 //左边头像点击事件
 -(void)leftPortraitClick
 {
-  
+    STLeftSliderController *leftVc=[[STLeftSliderController alloc]init];
+    //[self.navigationController pushViewController:leftVc animated:YES];
+    [self.navigationController presentViewController:leftVc animated:YES completion:nil];
 }
 
 //代理方法
