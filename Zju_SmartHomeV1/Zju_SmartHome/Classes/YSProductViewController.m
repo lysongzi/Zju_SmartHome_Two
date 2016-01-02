@@ -19,6 +19,7 @@
 #import "LogicIdXMLParser.h"
 #import "JYUpdateFurnitureName.h"
 #import "YSRGBPatternViewController.h"
+#import "YSYWPatternViewController.h"
 
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define UISCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
@@ -107,8 +108,8 @@ NS_ENUM(NSInteger, ProductType)
         self.imageDic[@(RGBLIGHT_ON)] = @"single_btn_rgb_on";
         self.imageDic[@(RGBLIGHT_OFF)] = @"single_btn_rgb_off";
         
-        self.imageDic[@(FRIDGE_ON)] = @"single_btn_firdge_on";
-        self.imageDic[@(FRIDGE_OFF)] = @"single_btn_firdge_off";
+        self.imageDic[@(FRIDGE_ON)] = @"single_btn_fridge_on";
+        self.imageDic[@(FRIDGE_OFF)] = @"single_btn_fridge_off";
         
         self.imageDic[@(BEDLIGHT_ON)] = @"single_btn_yw_on";
         self.imageDic[@(BEDLIGHT_OFF)] = @"single_btn_yw_off";
@@ -219,15 +220,6 @@ static BOOL _isPoping;
     cell.imageView.image = [UIImage imageNamed:product.imageStr];
     cell.descLabel.text = product.descLabel;
     cell.closeButton.hidden = YES;
-    //默认底端和右端的线都显示
-    cell.rightLine.hidden = NO;
-    cell.bottomLine.hidden = NO;
-    
-    //行末尾，则不显示右侧的线
-    if (indexPath.row % SECTION_COLUMN == (SECTION_COLUMN - 1))
-    {
-        cell.rightLine.hidden = YES;
-    }
     
     [cell.closeButton addTarget:self action:@selector(deleteCellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -280,15 +272,19 @@ static BOOL _isPoping;
         
         if([furniture.deviceType isEqualToString:@"40"])
         {
-            YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
-            ysVc.logic_id=furniture.logic_id;
+//            YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
+//            ysVc.logic_id=furniture.logic_id;
+//            [self.navigationController pushViewController:ysVc animated:YES];
+            
+            YSYWPatternViewController *ysVc = [[YSYWPatternViewController alloc] init];
+            ysVc.logic_id = furniture.logic_id;
             [self.navigationController pushViewController:ysVc animated:YES];
         }
         else if([furniture.deviceType isEqualToString:@"41"])
         {
-//            DLLampControllYWModeViewController *cyfVc=(DLLampControllYWModeViewController *)furniture.controller;
-//            cyfVc.logic_id=furniture.logic_id;
-//            [self.navigationController pushViewController:cyfVc animated:cyfVc];
+            YSYWPatternViewController *ysVc = [[YSYWPatternViewController alloc] init];
+            ysVc.logic_id = furniture.logic_id;
+            [self.navigationController pushViewController:ysVc animated:YES];
         }
         else
         {
@@ -445,12 +441,12 @@ static BOOL _isPoping;
                            
                 if ([furniture.deviceType isEqualToString:@"40"])
                 {
-                    furniture.imageStr = self.imageDic[@(RGBLIGHT_OFF)];
+                    furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
                     //furniture.controller = [[YSPatternViewController alloc] init];
                 }
                 else if ([furniture.deviceType isEqualToString:@"41"])
                 {
-                    furniture.imageStr = self.imageDic[@(YWLIGHT_OFF)];
+                    furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
                     furniture.controller = nil;
                 }
                 else

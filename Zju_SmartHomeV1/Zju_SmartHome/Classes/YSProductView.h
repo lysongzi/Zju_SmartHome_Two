@@ -13,8 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
-@property (weak, nonatomic) IBOutlet UIView *bottomLine;
-@property (weak, nonatomic) IBOutlet UIView *rightLine;
 
 +(instancetype)initProductViewWithXib;
 
