@@ -10,12 +10,12 @@
 #import "ZQSlider.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD+MJ.h"
-#import "YSPatternViewController.h"
+#import "YSRGBPatternViewController.h"
 #import "AppDelegate.h"
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
 #import "STSaveSceneView.h"
-#import "JYSqlite.h"
+#import "JYNewSqlite.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -378,7 +378,7 @@
   
   for (UIViewController *controller in self.navigationController.viewControllers) {
     
-    if ([controller isKindOfClass:[YSPatternViewController class]]) {
+    if ([controller isKindOfClass:[YSRGBPatternViewController class]]) {
       
       [self.navigationController popToViewController:controller animated:YES];
       
@@ -619,7 +619,7 @@
     self.navigationItem.rightBarButtonItem.enabled=YES;
     NSLog(@"－－－－%@",newSceneName);
     
-    JYSqlite *jySqlite=[[JYSqlite alloc]init];
+    JYNewSqlite *jySqlite=[[JYNewSqlite alloc]init];
     jySqlite.patterns=[[NSMutableArray alloc]init];
     
     //打开数据库
@@ -629,13 +629,12 @@
     //获取表中所有记录
     [jySqlite getAllRecord];
     
-    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:newSceneName andField2:@"desc" field2Value:@"???" andField3:@"img" field3Value:@"soft_background" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
-    
-    [jySqlite getAllRecord];
+    //柔和模式
+    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:newSceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
     
     for (UIViewController *controller in self.navigationController.viewControllers)
     {
-        if ([controller isKindOfClass:[YSPatternViewController class]])
+        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
         {
             [self.navigationController popToViewController:controller animated:YES];
         }

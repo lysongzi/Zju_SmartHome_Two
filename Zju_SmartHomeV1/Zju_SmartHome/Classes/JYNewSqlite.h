@@ -1,14 +1,14 @@
 //
-//  JYSqlite.h
+//  JYNewSqlite.h
 //  Zju_SmartHome
 //
-//  Created by 123 on 15/12/23.
-//  Copyright © 2015年 GJY. All rights reserved.
+//  Created by 顾金跃 on 16/1/2.
+//  Copyright © 2016年 GJY. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface JYSqlite : NSObject
+@interface JYNewSqlite : NSObject
 @property(nonatomic,strong)NSMutableArray *patterns;
 -(NSString *)filePath;
 -(void)openDB;

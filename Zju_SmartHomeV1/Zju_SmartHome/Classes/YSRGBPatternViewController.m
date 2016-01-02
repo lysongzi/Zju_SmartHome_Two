@@ -9,6 +9,8 @@
 #import "YSRGBPatternViewController.h"
 #import "YSProductViewController.h"
 #import "YSNewPattern.h"
+#import "JYNewSqlite.h"
+#import "DLLampControlRGBModeViewController.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -18,9 +20,11 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *patternNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bkgImageView;
+//图片选择按钮
 @property (weak, nonatomic) IBOutlet UIButton *pictureButton;
+//音乐播放按钮
 @property (weak, nonatomic) IBOutlet UIButton *musicButton;
-
+//模式切换
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableArray *patterns;
 @property (strong, nonatomic) NSMutableArray *cellsView;
@@ -28,13 +32,11 @@
 @property (assign) NSInteger cellWidth;
 @property (assign) NSInteger cellHeight;
 
-@property (strong, nonatomic) NSArray *names;
-@property (strong, nonatomic) NSArray *logoNames;
-@property (strong, nonatomic) NSArray *bkgNames;
 
 //记录当前居中的模式索引
 @property (assign) NSInteger selectedIndex;
-
+//定义JYSqlite对象
+@property(nonatomic,strong)JYNewSqlite *jynewSqlite;
 @end
 
 @implementation YSRGBPatternViewController
@@ -46,21 +48,6 @@
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
     self.cellHeight = self.scrollView.frame.size.height;
-    
-    if (!self.names)
-    {
-        self.names = @[@"柔和", @"舒适", @"明亮", @"跳跃", @"R", @"G", @"B"];
-    }
-    
-    if (!self.logoNames)
-    {
-        self.logoNames = @[@"rouhe_icon", @"shushi_icon", @"mingliang_icon", @"tiaoyue_icon", @"R", @"G", @"B"];
-    }
-    
-    if (!self.bkgNames)
-    {
-        self.bkgNames = @[@"rouhe_bg", @"shushi_bg", @"mingliang_bg", @"tiaoyue_bg", @"R_bg", @"G_bg", @"B_bg"];
-    }
     
 }
 
@@ -76,23 +63,54 @@
 //初始化模式的数据
 - (void)initPatternData
 {
+    //初始化
+    JYNewSqlite *jynewSqlite=[[JYNewSqlite alloc]init];
+    jynewSqlite.patterns=[[NSMutableArray alloc]init];
+    self.jynewSqlite=jynewSqlite;
     
-    if (!self.patterns)
+    //打开数据库
+    [self.jynewSqlite openDB];
+    //创建表（如果已经存在时不会再创建的）
+    [self.jynewSqlite createTable];
+    //获取表中所有记录
+    [self.jynewSqlite getAllRecord];
+    
+    //self.patterns=jySqlite.patterns;
+    if(self.jynewSqlite.patterns.count==0)
     {
-        self.patterns = [NSMutableArray array];
+        NSLog(@"暂时还没有数据");
+        //柔和模式
+        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"254" andField6:@"bValue" field6Value:@"253"];
+        
+        //舒适模式
+        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"233" andField5:@"gValue" field5Value:@"234" andField6:@"bValue" field6Value:@"235"];
+        
+        //明亮模式
+         [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"明亮" andField2:@"logoName" field2Value:@"mingliang_icon" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"101" andField6:@"bValue" field6Value:@"102"];
+      
+        //跳跃模式
+         [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"跳跃" andField2:@"logoName" field2Value:@"tiaoyue_icon" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"rValue" field4Value:@"1" andField5:@"gValue" field5Value:@"2" andField6:@"bValue" field6Value:@"3"];
+     
+        //R模式
+        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"R" andField2:@"logoName" field2Value:@"R" andField3:@"bkgName" field3Value:@"R_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"0" andField6:@"bValue" field6Value:@"0"];
+        
+        //G模式
+         [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"G" andField2:@"logoName" field2Value:@"G" andField3:@"bkgName" field3Value:@"G_bg" andField4:@"rValue" field4Value:@"0" andField5:@"gValue" field5Value:@"255" andField6:@"bValue" field6Value:@"0"];
+      
+        //B模式
+         [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"B" andField2:@"logoName" field2Value:@"B" andField3:@"bkgName" field3Value:@"B_bg" andField4:@"rValue" field4Value:@"0" andField5:@"gValue" field5Value:@"0" andField6:@"bValue" field6Value:@"255"];
+        
+        
+        [self.jynewSqlite getAllRecord];
+        self.patterns=self.jynewSqlite.patterns;
+        NSLog(@"长度%ld",self.patterns.count);
     }
-    
-    //默认的模式
-    for (int i = 0; i < self.names.count; i++) {
-        YSNewPattern *pattern = [[YSNewPattern alloc] initWithName:self.names[i] logoName:self.logoNames[i] bkgName:self.bkgNames[i]];
-        [self.patterns addObject:pattern];
+    else
+    {
+        NSLog(@"已经有数据了");
+        self.patterns=self.jynewSqlite.patterns;
+        //NSLog(@"长度%ld",self.patterns.count);
     }
-    
-    //然后这里加载已保存的自定义的模式
-    //。。。。。。。。。。。。。。。。
-    [self addPatternToScrollView:[[YSNewPattern alloc] initWithName:@"自定义1" logoName:@"mingliang_icon" bkgName:@"mingliang_bg"]];
-    [self addPatternToScrollView:[[YSNewPattern alloc] initWithName:@"自定义2" logoName:@"mingliang_icon" bkgName:@"mingliang_bg"]];
-    [self addPatternToScrollView:[[YSNewPattern alloc] initWithName:@"自定义3" logoName:@"mingliang_icon" bkgName:@"mingliang_bg"]];
     
     //最后一个自定义按钮
     [self.patterns addObject:[[YSNewPattern alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
@@ -190,7 +208,11 @@
     //否则就是点击了居中的元素
     else
     {
-        NSLog(@"进入添加新模式的界面");
+        NSLog(@"进入添加新模式的界面123456");
+        DLLampControlRGBModeViewController *rgbVc=[[DLLampControlRGBModeViewController alloc]init];
+        rgbVc.logic_id=self.logic_id;
+        [self.navigationController pushViewController:rgbVc animated:YES];
+        
     }
     
 }

@@ -280,9 +280,9 @@ static BOOL _isPoping;
         
         if([furniture.deviceType isEqualToString:@"40"])
         {
-            //YSPatternViewController *ysPattern=(YSPatternViewController *)furniture.controller;
-            //ysPattern.logic_id=furniture.logic_id;
-            [self.navigationController pushViewController:[[YSRGBPatternViewController alloc] init] animated:YES];
+            YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
+            ysVc.logic_id=furniture.logic_id;
+            [self.navigationController pushViewController:ysVc animated:YES];
         }
         else if([furniture.deviceType isEqualToString:@"41"])
         {

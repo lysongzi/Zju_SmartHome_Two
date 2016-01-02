@@ -1,27 +1,27 @@
 //
-//  JYSqlite.m
+//  JYNewSqlite.m
 //  Zju_SmartHome
 //
-//  Created by 123 on 15/12/23.
-//  Copyright © 2015年 GJY. All rights reserved.
+//  Created by 顾金跃 on 16/1/2.
+//  Copyright © 2016年 GJY. All rights reserved.
 //
 
-#import "JYSqlite.h"
+#import "JYNewSqlite.h"
 #import "sqlite3.h"
-#import "YSPattern.h"
-@interface JYSqlite()
+#import "YSNewPattern.h"
+@interface JYNewSqlite()
 {
     //声明一个sqlite3的数据库
     sqlite3 *db;
 }
 @end
-@implementation JYSqlite
+@implementation JYNewSqlite
 //返回数据库在文件夹中的全路径信息
 -(NSString *)filePath
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDir=[paths objectAtIndex:0];
-    //NSLog(@"我看看路径%@",documentDir);
+    NSLog(@"我看看路径%@",documentDir);
     return [documentDir stringByAppendingPathComponent:@"/patternTest.sqlite"];
 }
 
@@ -31,16 +31,16 @@
     if(sqlite3_open([[self filePath]UTF8String], &db)!=SQLITE_OK)
     {
         sqlite3_close(db);
-        //NSLog(@"数据库打开失败");
+        NSLog(@"数据库打开失败");
     }
-   // NSLog(@"数据库打开成功");
+     NSLog(@"数据库打开成功");
 }
 
 //创建表
 -(void)createTable
 {
     //模式名称，模式描述，模式图片
-    NSString *sql=@"create TABLE if not EXISTS patternTable(name NSString,desc NSString,img NSString,rValue NSString,gValue NSString,bValue NSString);";
+    NSString *sql=@"create TABLE if not EXISTS patternTable(name NSString,logoName NSString,bkgName NSString,rValue NSString,gValue NSString,bValue NSString);";
     char *errorMesg=NULL;
     int result=sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorMesg);
     if(result==SQLITE_OK)
@@ -68,6 +68,10 @@
     {
         sqlite3_close(db);
         NSAssert(0,@"插入数据错误！");
+    }
+    else
+    {
+        NSLog(@"插入数据成功");
     }
     
 }
@@ -110,13 +114,13 @@
     }
 }
 
-//更新模式名称,模式描述,背景图标识
--(void)updateRecordByOldPatternName:(NSString *)oldPatternName andNewPatternName:(NSString *)newPatternName andDesc:(NSString *)descLabel andImg:(NSString *)imgKey
+//更新模式名称,模式logo,背景图片
+-(void)updateRecordByOldPatternName:(NSString *)oldPatternName andNewPatternName:(NSString *)newPatternName andLogoName:(NSString *)logoName andBkgName:(NSString *)BkgName
 {
     sqlite3_stmt *stmt = nil;
-    NSString *sql = [NSString stringWithFormat:@"update patternTable set name = '%@',desc='%@',img='%@'  where name = '%@'", newPatternName,descLabel,imgKey,oldPatternName];
+    NSString *sql = [NSString stringWithFormat:@"update patternTable set name = '%@',logoName='%@',bkgName='%@'  where name = '%@'", newPatternName,logoName,BkgName,oldPatternName];
     
-    //NSLog(@"===%@",sql);
+    NSLog(@"===%@",sql);
     
     if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
     {
@@ -146,11 +150,11 @@
             char *name=(char *)sqlite3_column_text(statement, 0);
             NSString *patternName=[[NSString alloc]initWithUTF8String:name];
             
-            char *desc=(char *)sqlite3_column_text(statement, 1);
-            NSString *descLabel=[[NSString alloc]initWithUTF8String:desc];
+            char *logoName=(char *)sqlite3_column_text(statement, 1);
+            NSString *logoName1=[[NSString alloc]initWithUTF8String:logoName];
             
-            char *img=(char *)sqlite3_column_text(statement, 2);
-            NSString *imgKey=[[NSString alloc]initWithUTF8String:img];
+            char *bkgName=(char *)sqlite3_column_text(statement, 2);
+            NSString *bkgName1=[[NSString alloc]initWithUTF8String:bkgName];
             
             char *r =(char *)sqlite3_column_text(statement, 3);
             NSString *rValue=[[NSString alloc]initWithUTF8String:r];
@@ -161,18 +165,18 @@
             char *b =(char *)sqlite3_column_text(statement, 5);
             NSString *bValue=[[NSString alloc]initWithUTF8String:b];
             
-            YSPattern *pattern=[[YSPattern alloc]init];
-            pattern.patternName=patternName;
-            pattern.descLabel=descLabel;
-            pattern.imgKey=imgKey;
-            pattern.rValue=rValue;
-            pattern.gValue=gValue;
-            pattern.bValue=bValue;
-            NSLog(@"====%@",pattern.patternName);
-            
-            [self.patterns addObject:pattern];
+
+            YSNewPattern *newPattern=[[YSNewPattern alloc]init];
+            newPattern.name=patternName;
+            newPattern.logoName=logoName1;
+            newPattern.bkgName=bkgName1;
+            newPattern.rValue=rValue;
+            newPattern.gValue=gValue;
+            newPattern.bValue=bValue;
+            [self.patterns addObject:newPattern];
+            NSLog(@"====%@",newPattern.name);
         }
-       // NSLog(@"==%ld",self.patterns.count);
+         NSLog(@"==%ld",self.patterns.count);
     }
 }
 
