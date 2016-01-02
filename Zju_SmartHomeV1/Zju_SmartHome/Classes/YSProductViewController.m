@@ -268,16 +268,11 @@ static BOOL _isPoping;
     else
     {
        JYFurniture * furniture = self.products[indexPath.row];
-//        [self.navigationController pushViewController:furniture.controller animated:YES];
         
         if([furniture.deviceType isEqualToString:@"40"])
         {
-//            YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
-//            ysVc.logic_id=furniture.logic_id;
-//            [self.navigationController pushViewController:ysVc animated:YES];
-            
-            YSYWPatternViewController *ysVc = [[YSYWPatternViewController alloc] init];
-            ysVc.logic_id = furniture.logic_id;
+            YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
+            ysVc.logic_id=furniture.logic_id;
             [self.navigationController pushViewController:ysVc animated:YES];
         }
         else if([furniture.deviceType isEqualToString:@"41"])
@@ -348,12 +343,12 @@ static BOOL _isPoping;
                           
                           if([furniture.deviceType isEqualToString:@"40"])
                           {
-                              furniture.imageStr=@"rgb_light_on";
+                              furniture.imageStr=self.imageDic[@(RGBLIGHT_ON)];
                               //furniture.controller = [[YSPatternViewController alloc] init];
                           }
                           else if([furniture.deviceType isEqualToString:@"41"])
                           {
-                              furniture.imageStr=@"yw_light_on";
+                              furniture.imageStr=self.imageDic[@(YWLIGHT_ON)];
                               //furniture.controller=[[DLLampControllYWModeViewController alloc]init];
                           }
                           else
@@ -446,7 +441,7 @@ static BOOL _isPoping;
                 }
                 else if ([furniture.deviceType isEqualToString:@"41"])
                 {
-                    furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
+                    furniture.imageStr = self.imageDic[@(YWLIGHT_ON)];
                     furniture.controller = nil;
                 }
                 else
