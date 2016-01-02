@@ -108,8 +108,8 @@ NS_ENUM(NSInteger, ProductType)
         self.imageDic[@(RGBLIGHT_ON)] = @"single_btn_rgb_on";
         self.imageDic[@(RGBLIGHT_OFF)] = @"single_btn_rgb_off";
         
-        self.imageDic[@(FRIDGE_ON)] = @"single_btn_firdge_on";
-        self.imageDic[@(FRIDGE_OFF)] = @"single_btn_firdge_off";
+        self.imageDic[@(FRIDGE_ON)] = @"single_btn_fridge_on";
+        self.imageDic[@(FRIDGE_OFF)] = @"single_btn_fridge_off";
         
         self.imageDic[@(BEDLIGHT_ON)] = @"single_btn_yw_on";
         self.imageDic[@(BEDLIGHT_OFF)] = @"single_btn_yw_off";
@@ -441,12 +441,12 @@ static BOOL _isPoping;
                            
                 if ([furniture.deviceType isEqualToString:@"40"])
                 {
-                    furniture.imageStr = self.imageDic[@(RGBLIGHT_OFF)];
+                    furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
                     //furniture.controller = [[YSPatternViewController alloc] init];
                 }
                 else if ([furniture.deviceType isEqualToString:@"41"])
                 {
-                    furniture.imageStr = self.imageDic[@(YWLIGHT_OFF)];
+                    furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
                     furniture.controller = nil;
                 }
                 else
