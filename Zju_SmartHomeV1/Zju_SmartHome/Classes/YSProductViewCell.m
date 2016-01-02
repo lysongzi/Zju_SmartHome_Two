@@ -32,8 +32,6 @@
         
         self.imageView = productView.imageView;
         self.descLabel = productView.descLabel;
-        self.bottomLine = productView.bottomLine;
-        self.rightLine = productView.rightLine;
         self.closeButton = productView.closeButton;
         
     }
