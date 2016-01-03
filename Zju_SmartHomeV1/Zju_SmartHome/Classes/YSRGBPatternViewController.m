@@ -218,7 +218,6 @@
     //否则就是点击了居中的元素
     else
     {
-        NSLog(@"进入添加新模式的界面123456");
         DLLampControlRGBModeViewController *rgbVc=[[DLLampControlRGBModeViewController alloc]init];
         rgbVc.logic_id=self.logic_id;
         [self.navigationController pushViewController:rgbVc animated:YES];

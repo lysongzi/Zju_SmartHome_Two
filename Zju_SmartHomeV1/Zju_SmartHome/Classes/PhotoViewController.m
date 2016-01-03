@@ -11,26 +11,69 @@
 #import "PhotoViewController.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
+#import "STSaveSceneView.h"
+#import "JYNewSqlite.h"
+#import "YSRGBPatternViewController.h"
+#define SCREEN_WIDTH self.view.frame.size.width
+#define SCREEN_HEIGHT self.view.frame.size.height
+@interface PhotoViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate,STSaveSceneViewDelegate>
 
-@interface PhotoViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
 
-
-
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
+@property(nonatomic,strong)UIImageView *imageView;
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (nonatomic,assign) BOOL isOpenCameraOrAlbum;
 
+@property(nonatomic,strong)STSaveSceneView *stView;
+
+@property(nonatomic,copy)NSString *patternName;
+@property(nonatomic,copy)NSString *rValue;
+@property(nonatomic,copy)NSString *gValue;
+@property(nonatomic,copy)NSString *bValue;
 
 @end
 
 @implementation PhotoViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
   [super viewDidLoad];
+  [self setNavigationBar];
     
 }
-
+-(void)setNavigationBar
+{
+    UIButton *leftButton=[[UIButton alloc]init];
+    [leftButton setImage:[UIImage imageNamed:@"ct_icon_leftbutton"] forState:UIControlStateNormal];
+    leftButton.frame=CGRectMake(0, 0, 25, 25);
+    [leftButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
+    [leftButton addTarget:self action:@selector(leftBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    
+    self.navigationItem.leftBarButtonItem = leftItem;
+    UILabel *titleView=[[UILabel alloc]init];
+    [titleView setText:@"照片取色"];
+    titleView.frame=CGRectMake(0, 0, 100, 16);
+    titleView.font=[UIFont systemFontOfSize:16];
+    [titleView setTextColor:[UIColor whiteColor]];
+    titleView.textAlignment=NSTextAlignmentCenter;
+    self.navigationItem.titleView=titleView;
+    
+    //保存按钮
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"保存"
+                                                                  style:UIBarButtonItemStyleDone
+                                                                 target:self
+                                                                 action:@selector(rightBtnClicked)];
+    self.navigationItem.rightBarButtonItem=rightItem;
+}
+-(void)rightBtnClicked
+{
+    NSLog(@"===%@ %@ %@ %@ %@",self.logic_id,self.patternName,self.rValue,self.gValue,self.bValue);
+    STSaveSceneView *stView=[STSaveSceneView initWithSaveScene];
+    stView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    stView.delegate=self;
+    [self.view addSubview:stView];
+    self.navigationItem.rightBarButtonItem.enabled=NO;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
 
@@ -68,9 +111,15 @@
 {
 
   UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-
+  
+    NSLog(@"%f  %f",image.size.width,image.size.height);
   //将照片放入UIImageView对象中；
- self.imageView.image = image;
+ // self.imageView.image = image;
+    UIImageView *imageView=[[UIImageView alloc]init];
+    imageView.frame=CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
+    [imageView setImage:image];
+    [self.view addSubview:imageView];
+    self.imageView=imageView;
 
   if (self.openType == UIImagePickerControllerSourceTypeCamera) {
 
@@ -104,6 +153,7 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"不管怎样都会来到这里吧");
     //触点对象
     UITouch *touch=touches.anyObject;
     //触点位置
@@ -117,6 +167,10 @@
     NSString *gValue=[NSString stringWithFormat:@"%d",(int)(components[1]*255)];
     NSString *bValue=[NSString stringWithFormat:@"%d",(int)(components[2]*255)];
     NSLog(@"我看看结果:%@ %@ %@",rValue,gValue,bValue);
+    
+    self.rValue=rValue;
+    self.gValue=gValue;
+    self.bValue=bValue;
 
   NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[rValue intValue]]];
   NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[gValue intValue]]];
@@ -262,4 +316,54 @@
     return context;
 }
 
+
+
+//实现的代理方法
+-(void)cancelSaveScene
+{
+    [self.stView removeFromSuperview];
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+}
+-(void)noSaveScene
+{
+    [self.stView removeFromSuperview];
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+}
+-(void)saveNewScene:(NSString *)newSceneName
+{
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+    NSLog(@"－－－－%@",newSceneName);
+    
+    JYNewSqlite *jySqlite=[[JYNewSqlite alloc]init];
+    jySqlite.patterns=[[NSMutableArray alloc]init];
+    
+    //打开数据库
+    [jySqlite openDB];
+    //创建表（如果已经存在时不会再创建的）
+    [jySqlite createTable];
+    //获取表中所有记录
+    [jySqlite getAllRecord];
+    
+    //柔和模式
+    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:newSceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue andField5:@"gValue" field5Value:self.gValue andField6:@"bValue" field6Value:self.bValue];
+    
+    for (UIViewController *controller in self.navigationController.viewControllers)
+    {
+        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+        {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
+}
+
+-(void)leftBtnClicked
+{
+    for (UIViewController *controller in self.navigationController.viewControllers)
+    {
+        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+        {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
+}
 @end

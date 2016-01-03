@@ -388,10 +388,8 @@
   }
 }
 
-//电器开关按钮
 -(void)rightBtnClicked
 {
-  NSLog(@"开关按钮点击事件");
   NSLog(@"===%@ %@ %@ %@ %@",self.logic_id,self.patternName,self.rValue.text,self.gValue.text,self.bValue.text);
 
     
@@ -404,7 +402,8 @@
 }
 
 #pragma mark - 左上角按钮点击，照片取色
-- (IBAction)photoColorButtonPressed:(id)sender {
+- (IBAction)photoColorButtonPressed:(id)sender
+{
 
   if ([self.imagePickerPopover isPopoverVisible]) {
     [self.imagePickerPopover dismissPopoverAnimated:YES];
@@ -461,6 +460,7 @@
     else{
       //跳到ShowPhoto页面；
       PhotoViewController *showPhoto = [[PhotoViewController alloc] init];
+      showPhoto.logic_id=self.logic_id;
       showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;//从图库打开；
       [self.navigationController pushViewController:showPhoto animated:true];
     }
