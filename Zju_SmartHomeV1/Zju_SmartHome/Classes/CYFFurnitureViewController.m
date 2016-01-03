@@ -622,6 +622,8 @@ static BOOL _isPoping;
                          furniture.logic_id = logicIdXMLParser.logicId;
                          furniture.deviceType = logicIdXMLParser.deviceType;
                          
+                         NSLog(@"add llll");
+                         
                          if([furniture.deviceType isEqualToString:@"40"])
                          {
                              furniture.imageStr = self.imageHighArray[3];
@@ -808,12 +810,12 @@ static BOOL _isPoping;
       
             if([furniture.deviceType isEqualToString:@"40"])
             {
-                furniture.imageStr=@"rgb_light_on";
+                furniture.imageStr=self.imageHighArray[3];
                 furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
             }
             else if([furniture.deviceType isEqualToString:@"41"])
             {
-                furniture.imageStr=@"yw_light_on";
+                furniture.imageStr=self.imageHighArray[4];
                 furniture.controller=[[DLLampControllYWModeViewController alloc]init];
             }
             else

@@ -24,6 +24,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mengban2" id="wvr-oo-V2u">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="明亮" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="blH-25-dM6">
                     <rect key="frame" x="0.0" y="84" width="320" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -32,9 +36,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tSz-Yc-tfB">
-                    <rect key="frame" x="250" y="460" width="50" height="50"/>
+                    <rect key="frame" x="256" y="463" width="45" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="music_unpress"/>
+                    <state key="normal" backgroundImage="music_unpress"/>
                     <connections>
                         <action selector="musicClick:" destination="-1" eventType="touchUpInside" id="4IB-az-IgP"/>
                     </connections>
@@ -44,9 +48,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Hh8-ho-imU">
-                    <rect key="frame" x="22" y="460" width="50" height="50"/>
+                    <rect key="frame" x="22" y="465" width="40" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="picture_unpress"/>
+                    <state key="normal" backgroundImage="zhaopianquse_icon_unpress"/>
                     <connections>
                         <action selector="pictureClick:" destination="-1" eventType="touchUpInside" id="sVf-YR-yuG"/>
                     </connections>
@@ -57,8 +61,9 @@
         </view>
     </objects>
     <resources>
+        <image name="mengban2" width="320" height="568"/>
         <image name="mingliang_bg" width="320" height="568"/>
         <image name="music_unpress" width="40" height="40"/>
-        <image name="picture_unpress" width="40" height="40"/>
+        <image name="zhaopianquse_icon_unpress" width="37" height="37"/>
     </resources>
 </document>

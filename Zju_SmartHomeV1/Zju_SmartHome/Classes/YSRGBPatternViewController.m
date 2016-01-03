@@ -50,6 +50,8 @@
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
     self.cellHeight = self.scrollView.frame.size.height;
     
+    [self.pictureButton setBackgroundImage:[UIImage imageNamed:@"zhaopianquse_icon_press"] forState:UIControlStateHighlighted];
+    [self.musicButton setBackgroundImage:[UIImage imageNamed:@"music_icon_press"] forState:UIControlStateHighlighted];
 }
 
 -(void)viewWillAppear:(BOOL)animated
