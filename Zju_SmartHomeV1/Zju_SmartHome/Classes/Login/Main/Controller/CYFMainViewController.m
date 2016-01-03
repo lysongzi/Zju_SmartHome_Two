@@ -44,7 +44,6 @@
   
   //设置显示的view
   STHomeView *sthomeView=[STHomeView initWithHomeView];
-  //sthomeView.backgroundColor=[UIColor whiteColor];
   
   //设置代理
   sthomeView.delegate=self;
@@ -141,9 +140,11 @@
   
   
   //以下三行代码是设置该按钮为圆形的代码；
-  self.leftBtn.frame=CGRectMake(0, 0, 28, 28);
+  self.leftBtn.frame=CGRectMake(0, 0, 35, 35);
   [self.leftBtn.layer setCornerRadius:CGRectGetHeight([self.leftBtn bounds]) / 2];
   self.leftBtn.layer.masksToBounds = true;
+    self.leftBtn.layer.borderWidth=1;
+    self.leftBtn.layer.borderColor=[[UIColor whiteColor]CGColor];
   
   
   
@@ -176,7 +177,6 @@
 -(void)leftPortraitClick
 {
     STLeftSliderController *leftVc=[[STLeftSliderController alloc]init];
-    //[self.navigationController pushViewController:leftVc animated:YES];
     [self.navigationController presentViewController:leftVc animated:YES completion:nil];
 }
 

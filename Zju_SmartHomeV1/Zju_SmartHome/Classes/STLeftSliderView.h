@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *portraitBtn;
 - (IBAction)modifyPortraitClick:(id)sender;
 - (IBAction)backBtnClick:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *uesername;
+@property (weak, nonatomic) IBOutlet UILabel *userEmail;
 
 +(instancetype)initWithSliderView;
 

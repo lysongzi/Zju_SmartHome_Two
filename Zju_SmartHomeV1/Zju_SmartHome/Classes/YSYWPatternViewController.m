@@ -8,9 +8,8 @@
 
 #import "YSYWPatternViewController.h"
 #import "YSProductViewController.h"
-#import "YSNewPattern.h"
-#import "JYNewSqlite.h"
-#import "DLLampControlRGBModeViewController.h"
+#import "YSYWPattern.h"
+#import "JYYWSqlite.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -39,7 +38,7 @@
 //记录当前居中的模式索引
 @property (assign) NSInteger selectedIndex;
 //定义JYSqlite对象
-@property(nonatomic,strong)JYNewSqlite *jynewSqlite;
+@property(nonatomic,strong)JYYWSqlite *jySqlite;
 
 @end
 
@@ -68,52 +67,44 @@
 - (void)initPatternData
 {
     //初始化
-//    JYNewSqlite *jynewSqlite=[[JYNewSqlite alloc]init];
-//    jynewSqlite.patterns=[[NSMutableArray alloc]init];
-//    self.jynewSqlite=jynewSqlite;
-//    
-//    //打开数据库
-//    [self.jynewSqlite openDB];
-//    //创建表（如果已经存在时不会再创建的）
-//    [self.jynewSqlite createTable];
-//    //获取表中所有记录
-//    [self.jynewSqlite getAllRecord];
-//    
-//    //self.patterns=jySqlite.patterns;
-//    if(self.jynewSqlite.patterns.count==0)
-//    {
-//        NSLog(@"暂时还没有数据");
-//        //柔和模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"254" andField6:@"bValue" field6Value:@"253"];
-//        
-//        //舒适模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"233" andField5:@"gValue" field5Value:@"234" andField6:@"bValue" field6Value:@"235"];
-//        
-//        //明亮模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"明亮" andField2:@"logoName" field2Value:@"mingliang_icon" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"101" andField6:@"bValue" field6Value:@"102"];
-//        
-//        //跳跃模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"跳跃" andField2:@"logoName" field2Value:@"tiaoyue_icon" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"rValue" field4Value:@"1" andField5:@"gValue" field5Value:@"2" andField6:@"bValue" field6Value:@"3"];
-//        
-//        [self.jynewSqlite getAllRecord];
-//        self.patterns=self.jynewSqlite.patterns;
-//        NSLog(@"长度%ld",self.patterns.count);
-//    }
-//    else
-//    {
-//        NSLog(@"已经有数据了");
-//        self.patterns=self.jynewSqlite.patterns;
-//        //NSLog(@"长度%ld",self.patterns.count);
-//    }
+    JYYWSqlite *jySqlite=[[JYYWSqlite alloc]init];
+    jySqlite.patterns=[[NSMutableArray alloc]init];
+    self.jySqlite=jySqlite;
     
-    self.patterns = [NSMutableArray array];
-    [self.patterns addObject:[[YSNewPattern alloc] initWithName:@"柔和" logoName:@"rouhe_icon" bkgName:@"rouhe_bg"]];
-    [self.patterns addObject:[[YSNewPattern alloc] initWithName:@"舒适" logoName:@"shushi_icon" bkgName:@"shushi_bg"]];
-    [self.patterns addObject:[[YSNewPattern alloc] initWithName:@"明亮" logoName:@"mingliang_icon" bkgName:@"mingliang_bg"]];
-    [self.patterns addObject:[[YSNewPattern alloc] initWithName:@"跳跃" logoName:@"tiaoyue_icon"bkgName:@"tiaoyue_bg"]];
+    //打开数据库
+    [self.jySqlite openDB];
+    //创建表（如果已经存在时不会再创建的）
+    [self.jySqlite createTable];
+    //获取表中所有记录
+    [self.jySqlite getAllRecord];
+
+    if(self.jySqlite.patterns.count==0)
+    {
+        NSLog(@"暂时还没有数据");
+        //柔和模式
+        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"50"];
+        
+        //舒适模式
+        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"56" andField5:@"gValue" field5Value:@"57"];
+        
+        //明亮模式
+        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"明亮" andField2:@"logoName" field2Value:@"mingliang_icon" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"rValue" field4Value:@"10" andField5:@"gValue" field5Value:@"11" ];
+        
+        //跳跃模式
+        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"跳跃" andField2:@"logoName" field2Value:@"tiaoyue_icon" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"rValue" field4Value:@"11" andField5:@"gValue" field5Value:@"20"];
+        
+        [self.jySqlite getAllRecord];
+        self.patterns=self.jySqlite.patterns;
+        NSLog(@"长度%ld",self.patterns.count);
+    }
+    else
+    {
+        NSLog(@"已经有数据了");
+        self.patterns=self.jySqlite.patterns;
+    }
     
     //最后一个自定义按钮
-    [self.patterns addObject:[[YSNewPattern alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
+    [self.patterns addObject:[[YSYWPattern alloc] initWithName:@"自定义xiaoyueyue" logoName:@"zidingyi"]];
     NSLog(@"%ld", self.patterns.count);
 }
 
@@ -219,8 +210,8 @@
     else
     {
         NSLog(@"进入添加新模式的界面123456");
-//        DLLampControlRGBModeViewController *rgbVc=[[DLLampControlRGBModeViewController alloc]init];
-//        rgbVc.logic_id = self.logic_id;
+//         *rgbVc=[[ alloc]init];
+//        rgbVc.logic_id=self.logic_id;
 //        [self.navigationController pushViewController:rgbVc animated:YES];
         
     }
@@ -303,7 +294,7 @@
 
 #pragma mark - scrollView中cell的动态操作
 
-- (void)addPatternToScrollView:(YSNewPattern *)pattern
+- (void)addPatternToScrollView:(YSYWPattern *)pattern
 {
     //先把该模式添加到数组中
     [self.patterns insertObject:pattern atIndex:self.patterns.count];
@@ -312,7 +303,7 @@
     //待定
 }
 
-- (void)deletePatternFromScrollView:(YSNewPattern *)pattern
+- (void)deletePatternFromScrollView:(YSYWPattern *)pattern
 {
     //从模型中删除
     [self.patterns removeObjectAtIndex:self.selectedIndex];

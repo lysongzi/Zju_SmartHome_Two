@@ -302,7 +302,6 @@ static BOOL _isPoping;
 //设置每一个item的宽度，高度
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-  
   return CGSizeMake(UISCREEN_WIDTH/ 3, UISCREEN_WIDTH/ 3);
 }
 

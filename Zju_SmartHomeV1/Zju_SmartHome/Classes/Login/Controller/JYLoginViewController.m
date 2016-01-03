@@ -104,6 +104,7 @@
         
         AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
         appDelegate.username=data.account;
+        appDelegate.email=data.email;
         
         //5.存储模型数据
         //归档

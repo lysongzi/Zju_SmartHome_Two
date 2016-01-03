@@ -9,6 +9,8 @@
 #import "STLeftSliderController.h"
 #import "STLeftSliderView.h"
 #import "STSliderCell.h"
+#import "AppDelegate.h"
+#import "UIImage+ST.h"
 
 @interface STLeftSliderController ()<UITableViewDataSource,UITableViewDelegate,STLeftSliderViewDelegate>
 @property(nonatomic,strong)NSArray *imageNames;
@@ -38,9 +40,17 @@
     [super viewDidLoad];
     
     STLeftSliderView *leftSliderView=[STLeftSliderView initWithSliderView];
+    
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    leftSliderView.uesername.text=appDelegate.username;
+    leftSliderView.userEmail.text=appDelegate.email;
+    
     leftSliderView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self.view addSubview:leftSliderView];
     leftSliderView.delegate=self;
+    
+    [leftSliderView.portraitBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
+  
     
     leftSliderView.sliderTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     leftSliderView.sliderTableView.bounces=NO;
@@ -54,13 +64,13 @@
 }
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return self.imageNames.count;
 }
 

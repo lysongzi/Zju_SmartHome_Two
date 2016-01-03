@@ -29,6 +29,8 @@
 
 //用户名
 @property(nonatomic,copy)NSString *username;
+//用户email
+@property(nonatomic,copy)NSString *email;
 
 @end
 

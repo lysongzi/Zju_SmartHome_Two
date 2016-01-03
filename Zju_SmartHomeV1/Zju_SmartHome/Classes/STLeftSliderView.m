@@ -7,7 +7,6 @@
 //
 
 #import "STLeftSliderView.h"
-#import "UIImage+ST.h"
 
 @implementation STLeftSliderView
 
@@ -26,8 +25,7 @@
 +(instancetype)initWithSliderView
 {
     STLeftSliderView *leftSliderView=[[[NSBundle mainBundle]loadNibNamed:@"STLeftSliderView" owner:nil options:nil]lastObject];
-    UIImage *newImage=[UIImage circleImageWithName:@"头像" borderWith:4 borderColor:[UIColor whiteColor]];
-    [leftSliderView.portraitBtn setBackgroundImage:newImage forState:UIControlStateNormal];
+   
     
     return leftSliderView;
 }
