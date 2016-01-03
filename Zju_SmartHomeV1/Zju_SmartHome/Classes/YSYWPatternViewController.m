@@ -10,6 +10,7 @@
 #import "YSProductViewController.h"
 #import "YSYWPattern.h"
 #import "JYYWSqlite.h"
+#import "DLLampControllYWModeViewController.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -210,9 +211,9 @@
     else
     {
         NSLog(@"进入添加新模式的界面123456");
-//         *rgbVc=[[ alloc]init];
-//        rgbVc.logic_id=self.logic_id;
-//        [self.navigationController pushViewController:rgbVc animated:YES];
+        DLLampControllYWModeViewController *ywVc=[[DLLampControllYWModeViewController alloc]init];
+        ywVc.logic_id=self.logic_id;
+        [self.navigationController pushViewController:ywVc animated:YES];
         
     }
     

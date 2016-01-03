@@ -12,6 +12,7 @@
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
 #import "MBProgressHUD+MJ.h"
+#import "YSYWPatternViewController.h"
 
 
 @interface DLLampControllYWModeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
@@ -20,23 +21,25 @@
 @property (weak, nonatomic) IBOutlet UILabel *LDValue; /**< light-dark-value */
 @property (weak, nonatomic) IBOutlet UILabel *CWValue; /**< cold-warm-value */
 @property (nonatomic, weak) UISlider *slider;
-@property (weak, nonatomic) IBOutlet UIButton *leftFront;
-@property (weak, nonatomic) IBOutlet UIButton *rightNext;
+
 
 //YW控制
 @property (weak, nonatomic) IBOutlet UIButton *ywAdjust;
-//RGB控制
-@property (weak, nonatomic) IBOutlet UIButton *rgbAdjust;
 //模式选择
 @property (weak, nonatomic) IBOutlet UIButton *modeSelect;
-//音乐播放
-@property (weak, nonatomic) IBOutlet UIButton *musicOpen;
 
 @property(nonatomic,assign)int tag;
 @property(nonatomic,assign)int switchTag;
-@property(nonatomic,assign)int sliderValueTemp;
+//@property(nonatomic,assign)int sliderValueTemp;
 
 @property(nonatomic,assign)int isPhoto;
+
+//滑动条
+@property (nonatomic, weak) UISlider *mySlider;
+//存储滑动值的临时变量
+@property(nonatomic,assign)int temp;
+@property(nonatomic,strong)UISlider *mySlider2;
+
 //有关照片取色的属性；
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (nonatomic,strong) UIAlertController *alert;
@@ -51,43 +54,54 @@
   [super viewDidLoad];
   
   self.tag=1;
-  
+
   self.switchTag = 1;
-  self.leftFront.enabled = false;
-  self.rightNext.enabled = false;
-  
-  [self.modeSelect setBackgroundImage:[UIImage imageNamed:@"ct_icon_model_unpress"] forState:UIControlStateNormal];
+ 
     
   //设置导航栏
   [self setNavigationBar];
-    //实际是图片选择
-//    [self.ywAdjust addTarget:self action:@selector(photoClick) forControlEvents:UIControlEventTouchUpInside];
-//    //实际是YW灯
-//    [self.rgbAdjust addTarget:self action:@selector(ywClick) forControlEvents:UIControlEventTouchUpInside];
-  
+    
   UIImageView *imgView = [[UIImageView alloc]init];
   imgView.tag = 10086;
   UIView *viewColorPickerPositionIndicator = [[UIView alloc]init];
   viewColorPickerPositionIndicator.tag = 10087;
   UIButton *btnPlay = [[UIButton alloc] init];
-  
-  ZQSlider *slider = [[ZQSlider alloc] init];
-  slider.backgroundColor = [UIColor clearColor];
-  
-  slider.minimumValue = 0;
-  slider.maximumValue = 100;
-  slider.value = 100;
-  
-  [slider setMaximumTrackImage:[UIImage imageNamed:@"lightdarkslider3"] forState:UIControlStateNormal];
-  [slider setMinimumTrackImage:[UIImage imageNamed:@"lightdarkslider3"] forState:UIControlStateNormal];
-  [slider setThumbImage:[UIImage imageNamed:@"sliderPoint"] forState:UIControlStateNormal];
-  [slider setThumbImage:[UIImage imageNamed:@"sliderPoint"] forState:UIControlStateNormal];
-  self.LDValue.text = [NSString stringWithFormat:@"%d", (int)slider.value];
-  slider.continuous = YES;
-  
-  self.slider = slider;
-  [slider addTarget:self action:@selector(sliderValueChanged) forControlEvents:UIControlEventValueChanged];
-  [slider addTarget:self action:@selector(sliderTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
+    
+    UISlider *mySlider=[[UISlider alloc]init];
+    self.mySlider=mySlider;
+    UIColor *newColor=[UIColor colorWithRed:125/255.0f green:120/255.0f blue:86/255.0f alpha:1];
+    self.mySlider.backgroundColor=newColor;
+    // 设置UISlider的最小值和最大值
+    self.mySlider.minimumValue = 0;
+    self.mySlider.maximumValue = 100;
+    
+    // 为UISlider添加事件方法
+    [self.mySlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    _mySlider.minimumTrackTintColor = [UIColor clearColor];
+    _mySlider.maximumTrackTintColor = [UIColor clearColor];
+    [_mySlider setThumbImage:[UIImage imageNamed:@"point"] forState:UIControlStateNormal];
+    //设置圆角
+    _mySlider.layer.cornerRadius=4;
+    _mySlider.layer.masksToBounds=YES;
+    [self.view addSubview:self.mySlider];
+    
+    UISlider *mySlider2=[[UISlider alloc]init];
+    self.mySlider2=mySlider2;
+    UIColor *newColor2=[UIColor colorWithRed:125/255.0f green:120/255.0f blue:86/255.0f alpha:1];
+    self.mySlider2.backgroundColor=newColor2;
+    // 设置UISlider的最小值和最大值
+    self.mySlider2.minimumValue = 0;
+    self.mySlider2.maximumValue = 100;
+    
+    // 为UISlider添加事件方法
+    [self.mySlider2 addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    _mySlider2.minimumTrackTintColor = [UIColor clearColor];
+    _mySlider2.maximumTrackTintColor = [UIColor clearColor];
+    [_mySlider2 setThumbImage:[UIImage imageNamed:@"point"] forState:UIControlStateNormal];
+    //设置圆角
+    _mySlider2.layer.cornerRadius=4;
+    _mySlider2.layer.masksToBounds=YES;
+    [self.view addSubview:self.mySlider2];
   
   if (fabs(([[UIScreen mainScreen] bounds].size.height - 568)) < 1){
     // 5 & 5s & 5c
@@ -96,7 +110,8 @@
     viewColorPickerPositionIndicator.layer.cornerRadius = 8;
     viewColorPickerPositionIndicator.layer.borderWidth = 2;
     btnPlay.frame = CGRectMake(111, 111, 60, 60);
-    slider.frame = CGRectMake(40, 260, 200, 10);
+      self.mySlider.frame=CGRectMake(50, 440, 220, 8);
+      self.mySlider2.frame=CGRectMake(50, 483, 220, 8);
     
   }else if (fabs(([[UIScreen mainScreen] bounds].size.height - 667)) < 1) {
     // 6 & 6s
@@ -105,7 +120,8 @@
     viewColorPickerPositionIndicator.layer.cornerRadius = 10;
     viewColorPickerPositionIndicator.layer.borderWidth = 2;
     btnPlay.frame = CGRectMake(135, 135, 60, 60);
-    slider.frame = CGRectMake(50, 310, 225, 10);
+      self.mySlider.frame=CGRectMake(55, 516, 265, 9);
+      self.mySlider2.frame=CGRectMake(55, 565, 265, 9);
     
   }else if (fabs(([[UIScreen mainScreen] bounds].size.height - 736)) < 1){
     // 6p & 6sp
@@ -114,7 +130,8 @@
     viewColorPickerPositionIndicator.layer.cornerRadius = 12;
     viewColorPickerPositionIndicator.layer.borderWidth = 2;
     btnPlay.frame = CGRectMake(150, 150, 60, 60);
-    slider.frame = CGRectMake(85, 340, 200, 10);
+      self.mySlider.frame=CGRectMake(60, 571, 295, 10);
+      self.mySlider2.frame=CGRectMake(60, 624, 295, 10);
     
   }
   
@@ -131,43 +148,43 @@
   [self.panelView addSubview:imgView];
   [self.panelView addSubview:viewColorPickerPositionIndicator];
   [self.panelView addSubview:btnPlay];
-  [self.panelView addSubview:slider];
-}
-
--(void)sliderValueChanged{
-    self.LDValue.text = [NSString stringWithFormat:@"%d", (int)self.slider.value ];
-    NSLog(@"＝＝＝%f",self.slider.value);
-    //在这里把亮暗值   (int)self.slider.value   传给服务器
-    if(fabsf(self.slider.value-self.sliderValueTemp)>9)
-    {
-        if(self.slider.value<=10)
-        {
-            self.slider.value=0;
-        }
-        if(self.slider.value>=90)
-        {
-            self.slider.value=100;
-        }
-        int value = (int)self.slider.value;
-        
-        [HttpRequest sendYWBrightnessToServer:self.logic_id brightnessValue:[NSString stringWithFormat:@"%d", value ] success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-            NSLog(@"YW亮暗返回成功：%@",result);
-            
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            //NSLog(@"YW亮暗返回失败：%@",error);
-            [MBProgressHUD showError:@"请检查网关"];
-        }];
-    }
   
 }
--(void)sliderTouchUpInside
-{
-    NSLog(@"还原");
-    self.sliderValueTemp=0;
-}
+
+//-(void)sliderValueChanged{
+//    self.LDValue.text = [NSString stringWithFormat:@"%d", (int)self.slider.value ];
+//    NSLog(@"＝＝＝%f",self.slider.value);
+//    //在这里把亮暗值   (int)self.slider.value   传给服务器
+//    if(fabsf(self.slider.value-self.sliderValueTemp)>9)
+//    {
+//        if(self.slider.value<=10)
+//        {
+//            self.slider.value=0;
+//        }
+//        if(self.slider.value>=90)
+//        {
+//            self.slider.value=100;
+//        }
+//        int value = (int)self.slider.value;
+//        
+//        [HttpRequest sendYWBrightnessToServer:self.logic_id brightnessValue:[NSString stringWithFormat:@"%d", value ] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            
+//            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//            NSLog(@"YW亮暗返回成功：%@",result);
+//            
+//            
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            //NSLog(@"YW亮暗返回失败：%@",error);
+//            [MBProgressHUD showError:@"请检查网关"];
+//        }];
+//    }
+//  
+//}
+//-(void)sliderTouchUpInside
+//{
+//    NSLog(@"还原");
+//    self.sliderValueTemp=0;
+//}
 /**
  *  判断点触位置，如果点触位置在颜色区域内的话，才返回点触的控件为UIImageView *imgView
  *  除此之外，点触位置落在小圆内部或者大圆外部，都返回nil
@@ -233,15 +250,10 @@
                          smallRadius:imgView.frame.size.width * 0.38        //0.39
                          targetPoint:touchLocation]) {
       
-      //!!!:ATTENTIOIN
-      //        viewColorPickerPositionIndicator.center = touchLocation;
       viewColorPickerPositionIndicator.center = CGPointMake(touchLocation.x + 35, touchLocation.y + 35);
       viewColorPickerPositionIndicator.backgroundColor = [self getPixelColorAtLocation:touchLocation];
       
-      /**
-       *  以下判断代码真的是丧心病狂，63这个值真是可怜，代码不忍直视，为什么写了很多无意思的数值，只是想让YW灯的冷暖值
-       *  从零取到一百，生生的把它凑成了一百
-       */
+      
       int cwValue = (int)(touchLocation.y / 2.5) - 2;
       if (fabs(([[UIScreen mainScreen] bounds].size.height - 480)) < 1) {
         // 4 & 4s
@@ -322,12 +334,12 @@
                            bigRadius:imgView.frame.size.width * 0.48
                          smallRadius:imgView.frame.size.width * 0.38        //0.39
                          targetPoint:touchLocation]) {
-      
-      //!!!:ATTENTIOIN
+    
       //        viewColorPickerPositionIndicator.center = touchLocation;
       viewColorPickerPositionIndicator.center = CGPointMake(touchLocation.x + 35, touchLocation.y + 35);
       viewColorPickerPositionIndicator.backgroundColor = [self getPixelColorAtLocation:touchLocation];
-      
+        self.mySlider.backgroundColor=[self getPixelColorAtLocation:touchLocation];
+        self.mySlider2.backgroundColor=[self getPixelColorAtLocation:touchLocation];
       
       
       int cwValue = (int)(touchLocation.y / 2.5) - 2;
@@ -414,15 +426,12 @@
                          smallRadius:imgView.frame.size.width * 0.38        //0.39
                          targetPoint:touchLocation]) {
       
-      //!!!:ATTENTIOIN
       //        viewColorPickerPositionIndicator.center = touchLocation;
       viewColorPickerPositionIndicator.center = CGPointMake(touchLocation.x + 35, touchLocation.y + 35);
       viewColorPickerPositionIndicator.backgroundColor = [self getPixelColorAtLocation:touchLocation];
+        self.mySlider.backgroundColor=[self getPixelColorAtLocation:touchLocation];
+        self.mySlider2.backgroundColor=[self getPixelColorAtLocation:touchLocation];
       
-      /**
-       *  以下判断代码真的是丧心病狂，63这个值真是可怜，代码不忍直视，为什么写了很多无意思的数值，只是想让YW灯的冷暖值
-       *  从零取到一百，生生的把它凑成了一百
-       */
       int cwValue = (int)(touchLocation.y / 2.5) - 2;
       if (fabs(([[UIScreen mainScreen] bounds].size.height - 480)) < 1) {
         // 4 & 4s
@@ -558,13 +567,21 @@
 //****************************************结束
 - (void)leftBtnClicked{
   
-  for (UIViewController *controller in self.navigationController.viewControllers) {
+  for (UIViewController *controller in self.navigationController.viewControllers)
+  {
     
-    if ([controller isKindOfClass:[CYFFurnitureViewController class]]) {
+    if ([controller isKindOfClass:[CYFFurnitureViewController class]])
+    {
       
       [self.navigationController popToViewController:controller animated:YES];
       
     }
+    if ([controller isKindOfClass:[YSYWPatternViewController class]])
+      {
+          
+          [self.navigationController popToViewController:controller animated:YES];
+          
+      }
     
   }
 }
@@ -722,6 +739,29 @@
     
     //弹出提示框；
     [self presentViewController:self.alert animated:true completion:nil];
+}
+
+
+- (void)sliderValueChanged:(id)sender
+{
+    if ([sender isKindOfClass:[UISlider class]])
+    {
+        UISlider * slider = (UISlider *)sender;
+        if(fabs(slider.value-self.temp)>=8)
+        {
+            if(slider.value<=8)
+            {
+                slider.value=0;
+            }
+            else if(slider.value>=92)
+            {
+                slider.value=100;
+            }
+            self.temp=(int)slider.value;
+            NSLog(@"可以发送请求%d",(int)slider.value);
+        }
+        
+    }
 }
 @end
 

@@ -53,6 +53,7 @@
 {
     NSLog(@"控制rgb灯的界面逻辑id值和模式值传递过来了吗?%@ %@",self.logic_id,self.patternName);
   [super viewDidLoad];
+    self.view.backgroundColor=[UIColor blackColor];
    //设置导航条
   [self setNavigationBar];
    //进行初始化

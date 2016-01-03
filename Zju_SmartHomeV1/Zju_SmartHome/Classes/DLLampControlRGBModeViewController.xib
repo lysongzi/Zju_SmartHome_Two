@@ -32,7 +32,7 @@
                         </button>
                     </subviews>
                     <animations/>
-                    <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YYg-Vs-X1b" userLabel="model">
                     <rect key="frame" x="252" y="98" width="40" height="40"/>

@@ -15,6 +15,7 @@
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
 #import "CYFFurnitureViewController.h"
+#import "YSYWPatternViewController.h"
 
 
 @interface DLLampControlGuestModeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
@@ -511,12 +512,18 @@
 //向左切换模式
 - (void)leftBtnClicked{
   
-  for (UIViewController *controller in self.navigationController.viewControllers) {
+  for (UIViewController *controller in self.navigationController.viewControllers)
+  {
     
-    if ([controller isKindOfClass:[CYFFurnitureViewController class]]) {
+    if ([controller isKindOfClass:[CYFFurnitureViewController class]])
+    {
       
       [self.navigationController popToViewController:controller animated:YES];
       
+    }
+    if([controller isKindOfClass:[YSYWPatternViewController class]])
+    {
+        [self.navigationController popToViewController:controller animated:YES];
     }
     
   }

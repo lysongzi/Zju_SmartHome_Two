@@ -9,12 +9,8 @@
             <connections>
                 <outlet property="CWValue" destination="V2K-bm-4u0" id="6sA-eC-iba"/>
                 <outlet property="LDValue" destination="5vC-q5-ykj" id="l14-bP-c9p"/>
-                <outlet property="leftFront" destination="2Vu-yL-sPj" id="Fob-Ug-cTL"/>
                 <outlet property="modeSelect" destination="phH-eX-Nb3" id="erh-v4-KXY"/>
-                <outlet property="musicOpen" destination="jot-7t-BPA" id="z9t-mi-bh7"/>
                 <outlet property="panelView" destination="7XE-6J-O7y" id="Las-u0-jKr"/>
-                <outlet property="rgbAdjust" destination="4d6-qr-TjB" id="pDf-Ng-BBh"/>
-                <outlet property="rightNext" destination="ee0-5A-bRf" id="h9W-3v-hzZ"/>
                 <outlet property="view" destination="glG-8u-TrQ" id="eIf-eQ-Xd8"/>
                 <outlet property="ywAdjust" destination="5fI-hY-NTU" id="dUA-xe-OF1"/>
             </connections>
@@ -24,79 +20,50 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ee0-5A-bRf" userLabel="right">
-                    <rect key="frame" x="253" y="112" width="40" height="40"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <animations/>
-                    <state key="normal" backgroundImage="ct_icon_rightbutton"/>
-                </button>
                 <view contentMode="scaleToFill" id="w7T-ux-qoc" userLabel="dinnerMode">
-                    <rect key="frame" x="78" y="71" width="164" height="128"/>
+                    <rect key="frame" x="78" y="75" width="164" height="67"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view contentMode="scaleToFill" id="RQB-8s-VYT" userLabel="modeTitle">
-                            <rect key="frame" x="0.0" y="0.0" width="164" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="v58-ib-4Eg">
-                                    <rect key="frame" x="48" y="1" width="68" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                    <animations/>
-                                    <attributedString key="attributedText">
-                                        <fragment content="控制界面">
-                                            <attributes>
-                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="17" name="STHeitiSC-Light"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <animations/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="会客" id="cfC-A2-JsN">
-                            <rect key="frame" x="0.0" y="22" width="164" height="106"/>
+                            <rect key="frame" x="0.0" y="-6" width="164" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
                         </imageView>
                         <view contentMode="scaleToFill" id="8cc-xJ-OfG" userLabel="color_preview">
-                            <rect key="frame" x="10" y="105" width="144" height="12"/>
+                            <rect key="frame" x="10" y="51" width="144" height="12"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" red="0.99550449848175049" green="0.98939780201873728" blue="0.67969814997744982" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="冷暖" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2rA-Lt-f7K" userLabel="冷暖">
-                            <rect key="frame" x="26" y="48" width="39" height="21"/>
+                            <rect key="frame" x="26" y="4" width="39" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亮度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Omj-0P-Q1N" userLabel="亮度">
-                            <rect key="frame" x="101" y="48" width="37" height="21"/>
+                            <rect key="frame" x="101" y="4" width="37" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V2K-bm-4u0" userLabel="冷暖值">
-                            <rect key="frame" x="28" y="76" width="33" height="21"/>
+                            <rect key="frame" x="28" y="26" width="33" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5vC-q5-ykj" userLabel="亮度值">
-                            <rect key="frame" x="98" y="76" width="33" height="21"/>
+                            <rect key="frame" x="98" y="26" width="33" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <animations/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -104,55 +71,28 @@
                     <animations/>
                     <color key="backgroundColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <view contentMode="scaleToFill" id="7XE-6J-O7y" userLabel="panel">
-                    <rect key="frame" x="19" y="235" width="282" height="288"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="phH-eX-Nb3" userLabel="model">
+                    <rect key="frame" x="252" y="98" width="35" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="phH-eX-Nb3" userLabel="model">
-                            <rect key="frame" x="247" y="0.0" width="35" height="35"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <state key="normal" backgroundImage="ct_icon_model_unpress"/>
-                            <state key="highlighted" backgroundImage="ct_icon_model_press"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4d6-qr-TjB" userLabel="color">
-                            <rect key="frame" x="0.0" y="265" width="35" height="35"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <state key="normal" backgroundImage="temperature_highlight"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jot-7t-BPA" userLabel="music">
-                            <rect key="frame" x="247" y="265" width="35" height="35"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <state key="normal" backgroundImage="ct_icon_music_unpress"/>
-                            <state key="highlighted" backgroundImage="ct_icon_music_press"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yy1-LT-Jlx" userLabel="play">
-                            <rect key="frame" x="111" y="113" width="60" height="61"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <state key="normal" backgroundImage="ct_icon_buttonbreak-off"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5fI-hY-NTU" userLabel="bright">
-                            <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <state key="normal" backgroundImage="ct_icon_image_pickcolor_press_80"/>
-                            <connections>
-                                <action selector="photoClick1:" destination="-1" eventType="touchUpInside" id="akB-uB-HHC"/>
-                            </connections>
-                        </button>
-                    </subviews>
+                    <animations/>
+                    <state key="normal" backgroundImage="music_unpress"/>
+                    <state key="highlighted" backgroundImage="ct_icon_model_press"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5fI-hY-NTU" userLabel="bright">
+                    <rect key="frame" x="28" y="98" width="35" height="35"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <animations/>
+                    <state key="normal" backgroundImage="picture_unpress"/>
+                    <connections>
+                        <action selector="photoClick1:" destination="-1" eventType="touchUpInside" id="akB-uB-HHC"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" id="7XE-6J-O7y" userLabel="panel">
+                    <rect key="frame" x="19" y="150" width="282" height="288"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2Vu-yL-sPj" userLabel="left">
-                    <rect key="frame" x="30" y="115" width="40" height="40"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <animations/>
-                    <state key="normal" backgroundImage="ct_icon_leftbutton"/>
-                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
@@ -161,15 +101,9 @@
         </view>
     </objects>
     <resources>
-        <image name="ct_icon_buttonbreak-off" width="52" height="52"/>
-        <image name="ct_icon_image_pickcolor_press_80" width="40" height="40"/>
-        <image name="ct_icon_leftbutton" width="40" height="40"/>
         <image name="ct_icon_model_press" width="40" height="40"/>
-        <image name="ct_icon_model_unpress" width="40" height="40"/>
-        <image name="ct_icon_music_press" width="40" height="40"/>
-        <image name="ct_icon_music_unpress" width="40" height="40"/>
-        <image name="ct_icon_rightbutton" width="40" height="40"/>
-        <image name="temperature_highlight" width="40" height="40"/>
+        <image name="music_unpress" width="40" height="40"/>
+        <image name="picture_unpress" width="40" height="40"/>
         <image name="会客" width="164" height="108"/>
     </resources>
 </document>
