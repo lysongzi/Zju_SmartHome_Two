@@ -13,6 +13,4 @@
 @property(nonatomic,strong)UIView *view;
 //头部文字
 @property(nonatomic,strong)UILabel *title;
-
-@property(nonatomic,strong)UIView *topView;
 @end

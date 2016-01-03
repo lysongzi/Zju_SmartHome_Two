@@ -221,6 +221,11 @@ static BOOL _isPoping;
     cell.descLabel.text = product.descLabel;
     cell.closeButton.hidden = YES;
     
+    if (indexPath.row == (self.products.count - 1))
+    {
+        cell.lightImage.hidden = YES;
+    }
+    
     [cell.closeButton addTarget:self action:@selector(deleteCellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
     [self updateScrollView];
@@ -604,10 +609,10 @@ static BOOL _isPoping;
                                                                     style:UIBarButtonItemStyleDone
                                                                    target:self
                                                                    action:@selector(rightBtnClicked)];
+    [rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15],NSFontAttributeName,nil] forState:(UIControlStateNormal)];
     
     self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationItem.leftBarButtonItem = leftItem;
-    
 }
 
 //左侧返回按钮操作

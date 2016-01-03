@@ -33,7 +33,7 @@
         self.imageView = productView.imageView;
         self.descLabel = productView.descLabel;
         self.closeButton = productView.closeButton;
-        
+        self.lightImage = productView.lightImage;
     }
     return self;
 }
