@@ -11,6 +11,8 @@
 #import "YSNewPattern.h"
 #import "JYNewSqlite.h"
 #import "DLLampControlRGBModeViewController.h"
+#import "HttpRequest.h"
+#import "MBProgressHUD+MJ.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -260,6 +262,7 @@
         return;
     }
     
+    YSNewPattern *pattern=[self.patterns objectAtIndex:view.tag];
     //从模型中删除
     [self.patterns removeObjectAtIndex:view.tag];
     
@@ -287,6 +290,8 @@
     [self.cellsView removeObjectAtIndex:view.tag];
     //更新背景和文字
     [self updateCellBackground:(int)view.tag];
+    
+    [self.jynewSqlite deleteRecordWithName:pattern.name];
 }
 
 //点击图片取色按钮的响应事件
@@ -343,6 +348,27 @@
     {
         //变得太快了
         [self updateCellBackground:0];
+        YSNewPattern *pattern=self.patterns[0];
+        NSLog(@"lllssdsdds %@,%@,%@",pattern.name,pattern.rValue,pattern.bValue);
+        NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
+        NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.gValue intValue]]];
+        
+        NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.bValue intValue]]];
+        
+        // NSLog(@"---- %@ %@ %@ %@",self.logic_id,r,g,b);
+        
+        [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      
+                                      NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                                      NSLog(@"成功: %@", string);
+                                      
+                                  }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      
+                                      [MBProgressHUD showError:@"请检查网关"];
+                                      
+                                  }];
     }
 }
 
@@ -359,6 +385,36 @@
     [self updateCellBackground:(int)self.selectedIndex];
     //[self openGesture];
     [self.scrollView setUserInteractionEnabled:YES];
+    
+    YSNewPattern *pattern=self.patterns[(int)self.selectedIndex];
+   // NSLog(@"我看看划到的是哪个模式:%@ %@ %@ %@,这里进行灯的控制请求",pattern.name,pattern.rValue,pattern.gValue,pattern.bValue);
+    
+    NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
+    NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.gValue intValue]]];
+    
+    NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.bValue intValue]]];
+    
+   // NSLog(@"---- %@ %@ %@ %@",self.logic_id,r,g,b);
+    if([pattern.name isEqualToString:@"自定义"])
+    {
+        
+    }
+    else
+    {
+        [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                      
+                                      NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                                      NSLog(@"成功: %@", string);
+                                      
+                                  }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                      
+                                      [MBProgressHUD showError:@"请检查网关"];
+                                      
+                                  }];
+
+    }
 }
 
 //计算位置，居中选中的cell
