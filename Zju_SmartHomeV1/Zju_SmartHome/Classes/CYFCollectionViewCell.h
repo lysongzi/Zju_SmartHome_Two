@@ -15,12 +15,9 @@
 //每一个cell就是一个UIView,一个cell里面包含了一个图片和文本；
 //@property(nonatomic,strong)UIView *cellView;
 
-@property(strong,nonatomic) UIImageView *imageButton;
-@property(strong,nonatomic) UILabel *descLabel;
-@property(nonatomic,strong)UIView *bottomX;
-@property(nonatomic,strong)UIView *rightX;
-@property(nonatomic,strong)UIView *topX;
+@property (strong, nonatomic) UIImageView *imageButton;
+@property (strong, nonatomic) UILabel *descLabel;
+@property (strong, nonatomic) UIButton *closeButton;
+@property (strong, nonatomic) UIImageView *lightImage;
 
-
-@property(nonatomic,strong)UIButton *closeButton;
 @end

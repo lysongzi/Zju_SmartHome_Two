@@ -25,6 +25,10 @@
                     <inset key="contentEdgeInsets" minX="-1" minY="-5" maxX="-16" maxY="8"/>
                     <state key="normal" image="delete-button-red"/>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="single_white_lighting" id="gmq-65-vuf">
+                    <rect key="frame" x="16" y="6" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="single_btn_yw_on" id="ait-31-NMI" userLabel="ImageButton">
                     <rect key="frame" x="28" y="18" width="36" height="36"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -36,12 +40,14 @@
                 <outlet property="closeButton" destination="Pfe-Wg-syg" id="QtH-xM-RaH"/>
                 <outlet property="descLabel" destination="Yua-YN-rYv" id="9ol-FH-r74"/>
                 <outlet property="imageView" destination="ait-31-NMI" id="pt5-hw-DFp"/>
+                <outlet property="lightImage" destination="gmq-65-vuf" id="SwL-M6-Hi8"/>
             </connections>
-            <point key="canvasLocation" x="412" y="490"/>
+            <point key="canvasLocation" x="205" y="204"/>
         </view>
     </objects>
     <resources>
         <image name="delete-button-red" width="30" height="30"/>
-        <image name="single_btn_yw_on" width="59" height="59"/>
+        <image name="single_btn_yw_on" width="37" height="37"/>
+        <image name="single_white_lighting" width="63" height="63"/>
     </resources>
 </document>

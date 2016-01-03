@@ -13,7 +13,6 @@
 @property (weak, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) UILabel *descLabel;
 @property (weak, nonatomic) UIButton *closeButton;
-@property (weak, nonatomic) UIView *bottomLine;
-@property (weak, nonatomic) UIView *rightLine;
+@property (weak, nonatomic) UIImageView *lightImage;
 
 @end

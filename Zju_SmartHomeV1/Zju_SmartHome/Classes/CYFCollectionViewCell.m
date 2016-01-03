@@ -26,15 +26,10 @@
       self.furnitureView = furnitureView;
       [self addSubview:self.furnitureView];
 
-      self.imageButton = furnitureView.imageBtn;
-//      [self.imageButton setAdjustsImageWhenHighlighted:NO];
-      self.descLabel = furnitureView.descLabel;
-      self.bottomX = furnitureView.bottomX;
-      self.rightX = furnitureView.rightX;
-      self.topX = furnitureView.topX;
-    
-    self.closeButton = furnitureView.closeButton;
-
+      _imageButton = furnitureView.imageBtn;
+      _descLabel = furnitureView.descLabel;
+      _closeButton = furnitureView.closeButton;
+      _lightImage = furnitureView.lightImage;
   }
   return self;
 }
@@ -44,6 +39,6 @@
 {
     [super layoutSubviews];
     
-    self.furnitureView.frame=CGRectMake(0, 0, UISCREEN_WIDTH/ 3, UISCREEN_WIDTH/ 3);
+    self.furnitureView.frame=CGRectMake(0, 0, (UISCREEN_WIDTH - 36)/ 3 - 0.5, (UISCREEN_WIDTH - 36)/ 3 - 0.5);
 }
 @end
