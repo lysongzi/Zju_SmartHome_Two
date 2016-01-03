@@ -220,6 +220,7 @@ static BOOL _isPoping;
     cell.imageView.image = [UIImage imageNamed:product.imageStr];
     cell.descLabel.text = product.descLabel;
     cell.closeButton.hidden = YES;
+    cell.lightImage.hidden = NO;
     
     if (indexPath.row == (self.products.count - 1))
     {
@@ -337,8 +338,6 @@ static BOOL _isPoping;
                      [HttpRequest registerDeviceToServerProduct:logicIdXMLParser.logicId deviceName:deviceName type:logicIdXMLParser.deviceType success:^(AFHTTPRequestOperation *operation, id responseObject)
                       {
                           [self.addDeviceView removeFromSuperview];
-                          
-                          
                           
                           JYFurniture *furniture=[[JYFurniture alloc]init];
                           furniture.descLabel=deviceName;
