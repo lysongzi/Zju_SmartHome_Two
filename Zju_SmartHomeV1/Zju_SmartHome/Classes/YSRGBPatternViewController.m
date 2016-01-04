@@ -73,15 +73,22 @@
     NSLog(@"按返回按钮走这个方法了吧");
     if(self.tag_Back==2)
     {
+        NSLog(@"这里应该是从自定义模式返回的哦");
         //初始化默认模型数据
         [self initPatternData];
         //初始化scrollView
         [self initScrollView];
-        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.patterns.count - 2), 0)];
+        
+        //定位到新的添加模式
+        [self.scrollView setContentOffset:CGPointMake(self.cellWidth*(self.patterns.count-2), 0)];
+        //设置当前居中为新的添加模式，并更新背景和文字
+        self.selectedIndex=self.patterns.count-2;
+        [self updateCellBackground:(int)self.selectedIndex];
+        
     }
     else
     {
-        
+        NSLog(@"这里应该是修改模式背景图片返回来的");
     }
     
 }
@@ -399,6 +406,13 @@
     imageView.frame=CGRectMake(0, 500, 100, 100);
     imageView.image=image;
     [self.view addSubview:imageView];
+    
+    //1.应该先将图片存入数据库
+    
+    //2.然后重新加载更新
+    YSNewPattern *pattern=self.patterns[self.selectedIndex];
+    NSLog(@"dayin  %@",pattern.name);
+    pattern.bkgName=image;
 }
 //点击播放音乐的响应事件
 - (IBAction)musicClick:(id)sender

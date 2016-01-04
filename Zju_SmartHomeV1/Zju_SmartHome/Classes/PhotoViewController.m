@@ -351,6 +351,8 @@
     {
         if ([controller isKindOfClass:[YSRGBPatternViewController class]])
         {
+            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+            vc.tag_Back=2;
             [self.navigationController popToViewController:controller animated:YES];
         }
     }
