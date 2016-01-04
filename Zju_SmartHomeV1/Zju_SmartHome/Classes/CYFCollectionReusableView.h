@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol  CYFCollectionReusableViewDelegate<NSObject>
+
+@required
+
+
+@end
+
 @interface CYFCollectionReusableView : UICollectionReusableView
 //头部显示的view
 @property(nonatomic,strong)UIImageView *view;

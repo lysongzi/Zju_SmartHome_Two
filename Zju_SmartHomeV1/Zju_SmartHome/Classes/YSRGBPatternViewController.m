@@ -14,6 +14,7 @@
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
 #import "JYChangePatternBGController.h"
+#import "LYSImageStore.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -84,6 +85,7 @@
         //设置当前居中为新添加的模式，并更新背景和文字
         self.selectedIndex = self.patterns.count - 2;
         [self updateCellBackground:(int)self.selectedIndex];
+        self.tag_Back = 0;
     }
     else
     {
@@ -401,17 +403,22 @@
 -(void)changBG:(UIImage *)image
 {
     NSLog(@"回来修改背景图片了吧");
-    UIImageView *imageView=[[UIImageView alloc]init];
-    imageView.frame=CGRectMake(0, 500, 100, 100);
-    imageView.image=image;
-    [self.view addSubview:imageView];
     
-    //1.应该先将图片存入数据库
+    //为新图片创建一个标示文件名的值
+    NSUUID *uuid = [[NSUUID alloc] init];
+    NSString *imageName = [uuid UUIDString];
     
-    //2.然后重新加载更新
-    YSNewPattern *pattern=self.patterns[self.selectedIndex];
-    NSLog(@"dayin  %@",pattern.name);
-    pattern.bkgName=image;
+    //接下来存储改文件到本地，以及更新模型的数据
+    YSNewPattern *pattern = self.patterns[self.selectedIndex];
+    pattern.bkgName = imageName;
+    NSLog(@"%@ %@", pattern.bkgName, imageName);
+    [[LYSImageStore sharedStore] setImage:image forKey:imageName];
+    
+    //这里把该YSNewPattern更新到数据库
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    //这里显示图片
+    [self updateCellBackground:(int)self.selectedIndex];
 }
 //点击播放音乐的响应事件
 - (IBAction)musicClick:(id)sender
@@ -553,13 +560,32 @@
 //滑动到某个cell时更新视图的方法
 - (void)updateCellBackground:(int)index
 {
-    //NSLog(@"%@", [self.patterns[index] bkgName]);
+    NSLog(@"sleectt  %ld", (long)self.selectedIndex);
     self.patternNameLabel.text = [self.patterns[index] name];
     
     //如果是添加模式按钮则不修改图片
     if (index != self.patterns.count - 1)
     {
-        self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
+        //为默认模式，家在默认图片
+        if (self.selectedIndex < DEFAULT_CELL_NUMBER)
+        {
+            self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
+        }
+        //自定义图片加载自定义模式
+        else
+        {
+            YSNewPattern * selectedPattern = self.patterns[self.selectedIndex];
+            UIImage *image = [[LYSImageStore sharedStore] imageForKey:selectedPattern.bkgName];
+            
+            if (!image)
+            {
+                self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
+            }
+            else
+            {
+                self.bkgImageView.image = image;
+            }
+        }
     }
     
 }
