@@ -10,4 +10,6 @@
 
 @interface YSRGBPatternViewController : UIViewController
 @property(nonatomic,copy)NSString *logic_id;
+//标记是从哪里返回的
+@property(nonatomic,assign)int tag_Back;
 @end

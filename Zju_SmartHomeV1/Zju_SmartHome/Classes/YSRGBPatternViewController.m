@@ -13,12 +13,13 @@
 #import "DLLampControlRGBModeViewController.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
+#import "JYChangePatternBGController.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
 #define UISCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 
-@interface YSRGBPatternViewController ()<UIScrollViewDelegate>
+@interface YSRGBPatternViewController ()<UIScrollViewDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate,UINavigationControllerDelegate,ChangePatternBGDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *patternNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bkgImageView;
@@ -40,6 +41,11 @@
 //定义JYSqlite对象
 @property(nonatomic,strong)JYNewSqlite *jynewSqlite;
 
+
+//有关照片切换背景图的属性；
+@property (nonatomic,strong) UIPopoverController *imagePickerPopover;
+@property (nonatomic,strong) UIAlertController *alert;
+
 @end
 
 @implementation YSRGBPatternViewController
@@ -54,20 +60,36 @@
     
     [self.pictureButton setBackgroundImage:[UIImage imageNamed:@"zhaopianquse_icon_press"] forState:UIControlStateHighlighted];
     [self.musicButton setBackgroundImage:[UIImage imageNamed:@"music_icon_press"] forState:UIControlStateHighlighted];
+    
+    //初始化默认模型数据
+    [self initPatternData];
+    //初始化scrollView
+    [self initScrollView];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    //初始化默认模型数据
-    [self initPatternData];
+    NSLog(@"按返回按钮走这个方法了吧");
+    if(self.tag_Back==2)
+    {
+        //初始化默认模型数据
+        [self initPatternData];
+        //初始化scrollView
+        [self initScrollView];
+        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.patterns.count - 2), 0)];
+    }
+    else
+    {
+        
+    }
     
-    //初始化scrollView
-    [self initScrollView];
 }
 
 //初始化模式的数据
 - (void)initPatternData
 {
+    NSLog(@"初始化模式的数据");
     //初始化
     JYNewSqlite *jynewSqlite=[[JYNewSqlite alloc]init];
     jynewSqlite.patterns=[[NSMutableArray alloc]init];
@@ -124,6 +146,7 @@
 //初始化scrollView的内容
 - (void)initScrollView
 {
+    NSLog(@"初始化ScrollView");
     self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
     
     //清楚scrollView的子视图
@@ -298,8 +321,85 @@
 - (IBAction)pictureClick:(id)sender
 {
     NSLog(@"图片选择");
+    if ([self.imagePickerPopover isPopoverVisible]) {
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+        return;
+    }
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.editing = YES;
+    imagePicker.delegate=self;
+    //这里可以设置是否允许编辑图片；
+    imagePicker.allowsEditing = false;
+    
+    
+    /**
+     *  应该在这里让用户选择是打开摄像头还是图库；
+     */
+    //初始化提示框；
+    self.alert = [UIAlertController alertControllerWithTitle:@"请选择打开方式" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"照相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        //创建UIPopoverController对象前先检查当前设备是不是ipad
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+            self.imagePickerPopover.delegate = self;
+            [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
+                                            permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                            animated:YES];
+        }
+        else{
+            
+            //跳到ShowPhoto页面；
+            JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+            showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
+            showPhoto.delegate=self;
+            [self.navigationController pushViewController:showPhoto animated:true];
+        }
+    }]];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        
+        //创建UIPopoverController对象前先检查当前设备是不是ipad
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+            self.imagePickerPopover.delegate = self;
+            [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
+                                            permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                            animated:YES];
+        }
+        else{
+            //跳到ShowPhoto页面；
+            JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+            showPhoto.logic_id=self.logic_id;
+            showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;//从图库打开；
+            showPhoto.delegate=self;
+            [self.navigationController pushViewController:showPhoto animated:true];
+        }
+    }]];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //取消；
+    }]];
+    
+    //弹出提示框；
+    [self presentViewController:self.alert animated:true completion:nil];
 }
-
+//修改背景图片的代理方法
+-(void)changBG:(UIImage *)image
+{
+    NSLog(@"回来修改背景图片了吧");
+    UIImageView *imageView=[[UIImageView alloc]init];
+    imageView.frame=CGRectMake(0, 500, 100, 100);
+    imageView.image=image;
+    [self.view addSubview:imageView];
+}
 //点击播放音乐的响应事件
 - (IBAction)musicClick:(id)sender
 {
@@ -413,7 +513,7 @@
                                       [MBProgressHUD showError:@"请检查网关"];
                                       
                                   }];
-
+ 
     }
 }
 

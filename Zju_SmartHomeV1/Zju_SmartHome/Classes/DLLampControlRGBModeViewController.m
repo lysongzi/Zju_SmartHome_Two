@@ -40,6 +40,7 @@
 @property(nonatomic,assign)int tag;
 //开关标记
 @property(nonatomic,assign)int switchTag;
+
 //有关照片取色的属性；
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (nonatomic,strong) UIAlertController *alert;
@@ -637,6 +638,8 @@
     {
         if ([controller isKindOfClass:[YSRGBPatternViewController class]])
         {
+            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+            vc.tag_Back=2;
             [self.navigationController popToViewController:controller animated:YES];
         }
     }

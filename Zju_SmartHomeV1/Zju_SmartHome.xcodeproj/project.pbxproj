@@ -41,6 +41,8 @@
 		61726E631C33B08D000BF2C6 /* STHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61726E621C33B08D000BF2C6 /* STHomeView.m */; };
 		617C75C41C34BB0900E8AD6E /* DLLampControlRGBModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 617C75C21C34BB0900E8AD6E /* DLLampControlRGBModeViewController.m */; };
 		617C75C51C34BB0900E8AD6E /* DLLampControlRGBModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 617C75C31C34BB0900E8AD6E /* DLLampControlRGBModeViewController.xib */; };
+		617CCF591C39FE1100B08CFB /* JYChangePatternBGController.m in Sources */ = {isa = PBXBuildFile; fileRef = 617CCF571C39FE1100B08CFB /* JYChangePatternBGController.m */; };
+		617CCF5A1C39FE1100B08CFB /* JYChangePatternBGController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 617CCF581C39FE1100B08CFB /* JYChangePatternBGController.xib */; };
 		61D6068A1C2A2D4B0026E23D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D606891C2A2D4B0026E23D /* libsqlite3.tbd */; };
 		61D6068D1C2A2D930026E23D /* JYSqliteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6068C1C2A2D930026E23D /* JYSqliteViewController.m */; };
 		61E0439F1C38AC410048C3BA /* JYYWSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0439E1C38AC410048C3BA /* JYYWSqlite.m */; };
@@ -197,6 +199,9 @@
 		617C75C11C34BB0900E8AD6E /* DLLampControlRGBModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLampControlRGBModeViewController.h; sourceTree = "<group>"; };
 		617C75C21C34BB0900E8AD6E /* DLLampControlRGBModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLLampControlRGBModeViewController.m; sourceTree = "<group>"; };
 		617C75C31C34BB0900E8AD6E /* DLLampControlRGBModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLLampControlRGBModeViewController.xib; sourceTree = "<group>"; };
+		617CCF561C39FE1100B08CFB /* JYChangePatternBGController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYChangePatternBGController.h; sourceTree = "<group>"; };
+		617CCF571C39FE1100B08CFB /* JYChangePatternBGController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYChangePatternBGController.m; sourceTree = "<group>"; };
+		617CCF581C39FE1100B08CFB /* JYChangePatternBGController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYChangePatternBGController.xib; sourceTree = "<group>"; };
 		61D606891C2A2D4B0026E23D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		61D6068B1C2A2D930026E23D /* JYSqliteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSqliteViewController.h; sourceTree = "<group>"; };
 		61D6068C1C2A2D930026E23D /* JYSqliteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSqliteViewController.m; sourceTree = "<group>"; };
@@ -743,7 +748,6 @@
 		9D564DAE1BFF673E0062700D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9DBE55661C1EAFF300A91E6D /* Photo */,
 				6108792C1C145DF900890CC1 /* RGB&YW */,
 				9DFF737C1C09E9F40061EFBF /* temp */,
 				9D564DBB1BFF69A10062700D /* CYFFurnitureViewController.h */,
@@ -859,6 +863,7 @@
 				9D7D5A7B1BE4740100E1E1EF /* Login */,
 				446AF3361C0055BB0081C798 /* LeftSlideView */,
 				9D6568681BEBA04B006D9507 /* Main */,
+				9DBE55661C1EAFF300A91E6D /* Photo */,
 				9D564DAB1BFF67140062700D /* Furniture */,
 				9DDC64F11C25777E00C3872A /* Product */,
 			);
@@ -933,6 +938,9 @@
 				9DBE55641C1EAFF000A91E6D /* PhotoViewController.xib */,
 				9DBE55611C1EAFE800A91E6D /* PhotoViewController.h */,
 				9DBE55621C1EAFE800A91E6D /* PhotoViewController.m */,
+				617CCF561C39FE1100B08CFB /* JYChangePatternBGController.h */,
+				617CCF571C39FE1100B08CFB /* JYChangePatternBGController.m */,
+				617CCF581C39FE1100B08CFB /* JYChangePatternBGController.xib */,
 			);
 			name = Photo;
 			sourceTree = "<group>";
@@ -1159,6 +1167,7 @@
 				714854F11C127C300001347F /* CYFChangeMailViewController.xib in Resources */,
 				9D5FF5AB1BE9930B004371E5 /* JYRegister.xib in Resources */,
 				61645BBA1C10827E007462EC /* DLLampControllYWModeViewController.xib in Resources */,
+				617CCF5A1C39FE1100B08CFB /* JYChangePatternBGController.xib in Resources */,
 				9D4F31B41C3693930096B3FD /* STLeftSliderView.xib in Resources */,
 				7174E3A41BEFAEC500170AAA /* MBProgressHUD.bundle in Resources */,
 				712C524D1C0832900014F9CB /* QRCatchViewController.xib in Resources */,
@@ -1279,6 +1288,7 @@
 				9D564DBA1BFF68DD0062700D /* CYFCollectionReusableView.m in Sources */,
 				712C52441C08323B0014F9CB /* NSString+Tools.m in Sources */,
 				446AF3481C005BF10081C798 /* UIViewController+RESideMenu.m in Sources */,
+				617CCF591C39FE1100B08CFB /* JYChangePatternBGController.m in Sources */,
 				9D564D5B1BFEAD630062700D /* JYMainView.m in Sources */,
 				610879321C145F8F00890CC1 /* JYUpdateFurnitureName.m in Sources */,
 				9DEEFDA21C3773E900C33305 /* YSYWPatternViewController.m in Sources */,
