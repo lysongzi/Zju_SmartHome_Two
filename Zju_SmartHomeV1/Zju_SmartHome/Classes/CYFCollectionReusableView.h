@@ -10,7 +10,7 @@
 
 @interface CYFCollectionReusableView : UICollectionReusableView
 //头部显示的view
-@property(nonatomic,strong)UIView *view;
+@property(nonatomic,strong)UIImageView *view;
 //头部文字
 @property(nonatomic,strong)UILabel *title;
 @end

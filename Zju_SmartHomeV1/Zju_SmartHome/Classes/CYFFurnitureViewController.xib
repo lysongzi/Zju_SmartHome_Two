@@ -50,10 +50,10 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gZL-qr-1XX">
-                    <rect key="frame" x="18" y="533" width="284" height="30"/>
+                    <rect key="frame" x="18" y="539" width="284" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <state key="normal" title="添加智能区域" backgroundImage="圆角矩形-4">
+                    <state key="normal" backgroundImage="jiaju_btn_place_add">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <state key="selected" backgroundImage="圆角矩形-2@3x(1)"/>
@@ -68,7 +68,7 @@
     </objects>
     <resources>
         <image name="bg123" width="640" height="396"/>
+        <image name="jiaju_btn_place_add" width="270" height="25"/>
         <image name="圆角矩形-2@3x(1)" width="870" height="120"/>
-        <image name="圆角矩形-4" width="290" height="40"/>
     </resources>
 </document>

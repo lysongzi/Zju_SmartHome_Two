@@ -79,12 +79,11 @@
         //初始化scrollView
         [self initScrollView];
         
-        //定位到新的添加模式
-        [self.scrollView setContentOffset:CGPointMake(self.cellWidth*(self.patterns.count-2), 0)];
-        //设置当前居中为新的添加模式，并更新背景和文字
-        self.selectedIndex=self.patterns.count-2;
+        //定位到新添加的模式
+        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.patterns.count - 2), 0)];
+        //设置当前居中为新添加的模式，并更新背景和文字
+        self.selectedIndex = self.patterns.count - 2;
         [self updateCellBackground:(int)self.selectedIndex];
-        
     }
     else
     {
