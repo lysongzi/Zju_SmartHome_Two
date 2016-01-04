@@ -96,7 +96,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
 {
   if(!_headerArray)
   {
-    _headerArray = [[NSMutableArray alloc] initWithObjects:@"大厅",@"卧室", nil];
+    _headerArray = [[NSMutableArray alloc] initWithObjects:@"客厅",@"卧室", nil];
   }
   return _headerArray;
 }
@@ -106,7 +106,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
     if(!_imageArray)
     {
 //    _imageArray=[[NSMutableArray alloc]initWithObjects:@"single_btn_ac_off",@"single_btn_fridge_off",@"single_btn_tv_off",@"single_btn_rgb_on",@"single_btn_yw_off",@"equipment_add" ,nil];
-      _imageArray = [[NSMutableArray alloc]initWithObjects:@"single_btn_ac_off",@"single_btn_fridge_off",@"single_btn_tv_off",@"single_btn_rgb_off",@"single_btn_yw_off",@"single_btn_add" ,nil];
+      _imageArray = [[NSMutableArray alloc]initWithObjects:@"single_btn_fridge_off",@"single_btn_music_off",@"single_btn_tv_off",@"single_btn_rgb_off",@"single_btn_yw_off",@"single_btn_add" ,nil];
     }
     return _imageArray;
 }
@@ -115,7 +115,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
 {
     if(!_imageHighArray)
     {
-        _imageHighArray = [[NSMutableArray alloc]initWithObjects:@"single_btn_fridge_on",@"single_btn_fridge_on",@"single_btn_tv_on",@"single_btn_rgb_on",@"single_btn_yw_on",@"single_btn_add" ,nil];
+        _imageHighArray = [[NSMutableArray alloc]initWithObjects:@"single_btn_fridge_on",@"single_btn_music_on",@"single_btn_tv_on",@"single_btn_rgb_on",@"single_btn_yw_on",@"single_btn_add" ,nil];
     }
     return _imageHighArray;
 }
@@ -124,7 +124,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
 {
     if(!_descArray)
     {
-        _descArray = [[NSMutableArray alloc]initWithObjects:@"空调",@"冰箱",@"电视",@"RGB灯",@"YW灯",@"添加", nil];
+        _descArray = [[NSMutableArray alloc]initWithObjects:@"空调",@"音响",@"电视",@"RGB灯",@"YW灯",@"添加", nil];
     }
     return _descArray;
 }
@@ -285,9 +285,11 @@ static BOOL _isPoping;
     }
     
     //在这里设置ScrollView的高度
-    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height + self.addFurnitureButton.frame.size.height);
+    self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height + self.addFurnitureButton.frame.size.height + 10);
     
-    self.collectionView.frame = CGRectMake(GAP_WIDTH / 2, self.mainImageView.frame.size.height + GAP_HEIGHT, UISCREEN_WIDTH - GAP_WIDTH, self.collectionView.contentSize.height + GAP_HEIGHT);
+    float gap = GAP_WIDTH * (UISCREEN_WIDTH / 320);
+    NSLog(@"%f", gap);
+    self.collectionView.frame = CGRectMake((int)gap / 2 - 1, self.mainImageView.frame.size.height + GAP_HEIGHT, UISCREEN_WIDTH - (int)gap + 9, self.collectionView.contentSize.height + GAP_HEIGHT);
     
     //设置close按钮
     // 点击编辑按钮触发事件
@@ -333,7 +335,8 @@ static BOOL _isPoping;
 //设置section的header高度
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(self.collectionView.frame.size.width, 24);
+    float height = 42 * (UISCREEN_WIDTH / 320);
+    return CGSizeMake(self.collectionView.frame.size.width, height);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
