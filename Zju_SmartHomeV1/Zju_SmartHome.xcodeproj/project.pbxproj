@@ -66,6 +66,7 @@
 		9D1CB9D81C0B0F8600725A63 /* LogicIdXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9D71C0B0F8600725A63 /* LogicIdXMLParser.m */; };
 		9D1CB9DC1C0B0FA000725A63 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9DB1C0B0FA000725A63 /* HttpRequest.m */; };
 		9D1CB9DF1C0B0FDC00725A63 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9DE1C0B0FDC00725A63 /* Constants.m */; };
+		9D1EAE011C3A5B3B005EA4EC /* LYSImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1EAE001C3A5B3B005EA4EC /* LYSImageStore.m */; };
 		9D41EA601C33FEF400E31239 /* YSRGBPatternViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D41EA5E1C33FEF400E31239 /* YSRGBPatternViewController.m */; };
 		9D41EA611C33FEF400E31239 /* YSRGBPatternViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D41EA5F1C33FEF400E31239 /* YSRGBPatternViewController.xib */; };
 		9D41EA641C34077E00E31239 /* YSNewPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D41EA631C34077E00E31239 /* YSNewPattern.m */; };
@@ -243,6 +244,8 @@
 		9D1CB9DB1C0B0FA000725A63 /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		9D1CB9DD1C0B0FDC00725A63 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9D1CB9DE1C0B0FDC00725A63 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		9D1EADFF1C3A5B3B005EA4EC /* LYSImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LYSImageStore.h; path = ../../../../../ios_workspace/Homepwen/Homepwen/LYSImageStore.h; sourceTree = "<group>"; };
+		9D1EAE001C3A5B3B005EA4EC /* LYSImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LYSImageStore.m; path = ../../../../../ios_workspace/Homepwen/Homepwen/LYSImageStore.m; sourceTree = "<group>"; };
 		9D41EA5D1C33FEF400E31239 /* YSRGBPatternViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSRGBPatternViewController.h; sourceTree = "<group>"; };
 		9D41EA5E1C33FEF400E31239 /* YSRGBPatternViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSRGBPatternViewController.m; sourceTree = "<group>"; };
 		9D41EA5F1C33FEF400E31239 /* YSRGBPatternViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSRGBPatternViewController.xib; sourceTree = "<group>"; };
@@ -669,6 +672,8 @@
 				9D41EA631C34077E00E31239 /* YSNewPattern.m */,
 				61E043A01C38B0700048C3BA /* YSYWPattern.h */,
 				61E043A11C38B0700048C3BA /* YSYWPattern.m */,
+				9D1EADFF1C3A5B3B005EA4EC /* LYSImageStore.h */,
+				9D1EAE001C3A5B3B005EA4EC /* LYSImageStore.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1101,7 +1106,7 @@
 				TargetAttributes = {
 					9D7D5A401BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = 66F9B76GET;
+						DevelopmentTeam = R5G98FQWCS;
 					};
 					9D7D5A5C1BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -1297,6 +1302,7 @@
 				714854F01C127C300001347F /* CYFChangeMailViewController.m in Sources */,
 				71A7988E1C0D8C0B006F8D7B /* AllUtils.m in Sources */,
 				71E7A2EF1C1489B40091B86A /* CYFImageStore.m in Sources */,
+				9D1EAE011C3A5B3B005EA4EC /* LYSImageStore.m in Sources */,
 				61D6068D1C2A2D930026E23D /* JYSqliteViewController.m in Sources */,
 				446AF3241C0025C90081C798 /* SectionsViewController.m in Sources */,
 				9D41EA641C34077E00E31239 /* YSNewPattern.m in Sources */,
@@ -1488,7 +1494,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = lysongzi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1509,7 +1515,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = lysongzi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
