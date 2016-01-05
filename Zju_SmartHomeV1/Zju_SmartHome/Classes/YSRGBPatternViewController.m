@@ -172,10 +172,6 @@
     //清楚scrollView的子视图
     [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    //设置默认居中为第三个模式
-    self.scrollView.contentOffset = CGPointMake(self.cellWidth * 2, 0);
-    self.selectedIndex = 2;
-    
     self.scrollView.delegate = self;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.decelerationRate = 0.95f;
@@ -245,6 +241,9 @@
         [self.scrollView addSubview:view];
     }
     
+    //设置默认居中为第三个模式
+    [self.scrollView setContentOffset:CGPointMake(self.cellWidth * 2, 0) animated:YES];
+    self.selectedIndex = 2;
     //设置背景颜色和文字
     [self updateCellBackground:2];
 }
@@ -511,7 +510,52 @@
 //滑动的时候就会调用的函数，在这里写动画？
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //NSLog(@"scrollViewDidScroll");
+    NSLog(@"%f", self.scrollView.contentOffset.x);
+    
+    //处理每一个cell，计算它的缩放比例
+    for (int i = 0; i < self.cellsView.count; i++)
+    {
+        float lead = self.cellWidth * (i + 2);
+        float tail = self.cellWidth * (i + 3);
+        
+        //在屏幕左侧
+        if (self.scrollView.contentOffset.x > tail)
+        {
+            [self viewToScale:0.5 target:self.cellsView[i]];
+        }
+        //在屏幕右侧
+        else if ((self.scrollView.contentOffset.x + UISCREEN_WIDTH) < lead)
+        {
+            [self viewToScale:0.5 target:self.cellsView[i]];
+        }
+        //现在在界面上
+        else
+        {
+            float sub = lead - self.scrollView.contentOffset.x;
+            //前半部分
+            if (sub <= 2 * self.cellWidth)
+            {
+                float rate = sub / (2 * self.cellWidth) * 0.5 + 0.5;
+                rate = rate > 1.0 ? 1.0 : rate;
+                NSLog(@"%f", rate);
+                [self viewToScale:rate target:self.cellsView[i]];
+            }
+            else
+            {
+                float rate = (UISCREEN_WIDTH - sub - self.cellWidth) / (2 * self.cellWidth) * 0.5 + 0.5;
+                rate = rate > 1.0 ? 1.0 : rate;
+                [self viewToScale:rate target:self.cellsView[i]];
+            }
+        }
+    }
+}
+
+- (void)viewToScale:(float)scale target:(UIView *)view
+{
+    UIImageView *image = [[view subviews] lastObject];
+    [UIView beginAnimations:@"scale" context:nil];
+    image.transform = CGAffineTransformMakeScale(scale, scale);
+    [UIView commitAnimations];
 }
 
 //滑动动画结束时调用的函数

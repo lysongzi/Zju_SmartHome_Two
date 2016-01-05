@@ -24,7 +24,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mengban2" id="sMW-ts-fSn">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mengban" id="sMW-ts-fSn">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -61,7 +61,7 @@
         </view>
     </objects>
     <resources>
-        <image name="mengban2" width="320" height="568"/>
+        <image name="mengban" width="320" height="568"/>
         <image name="mingliang_bg" width="320" height="568"/>
         <image name="music_unpress" width="40" height="40"/>
         <image name="zhaopianquse_icon_unpress" width="37" height="37"/>

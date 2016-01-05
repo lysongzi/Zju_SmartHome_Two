@@ -38,7 +38,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    self.furnitureView.frame=CGRectMake(0, 0, (UISCREEN_WIDTH - 36)/ 3 - 0.5, (UISCREEN_WIDTH - 36)/ 3 - 0.5);
+    float gap = 36 * (UISCREEN_WIDTH / 320);
+    self.furnitureView.frame=CGRectMake(0, 0, (UISCREEN_WIDTH - gap)/ 3, (UISCREEN_WIDTH - gap)/ 3);
 }
 @end
