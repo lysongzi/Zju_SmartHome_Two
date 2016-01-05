@@ -50,11 +50,12 @@
 
 @implementation DLLampControllYWModeViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
   [super viewDidLoad];
+   NSLog(@"129183892138912  %@ %@",self.logic_id,self.furnitureName);
   
   self.tag=1;
-
   self.switchTag = 1;
  
     

@@ -36,6 +36,7 @@
 #import "CYFMainViewController.h"
 #import "JYUpdateFurnitureName.h"
 #import "YSRGBPatternViewController.h"
+#import "YSYWPatternViewController.h"
 
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define GAP_WIDTH 36
@@ -644,7 +645,12 @@ static BOOL _isPoping;
                          else if([furniture.deviceType isEqualToString:@"41"])
                          {
                              furniture.imageStr = self.imageHighArray[4];
-                             furniture.controller = [[DLLampControllYWModeViewController alloc]init];
+                             //furniture.controller = [[DLLampControllYWModeViewController alloc]init];
+                             YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                             vc.logic_id=furniture.logic_id;
+                             vc.furnitureName=furniture.descLabel;
+                             furniture.controller=vc;
+
                          }
                          else
                          {
@@ -744,7 +750,12 @@ static BOOL _isPoping;
                         }
                         else if([furniture.deviceType isEqualToString:@"41"])
                         {
-                            furniture.controller = [[DLLampControllYWModeViewController alloc]init];
+                            //furniture.controller = [[DLLampControllYWModeViewController alloc]init];
+                            YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                            vc.logic_id=furniture.logic_id;
+                            vc.furnitureName=furniture.descLabel;
+                            furniture.controller=vc;
+                            
                         }
                         else
                         {
@@ -776,7 +787,12 @@ static BOOL _isPoping;
                     else if([furniture.deviceType isEqualToString:@"41"])
                     {
                         furniture.imageStr=self.imageHighArray[4];
-                        furniture.controller=[[DLLampControllYWModeViewController alloc]init];
+                        //furniture.controller=[[DLLampControllYWModeViewController alloc]init];
+                        YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                        vc.logic_id=furniture.logic_id;
+                        vc.furnitureName=furniture.descLabel;
+                        furniture.controller=vc;
+
                     }
                     else
                     {
@@ -841,7 +857,12 @@ static BOOL _isPoping;
             else if([furniture.deviceType isEqualToString:@"41"])
             {
                 furniture.imageStr=self.imageHighArray[4];
-                furniture.controller=[[DLLampControllYWModeViewController alloc]init];
+               // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
+                YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                vc.logic_id=furniture.logic_id;
+                vc.furnitureName=furniture.descLabel;
+                furniture.controller=vc;
+
             }
             else
             {
@@ -901,7 +922,11 @@ static BOOL _isPoping;
                         }
                         else if([furniture.deviceType isEqualToString:@"41"])
                         {
-                            furniture.controller=[[DLLampControllYWModeViewController alloc]init];
+                            YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                            vc.logic_id=furniture.logic_id;
+                            vc.furnitureName=furniture.descLabel;
+                            furniture.controller=vc;
+                           // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
                         }
                         else
                         {

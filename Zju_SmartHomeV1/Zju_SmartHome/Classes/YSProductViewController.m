@@ -286,6 +286,7 @@ static BOOL _isPoping;
         {
             YSYWPatternViewController *ysVc = [[YSYWPatternViewController alloc] init];
             ysVc.logic_id = furniture.logic_id;
+            ysVc.furnitureName=furniture.descLabel;
             [self.navigationController pushViewController:ysVc animated:YES];
         }
         else

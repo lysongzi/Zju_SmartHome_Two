@@ -41,6 +41,9 @@
 //定义JYSqlite对象
 @property(nonatomic,strong)JYYWSqlite *jySqlite;
 
+//表名
+@property(nonatomic,copy)NSString *tableName;
+
 @end
 
 @implementation YSYWPatternViewController
@@ -49,6 +52,8 @@
 {
     [super viewDidLoad];
     [self setNaviBarItemButton];
+    NSLog(@"看看传递到YW界面的逻辑id和电器名称：%@ %@",self.logic_id,self.furnitureName);
+    self.tableName=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
     self.cellHeight = self.scrollView.frame.size.height;
@@ -77,26 +82,32 @@
     //打开数据库
     [self.jySqlite openDB];
     //创建表（如果已经存在时不会再创建的）
-    [self.jySqlite createTable];
+    //[self.jySqlite createTable];
+    [self.jySqlite createTable:self.tableName];
     //获取表中所有记录
-    [self.jySqlite getAllRecord];
+    //[self.jySqlite getAllRecord];
+    [self.jySqlite getAllRecord:self.tableName];
 
     if(self.jySqlite.patterns.count==0)
     {
         NSLog(@"暂时还没有数据");
+//        //柔和模式
+//        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"50"];
+        
         //柔和模式
-        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"50"];
+        [self.jySqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"50"];
         
         //舒适模式
-        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"56" andField5:@"gValue" field5Value:@"57"];
+        [self.jySqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"56" andField5:@"gValue" field5Value:@"57"];
         
         //明亮模式
-        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"明亮" andField2:@"logoName" field2Value:@"mingliang_icon" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"rValue" field4Value:@"10" andField5:@"gValue" field5Value:@"11" ];
+        [self.jySqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"明亮" andField2:@"logoName" field2Value:@"mingliang_icon" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"rValue" field4Value:@"10" andField5:@"gValue" field5Value:@"11" ];
         
         //跳跃模式
-        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"跳跃" andField2:@"logoName" field2Value:@"tiaoyue_icon" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"rValue" field4Value:@"11" andField5:@"gValue" field5Value:@"20"];
+        [self.jySqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"跳跃" andField2:@"logoName" field2Value:@"tiaoyue_icon" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"rValue" field4Value:@"11" andField5:@"gValue" field5Value:@"20"];
         
-        [self.jySqlite getAllRecord];
+        //[self.jySqlite getAllRecord];
+        [self.jySqlite getAllRecord:self.tableName];
         self.patterns=self.jySqlite.patterns;
         NSLog(@"长度%ld",self.patterns.count);
     }
@@ -107,7 +118,7 @@
     }
     
     //最后一个自定义按钮
-    [self.patterns addObject:[[YSYWPattern alloc] initWithName:@"自定义xiaoyueyue" logoName:@"zidingyi"]];
+    [self.patterns addObject:[[YSYWPattern alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
     NSLog(@"%ld", self.patterns.count);
 }
 
@@ -214,6 +225,7 @@
         NSLog(@"进入添加新模式的界面123456");
         DLLampControllYWModeViewController *ywVc=[[DLLampControllYWModeViewController alloc]init];
         ywVc.logic_id=self.logic_id;
+        ywVc.furnitureName=self.furnitureName;
         [self.navigationController pushViewController:ywVc animated:YES];
         
     }
@@ -251,7 +263,7 @@
     {
         return;
     }
-    
+     YSYWPattern *pattern=[self.patterns objectAtIndex:view.tag];
     //从模型中删除
     [self.patterns removeObjectAtIndex:view.tag];
     
@@ -279,6 +291,8 @@
     [self.cellsView removeObjectAtIndex:view.tag];
     //更新背景和文字
     [self updateCellBackground:(int)view.tag];
+    
+    [self.jySqlite deleteRecordWithName:pattern.name inTable:self.tableName];
 }
 
 //点击图片取色按钮的响应事件
@@ -437,7 +451,8 @@
 - (void)setNaviBarItemButton{
     
     UILabel *titleView = [[UILabel alloc]init];
-    [titleView setText:@"YW"];
+    //[titleView setText:@"YW"];
+    [titleView setText:self.furnitureName];
     titleView.frame = CGRectMake(0, 0, 100, 16);
     titleView.font = [UIFont systemFontOfSize:16];
     [titleView setTextColor:[UIColor whiteColor]];
