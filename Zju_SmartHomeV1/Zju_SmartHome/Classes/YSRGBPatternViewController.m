@@ -411,11 +411,10 @@
     //接下来存储改文件到本地，以及更新模型的数据
     YSNewPattern *pattern = self.patterns[self.selectedIndex];
     pattern.bkgName = imageName;
-    NSLog(@"%@ %@", pattern.bkgName, imageName);
+    NSLog(@"%@ %@ %@",pattern.name, pattern.bkgName, imageName);
     [[LYSImageStore sharedStore] setImage:image forKey:imageName];
     
-    //这里把该YSNewPattern更新到数据库
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    [self.jynewSqlite updateRecordBKGImage:pattern.name andNewBKGImage:imageName];
     
     //这里显示图片
     [self updateCellBackground:(int)self.selectedIndex];

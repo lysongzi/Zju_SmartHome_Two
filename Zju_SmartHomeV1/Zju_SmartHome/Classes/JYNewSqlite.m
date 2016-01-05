@@ -113,6 +113,26 @@
         }
     }
 }
+//更新背景图片
+-(void)updateRecordBKGImage:(NSString *)pattern andNewBKGImage:(NSString *)bkgName
+{
+    sqlite3_stmt *stmt = nil;
+    NSString *sql = [NSString stringWithFormat:@"update patternTable set bkgName = '%@' where name = '%@'", bkgName,pattern];
+    
+    NSLog(@"===%@",sql);
+    
+    if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
+    {
+        if (sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            //觉的应加一个判断, 若有这一行则修改
+            if (sqlite3_step(stmt) == SQLITE_DONE)
+            {
+                sqlite3_finalize(stmt);
+            }
+        }
+    }
+}
 
 //更新模式名称,模式logo,背景图片
 -(void)updateRecordByOldPatternName:(NSString *)oldPatternName andNewPatternName:(NSString *)newPatternName andLogoName:(NSString *)logoName andBkgName:(NSString *)BkgName

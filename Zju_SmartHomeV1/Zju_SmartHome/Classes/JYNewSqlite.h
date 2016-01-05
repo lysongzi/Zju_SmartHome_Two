@@ -28,6 +28,9 @@
 //更新rgb
 -(void)updateRecordByRGB:(NSString *)patternName rValue:(NSString *)rValue gValue:(NSString *)gValue bValue:(NSString *)bValue;
 
+//更新背景图片
+-(void)updateRecordBKGImage:(NSString *)pattern andNewBKGImage:(NSString *)bkgName;
+
 //更新模式名称,模式描述,背景图标识
 -(void)updateRecordByOldPatternName:(NSString *)oldPatternName andNewPatternName:(NSString *)newPatternName andLogoName:(NSString *)logoName andBkgName:(NSString *)BkgName;
 

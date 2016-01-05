@@ -35,6 +35,7 @@
 #import "DLLampControllYWModeViewController.h"
 #import "CYFMainViewController.h"
 #import "JYUpdateFurnitureName.h"
+#import "YSRGBPatternViewController.h"
 
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define GAP_WIDTH 36
@@ -727,7 +728,8 @@ static BOOL _isPoping;
             
                         if([furniture.deviceType isEqualToString:@"40"])
                         {
-                            furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
+                            //furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
+                            furniture.controller=[[YSRGBPatternViewController alloc]init];
                         }
                         else if([furniture.deviceType isEqualToString:@"41"])
                         {
@@ -753,7 +755,8 @@ static BOOL _isPoping;
                     if([furniture.deviceType isEqualToString:@"40"])
                     {
                         furniture.imageStr = self.imageHighArray[3];
-                        furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                        //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                        furniture.controller=[[YSRGBPatternViewController alloc]init];
                     }
                     else if([furniture.deviceType isEqualToString:@"41"])
                     {
@@ -814,7 +817,8 @@ static BOOL _isPoping;
             if([furniture.deviceType isEqualToString:@"40"])
             {
                 furniture.imageStr=self.imageHighArray[3];
-                furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                furniture.controller=[[YSRGBPatternViewController alloc]init];
             }
             else if([furniture.deviceType isEqualToString:@"41"])
             {
@@ -871,7 +875,8 @@ static BOOL _isPoping;
                         furniture.deviceType=furnitureBack.deviceType;
                         if([furniture.deviceType isEqualToString:@"40"])
                         {
-                            furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                            furniture.controller=[[YSRGBPatternViewController alloc]init];
+                            //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
                         }
                         else if([furniture.deviceType isEqualToString:@"41"])
                         {

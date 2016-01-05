@@ -872,6 +872,7 @@
 				446AF3361C0055BB0081C798 /* LeftSlideView */,
 				9D6568681BEBA04B006D9507 /* Main */,
 				9DBE55661C1EAFF300A91E6D /* Photo */,
+				61D606881C2A2CD20026E23D /* SQLite */,
 				9D564DAB1BFF67140062700D /* Furniture */,
 				9DDC64F11C25777E00C3872A /* Product */,
 			);
@@ -965,7 +966,6 @@
 		9DDC64F11C25777E00C3872A /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				61D606881C2A2CD20026E23D /* SQLite */,
 				61D606831C2A2BAE0026E23D /* Products */,
 				9D41EA511C33D74400E31239 /* Pattern */,
 				9DE6E1731C2B97750035E8DC /* RGB&YW */,
@@ -1109,7 +1109,7 @@
 				TargetAttributes = {
 					9D7D5A401BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = 66F9B76GET;
+						DevelopmentTeam = R5AC98T9N7;
 					};
 					9D7D5A5C1BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -1496,7 +1496,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangqifei1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1517,7 +1517,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = zhangqifei1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
