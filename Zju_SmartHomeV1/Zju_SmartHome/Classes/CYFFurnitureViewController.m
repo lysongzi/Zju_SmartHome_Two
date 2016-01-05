@@ -607,7 +607,8 @@ static BOOL _isPoping;
                          
                          if([furniture.deviceType isEqualToString:@"40"])
                          {
-                             furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
+                             //furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
+                             furniture.controller=[[YSRGBPatternViewController alloc]init];
                          }
                          else if([furniture.deviceType isEqualToString:@"41"])
                          {

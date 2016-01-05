@@ -279,6 +279,7 @@ static BOOL _isPoping;
         {
             YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
             ysVc.logic_id=furniture.logic_id;
+            ysVc.furnitureName=furniture.descLabel;
             [self.navigationController pushViewController:ysVc animated:YES];
         }
         else if([furniture.deviceType isEqualToString:@"41"])

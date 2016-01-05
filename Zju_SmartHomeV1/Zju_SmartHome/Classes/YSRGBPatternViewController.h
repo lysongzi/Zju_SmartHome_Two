@@ -12,4 +12,6 @@
 @property(nonatomic,copy)NSString *logic_id;
 //标记是从哪里返回的
 @property(nonatomic,assign)int tag_Back;
+
+@property(nonatomic,copy)NSString *furnitureName;
 @end

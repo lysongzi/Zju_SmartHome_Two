@@ -593,7 +593,8 @@
 - (void)setNaviBarItemButton{
     
     UILabel *titleView = [[UILabel alloc]init];
-    [titleView setText:@"RGB"];
+    //[titleView setText:@"RGB"];
+    [titleView setText:self.furnitureName];
     titleView.frame = CGRectMake(0, 0, 100, 16);
     titleView.font = [UIFont systemFontOfSize:16];
     [titleView setTextColor:[UIColor whiteColor]];
