@@ -52,7 +52,7 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"控制rgb灯的界面逻辑id值和模式值传递过来了吗?%@ %@",self.logic_id,self.patternName);
+    NSLog(@"控制rgb灯的界面逻辑id值和电器名称和模式值传递过来了吗?%@ %@ %@",self.logic_id,self.furnitureName,self.patternName);
   [super viewDidLoad];
     self.view.backgroundColor=[UIColor blackColor];
    //设置导航条
@@ -441,6 +441,8 @@
 
       //跳到ShowPhoto页面；
       PhotoViewController *showPhoto = [[PhotoViewController alloc] init];
+      showPhoto.logic_id=self.logic_id;
+      showPhoto.furnitureName=self.furnitureName;
       showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
       [self.navigationController pushViewController:showPhoto animated:true];
     }
@@ -462,6 +464,7 @@
       //跳到ShowPhoto页面；
       PhotoViewController *showPhoto = [[PhotoViewController alloc] init];
       showPhoto.logic_id=self.logic_id;
+        showPhoto.furnitureName=self.furnitureName;
       showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;//从图库打开；
       [self.navigationController pushViewController:showPhoto animated:true];
     }
@@ -627,12 +630,13 @@
     //打开数据库
     [jySqlite openDB];
     //创建表（如果已经存在时不会再创建的）
-    [jySqlite createTable];
+    //[jySqlite createTable];
     //获取表中所有记录
-    [jySqlite getAllRecord];
-    
+    //[jySqlite getAllRecord];
+    NSString *temp=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
+    NSLog(@"jsdahskgahjd  %@",temp);
     //柔和模式
-    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:newSceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
+    [jySqlite insertRecordIntoTableName:temp withField1:@"name" field1Value:newSceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
     
     for (UIViewController *controller in self.navigationController.viewControllers)
     {

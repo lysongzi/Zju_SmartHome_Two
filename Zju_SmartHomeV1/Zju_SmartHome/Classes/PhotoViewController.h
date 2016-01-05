@@ -13,6 +13,8 @@
 //电灯操作页面传递过来的类型，是打开照相机还是图库；
 @property(nonatomic,assign)UIImagePickerControllerSourceType openType;
 
+//逻辑id
 @property(nonatomic,copy)NSString *logic_id;
-
+//电器名称
+@property(nonatomic,copy)NSString *furnitureName;
 @end

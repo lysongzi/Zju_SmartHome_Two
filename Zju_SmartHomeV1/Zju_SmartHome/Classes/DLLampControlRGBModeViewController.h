@@ -18,6 +18,8 @@
 @interface DLLampControlRGBModeViewController : UIViewController
 //逻辑id
 @property(nonatomic,copy)NSString *logic_id;
+//电器名称
+@property(nonatomic,copy)NSString *furnitureName;
 //模式名称
 @property(nonatomic,copy)NSString *patternName;
 

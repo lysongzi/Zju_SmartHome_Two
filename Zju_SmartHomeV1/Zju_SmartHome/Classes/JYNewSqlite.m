@@ -21,7 +21,6 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDir=[paths objectAtIndex:0];
-    NSLog(@"我看看路径%@",documentDir);
     return [documentDir stringByAppendingPathComponent:@"/patternTest.sqlite"];
 }
 
@@ -52,7 +51,24 @@
         NSLog(@"创建模式表失败%s",errorMesg);
     }
 }
-
+//根据不同电器创建不同表
+-(void)createTable:(NSString *)tableName
+{
+   // NSString *sql=@"create TABLE if not EXISTS patternTable(name NSString,logoName NSString,bkgName NSString,rValue NSString,gValue NSString,bValue NSString);";
+    
+    NSString *sql=[NSString stringWithFormat:@"create TABLE if not EXISTS %@(name NSString,logoName NSString,bkgName NSString,rValue NSString,gValue NSString,bValue NSString);",tableName];
+    NSLog(@"看看创建表的sql语句%@",tableName);
+    char *errorMesg=NULL;
+    int result=sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorMesg);
+    if(result==SQLITE_OK)
+    {
+        NSLog(@"创建模式表成功");
+    }
+    else
+    {
+        NSLog(@"创建模式表失败%s",errorMesg);
+    }
+}
 //插入数据的方法
 -(void)insertRecordIntoTableName:(NSString *)tableName
                       withField1:(NSString *)field1 field1Value:(NSString *)field1Value
@@ -77,10 +93,10 @@
 }
 
 //删除数据
--(void)deleteRecordWithName:(NSString *)patternName
+-(void)deleteRecordWithName:(NSString *)patternName inTable:(NSString *)tableName
 {
     sqlite3_stmt *stmt;
-    NSString *sql = [NSString stringWithFormat:@"delete from patternTable where name = '%@'", patternName];
+    NSString *sql = [NSString stringWithFormat:@"delete from %@ where name = '%@'",tableName, patternName];
     
     if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, nil) == SQLITE_OK)
     {
@@ -93,11 +109,11 @@
         }
     }
 }
-//更新rgb
--(void)updateRecordByRGB:(NSString *)patternName rValue:(NSString *)rValue gValue:(NSString *)gValue bValue:(NSString *)bValue
+
+-(void)updateRecordByRGB:(NSString *)patternName rValue:(NSString *)rValue gValue:(NSString *)gValue bValue:(NSString *)bValue inTable:(NSString *)tableName
 {
     sqlite3_stmt *stmt = nil;
-    NSString *sql = [NSString stringWithFormat:@"update patternTable set rValue = '%@',gValue='%@',bValue='%@'  where name = '%@'", rValue,gValue,bValue,patternName];
+    NSString *sql = [NSString stringWithFormat:@"update %@ set rValue = '%@',gValue='%@',bValue='%@'  where name = '%@'",tableName, rValue,gValue,bValue,patternName];
     
     NSLog(@"===%@",sql);
     
@@ -114,10 +130,10 @@
     }
 }
 //更新背景图片
--(void)updateRecordBKGImage:(NSString *)pattern andNewBKGImage:(NSString *)bkgName
+-(void)updateRecordBKGImage:(NSString *)pattern andNewBKGImage:(NSString *)bkgName inTable:(NSString *)tableName
 {
     sqlite3_stmt *stmt = nil;
-    NSString *sql = [NSString stringWithFormat:@"update patternTable set bkgName = '%@' where name = '%@'", bkgName,pattern];
+      NSString *sql = [NSString stringWithFormat:@"update %@ set bkgName = '%@' where name = '%@'",tableName,bkgName,pattern];
     
     NSLog(@"===%@",sql);
     
@@ -134,33 +150,12 @@
     }
 }
 
-//更新模式名称,模式logo,背景图片
--(void)updateRecordByOldPatternName:(NSString *)oldPatternName andNewPatternName:(NSString *)newPatternName andLogoName:(NSString *)logoName andBkgName:(NSString *)BkgName
-{
-    sqlite3_stmt *stmt = nil;
-    NSString *sql = [NSString stringWithFormat:@"update patternTable set name = '%@',logoName='%@',bkgName='%@'  where name = '%@'", newPatternName,logoName,BkgName,oldPatternName];
-    
-    NSLog(@"===%@",sql);
-    
-    if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
-    {
-        if (sqlite3_step(stmt) == SQLITE_ROW)
-        {
-            //觉的应加一个判断, 若有这一行则修改
-            if (sqlite3_step(stmt) == SQLITE_DONE)
-            {
-                sqlite3_finalize(stmt);
-            }
-        }
-    }
-    
-}
-
-//查询数据
--(void)getAllRecord
+//从表中查询所有数据
+-(void)getAllRecordFromTable:(NSString *)tableName
 {
     //NSLog(@"***************查询所有数据********************");
-    NSString *sql=@"SELECT * FROM patternTable";
+    //NSString *sql=@"SELECT * FROM patternTable";
+     NSString *sql=[NSString stringWithFormat:@"SELECT * FROM %@",tableName];
     sqlite3_stmt *statement;
     
     if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil)==SQLITE_OK)
@@ -185,7 +180,7 @@
             char *b =(char *)sqlite3_column_text(statement, 5);
             NSString *bValue=[[NSString alloc]initWithUTF8String:b];
             
-
+            
             YSNewPattern *newPattern=[[YSNewPattern alloc]init];
             newPattern.name=patternName;
             newPattern.logoName=logoName1;
@@ -196,8 +191,9 @@
             [self.patterns addObject:newPattern];
             NSLog(@"====%@",newPattern.name);
         }
-         NSLog(@"==%ld",self.patterns.count);
+        NSLog(@"==%ld",self.patterns.count);
     }
 }
+
 
 @end

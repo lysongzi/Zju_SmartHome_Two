@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface YSRGBPatternViewController : UIViewController
+//逻辑id
 @property(nonatomic,copy)NSString *logic_id;
+//电器名称
+@property(nonatomic,copy)NSString *furnitureName;
+
 //标记是从哪里返回的
 @property(nonatomic,assign)int tag_Back;
-
-@property(nonatomic,copy)NSString *furnitureName;
 @end

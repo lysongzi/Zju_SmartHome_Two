@@ -401,6 +401,7 @@ static BOOL _isPoping;
                 DLLampControlGuestModeViewController *dlVc = (DLLampControlGuestModeViewController *)furniture.controller;
                 dlVc.logic_id = furniture.logic_id;
                 [self.navigationController pushViewController:dlVc animated:YES];
+                
             }
             //设备为YW灯，则进入YW控制界面
             else if([furniture.deviceType isEqualToString:@"41"])
@@ -608,7 +609,10 @@ static BOOL _isPoping;
                          if([furniture.deviceType isEqualToString:@"40"])
                          {
                              //furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
-                             furniture.controller=[[YSRGBPatternViewController alloc]init];
+                             YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                             vc.logic_id=furniture.logic_id;
+                             vc.furnitureName=furniture.descLabel;
+                             furniture.controller=vc;
                          }
                          else if([furniture.deviceType isEqualToString:@"41"])
                          {
@@ -627,12 +631,15 @@ static BOOL _isPoping;
                          furniture.logic_id = logicIdXMLParser.logicId;
                          furniture.deviceType = logicIdXMLParser.deviceType;
                          
-                         NSLog(@"add llll");
                          
                          if([furniture.deviceType isEqualToString:@"40"])
                          {
                              furniture.imageStr = self.imageHighArray[3];
-                             furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
+                             
+                             YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                             vc.logic_id=furniture.logic_id;
+                             vc.furnitureName=furniture.descLabel;
+                             furniture.controller = vc;
                          }
                          else if([furniture.deviceType isEqualToString:@"41"])
                          {
@@ -730,7 +737,10 @@ static BOOL _isPoping;
                         if([furniture.deviceType isEqualToString:@"40"])
                         {
                             //furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
-                            furniture.controller=[[YSRGBPatternViewController alloc]init];
+                            YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                            vc.logic_id=furniture.logic_id;
+                            vc.furnitureName=furniture.descLabel;
+                            furniture.controller=vc;
                         }
                         else if([furniture.deviceType isEqualToString:@"41"])
                         {
@@ -757,7 +767,11 @@ static BOOL _isPoping;
                     {
                         furniture.imageStr = self.imageHighArray[3];
                         //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
-                        furniture.controller=[[YSRGBPatternViewController alloc]init];
+                        
+                        YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                        vc.logic_id=furniture.logic_id;
+                        vc.furnitureName=furniture.descLabel;
+                        furniture.controller=vc;
                     }
                     else if([furniture.deviceType isEqualToString:@"41"])
                     {
@@ -819,7 +833,10 @@ static BOOL _isPoping;
             {
                 furniture.imageStr=self.imageHighArray[3];
                 //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
-                furniture.controller=[[YSRGBPatternViewController alloc]init];
+                YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                vc.logic_id=furniture.logic_id;
+                vc.furnitureName=furniture.descLabel;
+                furniture.controller=vc;
             }
             else if([furniture.deviceType isEqualToString:@"41"])
             {
@@ -876,7 +893,10 @@ static BOOL _isPoping;
                         furniture.deviceType=furnitureBack.deviceType;
                         if([furniture.deviceType isEqualToString:@"40"])
                         {
-                            furniture.controller=[[YSRGBPatternViewController alloc]init];
+                            YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                            vc.logic_id=furniture.logic_id;
+                            vc.furnitureName=furniture.descLabel;
+                            furniture.controller=vc;
                             //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
                         }
                         else if([furniture.deviceType isEqualToString:@"41"])
