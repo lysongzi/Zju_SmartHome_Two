@@ -289,8 +289,7 @@ static BOOL _isPoping;
     self.mainScrollView.contentSize = CGSizeMake(UISCREEN_WIDTH, self.mainImageView.frame.size.height + self.collectionView.contentSize.height + self.addFurnitureButton.frame.size.height + 10);
     
     float gap = GAP_WIDTH * (UISCREEN_WIDTH / 320);
-    NSLog(@"%f", gap);
-    self.collectionView.frame = CGRectMake((int)gap / 2 - 1, self.mainImageView.frame.size.height + GAP_HEIGHT, UISCREEN_WIDTH - (int)gap + 9, self.collectionView.contentSize.height + GAP_HEIGHT);
+    self.collectionView.frame = CGRectMake((int)gap / 2, self.mainImageView.frame.size.height + GAP_HEIGHT, UISCREEN_WIDTH - (int)gap, self.collectionView.contentSize.height + GAP_HEIGHT);
     
     //设置close按钮
     // 点击编辑按钮触发事件
@@ -324,7 +323,8 @@ static BOOL _isPoping;
 //设置每一个item的宽度，高度
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((UISCREEN_WIDTH - GAP_WIDTH) / SECTION_COLUMN - 0.5, (UISCREEN_WIDTH - GAP_WIDTH) / SECTION_COLUMN - 0.5);
+    float gap = GAP_WIDTH * (UISCREEN_WIDTH / 320);
+    return CGSizeMake((UISCREEN_WIDTH - (int)gap) / SECTION_COLUMN, (UISCREEN_WIDTH - (int)gap) / SECTION_COLUMN);
 }
 
 //设置间距
