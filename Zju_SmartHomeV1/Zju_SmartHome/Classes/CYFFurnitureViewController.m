@@ -37,6 +37,7 @@
 #import "JYUpdateFurnitureName.h"
 #import "YSRGBPatternViewController.h"
 #import "YSYWPatternViewController.h"
+#import "YSSceneViewController.h"
 
 #define UISCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define GAP_WIDTH 36
@@ -252,10 +253,26 @@ static BOOL _isPoping;
     CYFCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
   
     JYFurnitureSection *furnitureSection=[self.furnitureSecArray objectAtIndex:indexPath.section];
-  
+    
     view.title.text=furnitureSection.sectionName;
-  
+    view.tag = indexPath.section;
+    
+    //添加点击事件
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTap:)];
+    [view addGestureRecognizer:tap];
+    
     return view;
+}
+
+- (void)headerTap:(UITapGestureRecognizer *)gr
+{
+    CYFCollectionReusableView *view = (CYFCollectionReusableView *)gr.view;
+    NSInteger tag = view.tag;
+    JYFurnitureSection *furnitureSection=[self.furnitureSecArray objectAtIndex:tag];
+    
+    YSSceneViewController *svc = [[YSSceneViewController alloc] init];
+    svc.sectionName = furnitureSection.sectionName;
+    [self.navigationController pushViewController:svc animated:YES];
 }
 
 //每一部分有多少个item

@@ -56,9 +56,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"gujinyue %@ %@",self.furnitureName,self.logic_id);
+    //NSLog(@"gujinyue %@ %@",self.furnitureName,self.logic_id);
     self.tableName=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
-    NSLog(@"我先看看表的名字:%@",self.tableName);
+    //NSLog(@"我先看看表的名字:%@",self.tableName);
     [self setNaviBarItemButton];
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
@@ -79,7 +79,7 @@
     NSLog(@"按返回按钮走这个方法了吧");
     if(self.tag_Back==2)
     {
-        NSLog(@"这里应该是从自定义模式返回的哦");
+        //NSLog(@"这里应该是从自定义模式返回的哦");
         //初始化默认模型数据
         [self initPatternData];
         //初始化scrollView
@@ -102,7 +102,6 @@
 //初始化模式的数据
 - (void)initPatternData
 {
-    NSLog(@"初始化模式的数据");
     //初始化
     JYNewSqlite *jynewSqlite=[[JYNewSqlite alloc]init];
     jynewSqlite.patterns=[[NSMutableArray alloc]init];
@@ -115,16 +114,11 @@
     [self.jynewSqlite createTable:self.tableName];
     
     //获取表中所有记录
-    //[self.jynewSqlite getAllRecord];
     [self.jynewSqlite getAllRecordFromTable:self.tableName];
     
     //self.patterns=jySqlite.patterns;
     if(self.jynewSqlite.patterns.count == 0)
     {
-        NSLog(@"暂时还没有数据");
-        //柔和模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"254" andField6:@"bValue" field6Value:@"253"];
-//
         [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"254" andField6:@"bValue" field6Value:@"253"];
         
 
@@ -156,7 +150,6 @@
     {
         NSLog(@"已经有数据了");
         self.patterns=self.jynewSqlite.patterns;
-        //NSLog(@"长度%ld",self.patterns.count);
     }
     
     //最后一个自定义按钮
@@ -166,7 +159,6 @@
 //初始化scrollView的内容
 - (void)initScrollView
 {
-    NSLog(@"初始化ScrollView");
     self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
     
     //清楚scrollView的子视图
@@ -297,7 +289,6 @@
 //向上滑动删除
 - (void)swipeToDeletePattern:(UIGestureRecognizer *)gr
 {
-    NSLog(@"向上滑动删除函数进来了");
     UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
@@ -310,9 +301,8 @@
     //从模型中删除
     [self.patterns removeObjectAtIndex:view.tag];
     
+    NSLog(@"删除 view.tag : %ld", (long)view.tag);
     [self.cellsView[view.tag] setHidden:YES];
-    
-    NSLog(@"%ld %ld", view.tag, self.cellsView.count);
     
     UIView * changeView;
     for (long i = view.tag + 1; i < self.cellsView.count; i++)
@@ -332,6 +322,8 @@
     
     //移除该cell的视图
     [self.cellsView removeObjectAtIndex:view.tag];
+    //更新scrollview的内容宽度
+    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
     //更新背景和文字
     [self updateCellBackground:(int)view.tag];
     
@@ -343,7 +335,6 @@
 //点击图片取色按钮的响应事件
 - (IBAction)pictureClick:(id)sender
 {
-    NSLog(@"图片选择");
     if ([self.imagePickerPopover isPopoverVisible]) {
         [self.imagePickerPopover dismissPopoverAnimated:YES];
         self.imagePickerPopover = nil;
@@ -417,8 +408,6 @@
 //修改背景图片的代理方法
 -(void)changBG:(UIImage *)image
 {
-    NSLog(@"回来修改背景图片了吧");
-    
     //为新图片创建一个标示文件名的值
     NSUUID *uuid = [[NSUUID alloc] init];
     NSString *imageName = [uuid UUIDString];
@@ -426,7 +415,7 @@
     //接下来存储改文件到本地，以及更新模型的数据
     YSNewPattern *pattern = self.patterns[self.selectedIndex];
     pattern.bkgName = imageName;
-    NSLog(@"%@ %@ %@",pattern.name, pattern.bkgName, imageName);
+    //NSLog(@"%@ %@ %@",pattern.name, pattern.bkgName, imageName);
     [[LYSImageStore sharedStore] setImage:image forKey:imageName];
     
     //[self.jynewSqlite updateRecordBKGImage:pattern.name andNewBKGImage:imageName];
@@ -450,12 +439,6 @@
     
     //然后添加到scrollView中
     //待定
-}
-
-- (void)deletePatternFromScrollView:(YSNewPattern *)pattern
-{
-    //从模型中删除
-    [self.patterns removeObjectAtIndex:self.selectedIndex];
 }
 
 #pragma mark - UIScrollViewDelegate 协议的实现
@@ -484,13 +467,12 @@
         //变得太快了
         [self updateCellBackground:0];
         YSNewPattern *pattern=self.patterns[0];
-        NSLog(@"lllssdsdds %@,%@,%@",pattern.name,pattern.rValue,pattern.bValue);
+        
         NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
         NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.gValue intValue]]];
         
         NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.bValue intValue]]];
         
-        // NSLog(@"---- %@ %@ %@ %@",self.logic_id,r,g,b);
         
         [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -510,8 +492,6 @@
 //滑动的时候就会调用的函数，在这里写动画？
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //NSLog(@"%f", self.scrollView.contentOffset.x);
-    
     //处理每一个cell，计算它的缩放比例
     for (int i = 0; i < self.cellsView.count; i++)
     {
@@ -521,12 +501,12 @@
         //在屏幕左侧
         if (self.scrollView.contentOffset.x > tail)
         {
-            [self viewToScale:0.5 target:self.cellsView[i]];
+            [self viewToScale:0.6 target:self.cellsView[i]];
         }
         //在屏幕右侧
         else if ((self.scrollView.contentOffset.x + UISCREEN_WIDTH) < lead)
         {
-            [self viewToScale:0.5 target:self.cellsView[i]];
+            [self viewToScale:0.6 target:self.cellsView[i]];
         }
         //现在在界面上
         else
@@ -535,14 +515,13 @@
             //前半部分
             if (sub <= 2 * self.cellWidth)
             {
-                float rate = sub / (2 * self.cellWidth) * 0.5 + 0.5;
+                float rate = sub / (2 * self.cellWidth) * 0.5 + 0.6;
                 rate = rate > 1.0 ? 1.0 : rate;
-                NSLog(@"%f", rate);
                 [self viewToScale:rate target:self.cellsView[i]];
             }
             else
             {
-                float rate = (UISCREEN_WIDTH - sub - self.cellWidth) / (2 * self.cellWidth) * 0.5 + 0.5;
+                float rate = (UISCREEN_WIDTH - sub - self.cellWidth) / (2 * self.cellWidth) * 0.5 + 0.6;
                 rate = rate > 1.0 ? 1.0 : rate;
                 [self viewToScale:rate target:self.cellsView[i]];
             }
@@ -563,18 +542,15 @@
 {
     //根据居中的选项更新背景和文字
     [self updateCellBackground:(int)self.selectedIndex];
-    //[self openGesture];
     [self.scrollView setUserInteractionEnabled:YES];
     
     YSNewPattern *pattern=self.patterns[(int)self.selectedIndex];
-   // NSLog(@"我看看划到的是哪个模式:%@ %@ %@ %@,这里进行灯的控制请求",pattern.name,pattern.rValue,pattern.gValue,pattern.bValue);
     
     NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
     NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.gValue intValue]]];
     
     NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.bValue intValue]]];
     
-   // NSLog(@"---- %@ %@ %@ %@",self.logic_id,r,g,b);
     if([pattern.name isEqualToString:@"自定义"])
     {
         
@@ -614,13 +590,11 @@
     
     //选定某个模式，进行模式更新等操作
     self.selectedIndex = index;
-    //[self updateCellBackground:index];
 }
 
 //滑动到某个cell时更新视图的方法
 - (void)updateCellBackground:(int)index
 {
-    NSLog(@"sleectt  %ld", (long)self.selectedIndex);
     self.patternNameLabel.text = [self.patterns[index] name];
     
     //如果是添加模式按钮则不修改图片
@@ -630,10 +604,12 @@
         if (self.selectedIndex < DEFAULT_CELL_NUMBER)
         {
             self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
+            self.pictureButton.enabled = NO;
         }
         //自定义图片加载自定义模式
         else
         {
+            self.pictureButton.enabled = YES;
             YSNewPattern * selectedPattern = self.patterns[self.selectedIndex];
             UIImage *image = [[LYSImageStore sharedStore] imageForKey:selectedPattern.bkgName];
             
@@ -646,6 +622,11 @@
                 self.bkgImageView.image = image;
             }
         }
+    }
+    else
+    {
+        //自定义设置图片取色不可用
+        self.pictureButton.enabled = NO;
     }
     
 }
@@ -685,21 +666,18 @@
 {
     //0表示为关灯状态，1表示开灯状态
     UIButton *swichButton = (UIButton *)sender;
-    //NSLog(@"%ld", swichButton.tag);
     
     //关灯变开灯
     if (!swichButton.tag)
     {
         swichButton.tag = 1;
         [swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-unpress"] forState:UIControlStateNormal];
-        //[swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-press"]];
     }
     //开灯变关灯
     else
     {
         swichButton.tag = 0;
         [swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-press"] forState:UIControlStateNormal];
-        //[swichButton setImage:[UIImage imageNamed:@"ct_icon_switch-unpress"]];
     }
 }
 

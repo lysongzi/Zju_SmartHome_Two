@@ -63,6 +63,9 @@
 		71DD8D671C0F1F3C000E1639 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD8D661C0F1F3C000E1639 /* QuartzCore.framework */; };
 		71DD8E151C102812000E1639 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 71DD8E141C102812000E1639 /* Reachability.m */; };
 		71E7A2EF1C1489B40091B86A /* CYFImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7A2EE1C1489B40091B86A /* CYFImageStore.m */; };
+		9D1B1BAC1C3CFD6B0048B8A3 /* YSScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B1BA81C3CFD6B0048B8A3 /* YSScene.m */; };
+		9D1B1BAD1C3CFD6B0048B8A3 /* YSSceneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B1BAA1C3CFD6B0048B8A3 /* YSSceneViewController.m */; };
+		9D1B1BAE1C3CFD6B0048B8A3 /* YSSceneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D1B1BAB1C3CFD6B0048B8A3 /* YSSceneViewController.xib */; };
 		9D1CB9D81C0B0F8600725A63 /* LogicIdXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9D71C0B0F8600725A63 /* LogicIdXMLParser.m */; };
 		9D1CB9DC1C0B0FA000725A63 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9DB1C0B0FA000725A63 /* HttpRequest.m */; };
 		9D1CB9DF1C0B0FDC00725A63 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CB9DE1C0B0FDC00725A63 /* Constants.m */; };
@@ -239,6 +242,11 @@
 		71E7A2ED1C1489B40091B86A /* CYFImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYFImageStore.h; sourceTree = "<group>"; };
 		71E7A2EE1C1489B40091B86A /* CYFImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYFImageStore.m; sourceTree = "<group>"; };
 		88554DE0CE3743A8B110C726 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D1B1BA71C3CFD6B0048B8A3 /* YSScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSScene.h; sourceTree = "<group>"; };
+		9D1B1BA81C3CFD6B0048B8A3 /* YSScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSScene.m; sourceTree = "<group>"; };
+		9D1B1BA91C3CFD6B0048B8A3 /* YSSceneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSSceneViewController.h; sourceTree = "<group>"; };
+		9D1B1BAA1C3CFD6B0048B8A3 /* YSSceneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSSceneViewController.m; sourceTree = "<group>"; };
+		9D1B1BAB1C3CFD6B0048B8A3 /* YSSceneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSSceneViewController.xib; sourceTree = "<group>"; };
 		9D1CB9D61C0B0F8600725A63 /* LogicIdXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogicIdXMLParser.h; sourceTree = "<group>"; };
 		9D1CB9D71C0B0F8600725A63 /* LogicIdXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogicIdXMLParser.m; sourceTree = "<group>"; };
 		9D1CB9DA1C0B0FA000725A63 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
@@ -636,6 +644,42 @@
 			name = Reachability;
 			sourceTree = "<group>";
 		};
+		9D1B1BA61C3CFD540048B8A3 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				9D1B1BB11C3CFD850048B8A3 /* Controller */,
+				9D1B1BB01C3CFD7E0048B8A3 /* View */,
+				9D1B1BAF1C3CFD760048B8A3 /* Model */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		9D1B1BAF1C3CFD760048B8A3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9D1B1BA71C3CFD6B0048B8A3 /* YSScene.h */,
+				9D1B1BA81C3CFD6B0048B8A3 /* YSScene.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9D1B1BB01C3CFD7E0048B8A3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		9D1B1BB11C3CFD850048B8A3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9D1B1BA91C3CFD6B0048B8A3 /* YSSceneViewController.h */,
+				9D1B1BAA1C3CFD6B0048B8A3 /* YSSceneViewController.m */,
+				9D1B1BAB1C3CFD6B0048B8A3 /* YSSceneViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		9D1CB9D51C0B0F7100725A63 /* XMLParser */ = {
 			isa = PBXGroup;
 			children = (
@@ -966,6 +1010,7 @@
 		9DDC64F11C25777E00C3872A /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				9D1B1BA61C3CFD540048B8A3 /* Scene */,
 				61D606831C2A2BAE0026E23D /* Products */,
 				9D41EA511C33D74400E31239 /* Pattern */,
 				9DE6E1731C2B97750035E8DC /* RGB&YW */,
@@ -1152,6 +1197,7 @@
 				9DE6E1231C2790660035E8DC /* JYOtherViewController.xib in Resources */,
 				9DDC64F81C25782C00C3872A /* YSProductView.xib in Resources */,
 				446AF3011C001F060081C798 /* SMS_SDKLocalizable.strings in Resources */,
+				9D1B1BAE1C3CFD6B0048B8A3 /* YSSceneViewController.xib in Resources */,
 				9DBE55651C1EAFF000A91E6D /* PhotoViewController.xib in Resources */,
 				6108792F1C145F3700890CC1 /* JYUpdateFurnitureName.xib in Resources */,
 				9D7D5A8C1BE4748200E1E1EF /* loginXib.xib in Resources */,
@@ -1259,6 +1305,7 @@
 				9D7D5A521BE472D300E1E1EF /* Zju_SmartHome.xcdatamodeld in Sources */,
 				9D7D5A8A1BE4744000E1E1EF /* JYLoginViewController.m in Sources */,
 				9D5FF5B41BEA2C2E004371E5 /* JYNavigationController.m in Sources */,
+				9D1B1BAD1C3CFD6B0048B8A3 /* YSSceneViewController.m in Sources */,
 				446AF3211C0025330081C798 /* SMS_MBProgressHUD.m in Sources */,
 				61F484381C375D0B00FB13B9 /* JYNewSqlite.m in Sources */,
 				9D41EA601C33FEF400E31239 /* YSRGBPatternViewController.m in Sources */,
@@ -1288,6 +1335,7 @@
 				9D5FF5AE1BE9942A004371E5 /* JYRegisterXib.m in Sources */,
 				9D5292121C118F5800205CFD /* DLLampControlGuestModeViewController.m in Sources */,
 				9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */,
+				9D1B1BAC1C3CFD6B0048B8A3 /* YSScene.m in Sources */,
 				9DFF73751C087AA20061EFBF /* DLAddDeviceView.m in Sources */,
 				9D6568671BEB8861006D9507 /* JYUserData.m in Sources */,
 				9DE6E1221C2790660035E8DC /* JYOtherViewController.m in Sources */,
