@@ -510,7 +510,7 @@
 //滑动的时候就会调用的函数，在这里写动画？
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"%f", self.scrollView.contentOffset.x);
+    //NSLog(@"%f", self.scrollView.contentOffset.x);
     
     //处理每一个cell，计算它的缩放比例
     for (int i = 0; i < self.cellsView.count; i++)
