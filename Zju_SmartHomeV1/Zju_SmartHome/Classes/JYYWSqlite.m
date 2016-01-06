@@ -53,6 +53,24 @@
     }
 }
 
+-(void)createTable:(NSString *)tableName
+{
+    //模式名称，模式描述，模式图片
+    NSString *sql=[NSString stringWithFormat:@"create TABLE if not EXISTS %@(name NSString,logoName NSString,bkgName NSString,rValue NSString,gValue NSString);",tableName];
+    NSLog(@"看看新建YW表的sql语句:%@",sql);
+    char *errorMesg=NULL;
+    int result=sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorMesg);
+    if(result==SQLITE_OK)
+    {
+        NSLog(@"创建模式表成功");
+    }
+    else
+    {
+        NSLog(@"创建模式表失败%s",errorMesg);
+    }
+
+}
+
 //插入数据的方法
 -(void)insertRecordIntoTableName:(NSString *)tableName
                       withField1:(NSString *)field1 field1Value:(NSString *)field1Value
@@ -93,52 +111,108 @@
         }
     }
 }
-//更新y
--(void)updateRecordByY:(NSString *)patternName rValue:(NSString *)rValue
+//在指定表删除数据
+-(void)deleteRecordWithName:(NSString *)patternName inTable:(NSString *)tableName
 {
-    sqlite3_stmt *stmt = nil;
-    NSString *sql = [NSString stringWithFormat:@"update patternTable set rValue = '%@' where name = '%@'", rValue,patternName];
+    sqlite3_stmt *stmt;
+    NSString *sql = [NSString stringWithFormat:@"delete from %@ where name = '%@'",  tableName, patternName];
     
-    NSLog(@"===%@",sql);
-    
-    if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
+    if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, nil) == SQLITE_OK)
     {
-        if (sqlite3_step(stmt) == SQLITE_ROW)
+        sqlite3_step(stmt);
+        //觉的应加一个判断, 若有这一行则删除
+        if (sqlite3_step(stmt) == SQLITE_DONE)
         {
-            //觉的应加一个判断, 若有这一行则修改
-            if (sqlite3_step(stmt) == SQLITE_DONE)
-            {
-                sqlite3_finalize(stmt);
-            }
+            sqlite3_finalize(stmt);
+            
         }
     }
 }
-//更新W
--(void)updateRecordByW:(NSString *)patternName rValue:(NSString *)gValue
-{
-    sqlite3_stmt *stmt = nil;
-    NSString *sql = [NSString stringWithFormat:@"update patternTable set gValue = '%@' where name = '%@'", gValue,patternName];
-    
-    NSLog(@"===%@",sql);
-    
-    if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
-    {
-        if (sqlite3_step(stmt) == SQLITE_ROW)
-        {
-            //觉的应加一个判断, 若有这一行则修改
-            if (sqlite3_step(stmt) == SQLITE_DONE)
-            {
-                sqlite3_finalize(stmt);
-            }
-        }
-    }
-}
+////更新y
+//-(void)updateRecordByY:(NSString *)patternName rValue:(NSString *)rValue
+//{
+//    sqlite3_stmt *stmt = nil;
+//    NSString *sql = [NSString stringWithFormat:@"update patternTable set rValue = '%@' where name = '%@'", rValue,patternName];
+//    
+//    NSLog(@"===%@",sql);
+//    
+//    if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
+//    {
+//        if (sqlite3_step(stmt) == SQLITE_ROW)
+//        {
+//            //觉的应加一个判断, 若有这一行则修改
+//            if (sqlite3_step(stmt) == SQLITE_DONE)
+//            {
+//                sqlite3_finalize(stmt);
+//            }
+//        }
+//    }
+//}
+////更新W
+//-(void)updateRecordByW:(NSString *)patternName rValue:(NSString *)gValue
+//{
+//    sqlite3_stmt *stmt = nil;
+//    NSString *sql = [NSString stringWithFormat:@"update patternTable set gValue = '%@' where name = '%@'", gValue,patternName];
+//    
+//    NSLog(@"===%@",sql);
+//    
+//    if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
+//    {
+//        if (sqlite3_step(stmt) == SQLITE_ROW)
+//        {
+//            //觉的应加一个判断, 若有这一行则修改
+//            if (sqlite3_step(stmt) == SQLITE_DONE)
+//            {
+//                sqlite3_finalize(stmt);
+//            }
+//        }
+//    }
+//}
 
 //查询数据
 -(void)getAllRecord
 {
     //NSLog(@"***************查询所有数据********************");
     NSString *sql=@"SELECT * FROM patternYWTable";
+    sqlite3_stmt *statement;
+    
+    if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil)==SQLITE_OK)
+    {
+        while (sqlite3_step(statement)==SQLITE_ROW)
+        {
+            char *name=(char *)sqlite3_column_text(statement, 0);
+            NSString *patternName=[[NSString alloc]initWithUTF8String:name];
+            
+            char *logoName=(char *)sqlite3_column_text(statement, 1);
+            NSString *logoName1=[[NSString alloc]initWithUTF8String:logoName];
+            
+            char *bkgName=(char *)sqlite3_column_text(statement, 2);
+            NSString *bkgName1=[[NSString alloc]initWithUTF8String:bkgName];
+            
+            char *r =(char *)sqlite3_column_text(statement, 3);
+            NSString *rValue=[[NSString alloc]initWithUTF8String:r];
+            
+            char *g =(char *)sqlite3_column_text(statement, 4);
+            NSString *gValue=[[NSString alloc]initWithUTF8String:g];
+            
+            
+            YSYWPattern *newPattern=[[YSYWPattern alloc]init];
+            newPattern.name=patternName;
+            newPattern.logoName=logoName1;
+            newPattern.bkgName=bkgName1;
+            newPattern.rValue=rValue;
+            newPattern.gValue=gValue;
+            [self.patterns addObject:newPattern];
+            NSLog(@"====%@",newPattern.name);
+        }
+        NSLog(@"==%ld",self.patterns.count);
+    }
+}
+//查询数据
+-(void)getAllRecord:(NSString *)tableName
+{
+    //NSLog(@"***************查询所有数据********************");
+    NSString *sql=[NSString stringWithFormat:@"SELECT * FROM %@",tableName];
     sqlite3_stmt *statement;
     
     if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &statement, nil)==SQLITE_OK)
