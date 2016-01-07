@@ -21,7 +21,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDir=[paths objectAtIndex:0];
-    NSLog(@"我看看路径%@",documentDir);
+
     return [documentDir stringByAppendingPathComponent:@"/patternTest.sqlite"];
 }
 
@@ -31,9 +31,7 @@
     if(sqlite3_open([[self filePath]UTF8String], &db)!=SQLITE_OK)
     {
         sqlite3_close(db);
-        NSLog(@"数据库打开失败");
     }
-    NSLog(@"数据库打开成功");
 }
 
 //创建表(rValue代表冷暖，gValue代表亮度)
@@ -45,11 +43,11 @@
     int result=sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorMesg);
     if(result==SQLITE_OK)
     {
-        NSLog(@"创建模式表成功");
+        //NSLog(@"创建模式表成功");
     }
     else
     {
-        NSLog(@"创建模式表失败%s",errorMesg);
+        //NSLog(@"创建模式表失败%s",errorMesg);
     }
 }
 
@@ -57,16 +55,16 @@
 {
     //模式名称，模式描述，模式图片
     NSString *sql=[NSString stringWithFormat:@"create TABLE if not EXISTS %@(name NSString,logoName NSString,bkgName NSString,rValue NSString,gValue NSString);",tableName];
-    NSLog(@"看看新建YW表的sql语句:%@",sql);
+    
     char *errorMesg=NULL;
     int result=sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorMesg);
     if(result==SQLITE_OK)
     {
-        NSLog(@"创建模式表成功");
+        //NSLog(@"创建模式表成功");
     }
     else
     {
-        NSLog(@"创建模式表失败%s",errorMesg);
+        //NSLog(@"创建模式表失败%s",errorMesg);
     }
 
 }
@@ -89,7 +87,7 @@
     }
     else
     {
-        NSLog(@"插入数据成功");
+        //NSLog(@"插入数据成功");
     }
     
 }
@@ -203,9 +201,7 @@
             newPattern.rValue=rValue;
             newPattern.gValue=gValue;
             [self.patterns addObject:newPattern];
-            NSLog(@"====%@",newPattern.name);
         }
-        NSLog(@"==%ld",self.patterns.count);
     }
 }
 //查询数据
@@ -242,9 +238,7 @@
             newPattern.rValue=rValue;
             newPattern.gValue=gValue;
             [self.patterns addObject:newPattern];
-            NSLog(@"====%@",newPattern.name);
         }
-        NSLog(@"==%ld",self.patterns.count);
     }
 }
 

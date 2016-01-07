@@ -21,9 +21,6 @@
 +(instancetype)sharedStore
 {
     static LYSImageStore *instance = nil;
-//    if (!instance) {
-//        instance = [[self alloc] initPrivate];
-//    }
     //确保多线程中只创建一次对象,线程安全的单例
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -58,8 +55,6 @@
     
     //从图片提取JPEG格式的数据,第二个参数为图片压缩参数
     NSData *data = UIImageJPEGRepresentation(image, 0.5);
-    //以PNG格式提取图片数据
-    //NSData *data = UIImagePNGRepresentation(image);
     
     //将图片数据写入文件
     [data writeToFile:path atomically:YES];
@@ -67,7 +62,6 @@
 
 -(UIImage *)imageForKey:(NSString *)key
 {
-    //return [self.dictionary objectForKey:key];
     UIImage *image = [self.dictionary objectForKey:key];
     if (!image) {
         NSString *path = [self imagePathForKey:key];
@@ -78,7 +72,7 @@
         }
         else
         {
-            NSLog(@"Error: unable to find %@", [self imagePathForKey:key]);
+            //NSLog(@"Error: unable to find %@", [self imagePathForKey:key]);
         }
     }
     return image;
@@ -105,7 +99,7 @@
 
 -(void)clearCaches:(NSNotification *)n
 {
-    NSLog(@"Flushing %ld images out of the cache", [self.dictionary count]);
+    //NSLog(@"Flushing %ld images out of the cache", [self.dictionary count]);
     [self.dictionary removeAllObjects];
 }
 

@@ -8,9 +8,7 @@
 
 #import "HttpRequest.h"
 #import "AFNetworking.h"
-
 #import "AppDelegate.h"
-
 #import "MBProgressHUD+MJ.h"
 
 @implementation HttpRequest
@@ -41,18 +39,15 @@
   
   AppDelegate *app = [[UIApplication sharedApplication] delegate];
   
-  if (app.isInternalNetworkGate) {
+  if (app.isInternalNetworkGate)
+  {
     //内网；
-    
-    NSLog(@"内网获取逻辑ID的IP：%@",[[NSString alloc] initWithFormat:@"http://%@/phone/getLogicIdfromMac.php",app.globalInternalIP]);
-    
     NSString *url  = [[NSString alloc] initWithFormat:@"http://%@/phone/getLogicIdfromMac.php",app.globalInternalIP];
     
     [manager POST:url
        parameters:parameters
           success:success
           failure:failure];
-     NSLog(@"使用内网 向网关发送Mac值");
   }else{
     //外网；
     //默认使用外网；
@@ -60,9 +55,6 @@
        parameters:parameters
           success:success
           failure:failure];
-    
-     NSLog(@"使用外网 向网关发送Mac值");
-    
   }
   
 }
@@ -97,7 +89,6 @@
         success:success
         failure:failure];
   
-  // NSLog(@"使用外网 向服务器注册设备");
 }
 
 //****************
@@ -124,13 +115,11 @@
           success:success
           failure:failure];
     
-    // NSLog(@"使用外网 向服务器注册设备");
 }
 //****************
 #pragma mark - 从服务器获取家具所有设备的方法
 + (void)findAllDeviceFromServer :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
   
-  //  [MBProgressHUD showMessage:@"正在加载..."];
   //1.创建请求管理对象
   AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
   
@@ -147,16 +136,11 @@
      parameters:params
         success:success
         failure:failure];
-  
-  // NSLog(@"使用外网从服务器获取所有注册设备");
-  
-  
 }
 
 //从单品中获取所有电器
 + (void)findAllDeviceFromServerProduct :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
     
-    //  [MBProgressHUD showMessage:@"正在加载..."];
     //1.创建请求管理对象
     AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
     
@@ -174,10 +158,6 @@
        parameters:params
           success:success
           failure:failure];
-    
-    // NSLog(@"使用外网从服务器获取所有注册设备");
-    
-    
 }
 
 
@@ -209,8 +189,6 @@
      parameters:params
         success:success
         failure:failure];
-  // NSLog(@"获取内网IP地址。。。");
-  
 }
 
 #pragma mark - 删除电器网络请求方法
@@ -223,7 +201,6 @@
   //2.说明服务器返回的是json参数
   manager.responseSerializer=[AFHTTPResponseSerializer serializer];
   
-  // NSLog(@"====PPPPP %@",logicId);
   NSDictionary *params = @{@"is_app":@"1",
                            @"equipment.logic_id":logicId
                            };
@@ -232,8 +209,6 @@
      parameters:params
         success:success
         failure:failure];
-  
-  //  NSLog(@"使用外网 向服务器注册设备");
   
 }
 
@@ -246,7 +221,6 @@
     //2.说明服务器返回的是json参数
     manager.responseSerializer=[AFHTTPResponseSerializer serializer];
     
-    // NSLog(@"====PPPPP %@",logicId);
     NSDictionary *params = @{@"is_app":@"1",
                              @"is_sample":@"1",
                              @"equipment.logic_id":logicId
@@ -256,9 +230,6 @@
        parameters:params
           success:success
           failure:failure];
-    
-    //  NSLog(@"使用外网 向服务器注册设备");
-    
 }
 
 
@@ -293,8 +264,6 @@
        parameters:parameters
           success:success
           failure:failure];
-    NSLog(@"使用内网控制YW冷暖：%@",[[NSString alloc] initWithFormat:@"http://%@/phone/yw_light.php",app.globalInternalIP]);
-    
   }else{
     
     //外网；
@@ -302,9 +271,6 @@
        parameters:parameters
           success:success
           failure:failure];
-    
-    NSLog(@"使用外网控制YW冷暖");
-    
   }
   
   
@@ -343,18 +309,12 @@
        parameters:parameters
           success:success
           failure:failure];
-    
-     NSLog(@"使用内网控制YW亮度：%@",[[NSString alloc] initWithFormat:@"http://%@/phone/yw_light.php",app.globalInternalIP]);
-    
   }else{
     //外网；
     [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/yw_light.php"
        parameters:parameters
           success:success
           failure:failure];
-    
-    NSLog(@"使用外网控制YW亮度");
-    
   }
   
 }
@@ -395,9 +355,6 @@
           success:success
           failure:failure];
     
-    NSLog(@"使用内网控制RGB亮度：%@",[[NSString alloc] initWithFormat:@"http://%@/phone/yw_light.php",app.globalInternalIP]);
-    
-    
   }else{
     
     //外网
@@ -405,8 +362,6 @@
        parameters:parameters
           success:success
           failure:failure];
-    
-    NSLog(@"使用外网控制RGB亮度");
     
   }
   
@@ -433,7 +388,6 @@
                    "<action>change_color</action>"
                    "<value>%@,%@,%@</value>"
                    "</root>",  logicId,redValue,greenValue,blueValue];
-  NSLog(@"-----%@ %@ %@",redValue,greenValue,blueValue);
   
   NSDictionary *parameters = @{@"test" : str};
   
@@ -446,9 +400,7 @@
        parameters:parameters
           success:success
           failure:failure];
-    
-    NSLog(@"使用内网控制RGB颜色：%@",[[NSString alloc] initWithFormat:@"http://%@/phone/color_light.php",app.globalInternalIP]);
-    
+
   }else{
     
     //外网
@@ -456,8 +408,6 @@
        parameters:parameters
           success:success
           failure:failure];
-    
-    NSLog(@"使用外网控制GRB颜色");
     
   }
   

@@ -52,7 +52,6 @@
 {
     [super viewDidLoad];
     [self setNaviBarItemButton];
-    NSLog(@"看看传递到YW界面的逻辑id和电器名称：%@ %@",self.logic_id,self.furnitureName);
     self.tableName=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
@@ -82,18 +81,12 @@
     //打开数据库
     [self.jySqlite openDB];
     //创建表（如果已经存在时不会再创建的）
-    //[self.jySqlite createTable];
     [self.jySqlite createTable:self.tableName];
     //获取表中所有记录
-    //[self.jySqlite getAllRecord];
     [self.jySqlite getAllRecord:self.tableName];
 
     if(self.jySqlite.patterns.count==0)
     {
-        NSLog(@"暂时还没有数据");
-//        //柔和模式
-//        [self.jySqlite insertRecordIntoTableName:@"patternYWTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"50"];
-        
         //柔和模式
         [self.jySqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"50"];
         
@@ -109,17 +102,15 @@
         //[self.jySqlite getAllRecord];
         [self.jySqlite getAllRecord:self.tableName];
         self.patterns=self.jySqlite.patterns;
-        NSLog(@"长度%ld",self.patterns.count);
     }
     else
     {
-        NSLog(@"已经有数据了");
+        //NSLog(@"已经有数据了");
         self.patterns=self.jySqlite.patterns;
     }
     
     //最后一个自定义按钮
     [self.patterns addObject:[[YSYWPattern alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
-    NSLog(@"%ld", self.patterns.count);
 }
 
 //初始化scrollView的内容
@@ -222,7 +213,6 @@
     //否则就是点击了居中的元素
     else
     {
-        NSLog(@"进入添加新模式的界面123456");
         DLLampControllYWModeViewController *ywVc=[[DLLampControllYWModeViewController alloc]init];
         ywVc.logic_id=self.logic_id;
         ywVc.furnitureName=self.furnitureName;
@@ -255,7 +245,6 @@
 //向上滑动删除
 - (void)swipeToDeletePattern:(UIGestureRecognizer *)gr
 {
-    NSLog(@"向上滑动删除函数进来了");
     UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
@@ -268,8 +257,6 @@
     [self.patterns removeObjectAtIndex:view.tag];
     
     [self.cellsView[view.tag] setHidden:YES];
-    
-    //NSLog(@"%ld %ld", view.tag, self.cellsView.count);
     
     UIView * changeView;
     for (long i = view.tag + 1; i < self.cellsView.count; i++)
@@ -300,14 +287,14 @@
 //点击图片取色按钮的响应事件
 - (IBAction)pictureClick:(id)sender
 {
-    NSLog(@"图片选择");
+    //NSLog(@"图片选择");
 }
 
 //点击播放音乐的响应事件
 
 - (IBAction)musicClick:(id)sender
 {
-    NSLog(@"音乐选择");
+    //NSLog(@"音乐选择");
 }
 
 #pragma mark - scrollView中cell的动态操作
@@ -316,9 +303,6 @@
 {
     //先把该模式添加到数组中
     [self.patterns insertObject:pattern atIndex:self.patterns.count];
-    
-    //然后添加到scrollView中
-    //待定
 }
 
 - (void)deletePatternFromScrollView:(YSYWPattern *)pattern
@@ -358,8 +342,6 @@
 //滑动的时候就会调用的函数，在这里写动画？
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //NSLog(@"%f", self.scrollView.contentOffset.x);
-    
     //处理每一个cell，计算它的缩放比例
     for (int i = 0; i < self.cellsView.count; i++)
     {
@@ -385,7 +367,6 @@
             {
                 float rate = sub / (2 * self.cellWidth) * 0.5 + 0.6;
                 rate = rate > 1.0 ? 1.0 : rate;
-                NSLog(@"%f", rate);
                 [self viewToScale:rate target:self.cellsView[i]];
             }
             else
@@ -411,7 +392,6 @@
 {
     //根据居中的选项更新背景和文字
     [self updateCellBackground:(int)self.selectedIndex];
-    //[self openGesture];
     [self.scrollView setUserInteractionEnabled:YES];
 }
 
@@ -432,7 +412,6 @@
     
     //选定某个模式，进行模式更新等操作
     self.selectedIndex = index;
-    //[self updateCellBackground:index];
 }
 
 //滑动到某个cell时更新视图的方法
@@ -453,17 +432,6 @@
         else
         {
             self.pictureButton.enabled = YES;
-            //YSYWPattern * selectedPattern = self.patterns[self.selectedIndex];
-            //UIImage *image = [[LYSImageStore sharedStore] imageForKey:selectedPattern.bkgName];
-            
-//            if (!image)
-//            {
-//                self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
-//            }
-//            else
-//            {
-//                self.bkgImageView.image = image;
-//            }
         }
     }
     else
@@ -479,7 +447,7 @@
 - (void)setNaviBarItemButton{
     
     UILabel *titleView = [[UILabel alloc]init];
-    //[titleView setText:@"YW"];
+    
     [titleView setText:self.furnitureName];
     titleView.frame = CGRectMake(0, 0, 100, 16);
     titleView.font = [UIFont systemFontOfSize:16];
@@ -510,7 +478,6 @@
 {
     //0表示为关灯状态，1表示开灯状态
     UIButton *swichButton = (UIButton *)sender;
-    //NSLog(@"%ld", swichButton.tag);
     
     //关灯变开灯
     if (!swichButton.tag)
