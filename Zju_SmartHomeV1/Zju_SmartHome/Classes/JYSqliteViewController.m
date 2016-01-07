@@ -32,20 +32,9 @@
     //2.创建表
     [self createTable];
     
-    //3.插入测试数据
-    //[self insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"温暖模式" andField2:@"desc" field2Value:@"warm" andField3:@"img" field3Value:@"picture" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"99" andField6:@"bValue" field6Value:@"98"];
-    
-    //[self insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"冷酷模式" andField2:@"desc" field2Value:@"cold" andField3:@"img" field3Value:@"pictureeee" andField4:@"rValue" field4Value:@"98" andField5:@"gValue" field5Value:@"99" andField6:@"bValue" field6Value:@"100"];
-    
-    //4.查询数据
-    //[self getAllStudents];
-    
     //5.删除数据
     [self deleteRecordWithName:@"温暖模式"];
     
-    //[self updateRecordByRGB:@"冷酷模式" rValue:@"128" gValue:@"250" bValue:@"111"];
-   // [self updateRecordByOldPatternName:@"冷酷模式" andNewPatternName:@"冷酷模式1" andDesc:@"cold1" andImg:@"picture1"];
-    //[self updateRecordByRGB:@"冷酷模式1" rValue:@"222" gValue:@"111" bValue:@"255"];
     [self getAllStudents];
 
 }
@@ -55,7 +44,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDir=[paths objectAtIndex:0];
-    NSLog(@"我看看路径%@",documentDir);
+    
     return [documentDir stringByAppendingPathComponent:@"/patternTest.sqlite"];
 }
 
@@ -65,9 +54,9 @@
     if(sqlite3_open([[self filePath]UTF8String], &db)!=SQLITE_OK)
     {
         sqlite3_close(db);
-        NSLog(@"数据库打开失败");
+        //NSLog(@"数据库打开失败");
     }
-    NSLog(@"数据库打开成功");
+    //NSLog(@"数据库打开成功");
 }
 
 //创建表
@@ -79,11 +68,11 @@
     int result=sqlite3_exec(db, [sql UTF8String], NULL, NULL, &errorMesg);
     if(result==SQLITE_OK)
     {
-        NSLog(@"创建模式表成功");
+        //NSLog(@"创建模式表成功");
     }
     else
     {
-        NSLog(@"创建模式表失败%s",errorMesg);
+        //NSLog(@"创建模式表失败%s",errorMesg);
     }
 }
 
@@ -129,7 +118,7 @@
     sqlite3_stmt *stmt = nil;
     NSString *sql = [NSString stringWithFormat:@"update patternTable set rValue = '%@',gValue='%@',bValue='%@'  where name = '%@'", rValue,gValue,bValue,patternName];
     
-    NSLog(@"===%@",sql);
+    //NSLog(@"===%@",sql);
 
     if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
     {
@@ -150,7 +139,7 @@
     sqlite3_stmt *stmt = nil;
     NSString *sql = [NSString stringWithFormat:@"update patternTable set name = '%@',desc='%@',img='%@'  where name = '%@'", newPatternName,descLabel,imgKey,oldPatternName];
     
-    NSLog(@"===%@",sql);
+    //NSLog(@"===%@",sql);
     
     if (sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL) == SQLITE_OK)
     {
@@ -169,7 +158,7 @@
 //查询数据
 -(void)getAllStudents
 {
-    NSLog(@"***************查询所有数据********************");
+    //NSLog(@"***************查询所有数据********************");
     NSString *sql=@"SELECT * FROM patternTable";
     sqlite3_stmt *statement;
     
@@ -194,14 +183,7 @@
             
             char *b =(char *)sqlite3_column_text(statement, 5);
             NSString *bValue=[[NSString alloc]initWithUTF8String:b];
-            
-            NSLog(@"===%@ %@ %@ %@ %@ %@",patternName,descLabel,imgKey,rValue,gValue,bValue);
 
-//            YSPattern *pattern=[[YSPattern alloc]initWithPatternName:patternName desc:descLabel picture:imgKey];
-//            
-//            NSString *info=[[NSString alloc]initWithFormat:@"%@-%@-%@",pattern.patternName,pattern.descLabel,pattern.imgKey];
-//            NSLog(@"====%@",info);
-            
         }
     }
 }

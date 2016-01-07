@@ -140,8 +140,6 @@ NS_ENUM(NSInteger, ProductType)
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     
-    //self.collectionView.showsVerticalScrollIndicator = false;
-    
     [self setNaviBarItemButton];
     
     self.mainScrollView.showsVerticalScrollIndicator = NO;
@@ -260,7 +258,6 @@ static BOOL _isPoping;
         
         UIAlertAction *actionCode = [UIAlertAction actionWithTitle:@"扫码" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
         {
-            NSLog(@"打开扫码界面");
             //打开扫码界面
             QRCatchViewController *qrCatcherVC=[[QRCatchViewController alloc]init];
             qrCatcherVC.tag=1;
@@ -291,9 +288,7 @@ static BOOL _isPoping;
         }
         else
         {
-//            JYOtherViewController *jyVc=(JYOtherViewController *)furniture.controller;
-//            jyVc.logic_id=furniture.logic_id;
-//            [self.navigationController pushViewController:jyVc animated:jyVc];
+            //别的电器
         }
 
     }
@@ -323,14 +318,12 @@ static BOOL _isPoping;
              [MBProgressHUD hideHUD];
              //表示从网关返回逻辑ID成功；需要解析这个逻辑ID，并发送到服务器；
              NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-             
-             NSLog(@"===DAYIN %@",result);
+
              //这里需要进行XML解析；
              LogicIdXMLParser *logicIdXMLParser = [[LogicIdXMLParser alloc] initWithXMLString:result];
              
              if([logicIdXMLParser.result isEqualToString:@"fail"])
              {
-                 NSLog(@"注册电器失败");
                  [MBProgressHUD showError:@"设备注册失败"];
              }
              else
@@ -350,17 +343,14 @@ static BOOL _isPoping;
                           if([furniture.deviceType isEqualToString:@"40"])
                           {
                               furniture.imageStr=self.imageDic[@(RGBLIGHT_ON)];
-                              //furniture.controller = [[YSPatternViewController alloc] init];
                           }
                           else if([furniture.deviceType isEqualToString:@"41"])
                           {
                               furniture.imageStr=self.imageDic[@(YWLIGHT_ON)];
-                              //furniture.controller=[[DLLampControllYWModeViewController alloc]init];
                           }
                           else
                           {
                               furniture.imageStr=@"办公室";
-                              //furniture.controller=[[JYOtherViewController alloc]init];
                           }
                           
                           [MBProgressHUD showSuccess:@"设备注册成功"];
@@ -424,11 +414,9 @@ static BOOL _isPoping;
 {
     [HttpRequest findAllDeviceFromServerProduct:^(AFHTTPRequestOperation *operation, id responseObject)
     {
-        NSLog(@"返回数据%@",responseObject);
         self.furnitureBackStatus = [JYFurnitureBackStatus statusWithDict:responseObject];
         
         NSMutableArray *backProducts = self.furnitureBackStatus.furnitureArray;
-        //NSLog(@"backProducts : %ld", [backProducts count]);
     
         if (backProducts && [backProducts count] > 0)
         {
@@ -443,17 +431,14 @@ static BOOL _isPoping;
                 if ([furniture.deviceType isEqualToString:@"40"])
                 {
                     furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
-                    //furniture.controller = [[YSPatternViewController alloc] init];
                 }
                 else if ([furniture.deviceType isEqualToString:@"41"])
                 {
                     furniture.imageStr = self.imageDic[@(YWLIGHT_ON)];
-                    furniture.controller = nil;
                 }
                 else
                 {
                     furniture.imageStr = self.imageDic[@(TV_ON)];
-                    furniture.controller = nil;
                 }
                 
                 [self.products addObject:furniture];
@@ -492,7 +477,6 @@ static BOOL _isPoping;
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:pointTouch];
         
         self.updaterow = indexPath.row;
-        //JYFurniture *furniture = self.products[updateRow];
         
         //如果点击的是添加按钮，不做处理
         if(self.updaterow == (self.products.count - 1))
@@ -509,7 +493,7 @@ static BOOL _isPoping;
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
-        NSLog(@"长按手势结束");
+        //NSLog(@"长按手势结束");
     }
 }
 
@@ -534,15 +518,12 @@ static BOOL _isPoping;
     params[@"equipment.logic_id"]=furniture.logic_id;
     params[@"equipment.name"]=furnitureName;
     
-    NSLog(@"%@ %@ ",furniture.logic_id,furnitureName);
-    
     //4.发送请求
     [mgr POST:@"http://60.12.220.16:8888/paladin/Equipment/update" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
      
      {
-         NSLog(@"%@",responseObject);
          [MBProgressHUD showMessage:@"正在修改..."];
-         NSLog(@"ahhahahah%@",responseObject);
+         
          if([responseObject[@"code"]isEqualToString:@"0"])
          {
              [MBProgressHUD hideHUD];
@@ -555,13 +536,11 @@ static BOOL _isPoping;
          }
          else if([responseObject[@"code"]isEqualToString:@"301"])
          {
-             NSLog(@"缺少参数");
              [MBProgressHUD hideHUD];
              [MBProgressHUD showError:@"修改电器名称失败"];
          }
          else if([responseObject[@"code"]isEqualToString:@"307"])
          {
-             NSLog(@"修改电器不存在");
              [MBProgressHUD hideHUD];
              [MBProgressHUD showError:@"修改电器不存在"];
          }
@@ -569,7 +548,6 @@ static BOOL _isPoping;
          
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"111");
          [MBProgressHUD hideHUD];
          [MBProgressHUD showError:@"修改电器名称失败"];
          
@@ -673,7 +651,6 @@ static BOOL _isPoping;
     
     [HttpRequest deleteDeviceFromServerProduct:furniture.logic_id success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
-        NSLog(@"==%@",responseObject);
         [self.products removeObject:furniture];
         [MBProgressHUD showSuccess:@"删除设备成功"];
         [self rightBtnClicked];

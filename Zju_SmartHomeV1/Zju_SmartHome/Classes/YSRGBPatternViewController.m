@@ -56,9 +56,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //NSLog(@"gujinyue %@ %@",self.furnitureName,self.logic_id);
+    
     self.tableName=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
-    //NSLog(@"我先看看表的名字:%@",self.tableName);
     [self setNaviBarItemButton];
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
@@ -76,10 +75,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"按返回按钮走这个方法了吧");
     if(self.tag_Back==2)
     {
-        //NSLog(@"这里应该是从自定义模式返回的哦");
         //初始化默认模型数据
         [self initPatternData];
         //初始化scrollView
@@ -94,7 +91,7 @@
     }
     else
     {
-        NSLog(@"这里应该是修改模式背景图片返回来的");
+        //NSLog(@"这里应该是修改模式背景图片返回来的");
     }
     
 }
@@ -116,11 +113,9 @@
     //获取表中所有记录
     [self.jynewSqlite getAllRecordFromTable:self.tableName];
     
-    //self.patterns=jySqlite.patterns;
     if(self.jynewSqlite.patterns.count == 0)
     {
         [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"254" andField6:@"bValue" field6Value:@"253"];
-        
 
         //舒适模式
         [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"233" andField5:@"gValue" field5Value:@"234" andField6:@"bValue" field6Value:@"235"];
@@ -140,15 +135,11 @@
         //B模式
          [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"B" andField2:@"logoName" field2Value:@"B" andField3:@"bkgName" field3Value:@"B_bg" andField4:@"rValue" field4Value:@"0" andField5:@"gValue" field5Value:@"0" andField6:@"bValue" field6Value:@"255"];
         
-        
-        //[self.jynewSqlite getAllRecord];
         [self.jynewSqlite getAllRecordFromTable:self.tableName];
         self.patterns=self.jynewSqlite.patterns;
-        NSLog(@"长度%ld",self.patterns.count);
     }
     else
     {
-        NSLog(@"已经有数据了");
         self.patterns=self.jynewSqlite.patterns;
     }
     
@@ -261,9 +252,7 @@
         rgbVc.logic_id=self.logic_id;
         rgbVc.furnitureName=self.furnitureName;
         [self.navigationController pushViewController:rgbVc animated:YES];
-        
     }
-    
 }
 
 //编辑模式事件
@@ -301,7 +290,6 @@
     //从模型中删除
     [self.patterns removeObjectAtIndex:view.tag];
     
-    NSLog(@"删除 view.tag : %ld", (long)view.tag);
     [self.cellsView[view.tag] setHidden:YES];
     
     UIView * changeView;
@@ -326,10 +314,7 @@
     self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
     //更新背景和文字
     [self updateCellBackground:(int)view.tag];
-    
-    //[self.jynewSqlite deleteRecordWithName:pattern.name];
     [self.jynewSqlite deleteRecordWithName:pattern.name inTable:self.tableName];
-    
 }
 
 //点击图片取色按钮的响应事件
@@ -359,15 +344,16 @@
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
         //创建UIPopoverController对象前先检查当前设备是不是ipad
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        {
             self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
             self.imagePickerPopover.delegate = self;
             [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
                                             permittedArrowDirections:UIPopoverArrowDirectionAny
                                                             animated:YES];
         }
-        else{
-            
+        else
+        {
             //跳到ShowPhoto页面；
             JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
             showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
@@ -376,31 +362,32 @@
         }
     }]];
     
-    [self.alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    {
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
         //创建UIPopoverController对象前先检查当前设备是不是ipad
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        {
             self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
             self.imagePickerPopover.delegate = self;
             [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
                                             permittedArrowDirections:UIPopoverArrowDirectionAny
                                                             animated:YES];
         }
-        else{
+        else
+        {
             //跳到ShowPhoto页面；
             JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
             showPhoto.logic_id=self.logic_id;
-            showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;//从图库打开；
+            showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;
+            //从图库打开；
             showPhoto.delegate=self;
             [self.navigationController pushViewController:showPhoto animated:true];
         }
     }]];
     
-    [self.alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        //取消；
-    }]];
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:nil]];
     
     //弹出提示框；
     [self presentViewController:self.alert animated:true completion:nil];
@@ -415,10 +402,8 @@
     //接下来存储改文件到本地，以及更新模型的数据
     YSNewPattern *pattern = self.patterns[self.selectedIndex];
     pattern.bkgName = imageName;
-    //NSLog(@"%@ %@ %@",pattern.name, pattern.bkgName, imageName);
     [[LYSImageStore sharedStore] setImage:image forKey:imageName];
-    
-    //[self.jynewSqlite updateRecordBKGImage:pattern.name andNewBKGImage:imageName];
+    //更新图片到sqlite
     [self.jynewSqlite updateRecordBKGImage:pattern.name andNewBKGImage:imageName inTable:self.tableName];
     
     //这里显示图片
@@ -427,7 +412,7 @@
 //点击播放音乐的响应事件
 - (IBAction)musicClick:(id)sender
 {
-    NSLog(@"音乐选择");
+    //NSLog(@"音乐选择");
 }
 
 #pragma mark - scrollView中cell的动态操作
@@ -436,9 +421,6 @@
 {
     //先把该模式添加到数组中
     [self.patterns insertObject:pattern atIndex:self.patterns.count];
-    
-    //然后添加到scrollView中
-    //待定
 }
 
 #pragma mark - UIScrollViewDelegate 协议的实现
@@ -475,21 +457,18 @@
         
         
         [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
-                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      
-                                      NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                      NSLog(@"成功: %@", string);
-                                      
-                                  }
-                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                      
-                                      [MBProgressHUD showError:@"请检查网关"];
-                                      
-                                  }];
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+        {
+            //NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error)
+        {
+            [MBProgressHUD showError:@"请检查网关"];
+        }];
     }
 }
 
-//滑动的时候就会调用的函数，在这里写动画？
+//滑动的时候就会调用的函数，在这里写动画
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     //处理每一个cell，计算它的缩放比例
@@ -544,7 +523,7 @@
     [self updateCellBackground:(int)self.selectedIndex];
     [self.scrollView setUserInteractionEnabled:YES];
     
-    YSNewPattern *pattern=self.patterns[(int)self.selectedIndex];
+    YSNewPattern *pattern = self.patterns[(int)self.selectedIndex];
     
     NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
     NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.gValue intValue]]];
@@ -558,17 +537,14 @@
     else
     {
         [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
-                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                      
-                                      NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                      NSLog(@"成功: %@", string);
-                                      
-                                  }
-                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                      
-                                      [MBProgressHUD showError:@"请检查网关"];
-                                      
-                                  }];
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+        {
+            //NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error)
+        {
+            [MBProgressHUD showError:@"请检查网关"];
+        }];
  
     }
 }
@@ -635,7 +611,6 @@
 - (void)setNaviBarItemButton{
     
     UILabel *titleView = [[UILabel alloc]init];
-    //[titleView setText:@"RGB"];
     [titleView setText:self.furnitureName];
     titleView.frame = CGRectMake(0, 0, 100, 16);
     titleView.font = [UIFont systemFontOfSize:16];
