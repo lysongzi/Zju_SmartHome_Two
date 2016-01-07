@@ -21,7 +21,7 @@
 #import "DLLeftSlideMenuViewController.h"
 #import "AppDelegate.h"
 #import "Reachability.h"
-#import "STLeftSliderController.h"
+
 
 @interface JYLoginViewController ()<LoginXibDelegate,UITextFieldDelegate>
 

@@ -78,7 +78,6 @@
 		9D4F31B41C3693930096B3FD /* STLeftSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4F31B21C3693930096B3FD /* STLeftSliderView.xib */; };
 		9D4F31B81C3693A10096B3FD /* STSliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F31B61C3693A10096B3FD /* STSliderCell.m */; };
 		9D4F31B91C3693A10096B3FD /* STSliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4F31B71C3693A10096B3FD /* STSliderCell.xib */; };
-		9D4F31BC1C3693B10096B3FD /* STLeftSliderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F31BB1C3693B10096B3FD /* STLeftSliderController.m */; };
 		9D4F31BF1C3693C10096B3FD /* UIImage+ST.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4F31BE1C3693C10096B3FD /* UIImage+ST.m */; };
 		9D5292121C118F5800205CFD /* DLLampControlGuestModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5292101C118F5800205CFD /* DLLampControlGuestModeViewController.m */; };
 		9D5292131C118F5800205CFD /* DLLampControlGuestModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5292111C118F5800205CFD /* DLLampControlGuestModeViewController.xib */; };
@@ -271,8 +270,6 @@
 		9D4F31B51C3693A10096B3FD /* STSliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STSliderCell.h; sourceTree = "<group>"; };
 		9D4F31B61C3693A10096B3FD /* STSliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STSliderCell.m; sourceTree = "<group>"; };
 		9D4F31B71C3693A10096B3FD /* STSliderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STSliderCell.xib; sourceTree = "<group>"; };
-		9D4F31BA1C3693B10096B3FD /* STLeftSliderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLeftSliderController.h; sourceTree = "<group>"; };
-		9D4F31BB1C3693B10096B3FD /* STLeftSliderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STLeftSliderController.m; sourceTree = "<group>"; };
 		9D4F31BD1C3693C10096B3FD /* UIImage+ST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ST.h"; sourceTree = "<group>"; };
 		9D4F31BE1C3693C10096B3FD /* UIImage+ST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ST.m"; sourceTree = "<group>"; };
 		9D52920F1C118F5800205CFD /* DLLampControlGuestModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLampControlGuestModeViewController.h; sourceTree = "<group>"; };
@@ -482,8 +479,6 @@
 		446AF3381C00562A0081C798 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9D4F31BA1C3693B10096B3FD /* STLeftSliderController.h */,
-				9D4F31BB1C3693B10096B3FD /* STLeftSliderController.m */,
 				446AF3491C005F180081C798 /* DLLeftSlideMenuViewController.h */,
 				446AF34A1C005F180081C798 /* DLLeftSlideMenuViewController.m */,
 				61645BA91C101BA5007462EC /* JYChangePwdViewController.h */,
@@ -1337,7 +1332,6 @@
 				9D4F31B81C3693A10096B3FD /* STSliderCell.m in Sources */,
 				71DD8E151C102812000E1639 /* Reachability.m in Sources */,
 				9D4F31BF1C3693C10096B3FD /* UIImage+ST.m in Sources */,
-				9D4F31BC1C3693B10096B3FD /* STLeftSliderController.m in Sources */,
 				442E7EB41C07402300E3C84C /* RESideMenu.m in Sources */,
 				9DFF73781C0932F80061EFBF /* JYFurnitureBack.m in Sources */,
 				9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */,
