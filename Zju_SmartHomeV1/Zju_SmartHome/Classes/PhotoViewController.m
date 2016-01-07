@@ -71,6 +71,7 @@
     STSaveSceneView *stView=[STSaveSceneView initWithSaveScene];
     stView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     stView.delegate=self;
+    self.stView=stView;
     [self.view addSubview:stView];
     self.navigationItem.rightBarButtonItem.enabled=NO;
 }
