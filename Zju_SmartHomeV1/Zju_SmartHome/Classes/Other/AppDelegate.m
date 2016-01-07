@@ -18,6 +18,8 @@
 #define appKey @"c879b326344c"
 #define appSecret @"82810facbfba262d63c14ed5dcc5998c"
 
+#import "STMusicTestController.h"
+
 #import "DLLampControlRGBModeViewController.h"
 @interface AppDelegate ()
 
@@ -31,8 +33,7 @@
     self.window=[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     
     //初始化应用，appKey和appSecret从后台申请得到
-    [SMSSDK registerApp:appKey withSecret:appSecret];
-    
+   [SMSSDK registerApp:appKey withSecret:appSecret];
     
     //1.先判断有无存储账号信息
 //    NSString *doc=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
@@ -57,10 +58,13 @@
    // JYLoginViewController *jyVc=[[JYLoginViewController alloc]init];
    // JYNavigationController *navVc=[[JYNavigationController alloc]initWithRootViewController:jyVc];
     //self.window.rootViewController=navVc;
+    
     self.window.rootViewController=[[JYLoginViewController alloc]init];
 
     //self.window.rootViewController=[[DLLampControlRGBModeViewController alloc]init];
     //}
+    
+    
     application.statusBarStyle=UIStatusBarStyleLightContent;
     [self.window makeKeyAndVisible];
     

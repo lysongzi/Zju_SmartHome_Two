@@ -58,6 +58,57 @@
   }
   
 }
+#pragma mark-根据协议和值得到具体对音乐的操作
++ (void)getMusicActionfromProtol:(NSString*)protolName andValue:(NSString *)value success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure
+{
+//    [MBProgressHUD showMessage:@"正在注册..."];
+    NSLog(@"%@",protolName);
+    //增加这几行代码；
+    AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
+    [securityPolicy setAllowInvalidCertificates:YES];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager setSecurityPolicy:securityPolicy];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    NSString *str = [[NSString alloc] initWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+                     "<root>"
+                     "<command_id></command_id>"
+                     "<command_type>execute</command_type>"
+                     "<id>123</id>"
+                     "<action>%@</action>"
+                     "<value></value>"
+                     "</root>",protolName];
+    
+    NSDictionary *parameters = @{@"test" : str};
+    
+    AppDelegate *app = [[UIApplication sharedApplication] delegate];
+    
+    if (app.isInternalNetworkGate) {
+        //内网；
+        
+        NSLog(@"内网获取逻辑ID的IP：%@",[[NSString alloc] initWithFormat:@"http://%@/phone/background_music.php",app.globalInternalIP]);
+        
+        NSString *url  = [[NSString alloc] initWithFormat:@"http://%@/phone/background_music.php",app.globalInternalIP];
+        
+        [manager POST:url
+           parameters:parameters
+              success:success
+              failure:failure];
+        NSLog(@"使用内网 向网关发送Mac值");
+    }else{
+        //外网；
+        //默认使用外网；
+        [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/background_music.php"
+           parameters:parameters
+              success:success
+              failure:failure];
+        
+        NSLog(@"使用外网 向网关发送Mac值");
+        
+    }
+}
 
 #pragma mark - 把设备注册到服务器的方法
 + (void)registerDeviceToServer:(NSString*)logicId deviceName:(NSString*)deviceName sectionName:(NSString*)sectionName type:(NSString*)type success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{

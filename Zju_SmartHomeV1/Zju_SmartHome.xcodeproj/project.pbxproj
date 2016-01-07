@@ -48,6 +48,8 @@
 		61E0439F1C38AC410048C3BA /* JYYWSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E0439E1C38AC410048C3BA /* JYYWSqlite.m */; };
 		61E043A21C38B0700048C3BA /* YSYWPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E043A11C38B0700048C3BA /* YSYWPattern.m */; };
 		61F484381C375D0B00FB13B9 /* JYNewSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F484371C375D0B00FB13B9 /* JYNewSqlite.m */; };
+		61FFEE541C3E984C00D8193F /* STMusicTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FFEE521C3E984C00D8193F /* STMusicTestController.m */; };
+		61FFEE551C3E984C00D8193F /* STMusicTestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FFEE531C3E984C00D8193F /* STMusicTestController.xib */; };
 		712A99FA1BEF849E00FE90FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712A99F91BEF849E00FE90FE /* CoreLocation.framework */; };
 		712C52431C08323B0014F9CB /* NSObject+Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = 712C52401C08323B0014F9CB /* NSObject+Macro.m */; };
 		712C52441C08323B0014F9CB /* NSString+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 712C52421C08323B0014F9CB /* NSString+Tools.m */; };
@@ -216,6 +218,9 @@
 		61E043A11C38B0700048C3BA /* YSYWPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSYWPattern.m; sourceTree = "<group>"; };
 		61F484361C375D0B00FB13B9 /* JYNewSqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYNewSqlite.h; sourceTree = "<group>"; };
 		61F484371C375D0B00FB13B9 /* JYNewSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYNewSqlite.m; sourceTree = "<group>"; };
+		61FFEE511C3E984C00D8193F /* STMusicTestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMusicTestController.h; sourceTree = "<group>"; };
+		61FFEE521C3E984C00D8193F /* STMusicTestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMusicTestController.m; sourceTree = "<group>"; };
+		61FFEE531C3E984C00D8193F /* STMusicTestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STMusicTestController.xib; sourceTree = "<group>"; };
 		712A99F91BEF849E00FE90FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		712C523F1C08323B0014F9CB /* NSObject+Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Macro.h"; sourceTree = "<group>"; };
 		712C52401C08323B0014F9CB /* NSObject+Macro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Macro.m"; sourceTree = "<group>"; };
@@ -581,6 +586,16 @@
 				61E0439E1C38AC410048C3BA /* JYYWSqlite.m */,
 			);
 			name = SQLite;
+			sourceTree = "<group>";
+		};
+		61FFEE041C3E8C4000D8193F /* STMusicTest */ = {
+			isa = PBXGroup;
+			children = (
+				61FFEE511C3E984C00D8193F /* STMusicTestController.h */,
+				61FFEE521C3E984C00D8193F /* STMusicTestController.m */,
+				61FFEE531C3E984C00D8193F /* STMusicTestController.xib */,
+			);
+			name = STMusicTest;
 			sourceTree = "<group>";
 		};
 		712C523A1C082F2B0014F9CB /* QRCatcher */ = {
@@ -1010,6 +1025,7 @@
 		9DDC64F11C25777E00C3872A /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				61FFEE041C3E8C4000D8193F /* STMusicTest */,
 				9D1B1BA61C3CFD540048B8A3 /* Scene */,
 				61D606831C2A2BAE0026E23D /* Products */,
 				9D41EA511C33D74400E31239 /* Pattern */,
@@ -1203,6 +1219,7 @@
 				9D7D5A8C1BE4748200E1E1EF /* loginXib.xib in Resources */,
 				9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */,
 				9D41EA611C33FEF400E31239 /* YSRGBPatternViewController.xib in Resources */,
+				61FFEE551C3E984C00D8193F /* STMusicTestController.xib in Resources */,
 				9DE6E11E1C2790450035E8DC /* CYFYWControllerViewController.xib in Resources */,
 				9D564D581BFEAD220062700D /* JYMainXib.xib in Resources */,
 				9D564DBF1BFF69A10062700D /* CYFFurnitureViewController.xib in Resources */,
@@ -1306,6 +1323,7 @@
 				9D7D5A8A1BE4744000E1E1EF /* JYLoginViewController.m in Sources */,
 				9D5FF5B41BEA2C2E004371E5 /* JYNavigationController.m in Sources */,
 				9D1B1BAD1C3CFD6B0048B8A3 /* YSSceneViewController.m in Sources */,
+				61FFEE541C3E984C00D8193F /* STMusicTestController.m in Sources */,
 				446AF3211C0025330081C798 /* SMS_MBProgressHUD.m in Sources */,
 				61F484381C375D0B00FB13B9 /* JYNewSqlite.m in Sources */,
 				9D41EA601C33FEF400E31239 /* YSRGBPatternViewController.m in Sources */,
