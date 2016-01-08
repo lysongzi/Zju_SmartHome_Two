@@ -15,7 +15,8 @@
 #import "JYFurnitureBack.h"
 #import "MBProgressHUD+MJ.h"
 #import "QRCatchViewController.h"
-#import "DLAddDeviceView.h"
+//#import "DLAddDeviceView.h"
+#import "STAddDeviceView.h"
 #import "LogicIdXMLParser.h"
 #import "JYUpdateFurnitureName.h"
 #import "YSRGBPatternViewController.h"
@@ -55,7 +56,7 @@ NS_ENUM(NSInteger, ProductType)
     TV_OFF
 };
 
-@interface YSProductViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UINavigationBarDelegate, DLAddDeviceViewDelegate, JYUpdateFurnitureNameDelegate>
+@interface YSProductViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UINavigationBarDelegate, STAddDeviceDelegate, JYUpdateFurnitureNameDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
@@ -64,7 +65,7 @@ NS_ENUM(NSInteger, ProductType)
 
 @property (strong, nonatomic) NSMutableArray *products;
 @property (strong, nonatomic) JYFurnitureBackStatus *furnitureBackStatus;
-@property (strong, nonatomic) DLAddDeviceView *addDeviceView;
+@property (strong, nonatomic) STAddDeviceView *addDeviceView;
 @property (strong, nonatomic) JYUpdateFurnitureName *updateFurniture;
 
 @property (strong, nonatomic) NSMutableDictionary *imageDic;
@@ -245,13 +246,19 @@ static BOOL _isPoping;
         UIAlertAction *actionInHand = [UIAlertAction actionWithTitle:@"手动输入" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
         {
             //手动输入的操作
-            DLAddDeviceView *addDeviceView = [DLAddDeviceView addDeviceView];
+            STAddDeviceView *addDeviceView = [STAddDeviceView addDeviceView];
             addDeviceView.delegate = self;
             self.addDeviceView = addDeviceView;
             
-            addDeviceView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+            addDeviceView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
             [self.view addSubview:addDeviceView];
+            //弹窗动画
+            [UIView animateWithDuration:0.5 animations:^{
+                [addDeviceView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            }];
+            
             self.navigationItem.hidesBackButton = YES;
+            self.navigationController.navigationBar.hidden=YES;
         }];
         
         [alertController addAction:actionInHand];
@@ -294,16 +301,21 @@ static BOOL _isPoping;
     }
 }
 
-#pragma mark - DLAddDeviceViewDelegate 协议的实现
+#pragma mark - STAddDeviceViewDelegate 协议的实现
 
 //取消添加设备
--(void)cancelAddDevice
+-(void)cancel
 {
-    [self.addDeviceView removeFromSuperview];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.addDeviceView setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [self.addDeviceView removeFromSuperview];
+        self.navigationController.navigationBar.hidden=NO;
+    }];
 }
 
 //添加设备
--(void)addDeviceGoGoGo:(NSString *)deviceName and:(NSString *)deviceMac
+-(void)next:(NSString *)deviceName and:(NSString *)deviceMac
 {
     if([deviceMac isEqualToString:@""])
     {
@@ -665,16 +677,24 @@ static BOOL _isPoping;
 -(void)addNewFurniture
 {
 
-    DLAddDeviceView *addDeviceView=[DLAddDeviceView addDeviceView];
+    STAddDeviceView *addDeviceView=[STAddDeviceView addDeviceView];
     
-    addDeviceView.deviceMac.text = self.macFromQRCatcher;
+    addDeviceView.mac.text = self.macFromQRCatcher;
     
     addDeviceView.delegate=self;
     
     self.addDeviceView=addDeviceView;
-    addDeviceView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    addDeviceView.frame=CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [addDeviceView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    }completion:^(BOOL finished) {
+        self.navigationController.navigationBar.hidden=YES;
+        self.navigationItem.hidesBackButton=YES;
+    }];
+    
     [self.view addSubview:addDeviceView];
-    self.navigationItem.hidesBackButton=YES;
+    
 }
 
 @end
