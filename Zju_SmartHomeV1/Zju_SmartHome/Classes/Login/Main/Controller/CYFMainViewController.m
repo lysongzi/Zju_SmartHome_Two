@@ -18,24 +18,43 @@
 #import "MBProgressHUD+MJ.h"
 #import <CoreLocation/CoreLocation.h>
 #import "STHomeView.h"
-#import "STLeftSliderController.h"
+#import "STLeftSliderView.h"
+#import "STSliderCell.h"
+#import "UIImage+ST.h"
 #import "CYFImageStore.h"
 
-@interface CYFMainViewController ()<STHomeViewDelegate,CLLocationManagerDelegate>
+@interface CYFMainViewController ()<STHomeViewDelegate,CLLocationManagerDelegate,STLeftSliderViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
 
 @property (nonatomic, strong) CLLocationManager* locationManager;
 
 @property(nonatomic,strong) STHomeView *homeView;
-//@property(nonatomic,strong) JYMainView *mainView;
+@property(nonatomic,strong) STLeftSliderView *leftView;
 
 @property (nonatomic,strong) UIButton *leftBtn;
 
-
-
+@property (nonatomic,strong)NSArray *imageNames;
+@property(nonatomic,strong)NSArray *descArray;
 @end
 
 @implementation CYFMainViewController
+
+-(NSArray *)imageNames
+{
+    if (_imageNames==nil) {
+        NSArray *imgNames=[NSArray arrayWithObjects:@"slide_icon_gitway",@"slide_icon_location",@"slide_icon_setting",@"slide_icon_aboutus",@"slide_icon_company", nil];
+        _imageNames=imgNames;
+    }
+    return _imageNames;
+}
+-(NSArray *)descArray
+{
+    if (_descArray==nil) {
+        NSArray *descArray=[NSArray arrayWithObjects:@"我的网关", @"一键场景",@"一键设备",@"关于我们",@"公司简介",nil];
+        _descArray=descArray;
+    }
+    return _descArray;
+}
 
 - (void)viewDidLoad
 {
@@ -176,8 +195,81 @@
 //左边头像点击事件
 -(void)leftPortraitClick
 {
-    STLeftSliderController *leftVc=[[STLeftSliderController alloc]init];
-    [self.navigationController presentViewController:leftVc animated:YES completion:nil];
+    STLeftSliderView *leftView=[STLeftSliderView initWithSliderView];
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    leftView.uesername.text=appDelegate.username;
+    leftView.userEmail.text=appDelegate.email;
+    
+    leftView.frame=CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+    [UIView animateWithDuration:0.5 animations:^{
+        leftView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    }];
+    leftView.delegate=self;
+    [leftView.portraitBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
+    
+    leftView.sliderTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    leftView.sliderTableView.bounces=NO;
+    leftView.sliderTableView.dataSource=self;
+    leftView.sliderTableView.delegate=self;
+    self.leftView=leftView;
+    [self.view addSubview:leftView];
+}
+
+//STLeftSliderView代理方法
+-(void)goBack
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.leftView setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [self.leftView removeFromSuperview];
+    }];
+    
+}
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.imageNames.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID=@"sliderCell";
+    STSliderCell *sliderCell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (sliderCell==nil)
+    {
+        sliderCell=[STSliderCell initWithSTSliderCell];
+        sliderCell.iconImage.image=[UIImage imageNamed:self.imageNames[indexPath.row]];
+        
+        [sliderCell.descBtn setTitle:self.descArray[indexPath.row] forState:UIControlStateNormal];
+        [sliderCell.descBtn setTitleColor:[UIColor colorWithRed:50/255.0 green:50/255.0 blue:50/255.0 alpha:1] forState:UIControlStateNormal];
+        
+        UIColor *color=[[UIColor alloc]initWithRed:(255/255.0f) green:(255/255.0f) blue:(255/255.0f) alpha:1.0];
+        sliderCell.selectedBackgroundView=[[UIView alloc]initWithFrame:sliderCell.frame];
+        sliderCell.selectedBackgroundView.backgroundColor=color;
+    }
+    
+    // Configure the cell...
+    
+    return sliderCell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat originH=50;
+    CGFloat originW=320;
+    CGFloat newH=(self.view.frame.size.width*originH)/originW;
+    return newH;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%ld",(long)indexPath.row);
 }
 
 //代理方法
