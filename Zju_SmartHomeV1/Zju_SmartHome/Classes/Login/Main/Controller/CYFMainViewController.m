@@ -42,7 +42,7 @@
 -(NSArray *)imageNames
 {
     if (_imageNames==nil) {
-        NSArray *imgNames=[NSArray arrayWithObjects:@"slide_icon_gitway",@"slide_icon_location",@"slide_icon_setting",@"slide_icon_aboutus",@"slide_icon_company", nil];
+        NSArray *imgNames=[NSArray arrayWithObjects:@"slide_btn_更改网关",@"slide_btn_一键场景",@"slide_btn_一键设备",@"slide_btn_软件说明",@"slide_btn_公司简介", nil];
         _imageNames=imgNames;
     }
     return _imageNames;
@@ -50,7 +50,7 @@
 -(NSArray *)descArray
 {
     if (_descArray==nil) {
-        NSArray *descArray=[NSArray arrayWithObjects:@"我的网关", @"一键场景",@"一键设备",@"关于我们",@"公司简介",nil];
+        NSArray *descArray=[NSArray arrayWithObjects:@"切换网关", @"一键场景",@"一键设备",@"软件说明",@"公司简介",nil];
         _descArray=descArray;
     }
     return _descArray;
