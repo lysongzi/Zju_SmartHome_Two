@@ -14,12 +14,13 @@
 #import "AppDelegate.h"
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
-#import "STSaveSceneView.h"
+//#import "STSaveSceneView.h"
+#import "STNewSceneView.h"
 #import "JYNewSqlite.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
-@interface DLLampControlRGBModeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate,STSaveSceneViewDelegate>
+@interface DLLampControlRGBModeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate,STSaveNewSceneDelegate>
 //RGB三个颜色值
 @property (weak, nonatomic) IBOutlet UILabel *rValue;
 @property (weak, nonatomic) IBOutlet UILabel *gValue;
@@ -45,7 +46,7 @@
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (nonatomic,strong) UIAlertController *alert;
 
-@property(nonatomic,strong)STSaveSceneView *stView;
+@property(nonatomic,strong)STNewSceneView *sceneView;
 @end
 
 @implementation DLLampControlRGBModeViewController
@@ -394,10 +395,18 @@
   NSLog(@"===%@ %@ %@ %@ %@",self.logic_id,self.patternName,self.rValue.text,self.gValue.text,self.bValue.text);
 
     
-  STSaveSceneView *stView=[STSaveSceneView initWithSaveScene];
-  stView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+  STNewSceneView *stView=[STNewSceneView saveNewSceneView];
+  stView.frame=CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [stView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        
+    }completion:^(BOOL finished) {
+        self.navigationController.navigationBar.hidden=YES;
+    }];
+    
   stView.delegate=self;
-  self.stView=stView;
+  self.sceneView=stView;
   [self.view addSubview:stView];
   self.navigationItem.rightBarButtonItem.enabled=NO;
 }
@@ -608,21 +617,32 @@
     [self.panelView addSubview:btnPlay];
 
 }
-
+#pragma mark-STNewSceneView的代理方法
 -(void)cancelSaveScene
 {
-    [self.stView removeFromSuperview];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.sceneView setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        [self.sceneView removeFromSuperview];
+    }];
     self.navigationItem.rightBarButtonItem.enabled=YES;
+    self.navigationController.navigationBar.hidden=NO;
 }
--(void)noSaveScene
+-(void)noSave
 {
-   [self.stView removeFromSuperview];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.sceneView setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        [self.sceneView removeFromSuperview];
+    }];
     self.navigationItem.rightBarButtonItem.enabled=YES;
+    self.navigationController.navigationBar.hidden=NO;
 }
--(void)saveNewScene:(NSString *)newSceneName
+-(void)saveNewScene:(NSString *)sceneName
 {
+    self.navigationController.navigationBar.hidden=NO;
     self.navigationItem.rightBarButtonItem.enabled=YES;
-    NSLog(@"－－－－%@",newSceneName);
+    NSLog(@"－－－－%@",sceneName);
     
     JYNewSqlite *jySqlite=[[JYNewSqlite alloc]init];
     jySqlite.patterns=[[NSMutableArray alloc]init];
@@ -636,17 +656,22 @@
     NSString *temp=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
     NSLog(@"jsdahskgahjd  %@",temp);
     //柔和模式
-    [jySqlite insertRecordIntoTableName:temp withField1:@"name" field1Value:newSceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
+    [jySqlite insertRecordIntoTableName:temp withField1:@"name" field1Value:sceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
     
-    for (UIViewController *controller in self.navigationController.viewControllers)
-    {
-        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.sceneView setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        [self.sceneView removeFromSuperview];
+        for (UIViewController *controller in self.navigationController.viewControllers)
         {
-            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
-            vc.tag_Back=2;
-            [self.navigationController popToViewController:controller animated:YES];
+            if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+            {
+                YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+                vc.tag_Back=2;
+                [self.navigationController popToViewController:controller animated:YES];
+            }
         }
-    }
+    }];
 }
 
 

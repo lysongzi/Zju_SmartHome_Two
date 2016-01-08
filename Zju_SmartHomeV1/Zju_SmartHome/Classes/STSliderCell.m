@@ -21,10 +21,6 @@
 +(instancetype)initWithSTSliderCell
 {
     STSliderCell *sliderCell=[[[NSBundle mainBundle]loadNibNamed:@"STSliderCell" owner:nil options:nil]lastObject];
-    sliderCell.cellView.layer.cornerRadius=18;
-    sliderCell.cellView.layer.masksToBounds=YES;
-    sliderCell.cellView.layer.borderWidth=0.5;
-    sliderCell.cellView.layer.borderColor=[[UIColor blackColor] CGColor];
     
     return sliderCell;
 }

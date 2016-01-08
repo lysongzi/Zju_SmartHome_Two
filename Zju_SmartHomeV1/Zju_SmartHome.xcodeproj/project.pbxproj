@@ -90,6 +90,10 @@
 		9D564DBF1BFF69A10062700D /* CYFFurnitureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D564DBD1BFF69A10062700D /* CYFFurnitureViewController.xib */; };
 		9D564DC21BFFF6E50062700D /* JYElectricalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D564DC11BFFF6E50062700D /* JYElectricalController.m */; };
 		9D564DC51C0007290062700D /* JYFurniture.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D564DC41C0007290062700D /* JYFurniture.m */; };
+		9D5A5F7C1C3F4559006EAD37 /* STAddDeviceVew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5A5F791C3F4559006EAD37 /* STAddDeviceVew.xib */; settings = {ASSET_TAGS = (); }; };
+		9D5A5F7D1C3F4559006EAD37 /* STAddDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5A5F7B1C3F4559006EAD37 /* STAddDeviceView.m */; settings = {ASSET_TAGS = (); }; };
+		9D5A5F811C3F49DE006EAD37 /* STNewSceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5A5F7F1C3F49DE006EAD37 /* STNewSceneView.m */; settings = {ASSET_TAGS = (); }; };
+		9D5A5F821C3F49DE006EAD37 /* STNewSceneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5A5F801C3F49DE006EAD37 /* STNewSceneView.xib */; settings = {ASSET_TAGS = (); }; };
 		9D5FF5AB1BE9930B004371E5 /* JYRegister.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5FF5AA1BE9930B004371E5 /* JYRegister.xib */; };
 		9D5FF5AE1BE9942A004371E5 /* JYRegisterXib.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5FF5AD1BE9942A004371E5 /* JYRegisterXib.m */; };
 		9D5FF5B41BEA2C2E004371E5 /* JYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5FF5B31BEA2C2E004371E5 /* JYNavigationController.m */; };
@@ -291,6 +295,12 @@
 		9D564DC11BFFF6E50062700D /* JYElectricalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYElectricalController.m; sourceTree = "<group>"; };
 		9D564DC31C0007290062700D /* JYFurniture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYFurniture.h; sourceTree = "<group>"; };
 		9D564DC41C0007290062700D /* JYFurniture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYFurniture.m; sourceTree = "<group>"; };
+		9D5A5F791C3F4559006EAD37 /* STAddDeviceVew.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STAddDeviceVew.xib; sourceTree = "<group>"; };
+		9D5A5F7A1C3F4559006EAD37 /* STAddDeviceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STAddDeviceView.h; sourceTree = "<group>"; };
+		9D5A5F7B1C3F4559006EAD37 /* STAddDeviceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STAddDeviceView.m; sourceTree = "<group>"; };
+		9D5A5F7E1C3F49DE006EAD37 /* STNewSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STNewSceneView.h; sourceTree = "<group>"; };
+		9D5A5F7F1C3F49DE006EAD37 /* STNewSceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STNewSceneView.m; sourceTree = "<group>"; };
+		9D5A5F801C3F49DE006EAD37 /* STNewSceneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STNewSceneView.xib; sourceTree = "<group>"; };
 		9D5FF5AA1BE9930B004371E5 /* JYRegister.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JYRegister.xib; sourceTree = "<group>"; };
 		9D5FF5AC1BE9942A004371E5 /* JYRegisterXib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYRegisterXib.h; sourceTree = "<group>"; };
 		9D5FF5AD1BE9942A004371E5 /* JYRegisterXib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYRegisterXib.m; sourceTree = "<group>"; };
@@ -524,6 +534,9 @@
 		615C37D01C2D0A86002663C5 /* Add Pattern */ = {
 			isa = PBXGroup;
 			children = (
+				9D5A5F7E1C3F49DE006EAD37 /* STNewSceneView.h */,
+				9D5A5F7F1C3F49DE006EAD37 /* STNewSceneView.m */,
+				9D5A5F801C3F49DE006EAD37 /* STNewSceneView.xib */,
 				615C37D11C2D0A9D002663C5 /* STSaveSceneView.h */,
 				615C37D21C2D0A9D002663C5 /* STSaveSceneView.m */,
 				615C37D31C2D0A9D002663C5 /* STSaveSceneView.xib */,
@@ -1054,6 +1067,9 @@
 		9DFF736D1C0871220061EFBF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9D5A5F791C3F4559006EAD37 /* STAddDeviceVew.xib */,
+				9D5A5F7A1C3F4559006EAD37 /* STAddDeviceView.h */,
+				9D5A5F7B1C3F4559006EAD37 /* STAddDeviceView.m */,
 				9DFF73711C08781C0061EFBF /* DLAddDeviceViewXib.xib */,
 				9DFF73731C087AA20061EFBF /* DLAddDeviceView.h */,
 				9DFF73741C087AA20061EFBF /* DLAddDeviceView.m */,
@@ -1216,6 +1232,7 @@
 				9D41EA611C33FEF400E31239 /* YSRGBPatternViewController.xib in Resources */,
 				61FFEE551C3E984C00D8193F /* STMusicTestController.xib in Resources */,
 				9DE6E11E1C2790450035E8DC /* CYFYWControllerViewController.xib in Resources */,
+				9D5A5F7C1C3F4559006EAD37 /* STAddDeviceVew.xib in Resources */,
 				9D564D581BFEAD220062700D /* JYMainXib.xib in Resources */,
 				9D564DBF1BFF69A10062700D /* CYFFurnitureViewController.xib in Resources */,
 				9D7D5A571BE472D300E1E1EF /* LaunchScreen.storyboard in Resources */,
@@ -1228,6 +1245,7 @@
 				610452B41C32C31E00753411 /* STHomeView.xib in Resources */,
 				446AF3291C002FB70081C798 /* Localizable.strings in Resources */,
 				9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */,
+				9D5A5F821C3F49DE006EAD37 /* STNewSceneView.xib in Resources */,
 				9D5292131C118F5800205CFD /* DLLampControlGuestModeViewController.xib in Resources */,
 				9D7D5A541BE472D300E1E1EF /* Assets.xcassets in Resources */,
 				714854F11C127C300001347F /* CYFChangeMailViewController.xib in Resources */,
@@ -1320,6 +1338,7 @@
 				9D1B1BAD1C3CFD6B0048B8A3 /* YSSceneViewController.m in Sources */,
 				61FFEE541C3E984C00D8193F /* STMusicTestController.m in Sources */,
 				446AF3211C0025330081C798 /* SMS_MBProgressHUD.m in Sources */,
+				9D5A5F7D1C3F4559006EAD37 /* STAddDeviceView.m in Sources */,
 				61F484381C375D0B00FB13B9 /* JYNewSqlite.m in Sources */,
 				9D41EA601C33FEF400E31239 /* YSRGBPatternViewController.m in Sources */,
 				9D7D5A871BE4740100E1E1EF /* main.m in Sources */,
@@ -1362,6 +1381,7 @@
 				610879321C145F8F00890CC1 /* JYUpdateFurnitureName.m in Sources */,
 				9DEEFDA21C3773E900C33305 /* YSYWPatternViewController.m in Sources */,
 				9D9F9C2C1C268A2E0031F886 /* YSProductViewCell.m in Sources */,
+				9D5A5F811C3F49DE006EAD37 /* STNewSceneView.m in Sources */,
 				615C37D41C2D0A9D002663C5 /* STSaveSceneView.m in Sources */,
 				714854F01C127C300001347F /* CYFChangeMailViewController.m in Sources */,
 				71A7988E1C0D8C0B006F8D7B /* AllUtils.m in Sources */,

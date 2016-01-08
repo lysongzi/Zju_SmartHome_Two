@@ -19,7 +19,8 @@
 #import "JYFurniture.h"
 #import "JYFurnitureSection.h"
 #import "QRCatchViewController.h"
-#import "DLAddDeviceView.h"
+//#import "DLAddDeviceView.h"
+#import "STAddDeviceView.h"
 #import "JYFurnitureBack.h"
 #import "AFNetworking.h"
 #import "JYFurnitureBackStatus.h"
@@ -50,7 +51,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
   ProviderEditStateDelete
 };
 
-@interface CYFFurnitureViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,DLAddDeviceViewDelegate,UINavigationBarDelegate,JYUpdateFurnitureNameDelegate>
+@interface CYFFurnitureViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,STAddDeviceDelegate,UINavigationBarDelegate,JYUpdateFurnitureNameDelegate>
 
 //collectionView属性
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -64,7 +65,7 @@ NS_ENUM(NSInteger, ProviderEditingState)
 @property(nonatomic,strong)NSMutableArray *furnitureArray;
 
 //添加电器View
-@property(nonatomic,strong)DLAddDeviceView *addDeviceView;
+@property(nonatomic,strong)STAddDeviceView *addDeviceView;
 //更改电器名称View
 @property(nonatomic,strong)JYUpdateFurnitureName *updateFurniture;
 
@@ -456,16 +457,23 @@ static BOOL _isPoping;
                                                                   handler:^(UIAlertAction * _Nonnull action)
                 {
                     //跳出填写MAC值的对话框；
-                    DLAddDeviceView *addDeviceView = [DLAddDeviceView addDeviceView];
+                    STAddDeviceView *addDeviceView = [STAddDeviceView addDeviceView];
                     addDeviceView.delegate = self;
                     self.addDeviceView = addDeviceView;
-                    addDeviceView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-                                        
+                    addDeviceView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+                    //弹窗动画
+                    [UIView animateWithDuration:0.5 animations:^{
+                        [addDeviceView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+                        
+                    }completion:^(BOOL finished) {
+                        self.navigationController.navigationBar.hidden=YES;
+                    }];
+                    
                     if(self.row < 5)
                     {
-                        [addDeviceView.deviceName setText:self.descArray[self.row]];
-                        addDeviceView.deviceName.textColor = [UIColor grayColor];
-                        addDeviceView.deviceName.enabled = NO;
+                        [addDeviceView.customName setText:self.descArray[self.row]];
+                        addDeviceView.customName.textColor = [UIColor grayColor];
+                        addDeviceView.customName.enabled = NO;
                     }
                     [self.view addSubview:addDeviceView];
                     self.navigationItem.hidesBackButton=YES;
@@ -556,34 +564,46 @@ static BOOL _isPoping;
 
 - (void)addNewFurniture
 {
-    DLAddDeviceView *addDeviceView=[DLAddDeviceView addDeviceView];
-    addDeviceView.deviceMac.text = self.macFromQRCatcher;
+    STAddDeviceView *addDeviceView=[STAddDeviceView addDeviceView];
+    addDeviceView.mac.text = self.macFromQRCatcher;
   
-    if (![addDeviceView.deviceMac.text isEqualToString:@""])
+    if (![addDeviceView.mac.text isEqualToString:@""])
     {
         if(self.row < 5)
         {
-            addDeviceView.deviceName.text = self.descArray[self.row];
-            addDeviceView.deviceName.enabled = false;
+            addDeviceView.customName.text = self.descArray[self.row];
+            addDeviceView.customName.enabled = false;
         }
     }
   
     addDeviceView.delegate = self;
   
     self.addDeviceView = addDeviceView;
-    addDeviceView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    addDeviceView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+    [UIView animateWithDuration:0.5 animations:^{
+        [addDeviceView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        
+    }completion:^(BOOL finished) {
+        self.navigationController.navigationBar.hidden=YES;
+    }];
     [self.view addSubview:addDeviceView];
     self.navigationItem.hidesBackButton=YES;
+    
 }
 
 //取消添加设备
--(void)cancelAddDevice
+-(void)cancel
 {
-    [self.addDeviceView removeFromSuperview];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.addDeviceView setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [self.addDeviceView removeFromSuperview];
+        self.navigationController.navigationBar.hidden=NO;
+    }];
 }
 
 //添加设备
--(void)addDeviceGoGoGo:(NSString *)deviceName and:(NSString *)deviceMac
+-(void)next:(NSString *)deviceName and:(NSString *)deviceMac
 {
     if([deviceMac isEqualToString:@""])
     {
@@ -675,7 +695,7 @@ static BOOL _isPoping;
                              furniture.controller = [[JYOtherViewController alloc]init];
                          }
                          
-                         if(![self.addDeviceView.deviceMac.text isEqualToString:@""])
+                         if(![self.addDeviceView.mac.text isEqualToString:@""])
                          {
                              JYFurnitureSection *section = self.furnitureSecArray[self.section1];
                              JYFurniture *furniture1 = section.furnitureArray[self.row];
