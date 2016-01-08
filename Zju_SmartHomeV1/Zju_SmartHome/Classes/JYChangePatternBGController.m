@@ -89,7 +89,6 @@
 {
     
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-    
     self.image=[self getThumbailFromImage:image];
     
     NSLog(@"%f  %f",self.image.size.width,self.image.size.height);

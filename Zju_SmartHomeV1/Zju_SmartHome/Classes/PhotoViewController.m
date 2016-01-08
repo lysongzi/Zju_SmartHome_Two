@@ -13,7 +13,7 @@
 #import "MBProgressHUD+MJ.h"
 //#import "STSaveSceneView.h"
 #import "STNewSceneView.h"
-#import "JYNewSqlite.h"
+#import "JYPatternSqlite.h"
 #import "YSRGBPatternViewController.h"
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -387,35 +387,24 @@
     self.navigationItem.rightBarButtonItem.enabled=YES;
     NSLog(@"－－－－%@",sceneName);
     
-    JYNewSqlite *jySqlite=[[JYNewSqlite alloc]init];
+    JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
     jySqlite.patterns=[[NSMutableArray alloc]init];
     
     //打开数据库
     [jySqlite openDB];
-    //创建表（如果已经存在时不会再创建的）
-    //[jySqlite createTable];
-    //获取表中所有记录
-    //[jySqlite getAllRecord];
-     NSString *temp=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
-    NSLog(@",,,,,%@",temp);
-    //柔和模式
-    [jySqlite insertRecordIntoTableName:temp withField1:@"name" field1Value:sceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue andField5:@"gValue" field5Value:self.gValue andField6:@"bValue" field6Value:self.bValue];
+   
+   
+    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue andField5:@"param2" field5Value:self.gValue andField6:@"param3" field6Value:self.bValue];
     
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.sceneView setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    } completion:^(BOOL finished) {
-        [self.sceneView removeFromSuperview];
-        for (UIViewController *controller in self.navigationController.viewControllers)
+    for (UIViewController *controller in self.navigationController.viewControllers)
+    {
+        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
         {
-            if ([controller isKindOfClass:[YSRGBPatternViewController class]])
-            {
-                YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
-                vc.tag_Back=2;
-                [self.navigationController popToViewController:controller animated:YES];
-            }
+            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+            vc.tag_Back=2;
+            [self.navigationController popToViewController:controller animated:YES];
         }
-    }];
-    
+    }
 }
 
 -(void)leftBtnClicked

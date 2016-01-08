@@ -213,6 +213,7 @@
     leftView.sliderTableView.delegate=self;
     self.leftView=leftView;
     [self.view addSubview:leftView];
+
 }
 
 //STLeftSliderView代理方法

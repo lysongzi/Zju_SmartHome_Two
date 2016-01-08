@@ -7,16 +7,16 @@
 //
 
 #import "DLLampControlRGBModeViewController.h"
-#import "ZQSlider.h"
+//#import "ZQSlider.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD+MJ.h"
 #import "YSRGBPatternViewController.h"
 #import "AppDelegate.h"
 #import "HttpRequest.h"
 #import "PhotoViewController.h"
-//#import "STSaveSceneView.h"
 #import "STNewSceneView.h"
-#import "JYNewSqlite.h"
+#import "JYPattern.h"
+#import "JYPatternSqlite.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -644,34 +644,24 @@
     self.navigationItem.rightBarButtonItem.enabled=YES;
     NSLog(@"－－－－%@",sceneName);
     
-    JYNewSqlite *jySqlite=[[JYNewSqlite alloc]init];
+    JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
     jySqlite.patterns=[[NSMutableArray alloc]init];
     
     //打开数据库
     [jySqlite openDB];
-    //创建表（如果已经存在时不会再创建的）
-    //[jySqlite createTable];
-    //获取表中所有记录
-    //[jySqlite getAllRecord];
-    NSString *temp=[NSString stringWithFormat:@"%@%@",self.furnitureName,self.logic_id];
-    NSLog(@"jsdahskgahjd  %@",temp);
+   
     //柔和模式
-    [jySqlite insertRecordIntoTableName:temp withField1:@"name" field1Value:sceneName andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:self.rValue.text andField5:@"gValue" field5Value:self.gValue.text andField6:@"bValue" field6Value:self.bValue.text];
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.sceneView setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    } completion:^(BOOL finished) {
-        [self.sceneView removeFromSuperview];
-        for (UIViewController *controller in self.navigationController.viewControllers)
+    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue.text andField5:@"param2" field5Value:self.gValue.text andField6:@"param3" field6Value:self.bValue.text];
+
+    for (UIViewController *controller in self.navigationController.viewControllers)
+    {
+        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
         {
-            if ([controller isKindOfClass:[YSRGBPatternViewController class]])
-            {
-                YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
-                vc.tag_Back=2;
-                [self.navigationController popToViewController:controller animated:YES];
-            }
+            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+            vc.tag_Back=2;
+            [self.navigationController popToViewController:controller animated:YES];
         }
-    }];
+    }
 }
 
 
@@ -691,7 +681,17 @@
                 slider.value=100;
             }
             self.temp=(int)slider.value;
-            NSLog(@"可以发送请求%d",(int)slider.value);
+            
+            [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:[NSString stringWithFormat:@"%d", (int)slider.value]
+                                           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                               
+                                               NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                                               NSLog(@"成功: %@", string);
+                                           }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               NSLog(@"失败: %@", error);
+                                               [MBProgressHUD showError:@"请检查网关"];
+                                           }];
         }
         
     }

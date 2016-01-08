@@ -1,27 +1,27 @@
 //
-//  JYNewSqlite.h
+//  JYPatternSqlite.h
 //  Zju_SmartHome
 //
-//  Created by 顾金跃 on 16/1/2.
+//  Created by 顾金跃 on 16/1/8.
 //  Copyright © 2016年 GJY. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface JYNewSqlite : NSObject
+@interface JYPatternSqlite : NSObject
 @property(nonatomic,strong)NSMutableArray *patterns;
-//电器名称
-@property(nonatomic,copy)NSString *furnitureName;
+
 //逻辑id
 @property(nonatomic,copy)NSString *logic_id;
 
 -(NSString *)filePath;
 -(void)openDB;
+
 //创建表
 -(void)createTable:(NSString *)tableName;
 
-//从表中查询所有数据
--(void)getAllRecordFromTable:(NSString *)tableName;
+//根据逻辑id，从指定表中获取数据
+-(void)getAllRecordFromTable:(NSString *)tableName ByLogic_id:(NSString *)logic_id;
 
 //插入数据的方法
 -(void)insertRecordIntoTableName:(NSString *)tableName
@@ -32,16 +32,11 @@
                        andField5:(NSString *)field5 field5Value:(NSString *)field5Value
                        andField6:(NSString *)field6 field6Value:(NSString *)field6Value;
 
-//删除指定表指定模式数据
--(void)deleteRecordWithName:(NSString *)patternName inTable:(NSString *)tableName;
+//删除表中指定逻辑id指定模式的数据
+-(void)deleteRecordWithLogicID:(NSString *)logic_ic andWithName:(NSString *)patternName inTable:(NSString *)tableName;
 
-//更新rgb
--(void)updateRecordByRGB:(NSString *)patternName rValue:(NSString *)rValue gValue:(NSString *)gValue bValue:(NSString *)bValue inTable:(NSString *)tableName;
+//根据指定逻辑id，指定模式名称来修改该模式的背景图片
+-(void)updateRecordByLogicID:(NSString *)logic_id andByName:(NSString *)patternName withNewBKG:(NSString *)bkgName inTable:(NSString *)tableName;
 
-//更新背景图片
--(void)updateRecordBKGImage:(NSString *)pattern andNewBKGImage:(NSString *)bkgName inTable:(NSString *)tableName;
-
-////更新模式名称,模式描述,背景图标识
-//-(void)updateRecordByOldPatternName:(NSString *)oldPatternName andNewPatternName:(NSString *)newPatternName andLogoName:(NSString *)logoName andBkgName:(NSString *)BkgName;
 
 @end

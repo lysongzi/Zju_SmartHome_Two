@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YSNewPattern.h"
+#import "JYPattern.h"
 
 @protocol DLLampControlRGBModeViewDelegate <NSObject>
 
 @optional
--(void)addPattern:(YSNewPattern *)pattern;
+-(void)addPattern:(JYPattern *)pattern;
 
 @end
 @interface DLLampControlRGBModeViewController : UIViewController

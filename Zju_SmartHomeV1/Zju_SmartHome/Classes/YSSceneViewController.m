@@ -8,7 +8,7 @@
 
 #import "YSSceneViewController.h"
 #import "YSScene.h"
-#import "JYNewSqlite.h"
+#import "JYPatternSqlite.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
 #import "LYSImageStore.h"
@@ -37,7 +37,7 @@
 //记录当前居中的模式索引
 @property (assign) NSInteger selectedIndex;
 //定义JYSqlite对象
-@property (nonatomic,strong) JYNewSqlite *jynewSqlite;
+@property (nonatomic,strong) JYPatternSqlite *jynewSqlite;
 
 
 //有关照片切换背景图的属性；
