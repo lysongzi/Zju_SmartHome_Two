@@ -245,7 +245,37 @@
     self.musicPreFrame = self.musicPre.frame;
     self.musicPlayFrame = self.musicPlay.frame;
     
+    //默认不显示
     self.musicView.frame = CGRectMake(self.musicViewFrame.origin.x + self.musicViewFrame.size.width - gap, self.musicViewFrame.origin.y, 0, self.musicViewFrame.size.height);
+    
+    //进行适配6
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float ratio = 1.0f;
+    
+    if (width == 320.0)
+    {
+        //5或5s
+    }
+    else if (width == 375.0)
+    {
+        ratio = 375.0 / 320.0;
+        
+    }
+    else if (width == 414.0)
+    {
+        ratio = 414.0 / 320.0;
+    }
+    
+    self.musicViewFrame = CGRectMake(self.musicViewFrame.origin.x * ratio, self.musicViewFrame.origin.y * ratio, self.musicViewFrame.size.width * ratio, self.musicViewFrame.size.height * ratio);
+    
+    self.musicBkgFrame = CGRectMake(self.musicBkgFrame.origin.x * ratio, self.musicBkgFrame.origin.y * ratio, self.musicBkgFrame.size.width * ratio, self.musicBkgFrame.size.height * ratio);
+    
+    self.musicNextFrame = CGRectMake(self.musicNextFrame.origin.x * ratio, self.musicNextFrame.origin.y * ratio, self.musicNextFrame.size.width * ratio, self.musicNextFrame.size.height * ratio);
+    
+    self.musicPlayFrame = CGRectMake(self.musicPlayFrame.origin.x * ratio, self.musicPlayFrame.origin.y * ratio, self.musicPlayFrame.size.width * ratio, self.musicPlayFrame.size.height * ratio);
+    
+    self.musicPreFrame = CGRectMake(self.musicPreFrame.origin.x * ratio, self.musicPreFrame.origin.y * ratio, self.musicPreFrame.size.width * ratio, self.musicPreFrame.size.height * ratio);
+
     
     //0表示未弹出状态，1表示弹出状态
     self.musicView.tag = 0;
@@ -253,8 +283,8 @@
     self.musicPlay.tag = 0;
     
     //设置各种按钮点击图片
-    [self.musicNext setImage:[UIImage imageNamed:@"music_xiayishou_icon_press"] forState:UIControlStateHighlighted];
-    [self.musicPre setImage:[UIImage imageNamed:@"music_shangyishou_icon_press"] forState:UIControlStateHighlighted];
+    [self.musicNext setBackgroundImage:[UIImage imageNamed:@"music_xiayishou_icon_press"] forState:UIControlStateHighlighted];
+    [self.musicPre setBackgroundImage:[UIImage imageNamed:@"music_shangyishou_icon_press"] forState:UIControlStateHighlighted];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -582,6 +612,25 @@
 - (IBAction)musicPlayClick:(id)sender
 {
     NSLog(@"这里是播放");
+    UIButton *play = (UIButton *)sender;
+    
+    //暂停变播放
+    if (!play.tag)
+    {
+        play.tag = 1;
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+        
+        //接下来在这里写播放的代码
+        //!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    else
+    {
+        play.tag = 0;
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+        
+        //接下来在这里写播放的代码
+        //!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
 }
 
 #pragma mark - scrollView中cell的动态操作

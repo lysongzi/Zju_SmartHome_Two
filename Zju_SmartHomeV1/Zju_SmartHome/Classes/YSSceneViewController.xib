@@ -56,16 +56,25 @@
                             <rect key="frame" x="11" y="3" width="40" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <state key="normal" backgroundImage="music_shangyishou_icon_unpress"/>
+                            <connections>
+                                <action selector="musicPreClick:" destination="-1" eventType="touchUpInside" id="K2d-4S-Ybg"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="joz-3A-2sl">
                             <rect key="frame" x="108" y="3" width="40" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <state key="normal" backgroundImage="music_xiayishou_icon_unpress"/>
+                            <connections>
+                                <action selector="musicNextClick:" destination="-1" eventType="touchUpInside" id="xnw-L1-LSd"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8CO-7d-qZG">
                             <rect key="frame" x="59" y="3" width="40" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <state key="normal" backgroundImage="music_bofang"/>
+                            <connections>
+                                <action selector="musicPlayClick:" destination="-1" eventType="touchUpInside" id="jN6-vv-1MX"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
