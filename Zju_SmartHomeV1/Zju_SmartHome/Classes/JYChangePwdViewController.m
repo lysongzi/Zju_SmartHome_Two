@@ -7,7 +7,7 @@
 //
 
 #import "JYChangePwdViewController.h"
-#import "RESideMenu.h"
+#import "STUserInfoController.h"
 #import "MBProgressHUD+MJ.h"
 #import "AFNetworking.h"
 
@@ -68,11 +68,11 @@
 }
 
 
-- (void)leftBtnClicked{
-    
+- (void)leftBtnClicked
+{
     for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[RESideMenu class]]) {
-            controller.navigationController.navigationBar.hidden=YES;
+        if ([controller isKindOfClass:[STUserInfoController class]])
+        {
             [self.navigationController popToViewController:controller animated:YES];
             
         }
