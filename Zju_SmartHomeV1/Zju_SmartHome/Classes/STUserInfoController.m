@@ -13,6 +13,8 @@
 #import "CYFChangeMailViewController.h"
 #import "JYChangePwdViewController.h"
 #import "CYFMainViewController.h"
+#import "AppDelegate.h"
+#import "JYLoginViewController.h"
 
 @interface STUserInfoController ()<UITableViewDataSource,UITableViewDelegate,STUserInfoViewDelegate>
 @property(nonatomic,strong)STUserInfoView *userView;
@@ -37,10 +39,13 @@
     
     STUserInfoView *userView=[STUserInfoView initWithUserView];
     userView.frame=self.view.bounds;
+    
     //用户名
-    [userView.userName setTitle:@"胡淑婷" forState:UIControlStateNormal];
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    [userView.userName setTitle:appDelegate.username forState:UIControlStateNormal];
+    
     //头像
-    [userView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:@"头像.jpg" borderWith:0 borderColor:nil] forState:UIControlStateNormal];
+    [userView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:@"UserPhoto" borderWith:0 borderColor:nil] forState:UIControlStateNormal];
     
     //userView的代理
     userView.delegate=self;
@@ -102,7 +107,15 @@
 #pragma mark-STUserInfoView的代理方法
 -(void)goBack
 {
-    NSLog(@"退出登录");
+    //沙盒路径
+    NSString *doc=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
+    NSString *file=[doc stringByAppendingPathComponent:@"account.data"];
+    
+    //清空沙盒内容
+    NSFileManager * fileManager = [[NSFileManager alloc]init];
+    [fileManager removeItemAtPath:file error:nil];
+    
+    self.view.window.rootViewController=[[JYLoginViewController alloc]init];
 }
 
 - (void)setNaviBarItemButton
@@ -127,18 +140,19 @@
 }
 -(void)leftBtnClicked
 {
-    
-    for (UIViewController *controller in self.navigationController.viewControllers)
-    {
-        
-        if ([controller isKindOfClass:[CYFMainViewController
-                                       class]])
-        {
-            [self.navigationController popToViewController:controller animated:YES];
-            
-        }
-        
-    }
+    [self.navigationController popViewControllerAnimated:YES];
+//    for (UIViewController *controller in self.navigationController.viewControllers)
+//    {
+//        
+//        [self.navigationController popViewControllerAnimated:YES];
+////        if ([controller isKindOfClass:[CYFMainViewController
+////                                       class]])
+////        {
+////            [self.navigationController popToViewController:controller animated:YES];
+////            
+////        }
+//        
+//    }
 }
 
 @end

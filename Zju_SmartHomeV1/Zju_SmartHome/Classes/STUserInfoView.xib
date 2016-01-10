@@ -15,9 +15,6 @@
                     <rect key="frame" x="110" y="89" width="100" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
-                    <connections>
-                        <action selector="modifyPortraitClick:" destination="a4a-lo-8vN" eventType="touchUpInside" id="F3l-Lt-UuY"/>
-                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sgb-am-fFn">
                     <rect key="frame" x="25" y="209" width="270" height="25"/>
