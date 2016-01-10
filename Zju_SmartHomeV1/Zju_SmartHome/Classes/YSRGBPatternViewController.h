@@ -16,4 +16,6 @@
 
 //标记是从哪里返回的
 @property(nonatomic,assign)int tag_Back;
+//区域名称
+@property(nonatomic,copy)NSString *room_name;
 @end

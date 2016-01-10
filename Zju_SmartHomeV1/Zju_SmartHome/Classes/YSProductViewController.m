@@ -284,6 +284,7 @@ static BOOL _isPoping;
             YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
             ysVc.logic_id=furniture.logic_id;
             ysVc.furnitureName=furniture.descLabel;
+            ysVc.room_name=@"-1";
             [self.navigationController pushViewController:ysVc animated:YES];
         }
         else if([furniture.deviceType isEqualToString:@"41"])
@@ -291,6 +292,7 @@ static BOOL _isPoping;
             YSYWPatternViewController *ysVc = [[YSYWPatternViewController alloc] init];
             ysVc.logic_id = furniture.logic_id;
             ysVc.furnitureName=furniture.descLabel;
+            ysVc.room_name=@"-1";
             [self.navigationController pushViewController:ysVc animated:YES];
         }
         else
