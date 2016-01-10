@@ -56,27 +56,58 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //1.创建请求管理对象
-    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    if([self.room_name isEqualToString:@"-1"])
+    {
+        NSLog(@"走的是单品");
+        //1.创建请求管理对象
+        AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+        
+        //2.说明服务器返回的是json参数
+        mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+        
+        //3.封装请求参数
+        NSMutableDictionary *params=[NSMutableDictionary dictionary];
+        params[@"is_app"]=@"1";
+        params[@"sceneconfig.room_name"]=@"-1";
+        params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+        
+        //4.发送请求
+        [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"返回失败了吧：%@",error);
+         }];
+        
+    }
+    else
+    {
+        NSLog(@"走的是家居");
+        //1.创建请求管理对象
+        AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+        
+        //2.说明服务器返回的是json参数
+        mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+        
+        //3.封装请求参数
+        NSMutableDictionary *params=[NSMutableDictionary dictionary];
+        params[@"is_app"]=@"1";
+        //params[@"sceneconfig.room_name"]=@"-1";
+        params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+        
+        //4.发送请求
+        [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"返回失败了吧：%@",error);
+         }];
+    }
     
-    //2.说明服务器返回的是json参数
-    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
-    
-    //3.封装请求参数
-    NSMutableDictionary *params=[NSMutableDictionary dictionary];
-    params[@"is_app"]=@"1";
-    params[@"sceneconfig.room_name"]=@"明亮";
-    params[@"sceneconfig.equipment_logicid"]=self.logic_id;
-    
-    //4.发送请求
-    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"返回失败了吧：%@",error);
-     }];
 
     
     //专门存储模式的表

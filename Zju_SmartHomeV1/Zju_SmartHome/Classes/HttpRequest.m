@@ -200,7 +200,7 @@
     //3.封装请求参数
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
-    params[@"room_name"]=@"-1";
+    params[@"equipment.room_name"]=@"-1";
     
     
     //外网；
