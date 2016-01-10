@@ -15,5 +15,7 @@
 @property(nonatomic,assign)int tag_Back;
 //区域的名称
 @property(nonatomic,copy) NSString *sectionName;
+//区域电器数组
+@property(nonatomic,strong)NSMutableArray *furnitureArray;
 
 @end

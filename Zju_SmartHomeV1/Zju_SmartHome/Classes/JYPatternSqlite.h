@@ -35,6 +35,7 @@
 //删除表中指定逻辑id指定模式的数据
 -(void)deleteRecordWithLogicID:(NSString *)logic_ic andWithName:(NSString *)patternName inTable:(NSString *)tableName;
 
+
 //根据指定逻辑id，指定模式名称来修改该模式的背景图片
 -(void)updateRecordByLogicID:(NSString *)logic_id andByName:(NSString *)patternName withNewBKG:(NSString *)bkgName inTable:(NSString *)tableName;
 

@@ -273,6 +273,27 @@ static BOOL _isPoping;
     
     YSSceneViewController *svc = [[YSSceneViewController alloc] init];
     svc.sectionName = furnitureSection.sectionName;
+    svc.furnitureArray=[[NSMutableArray alloc]init];
+    
+    for(int i=0;i<self.furnitureSecArray.count;i++)
+    {
+        JYFurnitureSection *section=self.furnitureSecArray[i];
+        if([view.title.text isEqualToString:section.sectionName])
+        {
+            NSLog(@"看看点中的是哪个头部%@",section.sectionName);
+            for(int j=0;j<section.furnitureArray.count;j++)
+            {
+                JYFurniture *furniture=section.furnitureArray[j];
+                //将某区域下注册的电器传递过去
+                if(furniture.registed==YES)
+                {
+                    [svc.furnitureArray addObject:furniture];
+                }
+            }
+        }
+    }
+    
+    NSLog(@"hdgsahjgdsah %ld",svc.furnitureArray.count);
     [self.navigationController pushViewController:svc animated:YES];
 }
 
@@ -714,12 +735,14 @@ static BOOL _isPoping;
                          }
                      }
                      [MBProgressHUD showSuccess:@"设备注册成功"];
+                     self.navigationController.navigationBar.hidden=NO;
                      [self.collectionView reloadData];
                      
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error)
                   {
                       [MBProgressHUD hideHUD];
                       [MBProgressHUD showError:@"设备注册失败"];
+                       self.navigationController.navigationBar.hidden=NO;
                   }];
              }
              
@@ -727,14 +750,17 @@ static BOOL _isPoping;
          {
              //从网关返回逻辑ID失败；
              [MBProgressHUD showError:@"获取逻辑ID失败，请检查网关"];
+              self.navigationController.navigationBar.hidden=NO;
          }];
     }
 }
 
 -(void)getDataFromReote
 {
+    
     [HttpRequest findAllDeviceFromServer:^(AFHTTPRequestOperation *operation, id responseObject)
     {
+        NSLog(@"9999999999%@",responseObject);
         //请求成功
         JYFurnitureBackStatus *furnitureBackStatus=[JYFurnitureBackStatus statusWithDict:responseObject];
         self.furnitureBackStatus=furnitureBackStatus;
@@ -749,6 +775,7 @@ static BOOL _isPoping;
 
 -(void)judge
 {
+    NSLog(@"judge");
     //遍历从服务器返回的电器的所属区域
     for(int i = 0; i < self.furnitureBackStatus.furnitureArray.count; i++)
     {
@@ -851,131 +878,139 @@ static BOOL _isPoping;
                 break;
             }
         }
-        
         //电器的所属区域不存在于已有头部电器数组
         if(j>=self.headerArray.count)
         {
-            //创建新区域
-            self.furnitureArray=[[NSMutableArray alloc]init];
-            //每个区域默认有5个电器和一个添加电器图片
-            for(int i=0;i<6;i++)
+           
+            NSLog(@"---%@",furnitureBack.scene_name);
+            if([furnitureBack.scene_name isEqualToString:@"-1"])
             {
-                //初始化一个电器
-                JYFurniture *furniture=[[JYFurniture alloc]init];
-                //设置电器图片
-                furniture.imageStr=self.imageArray[i];
-                //设置电器描述文字
-                furniture.descLabel=self.descArray[i];
-                //设置电器是否注册过
-                furniture.registed=NO;
-                furniture.deviceType=@"";
-                furniture.controller=nil;
-        
-                //将电器添加到电器数组中
-                [self.furnitureArray addObject:furniture];
-            }
-        
-            JYFurniture *furniture=[[JYFurniture alloc]init];
-            furniture.descLabel=furnitureBack.name;
-            furniture.registed=YES;
-            furniture.logic_id=furnitureBack.logic_id;
-      
-            furniture.deviceType=furnitureBack.deviceType;
-      
-            if([furniture.deviceType isEqualToString:@"40"])
-            {
-                furniture.imageStr=self.imageHighArray[3];
-                //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
-                YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
-                vc.logic_id=furniture.logic_id;
-                vc.furnitureName=furniture.descLabel;
-                furniture.controller=vc;
-            }
-            else if([furniture.deviceType isEqualToString:@"41"])
-            {
-                furniture.imageStr=self.imageHighArray[4];
-               // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
-                YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
-                vc.logic_id=furniture.logic_id;
-                vc.furnitureName=furniture.descLabel;
-                furniture.controller=vc;
-
+                 NSLog(@"12345678900000");
             }
             else
             {
-                furniture.imageStr=@"单品";
-                furniture.controller=[[JYOtherViewController alloc]init];
-            }
-            
-            int m=0;
-            for(m=0;m<self.descArray.count;m++)
-            {
-                if([furniture.descLabel isEqualToString:self.descArray[m]]){ break; }
-            }
-            
-            if(m>=self.descArray.count)
-            {
-                JYFurniture *temp=[[JYFurniture alloc]init];
-                temp=[self.furnitureArray lastObject];
-                [self.furnitureArray removeLastObject];
-         
-                [self.furnitureArray addObject:furniture];
-                [self.furnitureArray addObject:temp];
-         
-                //初始化一个智能区域
-                JYFurnitureSection *furnitureSection=[[JYFurnitureSection alloc]init];
-                //设置智能区域的名称
-                furnitureSection.sectionName=furnitureBack.scene_name;
-                //设置智能区域的电器数组
-                furnitureSection.furnitureArray=self.furnitureArray;
-                //将智能区域添加到智能区域数组中
-                [self.furnitureSecArray addObject:furnitureSection];
-                [self.headerArray addObject:furnitureBack.scene_name];
-      
-      
-                //这里判断是否有注册的电器是默认图片的
-                int k=0;
-                //遍历电器描述文字
-                for(k=0;k<self.descArray.count;k++)
+                //创建新区域
+                self.furnitureArray=[[NSMutableArray alloc]init];
+                //每个区域默认有5个电器和一个添加电器图片
+                for(int i=0;i<6;i++)
                 {
-                    //如果从服务器返回的电器与已有电器描述一致
-                    if([furnitureBack.name isEqualToString:self.descArray[k]])
+                    //初始化一个电器
+                    JYFurniture *furniture=[[JYFurniture alloc]init];
+                    //设置电器图片
+                    furniture.imageStr=self.imageArray[i];
+                    //设置电器描述文字
+                    furniture.descLabel=self.descArray[i];
+                    //设置电器是否注册过
+                    furniture.registed=NO;
+                    furniture.deviceType=@"";
+                    furniture.controller=nil;
+                    
+                    //将电器添加到电器数组中
+                    [self.furnitureArray addObject:furniture];
+                }
+                
+                
+                JYFurniture *furniture=[[JYFurniture alloc]init];
+                furniture.descLabel=furnitureBack.name;
+                furniture.registed=YES;
+                furniture.logic_id=furnitureBack.logic_id;
+                furniture.deviceType=furnitureBack.deviceType;
+                
+                if([furniture.deviceType isEqualToString:@"40"])
+                {
+                    furniture.imageStr=self.imageHighArray[3];
+                    //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                    YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                    vc.logic_id=furniture.logic_id;
+                    vc.furnitureName=furniture.descLabel;
+                    furniture.controller=vc;
+                }
+                else if([furniture.deviceType isEqualToString:@"41"])
+                {
+                    furniture.imageStr=self.imageHighArray[4];
+                    // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
+                    YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                    vc.logic_id=furniture.logic_id;
+                    vc.furnitureName=furniture.descLabel;
+                    furniture.controller=vc;
+                    
+                }
+                else
+                {
+                    furniture.imageStr=@"单品";
+                    furniture.controller=[[JYOtherViewController alloc]init];
+                }
+                
+                int m=0;
+                for(m=0;m<self.descArray.count;m++)
+                {
+                    if([furniture.descLabel isEqualToString:self.descArray[m]]){ break; }
+                }
+                
+                if(m>=self.descArray.count)
+                {
+                    JYFurniture *temp=[[JYFurniture alloc]init];
+                    temp=[self.furnitureArray lastObject];
+                    [self.furnitureArray removeLastObject];
+                    
+                    [self.furnitureArray addObject:furniture];
+                    [self.furnitureArray addObject:temp];
+                    
+                    //初始化一个智能区域
+                    JYFurnitureSection *furnitureSection=[[JYFurnitureSection alloc]init];
+                    //设置智能区域的名称
+                    furnitureSection.sectionName=furnitureBack.scene_name;
+                    //设置智能区域的电器数组
+                    furnitureSection.furnitureArray=self.furnitureArray;
+                    //将智能区域添加到智能区域数组中
+                    [self.furnitureSecArray addObject:furnitureSection];
+                    [self.headerArray addObject:furnitureBack.scene_name];
+                    
+                    
+                    //这里判断是否有注册的电器是默认图片的
+                    int k=0;
+                    //遍历电器描述文字
+                    for(k=0;k<self.descArray.count;k++)
                     {
-                        //那就从self.furnitureSecArray中找到它
-                        JYFurnitureSection *section=[self.furnitureSecArray objectAtIndex:j];
-                        JYFurniture *furniture=[section.furnitureArray objectAtIndex:k];
-                        //并将该电器的显示图片改为高亮
-                        furniture.imageStr=self.imageHighArray[k];
-                        furniture.registed=YES;
-                        furniture.logic_id=furnitureBack.logic_id;
-                        furniture.deviceType=furnitureBack.deviceType;
-                        if([furniture.deviceType isEqualToString:@"40"])
+                        //如果从服务器返回的电器与已有电器描述一致
+                        if([furnitureBack.name isEqualToString:self.descArray[k]])
                         {
-                            YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
-                            vc.logic_id=furniture.logic_id;
-                            vc.furnitureName=furniture.descLabel;
-                            furniture.controller=vc;
-                            //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                            //那就从self.furnitureSecArray中找到它
+                            JYFurnitureSection *section=[self.furnitureSecArray objectAtIndex:j];
+                            JYFurniture *furniture=[section.furnitureArray objectAtIndex:k];
+                            //并将该电器的显示图片改为高亮
+                            furniture.imageStr=self.imageHighArray[k];
+                            furniture.registed=YES;
+                            furniture.logic_id=furnitureBack.logic_id;
+                            furniture.deviceType=furnitureBack.deviceType;
+                            if([furniture.deviceType isEqualToString:@"40"])
+                            {
+                                YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
+                                vc.logic_id=furniture.logic_id;
+                                vc.furnitureName=furniture.descLabel;
+                                furniture.controller=vc;
+                                //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
+                            }
+                            else if([furniture.deviceType isEqualToString:@"41"])
+                            {
+                                YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                                vc.logic_id=furniture.logic_id;
+                                vc.furnitureName=furniture.descLabel;
+                                furniture.controller=vc;
+                                // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
+                            }
+                            else
+                            {
+                                furniture.controller=[[JYOtherViewController alloc]init];
+                            }
+                            break;
                         }
-                        else if([furniture.deviceType isEqualToString:@"41"])
-                        {
-                            YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
-                            vc.logic_id=furniture.logic_id;
-                            vc.furnitureName=furniture.descLabel;
-                            furniture.controller=vc;
-                           // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
-                        }
-                        else
-                        {
-                            furniture.controller=[[JYOtherViewController alloc]init];
-                        }
-                        break;
                     }
                 }
+                
             }
         }
     }
-    
     [self.collectionView reloadData];
 }
 

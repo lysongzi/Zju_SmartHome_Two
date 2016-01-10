@@ -8,10 +8,12 @@
 
 #import "YSSceneViewController.h"
 #import "YSScene.h"
-#import "JYPatternSqlite.h"
+#import "JYSceneSqlite.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
 #import "LYSImageStore.h"
+#import "JYFurniture.h"
+#import "JYFurnitureParam.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 6
@@ -33,24 +35,178 @@
 @property (assign) NSInteger cellWidth;
 @property (assign) NSInteger cellHeight;
 
+//@property (strong, nonatomic) NSMutableArray *patterns;
+
 
 //记录当前居中的模式索引
 @property (assign) NSInteger selectedIndex;
 //定义JYSqlite对象
-@property (nonatomic,strong) JYPatternSqlite *jynewSqlite;
+@property (nonatomic,strong) JYSceneSqlite *jynewSqlite;
 
 
 //有关照片切换背景图的属性；
 @property (nonatomic,strong) UIPopoverController *imagePickerPopover;
 @property (nonatomic,strong) UIAlertController *alert;
 
+@property(nonatomic,copy)NSString *tableName;
+
+//初始化场景数组
+@property(nonatomic,strong)NSMutableArray *sceneArray;
+//初始化背景图数组
+@property(nonatomic,strong)NSMutableArray *bkgArray;
+
+//初始化场景时RGB电器给定的默认值数组
+@property(nonatomic,strong)NSMutableArray *rgbParamArray;
+//初始化场景时YW电器给定的默认值数组
+@property(nonatomic,strong)NSMutableArray *ywParamArray;
+
 @end
 
 @implementation YSSceneViewController
 
+- (NSMutableArray *)sceneArray
+{
+    if(!_sceneArray)
+    {
+        _sceneArray = [[NSMutableArray alloc]initWithObjects:@"观影",@"会客",@"浪漫",@"睡眠",@"晚餐",@"阅读", nil];
+    }
+    return _sceneArray;
+}
+
+-(NSMutableArray *)bkgArray
+{
+    if(!_bkgArray)
+    {
+        _bkgArray=[[NSMutableArray alloc]initWithObjects:@"guanying",@"huike",@"langman",@"shuimian",
+            @"wancan",@"yuedu", nil];
+    }
+    return _bkgArray;
+}
+
+//预先设置默认场景的rgb参数值
+-(NSMutableArray *)rgbParamArray
+{
+    if(!_rgbParamArray)
+    {
+        _rgbParamArray=[[NSMutableArray alloc]init];
+        for(int i=0;i<6;i++)
+        {
+            JYFurnitureParam *param=[[JYFurnitureParam alloc]init];
+            if(i==0)
+            {
+                param.param1=@"255";
+                param.param2=@"0";
+                param.param3=@"0";
+                [_rgbParamArray addObject:param];
+            }
+            else if(i==1)
+            {
+                param.param1=@"0";
+                param.param2=@"255";
+                param.param3=@"0";
+                [_rgbParamArray addObject:param];
+            }
+            else if(i==2)
+            {
+                param.param1=@"0";
+                param.param2=@"0";
+                param.param3=@"255";
+                [_rgbParamArray addObject:param];
+            }
+            else if(i==3)
+            {
+                param.param1=@"100";
+                param.param2=@"202";
+                param.param3=@"101";
+                [_rgbParamArray addObject:param];
+            }
+            else if(i==4)
+            {
+                param.param1=@"2";
+                param.param2=@"3";
+                param.param3=@"5";
+                [_rgbParamArray addObject:param];
+            }
+            else if(i==5)
+            {
+                param.param1=@"77";
+                param.param2=@"1";
+                param.param3=@"200";
+                [_rgbParamArray addObject:param];
+            }
+        }
+    }
+    return _rgbParamArray;
+}
+
+//预先设置默认场景的yw参数值
+-(NSMutableArray *)ywParamArray
+{
+    if(!_ywParamArray)
+    {
+        _ywParamArray=[[NSMutableArray alloc]init];
+        for(int i=0;i<6;i++)
+        {
+            JYFurnitureParam *param=[[JYFurnitureParam alloc]init];
+            if(i==0)
+            {
+                param.param1=@"10";
+                param.param2=@"10";
+                param.param3=@"0";
+                [_ywParamArray addObject:param];
+            }
+            else if(i==1)
+            {
+                param.param1=@"50";
+                param.param2=@"50";
+                param.param3=@"0";
+                [_ywParamArray addObject:param];
+            }
+            else if(i==2)
+            {
+                param.param1=@"30";
+                param.param2=@"30";
+                param.param3=@"0";
+                [_ywParamArray addObject:param];
+            }
+            else if(i==3)
+            {
+                param.param1=@"80";
+                param.param2=@"80";
+                param.param3=@"0";
+                [_ywParamArray addObject:param];
+            }
+            else if(i==4)
+            {
+                param.param1=@"40";
+                param.param2=@"40";
+                param.param3=@"0";
+                [_ywParamArray addObject:param];
+            }
+            else if(i==5)
+            {
+                param.param1=@"100";
+                param.param2=@"100";
+                param.param3=@"0";
+                [_ywParamArray addObject:param];
+            }
+        }
+    }
+    return _ywParamArray;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //存储某区域某场景下电器的表
+    self.tableName=@"sceneTable";
+    NSLog(@"看看区域名称传过来没%@",self.sectionName);
+    for(int i=0;i<self.furnitureArray.count;i++)
+    {
+        JYFurniture *furniture=self.furnitureArray[i];
+        NSLog(@"ooooo %@ %@ %@",furniture.logic_id,furniture.descLabel,furniture.deviceType);
+    }
+    
     [self setNaviBarItemButton];
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
@@ -92,64 +248,62 @@
 //初始化模式的数据
 - (void)initPatternData
 {
-//    //初始化
-//    JYNewSqlite *jynewSqlite=[[JYNewSqlite alloc]init];
-//    jynewSqlite.patterns=[[NSMutableArray alloc]init];
-//    self.jynewSqlite=jynewSqlite;
-//    
-//    //打开数据库
-//    [self.jynewSqlite openDB];
-//    //创建表（如果已经存在时不会再创建的）
-//    [self.jynewSqlite createTable];
-//    //获取表中所有记录
-//    [self.jynewSqlite getAllRecord];
-//    
-//    //self.patterns=jySqlite.patterns;
-//    if(self.jynewSqlite.patterns.count == 0)
-//    {
-//        NSLog(@"暂时还没有数据");
-//        //柔和模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"254" andField6:@"bValue" field6Value:@"253"];
-//        
-//        //舒适模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"233" andField5:@"gValue" field5Value:@"234" andField6:@"bValue" field6Value:@"235"];
-//        
-//        //明亮模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"明亮" andField2:@"logoName" field2Value:@"mingliang_icon" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"rValue" field4Value:@"100" andField5:@"gValue" field5Value:@"101" andField6:@"bValue" field6Value:@"102"];
-//        
-//        //跳跃模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"跳跃" andField2:@"logoName" field2Value:@"tiaoyue_icon" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"rValue" field4Value:@"1" andField5:@"gValue" field5Value:@"2" andField6:@"bValue" field6Value:@"3"];
-//        
-//        //R模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"R" andField2:@"logoName" field2Value:@"R" andField3:@"bkgName" field3Value:@"R_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"0" andField6:@"bValue" field6Value:@"0"];
-//        
-//        //G模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"G" andField2:@"logoName" field2Value:@"G" andField3:@"bkgName" field3Value:@"G_bg" andField4:@"rValue" field4Value:@"0" andField5:@"gValue" field5Value:@"255" andField6:@"bValue" field6Value:@"0"];
-//        
-//        //B模式
-//        [self.jynewSqlite insertRecordIntoTableName:@"patternTable" withField1:@"name" field1Value:@"B" andField2:@"logoName" field2Value:@"B" andField3:@"bkgName" field3Value:@"B_bg" andField4:@"rValue" field4Value:@"0" andField5:@"gValue" field5Value:@"0" andField6:@"bValue" field6Value:@"255"];
-//        
-//        
-//        [self.jynewSqlite getAllRecord];
-//        self.patterns=self.jynewSqlite.patterns;
-//        NSLog(@"长度%ld",self.patterns.count);
-//    }
-//    else
-//    {
-//        NSLog(@"已经有数据了");
-//        self.patterns=self.jynewSqlite.patterns;
-//        //NSLog(@"长度%ld",self.patterns.count);
-//    }
-    self.scenes = [NSMutableArray array];
-    [self.scenes addObject:[[YSScene alloc] initWithName:@"观影" logoName:@"guanying_icon" bkgName:@"guanying"]];
-    [self.scenes addObject:[[YSScene alloc] initWithName:@"会客" logoName:@"huike_icon" bkgName:@"huike"]];
-    [self.scenes addObject:[[YSScene alloc] initWithName:@"浪漫" logoName:@"langman_icon" bkgName:@"langman"]];
-    [self.scenes addObject:[[YSScene alloc] initWithName:@"睡眠" logoName:@"shuimian_icon" bkgName:@"shuimian"]];
-    [self.scenes addObject:[[YSScene alloc] initWithName:@"晚餐" logoName:@"wancan_icon" bkgName:@"wancan"]];
-    [self.scenes addObject:[[YSScene alloc] initWithName:@"阅读" logoName:@"yuedu_icon" bkgName:@"yuedu"]];
+    //初始化
+    JYSceneSqlite *jynewSqlite=[[JYSceneSqlite alloc]init];
+    jynewSqlite.patterns=[[NSMutableArray alloc]init];
+    self.jynewSqlite=jynewSqlite;
     
-    //最后一个自定义按钮
-    [self.scenes addObject:[[YSScene alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
+    //打开数据库
+    [self.jynewSqlite openDB];
+    //创建表（如果已经存在时不会再创建的）
+    [self.jynewSqlite createTable:self.tableName];
+  
+    //获取表中所有记录
+    [self.jynewSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
+    
+    if(self.jynewSqlite.patterns.count == 0)
+    {
+        for(int i=0;i<6;i++)
+        {
+            for(int j=0;j<self.furnitureArray.count;j++)
+            {
+                JYFurniture *furniture=self.furnitureArray[j];
+                //说明是RGB灯
+                if([furniture.deviceType isEqualToString:@"40"])
+                {
+                    JYFurnitureParam *param=self.rgbParamArray[i];
+                    [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"area" field1Value:self.sectionName andField2:@"scene" field2Value:self.sceneArray[i] andField3:@"bkgName" field3Value:self.bkgArray[i] andField4:@"logic_id" field4Value:furniture.logic_id andField5:@"param1" field5Value:param.param1 andField6:@"param2" field6Value:param.param2 andField7:@"param3" field7Value:param.param3];
+                }
+                //说明是YW灯
+                else if([furniture.deviceType isEqualToString:@"41"])
+                {
+                    JYFurnitureParam *param=self.ywParamArray[i];
+                    [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"area" field1Value:self.sectionName andField2:@"scene" field2Value:self.sceneArray[i] andField3:@"bkgName" field3Value:self.bkgArray[i] andField4:@"logic_id" field4Value:furniture.logic_id andField5:@"param1" field5Value:param.param1 andField6:@"param2" field6Value:param.param2 andField7:@"param3" field7Value:param.param3];
+                }
+            }
+        }
+        
+        [self.jynewSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
+        
+        self.scenes =self.jynewSqlite.patterns;
+        for(int i=0;i<self.scenes.count;i++)
+        {
+            YSScene *scene=self.scenes[i];
+            NSLog(@"%@ %@ %@    %@   %@    %@    %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+        }
+    }
+    else
+    {
+        NSLog(@"已经有数据了");
+        self.scenes=self.jynewSqlite.patterns;
+        for(int i=0;i<self.scenes.count;i++)
+        {
+            YSScene *scene=self.scenes[i];
+            NSLog(@"%@ %@ %@    %@    %@    %@   %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+        }
+    }
+//    //最后一个自定义按钮
+//    [self.scenes addObject:[[YSScene alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
 }
 
 //初始化scrollView的内容

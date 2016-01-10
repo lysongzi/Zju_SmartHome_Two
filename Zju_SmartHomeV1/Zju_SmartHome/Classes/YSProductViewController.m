@@ -426,6 +426,7 @@ static BOOL _isPoping;
 {
     [HttpRequest findAllDeviceFromServerProduct:^(AFHTTPRequestOperation *operation, id responseObject)
     {
+        NSLog(@"00000 %@",responseObject);
         self.furnitureBackStatus = [JYFurnitureBackStatus statusWithDict:responseObject];
         
         NSMutableArray *backProducts = self.furnitureBackStatus.furnitureArray;
@@ -689,7 +690,7 @@ static BOOL _isPoping;
     [UIView animateWithDuration:0.5 animations:^{
         [addDeviceView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     }completion:^(BOOL finished) {
-        self.navigationController.navigationBar.hidden=YES;
+        self.navigationController.navigationBar.hidden=NO;
         self.navigationItem.hidesBackButton=YES;
     }];
     

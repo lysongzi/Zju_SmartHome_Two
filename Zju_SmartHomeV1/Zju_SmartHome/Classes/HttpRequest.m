@@ -130,7 +130,7 @@
   NSDictionary *params = @{@"is_app":@"1",
                            @"equipment.name":deviceName,
                            @"equipment.logic_id":logicId,
-                           @"equipment.scene_name" :sectionName,
+                           @"equipment.room_name" :sectionName,
                            @"equipment.type":type
                            };
   
@@ -154,7 +154,7 @@
     
     
     NSDictionary *params = @{@"is_app":@"1",
-                             @"is_sample":@"1",
+                             @"equipment.room_name":@"-1",
                              @"equipment.name":deviceName,
                              @"equipment.logic_id":logicId,
                              @"equipment.type":type
@@ -169,7 +169,7 @@
 }
 //****************
 #pragma mark - 从服务器获取家具所有设备的方法
-+ (void)findAllDeviceFromServer :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
++ (void)findAllDeviceFromServer :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success  failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
   
   //1.创建请求管理对象
   AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
@@ -180,7 +180,6 @@
   //3.封装请求参数
   NSMutableDictionary *params=[NSMutableDictionary dictionary];
   params[@"is_app"]=@"1";
-  
   
   //外网；
   [manager POST:@"http://60.12.220.16:8888/paladin/Equipment/find"
@@ -201,7 +200,7 @@
     //3.封装请求参数
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
-    params[@"is_sample"]=@"1";
+    params[@"room_name"]=@"-1";
     
     
     //外网；
@@ -210,7 +209,6 @@
           success:success
           failure:failure];
 }
-
 
 
 #pragma mark - 获取内网地址的方法

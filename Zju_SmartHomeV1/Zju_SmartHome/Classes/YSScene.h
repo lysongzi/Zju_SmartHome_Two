@@ -9,15 +9,24 @@
 #import <Foundation/Foundation.h>
 
 @interface YSScene : NSObject
-
-//模式名称
+//区域
+@property(nonatomic,copy)NSString *area;
+//场景名称
 @property (copy, nonatomic) NSString *name;
-//模式logo
+//场景logo
 @property (copy, nonatomic) NSString *logoName;
 //模式背景图片
 @property (copy, nonatomic) NSString *bkgName;
 
-- (instancetype)initWithName:(NSString *)name logoName:(NSString *)logoName;
-- (instancetype)initWithName:(NSString *)name logoName:(NSString *)logoName bkgName:(NSString *)bkgName;
+//某场景下电器的数组
+//@property(nonatomic,strong)NSMutableArray *furnituresArray;
+
+//电器逻辑id
+@property(nonatomic,copy)NSString *logic_id;
+
+//三个参数
+@property(nonatomic,copy)NSString *param1;
+@property(nonatomic,copy)NSString *param2;
+@property(nonatomic,copy)NSString *param3;
 
 @end
