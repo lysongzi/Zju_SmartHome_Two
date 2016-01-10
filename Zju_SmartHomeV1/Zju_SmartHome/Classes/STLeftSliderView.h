@@ -12,7 +12,7 @@
 
 @optional
 -(void)goBack;
-
+-(void)gotoUserInfo;
 @end
 @interface STLeftSliderView : UIView
 @property (weak, nonatomic) IBOutlet UITableView *sliderTableView;

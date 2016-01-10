@@ -22,6 +22,7 @@
 #import "STSliderCell.h"
 #import "UIImage+ST.h"
 #import "CYFImageStore.h"
+#import "STUserInfoController.h"
 
 @interface CYFMainViewController ()<STHomeViewDelegate,CLLocationManagerDelegate,STLeftSliderViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -136,12 +137,6 @@
   
 }
 
-
-
-
-
-
-
 //设置导航栏
 -(void)setupNavgationItem
 {
@@ -226,6 +221,13 @@
     }];
     
 }
+//进入个人信息中心
+-(void)gotoUserInfo
+{
+    STUserInfoController *userInfoVc=[[STUserInfoController alloc]init];
+    [self.navigationController pushViewController:userInfoVc animated:YES];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

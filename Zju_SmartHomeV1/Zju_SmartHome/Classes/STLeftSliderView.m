@@ -12,7 +12,9 @@
 
 - (IBAction)modifyPortraitClick:(id)sender
 {
-    NSLog(@"修改头像");
+    if ([self.delegate respondsToSelector:@selector(gotoUserInfo)]) {
+        [self.delegate gotoUserInfo];
+    }
 }
 
 - (IBAction)backBtnClick:(id)sender
