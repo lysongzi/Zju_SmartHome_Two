@@ -27,8 +27,6 @@
 +(instancetype)initWithSliderView
 {
     STLeftSliderView *leftSliderView=[[[NSBundle mainBundle]loadNibNamed:@"STLeftSliderView" owner:nil options:nil]lastObject];
-   
-    
     return leftSliderView;
 }
 

@@ -10,11 +10,6 @@
 
 @implementation STUserInfoView
 
-- (IBAction)modifyPortraitClick:(id)sender
-{
-    NSLog(@"修改头像");
-}
-
 - (IBAction)backBtnClick:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(goBack)]) {
@@ -26,6 +21,8 @@
 {
     STUserInfoView *userInfoView=[[[NSBundle mainBundle]loadNibNamed:@"STUserInfoView" owner:nil options:nil]lastObject];
     userInfoView.userActTableView.bounces=NO;
+    userInfoView.portraitBtn.userInteractionEnabled=NO;
+    userInfoView.userName.userInteractionEnabled=NO;
     userInfoView.userActTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     return userInfoView;
 }

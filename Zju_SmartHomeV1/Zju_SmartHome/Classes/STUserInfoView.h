@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *userName;
 
 @property (weak, nonatomic) IBOutlet UIButton *portraitBtn;
-- (IBAction)modifyPortraitClick:(id)sender;
 - (IBAction)backBtnClick:(id)sender;
 
 +(instancetype)initWithUserView;

@@ -74,7 +74,6 @@
     
     if ([controller isKindOfClass:[STUserInfoController class]])
     {
-        NSLog(@"====%@",controller);
       [self.navigationController popToViewController:controller animated:YES];
       
     }
