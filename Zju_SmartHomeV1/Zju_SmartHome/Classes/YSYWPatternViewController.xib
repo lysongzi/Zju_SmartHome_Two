@@ -8,7 +8,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YSYWPatternViewController">
             <connections>
                 <outlet property="bkgImageView" destination="0ef-P4-udh" id="qOn-q8-m7b"/>
+                <outlet property="lightView" destination="mKB-wi-kht" id="O7R-nT-PaN"/>
+                <outlet property="musicBkg" destination="vqB-EA-PoU" id="ViL-Yg-dbu"/>
                 <outlet property="musicButton" destination="xIu-Kx-2Cb" id="QHx-zh-OZa"/>
+                <outlet property="musicNext" destination="18N-nL-pr1" id="2KD-q6-r4z"/>
+                <outlet property="musicPlay" destination="ath-58-lgu" id="pjW-wO-DYN"/>
+                <outlet property="musicPre" destination="P9g-pS-fEK" id="1fD-25-vnT"/>
+                <outlet property="musicView" destination="4x4-PD-prw" id="y08-7r-qFK"/>
                 <outlet property="patternNameLabel" destination="IMM-90-kcK" id="QH9-Pd-Epn"/>
                 <outlet property="pictureButton" destination="uRn-0M-O3Z" id="OaW-6F-ZeS"/>
                 <outlet property="scrollView" destination="F1D-qC-Xlc" id="fC9-8X-DFg"/>
@@ -39,6 +45,41 @@
                     <rect key="frame" x="0.0" y="120" width="320" height="64"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </scrollView>
+                <view contentMode="scaleToFill" id="4x4-PD-prw">
+                    <rect key="frame" x="101" y="463" width="200" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yinyuekuangdi" id="vqB-EA-PoU">
+                            <rect key="frame" x="0.0" y="0.0" width="200" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P9g-pS-fEK">
+                            <rect key="frame" x="5" y="3" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" backgroundImage="music_shangyishou_icon_unpress"/>
+                            <connections>
+                                <action selector="musicPreClick:" destination="-1" eventType="touchUpInside" id="sg0-gM-ybb"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ath-58-lgu">
+                            <rect key="frame" x="56" y="3" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" backgroundImage="music_bofang"/>
+                            <connections>
+                                <action selector="musicPlayClick:" destination="-1" eventType="touchUpInside" id="Uyq-TT-F82"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="18N-nL-pr1">
+                            <rect key="frame" x="107" y="3" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" backgroundImage="music_xiayishou_icon_unpress"/>
+                            <connections>
+                                <action selector="musicNextClick:" destination="-1" eventType="touchUpInside" id="ZMU-6l-Yrf"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xIu-Kx-2Cb">
                     <rect key="frame" x="256" y="463" width="45" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -50,11 +91,16 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uRn-0M-O3Z">
                     <rect key="frame" x="22" y="465" width="40" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="zhaopianquse_icon_unpress"/>
+                    <state key="normal" backgroundImage="switch_unpress"/>
                     <connections>
                         <action selector="pictureClick:" destination="-1" eventType="touchUpInside" id="fk6-r3-ySM"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" id="mKB-wi-kht">
+                    <rect key="frame" x="61" y="222" width="198" height="201"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="298" y="302"/>
@@ -63,7 +109,11 @@
     <resources>
         <image name="mengban" width="320" height="568"/>
         <image name="mingliang_bg" width="320" height="568"/>
+        <image name="music_bofang" width="26" height="26"/>
+        <image name="music_shangyishou_icon_unpress" width="26" height="26"/>
         <image name="music_unpress" width="40" height="40"/>
-        <image name="zhaopianquse_icon_unpress" width="37" height="37"/>
+        <image name="music_xiayishou_icon_unpress" width="26" height="26"/>
+        <image name="switch_unpress" width="38" height="38"/>
+        <image name="yinyuekuangdi" width="137" height="35"/>
     </resources>
 </document>

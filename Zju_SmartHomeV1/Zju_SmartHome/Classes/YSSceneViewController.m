@@ -27,7 +27,18 @@
 @property (weak, nonatomic) IBOutlet UIButton *switchButton;
 //音乐播放按钮
 @property (weak, nonatomic) IBOutlet UIButton *musicButton;
-//模式切换
+
+//音乐播放框
+@property (weak, nonatomic) IBOutlet UIView *musicView;
+//播放按钮
+@property (weak, nonatomic) IBOutlet UIButton *musicPlay;
+//上一首
+@property (weak, nonatomic) IBOutlet UIButton *musicPre;
+//下一首
+@property (weak, nonatomic) IBOutlet UIButton *musicNext;
+//音乐框背景图
+@property (weak, nonatomic) IBOutlet UIImageView *musicBkg;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) NSMutableArray *scenes;
 @property (strong, nonatomic) NSMutableArray *cellsView;
@@ -35,14 +46,19 @@
 @property (assign) NSInteger cellWidth;
 @property (assign) NSInteger cellHeight;
 
-//@property (strong, nonatomic) NSMutableArray *patterns;
-
+//记录音乐框里各种空间位置的参数
+@property CGRect musicViewFrame;
+@property CGRect musicBkgFrame;
+@property CGRect musicPreFrame;
+@property CGRect musicNextFrame;
+@property CGRect musicPlayFrame;
 
 //记录当前居中的模式索引
 @property (assign) NSInteger selectedIndex;
 //定义JYSqlite对象
 @property (nonatomic,strong) JYSceneSqlite *jynewSqlite;
 
+@property CGRect music;
 
 //有关照片切换背景图的属性；
 @property (nonatomic,strong) UIPopoverController *imagePickerPopover;
@@ -220,6 +236,55 @@
     //初始化scrollView
     [self initScrollView];
     
+    //初始化音乐框
+    float gap = self.musicButton.frame.size.width / 2;
+    
+    self.musicViewFrame = self.musicView.frame;
+    self.musicBkgFrame = self.musicBkg.frame;
+    self.musicNextFrame = self.musicNext.frame;
+    self.musicPreFrame = self.musicPre.frame;
+    self.musicPlayFrame = self.musicPlay.frame;
+    
+    //默认不显示
+    self.musicView.frame = CGRectMake(self.musicViewFrame.origin.x + self.musicViewFrame.size.width - gap, self.musicViewFrame.origin.y, 0, self.musicViewFrame.size.height);
+    
+    //进行适配6
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float ratio = 1.0f;
+    
+    if (width == 320.0)
+    {
+        //5或5s
+    }
+    else if (width == 375.0)
+    {
+        ratio = 375.0 / 320.0;
+        
+    }
+    else if (width == 414.0)
+    {
+        ratio = 414.0 / 320.0;
+    }
+    
+    self.musicViewFrame = CGRectMake(self.musicViewFrame.origin.x * ratio, self.musicViewFrame.origin.y * ratio, self.musicViewFrame.size.width * ratio, self.musicViewFrame.size.height * ratio);
+    
+    self.musicBkgFrame = CGRectMake(self.musicBkgFrame.origin.x * ratio, self.musicBkgFrame.origin.y * ratio, self.musicBkgFrame.size.width * ratio, self.musicBkgFrame.size.height * ratio);
+    
+    self.musicNextFrame = CGRectMake(self.musicNextFrame.origin.x * ratio, self.musicNextFrame.origin.y * ratio, self.musicNextFrame.size.width * ratio, self.musicNextFrame.size.height * ratio);
+    
+    self.musicPlayFrame = CGRectMake(self.musicPlayFrame.origin.x * ratio, self.musicPlayFrame.origin.y * ratio, self.musicPlayFrame.size.width * ratio, self.musicPlayFrame.size.height * ratio);
+    
+    self.musicPreFrame = CGRectMake(self.musicPreFrame.origin.x * ratio, self.musicPreFrame.origin.y * ratio, self.musicPreFrame.size.width * ratio, self.musicPreFrame.size.height * ratio);
+
+    
+    //0表示未弹出状态，1表示弹出状态
+    self.musicView.tag = 0;
+    //0表示暂停状态，1表示播放状态
+    self.musicPlay.tag = 0;
+    
+    //设置各种按钮点击图片
+    [self.musicNext setBackgroundImage:[UIImage imageNamed:@"music_xiayishou_icon_press"] forState:UIControlStateHighlighted];
+    [self.musicPre setBackgroundImage:[UIImage imageNamed:@"music_shangyishou_icon_press"] forState:UIControlStateHighlighted];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -505,7 +570,67 @@
 //点击播放音乐的响应事件
 - (IBAction)musicClick:(id)sender
 {
-    NSLog(@"音乐选择");
+    if (!self.musicView.tag)
+    {
+        //弹出音乐界面
+        [UIView animateWithDuration:0.4 animations:^{
+            self.musicView.frame = CGRectMake(self.musicViewFrame.origin.x, self.musicViewFrame.origin.y, self.musicViewFrame.size.width, self.musicViewFrame.size.height);
+            
+            self.musicBkg.frame = CGRectMake(self.musicBkgFrame.origin.x, self.musicBkgFrame.origin.y, self.musicBkgFrame.size.width, self.musicBkgFrame.size.height);
+            
+            self.musicNext.frame = CGRectMake(self.musicNextFrame.origin.x, self.musicNextFrame.origin.y, self.musicNextFrame.size.width, self.musicNextFrame.size.height);
+            
+            self.musicPre.frame = CGRectMake(self.musicPreFrame.origin.x, self.musicPreFrame.origin.y, self.musicPreFrame.size.width, self.musicPreFrame.size.height);
+            
+            self.musicPlay.frame = CGRectMake(self.musicPlayFrame.origin.x, self.musicPlayFrame.origin.y, self.musicPlayFrame.size.width, self.musicPlayFrame.size.height);
+        }];
+        
+        self.musicView.tag = 1;
+    }
+    else
+    {
+        //缩回音乐界面
+        float gap = self.musicButton.frame.size.width / 2;
+        [UIView animateWithDuration:0.4 animations:^{
+            self.musicView.frame = CGRectMake(self.musicViewFrame.origin.x + self.musicViewFrame.size.width - gap, self.musicViewFrame.origin.y, 0, self.musicViewFrame.size.height);
+        }];
+        self.musicView.tag = 0;
+    }
+    
+}
+
+- (IBAction)musicPreClick:(id)sender
+{
+    NSLog(@"这里是上一首");
+}
+
+- (IBAction)musicNextClick:(id)sender
+{
+    NSLog(@"这里是下一首");
+}
+
+- (IBAction)musicPlayClick:(id)sender
+{
+    NSLog(@"这里是播放");
+    UIButton *play = (UIButton *)sender;
+    
+    //暂停变播放
+    if (!play.tag)
+    {
+        play.tag = 1;
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+        
+        //接下来在这里写播放的代码
+        //!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    else
+    {
+        play.tag = 0;
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+        
+        //接下来在这里写播放的代码
+        //!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
 }
 
 #pragma mark - scrollView中cell的动态操作

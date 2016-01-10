@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *pictureButton;
 //音乐播放按钮
 @property (weak, nonatomic) IBOutlet UIButton *musicButton;
+//中间亮圆圈
+@property (weak, nonatomic) IBOutlet UIView *lightView;
 
 //模式切换
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -44,6 +46,28 @@
 //表名
 @property(nonatomic,copy)NSString *tableName;
 
+//有关照片切换背景图的属性；
+@property (nonatomic,strong) UIPopoverController *imagePickerPopover;
+@property (nonatomic,strong) UIAlertController *alert;
+
+//音乐播放框
+@property (weak, nonatomic) IBOutlet UIView *musicView;
+//播放按钮
+@property (weak, nonatomic) IBOutlet UIButton *musicPlay;
+//上一首
+@property (weak, nonatomic) IBOutlet UIButton *musicPre;
+//下一首
+@property (weak, nonatomic) IBOutlet UIButton *musicNext;
+//音乐框背景图
+@property (weak, nonatomic) IBOutlet UIImageView *musicBkg;
+
+//记录音乐框里各种空间位置的参数
+@property CGRect musicViewFrame;
+@property CGRect musicBkgFrame;
+@property CGRect musicPreFrame;
+@property CGRect musicNextFrame;
+@property CGRect musicPlayFrame;
+
 @end
 
 @implementation YSYWPatternViewController
@@ -58,8 +82,64 @@
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
     self.cellHeight = self.scrollView.frame.size.height;
     
-    [self.pictureButton setBackgroundImage:[UIImage imageNamed:@"zhaopianquse_icon_press"] forState:UIControlStateHighlighted];
+    [self.pictureButton setBackgroundImage:[UIImage imageNamed:@"switch_press"] forState:UIControlStateHighlighted];
     [self.musicButton setBackgroundImage:[UIImage imageNamed:@"music_icon_press"] forState:UIControlStateHighlighted];
+    
+    //初始化音乐框
+    float gap = self.musicButton.frame.size.width / 2;
+    
+    self.musicViewFrame = self.musicView.frame;
+    self.musicBkgFrame = self.musicBkg.frame;
+    self.musicNextFrame = self.musicNext.frame;
+    self.musicPreFrame = self.musicPre.frame;
+    self.musicPlayFrame = self.musicPlay.frame;
+    
+    //默认不显示
+    self.musicView.frame = CGRectMake(self.musicViewFrame.origin.x + self.musicViewFrame.size.width - gap, self.musicViewFrame.origin.y, 0, self.musicViewFrame.size.height);
+    
+    //进行适配6
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float ratio = 1.0f;
+    
+    if (width == 320.0)
+    {
+        //5或5s
+    }
+    else if (width == 375.0)
+    {
+        ratio = 375.0 / 320.0;
+        
+    }
+    else if (width == 414.0)
+    {
+        ratio = 414.0 / 320.0;
+    }
+    
+    self.musicViewFrame = CGRectMake(self.musicViewFrame.origin.x * ratio, self.musicViewFrame.origin.y * ratio, self.musicViewFrame.size.width * ratio, self.musicViewFrame.size.height * ratio);
+    
+    self.musicBkgFrame = CGRectMake(self.musicBkgFrame.origin.x * ratio, self.musicBkgFrame.origin.y * ratio, self.musicBkgFrame.size.width * ratio, self.musicBkgFrame.size.height * ratio);
+    
+    self.musicNextFrame = CGRectMake(self.musicNextFrame.origin.x * ratio, self.musicNextFrame.origin.y * ratio, self.musicNextFrame.size.width * ratio, self.musicNextFrame.size.height * ratio);
+    
+    self.musicPlayFrame = CGRectMake(self.musicPlayFrame.origin.x * ratio, self.musicPlayFrame.origin.y * ratio, self.musicPlayFrame.size.width * ratio, self.musicPlayFrame.size.height * ratio);
+    
+    self.musicPreFrame = CGRectMake(self.musicPreFrame.origin.x * ratio, self.musicPreFrame.origin.y * ratio, self.musicPreFrame.size.width * ratio, self.musicPreFrame.size.height * ratio);
+    
+    
+    //0表示未弹出状态，1表示弹出状态
+    self.musicView.tag = 0;
+    //0表示暂停状态，1表示播放状态
+    self.musicPlay.tag = 0;
+    
+    //设置各种按钮点击图片
+    [self.musicNext setBackgroundImage:[UIImage imageNamed:@"music_xiayishou_icon_press"] forState:UIControlStateHighlighted];
+    [self.musicPre setBackgroundImage:[UIImage imageNamed:@"music_shangyishou_icon_press"] forState:UIControlStateHighlighted];
+    
+    UITapGestureRecognizer * tapLight = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeBkg:)];
+    [self.lightView setUserInteractionEnabled:YES];
+    [self.lightView addGestureRecognizer:tapLight];
+    
+    self.pictureButton.tag = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -326,18 +406,194 @@
     [self.jynewSqlite deleteRecordWithLogicID:self.logic_id andWithName:pattern.name inTable:self.tableName];
 }
 
-//点击图片取色按钮的响应事件
+//弹出选择更换背景图
+- (void)changeBkg:(UIGestureRecognizer *)gr
+{
+    if ([self.imagePickerPopover isPopoverVisible]) {
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+        return;
+    }
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.editing = YES;
+    //imagePicker.delegate=self;
+    //这里可以设置是否允许编辑图片；
+    imagePicker.allowsEditing = false;
+    
+    
+    /**
+     *  应该在这里让用户选择是打开摄像头还是图库；
+     */
+    //初始化提示框；
+    self.alert = [UIAlertController alertControllerWithTitle:@"更换背景图片" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"照相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        //创建UIPopoverController对象前先检查当前设备是不是ipad
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        {
+            //            self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+            //            self.imagePickerPopover.delegate = self;
+            //            [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
+            //                                            permittedArrowDirections:UIPopoverArrowDirectionAny
+            //                                                            animated:YES];
+        }
+        else
+        {
+            //跳到ShowPhoto页面；
+//            JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+//            showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
+//            showPhoto.delegate=self;
+//            [self.navigationController pushViewController:showPhoto animated:true];
+        }
+    }]];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                           {
+                               imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                               
+                               //创建UIPopoverController对象前先检查当前设备是不是ipad
+                               if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+                               {
+                                   //                                   self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+                                   //                                   self.imagePickerPopover.delegate = self;
+                                   //                                   [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
+                                   //                                                                   permittedArrowDirections:UIPopoverArrowDirectionAny
+                                   //                                                                                   animated:YES];
+                               }
+                               else
+                               {
+                                   //跳到ShowPhoto页面；
+//                                   JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+//                                   showPhoto.logic_id=self.logic_id;
+//                                   showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;
+//                                   //从图库打开；
+//                                   showPhoto.delegate=self;
+//                                   [self.navigationController pushViewController:showPhoto animated:true];
+                               }
+                           }]];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:nil]];
+    
+    //弹出提示框；
+    [self presentViewController:self.alert animated:true completion:nil];
+}
+
+
+//点击开关灯
 - (IBAction)pictureClick:(id)sender
 {
-    //NSLog(@"图片选择");
+    //0表示为关灯状态，1表示开灯状态
+    UIButton *swichButton = (UIButton *)sender;
+    
+    //关灯变开灯
+    if (!swichButton.tag)
+    {
+        swichButton.tag = 1;
+        
+        //做网络请求
+//        [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"100"
+//                                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                                           
+//                                           NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//                                           NSLog(@"成功: %@", string);
+//                                       }
+//                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                                           NSLog(@"失败: %@", error);
+//                                           [MBProgressHUD showError:@"请检查网关"];
+//                                           
+//                                       }];
+    }
+    //开灯变关灯
+    else
+    {
+        swichButton.tag = 0;
+        
+        //做网络请求
+//        [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"0"
+//                                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                                           
+//                                           NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//                                           NSLog(@"成功: %@", string);
+//                                       }
+//                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                                           NSLog(@"失败: %@", error);
+//                                           [MBProgressHUD showError:@"请检查网关"];
+//                                           
+//                                       }];
+    }
+    
 }
 
 //点击播放音乐的响应事件
-
 - (IBAction)musicClick:(id)sender
 {
-    //NSLog(@"音乐选择");
+    if (!self.musicView.tag)
+    {
+        //弹出音乐界面
+        [UIView animateWithDuration:0.4 animations:^{
+            self.musicView.frame = CGRectMake(self.musicViewFrame.origin.x, self.musicViewFrame.origin.y, self.musicViewFrame.size.width, self.musicViewFrame.size.height);
+            
+            self.musicBkg.frame = CGRectMake(self.musicBkgFrame.origin.x, self.musicBkgFrame.origin.y, self.musicBkgFrame.size.width, self.musicBkgFrame.size.height);
+            
+            self.musicNext.frame = CGRectMake(self.musicNextFrame.origin.x, self.musicNextFrame.origin.y, self.musicNextFrame.size.width, self.musicNextFrame.size.height);
+            
+            self.musicPre.frame = CGRectMake(self.musicPreFrame.origin.x, self.musicPreFrame.origin.y, self.musicPreFrame.size.width, self.musicPreFrame.size.height);
+            
+            self.musicPlay.frame = CGRectMake(self.musicPlayFrame.origin.x, self.musicPlayFrame.origin.y, self.musicPlayFrame.size.width, self.musicPlayFrame.size.height);
+        }];
+        
+        self.musicView.tag = 1;
+    }
+    else
+    {
+        //缩回音乐界面
+        float gap = self.musicButton.frame.size.width / 2;
+        [UIView animateWithDuration:0.4 animations:^{
+            self.musicView.frame = CGRectMake(self.musicViewFrame.origin.x + self.musicViewFrame.size.width - gap, self.musicViewFrame.origin.y, 0, self.musicViewFrame.size.height);
+        }];
+        self.musicView.tag = 0;
+    }
+    
 }
+
+- (IBAction)musicPreClick:(id)sender
+{
+    NSLog(@"这里是上一首");
+}
+
+- (IBAction)musicNextClick:(id)sender
+{
+    NSLog(@"这里是下一首");
+}
+
+- (IBAction)musicPlayClick:(id)sender
+{
+    NSLog(@"这里是播放");
+    UIButton *play = (UIButton *)sender;
+    
+    //暂停变播放
+    if (!play.tag)
+    {
+        play.tag = 1;
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+        
+        //接下来在这里写播放的代码
+        //!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    else
+    {
+        play.tag = 0;
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+        
+        //接下来在这里写播放的代码
+        //!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+}
+
 
 #pragma mark - scrollView中cell的动态操作
 
@@ -468,18 +724,15 @@
         if (self.selectedIndex < DEFAULT_CELL_NUMBER)
         {
             self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
-            self.pictureButton.enabled = NO;
         }
         //自定义图片加载自定义模式
         else
         {
-            self.pictureButton.enabled = YES;
         }
     }
     else
     {
         //自定义设置图片取色不可用
-        self.pictureButton.enabled = NO;
     }
 
     
