@@ -105,6 +105,8 @@
 		9D5FF5B41BEA2C2E004371E5 /* JYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5FF5B31BEA2C2E004371E5 /* JYNavigationController.m */; };
 		9D6568641BEB846F006D9507 /* JYLoginStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6568631BEB846F006D9507 /* JYLoginStatus.m */; };
 		9D6568671BEB8861006D9507 /* JYUserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6568661BEB8861006D9507 /* JYUserData.m */; };
+		9D7D249F1C4360FC00194C24 /* YSSoftwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D7D249D1C4360FC00194C24 /* YSSoftwareViewController.m */; };
+		9D7D24A01C4360FC00194C24 /* YSSoftwareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D7D249E1C4360FC00194C24 /* YSSoftwareViewController.xib */; };
 		9D7D5A521BE472D300E1E1EF /* Zju_SmartHome.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D7D5A501BE472D300E1E1EF /* Zju_SmartHome.xcdatamodeld */; };
 		9D7D5A541BE472D300E1E1EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D7D5A531BE472D300E1E1EF /* Assets.xcassets */; };
 		9D7D5A571BE472D300E1E1EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D7D5A551BE472D300E1E1EF /* LaunchScreen.storyboard */; };
@@ -324,6 +326,9 @@
 		9D6568631BEB846F006D9507 /* JYLoginStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYLoginStatus.m; sourceTree = "<group>"; };
 		9D6568651BEB8861006D9507 /* JYUserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYUserData.h; sourceTree = "<group>"; };
 		9D6568661BEB8861006D9507 /* JYUserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYUserData.m; sourceTree = "<group>"; };
+		9D7D249C1C4360FC00194C24 /* YSSoftwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSSoftwareViewController.h; sourceTree = "<group>"; };
+		9D7D249D1C4360FC00194C24 /* YSSoftwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSSoftwareViewController.m; sourceTree = "<group>"; };
+		9D7D249E1C4360FC00194C24 /* YSSoftwareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSSoftwareViewController.xib; sourceTree = "<group>"; };
 		9D7D5A411BE472D300E1E1EF /* Zju_SmartHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zju_SmartHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D7D5A511BE472D300E1E1EF /* Zju_SmartHome.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Zju_SmartHome.xcdatamodel; sourceTree = "<group>"; };
 		9D7D5A531BE472D300E1E1EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -502,6 +507,9 @@
 				9D4F31B21C3693930096B3FD /* STLeftSliderView.xib */,
 				61645BAB1C101BA5007462EC /* JYChangePwdViewController.xib */,
 				714854EF1C127C300001347F /* CYFChangeMailViewController.xib */,
+				9D7D249C1C4360FC00194C24 /* YSSoftwareViewController.h */,
+				9D7D249D1C4360FC00194C24 /* YSSoftwareViewController.m */,
+				9D7D249E1C4360FC00194C24 /* YSSoftwareViewController.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1203,7 +1211,7 @@
 				TargetAttributes = {
 					9D7D5A401BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = 66F9B76GET;
+						DevelopmentTeam = R5G98FQWCS;
 					};
 					9D7D5A5C1BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -1258,6 +1266,7 @@
 				9D5A5F7C1C3F4559006EAD37 /* STAddDeviceVew.xib in Resources */,
 				9D564D581BFEAD220062700D /* JYMainXib.xib in Resources */,
 				9D564DBF1BFF69A10062700D /* CYFFurnitureViewController.xib in Resources */,
+				9D7D24A01C4360FC00194C24 /* YSSoftwareViewController.xib in Resources */,
 				9D7D5A571BE472D300E1E1EF /* LaunchScreen.storyboard in Resources */,
 				61645BAD1C101BA5007462EC /* JYChangePwdViewController.xib in Resources */,
 				615C37D51C2D0A9D002663C5 /* STSaveSceneView.xib in Resources */,
@@ -1389,6 +1398,7 @@
 				9D1CB9D81C0B0F8600725A63 /* LogicIdXMLParser.m in Sources */,
 				446AF3111C0024AB0081C798 /* RegViewController.m in Sources */,
 				9DE6E11D1C2790450035E8DC /* CYFYWControllerViewController.m in Sources */,
+				9D7D249F1C4360FC00194C24 /* YSSoftwareViewController.m in Sources */,
 				446AF31E1C0025330081C798 /* NSDictionary-DeepMutableCopy.m in Sources */,
 				9D5FF5AE1BE9942A004371E5 /* JYRegisterXib.m in Sources */,
 				616A5E6C1C42423D009A72C5 /* STUserInfoController.m in Sources */,
@@ -1604,7 +1614,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = lysongzi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1625,7 +1635,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = lysongzi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

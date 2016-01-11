@@ -232,6 +232,8 @@
     [self.musicButton setBackgroundImage:[UIImage imageNamed:@"music_icon_press"] forState:UIControlStateHighlighted];
     
     //初始化默认模型数据
+    [self sceneArray];
+    [self bkgArray];
     [self initPatternData];
     //初始化scrollView
     [self initScrollView];
@@ -314,66 +316,82 @@
 - (void)initPatternData
 {
     //初始化
-    JYSceneSqlite *jynewSqlite=[[JYSceneSqlite alloc]init];
-    jynewSqlite.patterns=[[NSMutableArray alloc]init];
-    self.jynewSqlite=jynewSqlite;
-    
-    //打开数据库
-    [self.jynewSqlite openDB];
-    //创建表（如果已经存在时不会再创建的）
-    [self.jynewSqlite createTable:self.tableName];
-  
-    //获取表中所有记录
-    [self.jynewSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
-    
-    if(self.jynewSqlite.patterns.count == 0)
-    {
-        for(int i=0;i<6;i++)
-        {
-            for(int j=0;j<self.furnitureArray.count;j++)
-            {
-                JYFurniture *furniture=self.furnitureArray[j];
-                //说明是RGB灯
-                if([furniture.deviceType isEqualToString:@"40"])
-                {
-                    JYFurnitureParam *param=self.rgbParamArray[i];
-                    [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"area" field1Value:self.sectionName andField2:@"scene" field2Value:self.sceneArray[i] andField3:@"bkgName" field3Value:self.bkgArray[i] andField4:@"logic_id" field4Value:furniture.logic_id andField5:@"param1" field5Value:param.param1 andField6:@"param2" field6Value:param.param2 andField7:@"param3" field7Value:param.param3];
-                }
-                //说明是YW灯
-                else if([furniture.deviceType isEqualToString:@"41"])
-                {
-                    JYFurnitureParam *param=self.ywParamArray[i];
-                    [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"area" field1Value:self.sectionName andField2:@"scene" field2Value:self.sceneArray[i] andField3:@"bkgName" field3Value:self.bkgArray[i] andField4:@"logic_id" field4Value:furniture.logic_id andField5:@"param1" field5Value:param.param1 andField6:@"param2" field6Value:param.param2 andField7:@"param3" field7Value:param.param3];
-                }
-            }
-        }
-        
-        [self.jynewSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
-        
-        self.scenes =self.jynewSqlite.patterns;
-        for(int i=0;i<self.scenes.count;i++)
-        {
-            YSScene *scene=self.scenes[i];
-            NSLog(@"%@ %@ %@    %@   %@    %@    %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
-        }
-    }
-    else
-    {
-        NSLog(@"已经有数据了");
-        self.scenes=self.jynewSqlite.patterns;
-        for(int i=0;i<self.scenes.count;i++)
-        {
-            YSScene *scene=self.scenes[i];
-            NSLog(@"%@ %@ %@    %@    %@    %@   %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
-        }
-    }
+//    JYSceneSqlite *jynewSqlite=[[JYSceneSqlite alloc]init];
+//    jynewSqlite.patterns=[[NSMutableArray alloc]init];
+//    self.jynewSqlite=jynewSqlite;
+//    
+//    //打开数据库
+//    [self.jynewSqlite openDB];
+//    //创建表（如果已经存在时不会再创建的）
+//    [self.jynewSqlite createTable:self.tableName];
+//  
+//    //获取表中所有记录
+//    [self.jynewSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
+//    
+//    if(self.jynewSqlite.patterns.count == 0)
+//    {
+//        for(int i=0;i<6;i++)
+//        {
+//            for(int j=0;j<self.furnitureArray.count;j++)
+//            {
+//                JYFurniture *furniture=self.furnitureArray[j];
+//                //说明是RGB灯
+//                if([furniture.deviceType isEqualToString:@"40"])
+//                {
+//                    JYFurnitureParam *param=self.rgbParamArray[i];
+//                    [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"area" field1Value:self.sectionName andField2:@"scene" field2Value:self.sceneArray[i] andField3:@"bkgName" field3Value:self.bkgArray[i] andField4:@"logic_id" field4Value:furniture.logic_id andField5:@"param1" field5Value:param.param1 andField6:@"param2" field6Value:param.param2 andField7:@"param3" field7Value:param.param3];
+//                }
+//                //说明是YW灯
+//                else if([furniture.deviceType isEqualToString:@"41"])
+//                {
+//                    JYFurnitureParam *param=self.ywParamArray[i];
+//                    [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"area" field1Value:self.sectionName andField2:@"scene" field2Value:self.sceneArray[i] andField3:@"bkgName" field3Value:self.bkgArray[i] andField4:@"logic_id" field4Value:furniture.logic_id andField5:@"param1" field5Value:param.param1 andField6:@"param2" field6Value:param.param2 andField7:@"param3" field7Value:param.param3];
+//                }
+//            }
+//        }
+//        
+//        [self.jynewSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
+//        
+//        self.scenes =self.jynewSqlite.patterns;
+//        for(int i=0;i<self.scenes.count;i++)
+//        {
+//            YSScene *scene=self.scenes[i];
+//            NSLog(@"%@ %@ %@    %@   %@    %@    %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+//        }
+//    }
+//    else
+//    {
+//        NSLog(@"已经有数据了");
+//        self.scenes=self.jynewSqlite.patterns;
+//        for(int i=0;i<self.scenes.count;i++)
+//        {
+//            YSScene *scene=self.scenes[i];
+//            NSLog(@"%@ %@ %@    %@    %@    %@   %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+//        }
+//    }
 //    //最后一个自定义按钮
 //    [self.scenes addObject:[[YSScene alloc] initWithName:@"自定义" logoName:@"zidingyi"]];
+    NSLog(@"%lu", (unsigned long)self.sceneArray.count);
+    
+    for (int i = 0; i < self.sceneArray.count; i++)
+    {
+        YSScene *scene = [[YSScene alloc] init];
+        scene.name = self.sceneArray[i];
+        scene.bkgName = self.bkgArray[i];
+        [self.scenes addObject:scene];
+        NSLog(@"%@ %@", scene.name, scene.bkgName);
+    }
+    
+    YSScene *scene = [[YSScene alloc] init];
+    scene.name = @"自定义";
+    scene.bkgName = @"zidingyi";
+    [self.scenes addObject:scene];
 }
 
 //初始化scrollView的内容
 - (void)initScrollView
 {
+    NSLog(@"%lu", (unsigned long)self.sceneArray.count);
     self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenes.count + 4), self.cellHeight);
     
     //清楚scrollView的子视图

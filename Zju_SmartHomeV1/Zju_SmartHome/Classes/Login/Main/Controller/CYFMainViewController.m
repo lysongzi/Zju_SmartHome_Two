@@ -23,6 +23,7 @@
 #import "UIImage+ST.h"
 #import "CYFImageStore.h"
 #import "STUserInfoController.h"
+#import "YSSoftwareViewController.h"
 
 @interface CYFMainViewController ()<STHomeViewDelegate,CLLocationManagerDelegate,STLeftSliderViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -228,6 +229,12 @@
     [self.navigationController pushViewController:userInfoVc animated:YES];
 }
 
+- (void)goToSoftware
+{
+    YSSoftwareViewController *svc = [[YSSoftwareViewController alloc] init];
+    [self.navigationController pushViewController:svc animated:YES];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -272,7 +279,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%ld",(long)indexPath.row);
+    //NSLog(@"%ld$%^^$%^$%^$%^$^$%$%",(long)indexPath.row);
+    if (indexPath.row == 3)
+    {
+        [self goToSoftware];
+    }
 }
 
 //代理方法
