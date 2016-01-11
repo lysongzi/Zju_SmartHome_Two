@@ -83,19 +83,12 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if([textField.text isEqualToString:@"请输入用户名"])
-    {
-        [textField setText:@""];
-    }
-    else if([textField.text isEqualToString:@"请输入密码"])
+   if([textField.placeholder isEqualToString:@"请输入密码"])
     {
         self.registerXib.eyePicture.hidden=NO;
-        [textField setText:@""];
+//        [textField setText:@""];
         textField.secureTextEntry=YES;
-    }
-    else if([textField.text isEqualToString:@"请输入邮箱"])
-    {
-        [textField setText:@""];
+        [self.registerXib.eyePicture setImage:[UIImage imageNamed:@"login_icon_unBrowse"] forState:UIControlStateNormal];
     }
 }
 

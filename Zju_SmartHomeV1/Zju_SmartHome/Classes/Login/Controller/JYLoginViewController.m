@@ -52,18 +52,16 @@
 //UITextField监听事件
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-  if([textField.text isEqualToString:@"请输入用户名"])
-  {
-    [textField setText:@""];
-  }
-  else if([textField.text isEqualToString:@"请输入密码"])
+  if([textField.placeholder isEqualToString:@"请输入密码"])
   {
     self.loginXib.eyePicture.hidden=NO;
-    [textField setText:@""];
+//    [textField setText:@""];
     //textField.font=[UIFont systemFontOfSize:10];
     textField.secureTextEntry=YES;
+      [self.loginXib.eyePicture setImage:[UIImage imageNamed:@"login_icon_unBrowse"] forState:UIControlStateNormal];
   }
 }
+
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
   return UIStatusBarStyleLightContent;

@@ -43,6 +43,13 @@
     self.xinView.clipsToBounds=YES;
     self.sureView.layer.cornerRadius=20;
     self.sureView.clipsToBounds=YES;
+    
+    [self.oldMail setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.oldMail setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [self.mail setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.mail setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [self.confirmNewMail setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.confirmNewMail setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
 }
 
 -(void)setNavigationBar
@@ -82,25 +89,25 @@
 }
 
 //UITextField监听事件
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-  if([textField.text isEqualToString:@"请输入原邮箱"])
-  {
-    [textField setText:@""];
-//    textField.secureTextEntry=false;
-  }
-  else if([textField.text isEqualToString:@"请输入新邮箱"])
-  {
-    
-    [textField setText:@""];
-//    textField.secureTextEntry=YES;
-  }
-  else if([textField.text isEqualToString:@"请确认新邮箱"])
-  {
-    [textField setText:@""];
-//    textField.secureTextEntry=YES;
-  }
-}
+//-(void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//  if([textField.text isEqualToString:@"请输入原邮箱"])
+//  {
+//    [textField setText:@""];
+////    textField.secureTextEntry=false;
+//  }
+//  else if([textField.text isEqualToString:@"请输入新邮箱"])
+//  {
+//    
+//    [textField setText:@""];
+////    textField.secureTextEntry=YES;
+//  }
+//  else if([textField.text isEqualToString:@"请确认新邮箱"])
+//  {
+//    [textField setText:@""];
+////    textField.secureTextEntry=YES;
+//  }
+//}
 
 
 - (IBAction)changeMail:(id)sender

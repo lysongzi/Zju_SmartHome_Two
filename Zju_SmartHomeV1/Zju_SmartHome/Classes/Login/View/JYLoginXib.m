@@ -40,6 +40,10 @@
     loginXib.userNameView.clipsToBounds=YES;
     loginXib.pwdView.layer.cornerRadius=20;
     loginXib.pwdView.clipsToBounds=YES;
+    [loginXib.username setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [loginXib.username setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [loginXib.password setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [loginXib.password setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
     return loginXib;
 }
 
@@ -58,7 +62,7 @@
     else
     {
         self.password.secureTextEntry=YES;
-        [self.eyePicture setImage:[UIImage imageNamed:@"login_unBrowse"] forState:UIControlStateNormal];
+        [self.eyePicture setImage:[UIImage imageNamed:@"login_icon_unBrowse"] forState:UIControlStateNormal];
     }
 }
 

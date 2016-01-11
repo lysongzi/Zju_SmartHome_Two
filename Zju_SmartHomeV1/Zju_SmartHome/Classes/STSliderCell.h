@@ -11,9 +11,10 @@
 @interface STSliderCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *cellView;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
-@property (weak, nonatomic) IBOutlet UIButton *descBtn;
 
-- (IBAction)cellBtnClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *descLabel;
+
+
 
 +(instancetype)initWithSTSliderCell;
 @end

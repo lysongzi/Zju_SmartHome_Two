@@ -256,8 +256,8 @@
         sliderCell=[STSliderCell initWithSTSliderCell];
         sliderCell.iconImage.image=[UIImage imageNamed:self.imageNames[indexPath.row]];
         
-        [sliderCell.descBtn setTitle:self.descArray[indexPath.row] forState:UIControlStateNormal];
-        [sliderCell.descBtn setTitleColor:[UIColor colorWithRed:50/255.0 green:50/255.0 blue:50/255.0 alpha:1] forState:UIControlStateNormal];
+        sliderCell.descLabel.text=self.descArray[indexPath.row];
+        sliderCell.descLabel.textColor=[UIColor colorWithRed:50/255.0 green:50/255.0 blue:50/255.0 alpha:1];
         
         UIColor *color=[[UIColor alloc]initWithRed:(255/255.0f) green:(255/255.0f) blue:(255/255.0f) alpha:1.0];
         sliderCell.selectedBackgroundView=[[UIView alloc]initWithFrame:sliderCell.frame];

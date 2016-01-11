@@ -25,18 +25,18 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <view contentMode="scaleToFill" id="NtW-FV-21N">
-                    <rect key="frame" x="35" y="217" width="250" height="40"/>
+                    <rect key="frame" x="35" y="207" width="250" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <color key="backgroundColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_icon_user" id="ykW-4t-3UC">
-                    <rect key="frame" x="47" y="229" width="17" height="17"/>
+                    <rect key="frame" x="47" y="219" width="17" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                 </imageView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="请输入用户名" textAlignment="natural" minimumFontSize="17" id="Iaw-ZF-hmH">
-                    <rect key="frame" x="76" y="227" width="184" height="22"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入用户名" textAlignment="natural" minimumFontSize="17" id="Iaw-ZF-hmH">
+                    <rect key="frame" x="76" y="217" width="184" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <color key="tintColor" red="0.70196078429999997" green="0.070588235289999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
@@ -45,18 +45,18 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view contentMode="scaleToFill" id="4dn-Rh-nQh">
-                    <rect key="frame" x="35" y="267" width="250" height="40"/>
+                    <rect key="frame" x="35" y="257" width="250" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <color key="backgroundColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_icon_password" id="h4B-jN-tIq">
-                    <rect key="frame" x="47" y="279" width="17" height="17"/>
+                    <rect key="frame" x="47" y="269" width="17" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                 </imageView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="请输入密码" textAlignment="natural" minimumFontSize="17" id="Pn2-dp-bl2">
-                    <rect key="frame" x="76" y="277" width="172" height="22"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" id="Pn2-dp-bl2">
+                    <rect key="frame" x="76" y="267" width="172" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <color key="tintColor" red="0.70196078429999997" green="0.070588235289999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
@@ -65,7 +65,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Hrx-pc-Dpr">
-                    <rect key="frame" x="250" y="269" width="30" height="40"/>
+                    <rect key="frame" x="250" y="259" width="30" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -76,7 +76,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1QX-EL-4pN">
-                    <rect key="frame" x="35" y="322" width="250" height="40"/>
+                    <rect key="frame" x="35" y="312" width="250" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <state key="normal" backgroundImage="login_btn_loginfor6"/>
@@ -115,7 +115,7 @@
                     <state key="normal" backgroundImage="icon_tw"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OmY-Jd-DfN">
-                    <rect key="frame" x="50" y="376" width="60" height="15"/>
+                    <rect key="frame" x="50" y="366" width="60" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -130,7 +130,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jrD-jy-P5V">
-                    <rect key="frame" x="210" y="376" width="60" height="15"/>
+                    <rect key="frame" x="210" y="366" width="60" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
