@@ -15,7 +15,6 @@
 #import "JYFurnitureBack.h"
 #import "MBProgressHUD+MJ.h"
 #import "QRCatchViewController.h"
-//#import "DLAddDeviceView.h"
 #import "STAddDeviceView.h"
 #import "LogicIdXMLParser.h"
 #import "JYUpdateFurnitureName.h"
@@ -275,10 +274,12 @@ static BOOL _isPoping;
         
         [self presentViewController:alertController animated:true completion:nil];
     }
+    //否则就是跳转到灯的模式界面
     else
     {
        JYFurniture * furniture = self.products[indexPath.row];
         
+        //说明是RGB灯
         if([furniture.deviceType isEqualToString:@"40"])
         {
             YSRGBPatternViewController *ysVc=[[YSRGBPatternViewController alloc]init];
@@ -287,6 +288,7 @@ static BOOL _isPoping;
             ysVc.room_name=@"-1";
             [self.navigationController pushViewController:ysVc animated:YES];
         }
+        //说明是YW灯
         else if([furniture.deviceType isEqualToString:@"41"])
         {
             YSYWPatternViewController *ysVc = [[YSYWPatternViewController alloc] init];
@@ -295,9 +297,10 @@ static BOOL _isPoping;
             ysVc.room_name=@"-1";
             [self.navigationController pushViewController:ysVc animated:YES];
         }
+        //别的电器
         else
         {
-            //别的电器
+            //还没有实现其他智能电器
         }
 
     }
@@ -325,6 +328,7 @@ static BOOL _isPoping;
     }
     else
     {
+        //从网管获取实际Mac值的逻辑id
         [HttpRequest getLogicIdfromMac:deviceMac
                                success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
@@ -338,12 +342,14 @@ static BOOL _isPoping;
              
              if([logicIdXMLParser.result isEqualToString:@"fail"])
              {
+                 [MBProgressHUD hideHUD];
                  [MBProgressHUD showError:@"设备注册失败"];
              }
              else
              {
                  if(![logicIdXMLParser.deviceType isEqualToString:@""])
                  {
+                     //向服务器注册单品电器
                      [HttpRequest registerDeviceToServerProduct:logicIdXMLParser.logicId deviceName:deviceName type:logicIdXMLParser.deviceType success:^(AFHTTPRequestOperation *operation, id responseObject)
                       {
                           [self.addDeviceView removeFromSuperview];
@@ -366,15 +372,12 @@ static BOOL _isPoping;
                           {
                               furniture.imageStr=@"办公室";
                           }
-                          
-                          
-                          
                           JYFurniture *temp=[self.products lastObject];
                           [self.products removeLastObject];
                           [self.products addObject:furniture];
                           [self.products addObject:temp];
                           [self.collectionView reloadData];
-                          
+                          [MBProgressHUD hideHUD];
                           [MBProgressHUD showSuccess:@"设备注册成功"];
                           self.navigationController.navigationBar.hidden=NO;
                           
@@ -382,24 +385,20 @@ static BOOL _isPoping;
                       {
                           [MBProgressHUD hideHUD];
                           [MBProgressHUD showError:@"设备注册失败"];
-                          self.navigationController.navigationBar.hidden=NO;
                       }];
                  }
              }
-             
         }
          
         failure:^(AFHTTPRequestOperation *operation, NSError *error)
         {
              //从网关返回逻辑ID失败；
+             [MBProgressHUD hideHUD];
              [MBProgressHUD showError:@"获取逻辑ID失败，请检查网关"];
-            self.navigationController.navigationBar.hidden=NO;
         }];
         
     }
 }
-
-
 #pragma mark - UICollectionViewDelegateFlowLayout 协议的实现
 
 //设定每个Cell的大小
@@ -433,41 +432,50 @@ static BOOL _isPoping;
     [HttpRequest findAllDeviceFromServerProduct:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         NSLog(@"00000 %@",responseObject);
-        [MBProgressHUD hideHUD];
+        
         self.furnitureBackStatus = [JYFurnitureBackStatus statusWithDict:responseObject];
         
-        NSMutableArray *backProducts = self.furnitureBackStatus.furnitureArray;
-    
-        if (backProducts && [backProducts count] > 0)
+        if([self.furnitureBackStatus.code isEqualToString:@"305"])
         {
-            for (JYFurnitureBack *fb in backProducts)
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showSuccess:@"您尚未添加任何电器"];
+        }
+        else
+        {
+            NSMutableArray *backProducts = self.furnitureBackStatus.furnitureArray;
+            
+            if (backProducts && [backProducts count] > 0)
             {
-                JYFurniture *furniture = [[JYFurniture alloc] init];
-                furniture.descLabel = fb.name;
-                furniture.registed = YES;
-                furniture.logic_id = fb.logic_id;
-                furniture.deviceType = fb.deviceType;
-                           
-                if ([furniture.deviceType isEqualToString:@"40"])
+                for (JYFurnitureBack *fb in backProducts)
                 {
-                    furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
+                    JYFurniture *furniture = [[JYFurniture alloc] init];
+                    furniture.descLabel = fb.name;
+                    furniture.registed = YES;
+                    furniture.logic_id = fb.logic_id;
+                    furniture.deviceType = fb.deviceType;
+                    
+                    if ([furniture.deviceType isEqualToString:@"40"])
+                    {
+                        furniture.imageStr = self.imageDic[@(RGBLIGHT_ON)];
+                    }
+                    else if ([furniture.deviceType isEqualToString:@"41"])
+                    {
+                        furniture.imageStr = self.imageDic[@(YWLIGHT_ON)];
+                    }
+                    else
+                    {
+                        furniture.imageStr = self.imageDic[@(TV_ON)];
+                    }
+                    
+                    [self.products addObject:furniture];
                 }
-                else if ([furniture.deviceType isEqualToString:@"41"])
-                {
-                    furniture.imageStr = self.imageDic[@(YWLIGHT_ON)];
-                }
-                else
-                {
-                    furniture.imageStr = self.imageDic[@(TV_ON)];
-                }
-                
-                [self.products addObject:furniture];
             }
         }
-        
         [self appendBtnAdd];
         [self addLongPressGestureToCell];
         [self.collectionView reloadData];
+        [MBProgressHUD hideHUD];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
     {
         [MBProgressHUD showError:@"服务器加载数据失败"];

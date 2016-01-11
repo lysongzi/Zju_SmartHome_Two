@@ -16,6 +16,7 @@
 #import "JYChangePatternBGController.h"
 #import "LYSImageStore.h"
 #import "HttpRequest.h"
+#import "JYPatternBackStatus.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -71,6 +72,8 @@
 @property CGRect musicNextFrame;
 @property CGRect musicPlayFrame;
 
+
+@property(nonatomic,strong)NSMutableArray *BackPatternArray;
 @end
 
 @implementation YSRGBPatternViewController
@@ -97,6 +100,14 @@
         [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
              NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+             JYPatternBackStatus *backStatus=[JYPatternBackStatus statusWithDict:responseObject];
+             self.patterns=backStatus.patternArray;
+             NSLog(@"6666 %@ %@",backStatus.code,backStatus.msg);
+             for(int i=0;i<backStatus.patternArray.count;i++)
+             {
+                 JYPattern *pattern=backStatus.patternArray[i];
+                 NSLog(@"%@ %@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+             }
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
@@ -123,6 +134,7 @@
         [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
              NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+             
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {

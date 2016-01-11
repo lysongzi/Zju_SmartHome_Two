@@ -44,6 +44,7 @@
 		616A5E691C42422F009A72C5 /* STUserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616A5E651C42422F009A72C5 /* STUserInfoView.xib */; };
 		616A5E6C1C42423D009A72C5 /* STUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A5E6B1C42423D009A72C5 /* STUserInfoController.m */; };
 		61726E631C33B08D000BF2C6 /* STHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61726E621C33B08D000BF2C6 /* STHomeView.m */; };
+		6176B08F1C43A2A300981252 /* JYPatternBackStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 6176B08E1C43A2A300981252 /* JYPatternBackStatus.m */; };
 		617829611C40E4930063EAB9 /* JYFurnitureParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 617829601C40E4930063EAB9 /* JYFurnitureParam.m */; };
 		617C75C41C34BB0900E8AD6E /* DLLampControlRGBModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 617C75C21C34BB0900E8AD6E /* DLLampControlRGBModeViewController.m */; };
 		617C75C51C34BB0900E8AD6E /* DLLampControlRGBModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 617C75C31C34BB0900E8AD6E /* DLLampControlRGBModeViewController.xib */; };
@@ -218,6 +219,8 @@
 		616A5E6B1C42423D009A72C5 /* STUserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STUserInfoController.m; sourceTree = "<group>"; };
 		61726E611C33B08D000BF2C6 /* STHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHomeView.h; sourceTree = "<group>"; };
 		61726E621C33B08D000BF2C6 /* STHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHomeView.m; sourceTree = "<group>"; };
+		6176B08D1C43A2A300981252 /* JYPatternBackStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPatternBackStatus.h; sourceTree = "<group>"; };
+		6176B08E1C43A2A300981252 /* JYPatternBackStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPatternBackStatus.m; sourceTree = "<group>"; };
 		6178295F1C40E4930063EAB9 /* JYFurnitureParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYFurnitureParam.h; sourceTree = "<group>"; };
 		617829601C40E4930063EAB9 /* JYFurnitureParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYFurnitureParam.m; sourceTree = "<group>"; };
 		617C75C11C34BB0900E8AD6E /* DLLampControlRGBModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLampControlRGBModeViewController.h; sourceTree = "<group>"; };
@@ -757,6 +760,8 @@
 			children = (
 				61BE5C7B1C3F88BE00A7FEF3 /* JYPattern.h */,
 				61BE5C7C1C3F88BE00A7FEF3 /* JYPattern.m */,
+				6176B08D1C43A2A300981252 /* JYPatternBackStatus.h */,
+				6176B08E1C43A2A300981252 /* JYPatternBackStatus.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1370,6 +1375,7 @@
 				442E7EB41C07402300E3C84C /* RESideMenu.m in Sources */,
 				9DFF73781C0932F80061EFBF /* JYFurnitureBack.m in Sources */,
 				9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */,
+				6176B08F1C43A2A300981252 /* JYPatternBackStatus.m in Sources */,
 				9DB7CC941BE8FD7C0044AA75 /* JYRegisterViewController.m in Sources */,
 				9D6568641BEB846F006D9507 /* JYLoginStatus.m in Sources */,
 				712C52431C08323B0014F9CB /* NSObject+Macro.m in Sources */,

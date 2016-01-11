@@ -76,7 +76,7 @@
                      "<root>"
                      "<command_id></command_id>"
                      "<command_type>execute</command_type>"
-                     "<id>5  </id>"
+                     "<id>5</id>"
                      "<action>%@</action>"
                      "<value></value>"
                      "</root>",protolName];
@@ -120,13 +120,6 @@
   manager.responseSerializer=[AFHTTPResponseSerializer serializer];
   
   //3.封装请求参数
-  //  NSMutableDictionary *params=[NSMutableDictionary dictionary];
-  //  params[@"is_app"] = @"1";
-  //  params[@"equipment.name"] = deviceName;
-  //  params[@"equipment.logic_id"] = logicId;
-  //  params[@"equipment.scene_name"] = sectionName;
-  
-  
   NSDictionary *params = @{@"is_app":@"1",
                            @"equipment.name":deviceName,
                            @"equipment.logic_id":logicId,
@@ -143,7 +136,7 @@
 }
 
 //****************
-//单品中添加家具
+//单品中添加电器
 + (void)registerDeviceToServerProduct:(NSString*)logicId deviceName:(NSString*)deviceName  type:(NSString*)type success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
     
     //1.创建请求管理对象
@@ -191,6 +184,7 @@
 //从单品中获取所有电器
 + (void)findAllDeviceFromServerProduct :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
     
+    NSLog(@".............");
     [MBProgressHUD showMessage:@"正在加载..."];
     //1.创建请求管理对象
     AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
