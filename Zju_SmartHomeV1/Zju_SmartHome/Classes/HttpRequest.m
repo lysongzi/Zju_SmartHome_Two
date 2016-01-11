@@ -59,7 +59,7 @@
   
 }
 #pragma mark-根据协议和值得到具体对音乐的操作
-+ (void)getMusicActionfromProtol:(NSString*)protolName andValue:(NSString *)value success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure
++ (void)getMusicActionfromProtol:(NSString*)protolName success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure
 {
 //    [MBProgressHUD showMessage:@"正在注册..."];
     NSLog(@"%@",protolName);
@@ -76,7 +76,7 @@
                      "<root>"
                      "<command_id></command_id>"
                      "<command_type>execute</command_type>"
-                     "<id>123</id>"
+                     "<id>5  </id>"
                      "<action>%@</action>"
                      "<value></value>"
                      "</root>",protolName];
@@ -191,6 +191,7 @@
 //从单品中获取所有电器
 + (void)findAllDeviceFromServerProduct :(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
     
+    [MBProgressHUD showMessage:@"正在加载..."];
     //1.创建请求管理对象
     AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
     

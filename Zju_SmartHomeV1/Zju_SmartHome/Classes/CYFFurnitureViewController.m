@@ -734,9 +734,10 @@ static BOOL _isPoping;
                              [self.section.furnitureArray addObject:temp];
                          }
                      }
-                     [MBProgressHUD showSuccess:@"设备注册成功"];
-                     self.navigationController.navigationBar.hidden=NO;
+                    self.navigationController.navigationBar.hidden=NO;
                      [self.collectionView reloadData];
+                      [MBProgressHUD showSuccess:@"设备注册成功"];
+
                      
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error)
                   {

@@ -11,6 +11,7 @@
 #import "JYPatternSqlite.h"
 #import "JYPattern.h"
 #import "DLLampControllYWModeViewController.h"
+#import "HttpRequest.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -173,13 +174,13 @@
         //柔和模式
         [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"柔和" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:@"10" andField5:@"param2" field5Value:@"10" andField6:@"param3" field6Value:@"0"];
         
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"舒适" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"param1" field4Value:@"30" andField5:@"param2" field5Value:@"30" andField6:@"param3" field6Value:@"0"];
+        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"舒适" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"param1" field4Value:@"90" andField5:@"param2" field5Value:@"30" andField6:@"param3" field6Value:@"0"];
         
         //明亮模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"明亮" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"param1" field4Value:@"50" andField5:@"param2" field5Value:@"50" andField6:@"param3" field6Value:@"0"];
+        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"明亮" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"param1" field4Value:@"40" andField5:@"param2" field5Value:@"50" andField6:@"param3" field6Value:@"0"];
         
         //跳跃模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"跳跃" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"param1" field4Value:@"90" andField5:@"param2" field5Value:@"90" andField6:@"param3" field6Value:@"0"];
+        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"跳跃" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"param1" field4Value:@"100" andField5:@"param2" field5Value:@"90" andField6:@"param3" field6Value:@"0"];
         
         [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
         self.patterns=self.jynewSqlite.patterns;
@@ -634,6 +635,21 @@
     {
         //变得太快了
         [self updateCellBackground:0];
+        
+        JYPattern *pattern=self.patterns[0];
+    
+        int param1=[pattern.param1 intValue];
+       // int param2=[pattern.param2 intValue];
+        
+        
+        [HttpRequest sendYWWarmColdToServer:self.logic_id warmcoldValue:[NSString stringWithFormat:@"%d", 100-param1] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSLog(@"YW冷暖返回成功：%@",result);
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"YW冷暖返回失败：%@",error);
+        }];
     }
 }
 
@@ -691,6 +707,21 @@
     //根据居中的选项更新背景和文字
     [self updateCellBackground:(int)self.selectedIndex];
     [self.scrollView setUserInteractionEnabled:YES];
+    
+    JYPattern *pattern=self.patterns[self.selectedIndex];
+    
+    int param1=[pattern.param1 intValue];
+    // int param2=[pattern.param2 intValue];
+    
+    
+    [HttpRequest sendYWWarmColdToServer:self.logic_id warmcoldValue:[NSString stringWithFormat:@"%d", 100-param1] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"YW冷暖返回成功：%@",result);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"YW冷暖返回失败：%@",error);
+    }];
 }
 
 //计算位置，居中选中的cell

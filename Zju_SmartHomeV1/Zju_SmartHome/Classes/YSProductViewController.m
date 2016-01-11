@@ -367,19 +367,22 @@ static BOOL _isPoping;
                               furniture.imageStr=@"办公室";
                           }
                           
-                          [MBProgressHUD showSuccess:@"设备注册成功"];
+                          
                           
                           JYFurniture *temp=[self.products lastObject];
                           [self.products removeLastObject];
                           [self.products addObject:furniture];
                           [self.products addObject:temp];
-                          
                           [self.collectionView reloadData];
+                          
+                          [MBProgressHUD showSuccess:@"设备注册成功"];
+                          self.navigationController.navigationBar.hidden=NO;
                           
                       } failure:^(AFHTTPRequestOperation *operation, NSError *error)
                       {
                           [MBProgressHUD hideHUD];
                           [MBProgressHUD showError:@"设备注册失败"];
+                          self.navigationController.navigationBar.hidden=NO;
                       }];
                  }
              }
@@ -390,6 +393,7 @@ static BOOL _isPoping;
         {
              //从网关返回逻辑ID失败；
              [MBProgressHUD showError:@"获取逻辑ID失败，请检查网关"];
+            self.navigationController.navigationBar.hidden=NO;
         }];
         
     }
@@ -429,6 +433,7 @@ static BOOL _isPoping;
     [HttpRequest findAllDeviceFromServerProduct:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         NSLog(@"00000 %@",responseObject);
+        [MBProgressHUD hideHUD];
         self.furnitureBackStatus = [JYFurnitureBackStatus statusWithDict:responseObject];
         
         NSMutableArray *backProducts = self.furnitureBackStatus.furnitureArray;

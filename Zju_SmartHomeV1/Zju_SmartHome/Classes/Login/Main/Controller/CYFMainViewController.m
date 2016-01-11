@@ -52,7 +52,7 @@
 -(NSArray *)descArray
 {
     if (_descArray==nil) {
-        NSArray *descArray=[NSArray arrayWithObjects:@"切换网关", @"一键场景",@"一键设备",@"软件说明",@"公司简介",nil];
+        NSArray *descArray=[NSArray arrayWithObjects:@"切换内外网", @"一键场景",@"一键设备",@"软件说明",@"公司简介",nil];
         _descArray=descArray;
     }
     return _descArray;

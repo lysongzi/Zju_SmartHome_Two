@@ -18,7 +18,6 @@
 #define appKey @"c879b326344c"
 #define appSecret @"82810facbfba262d63c14ed5dcc5998c"
 
-#import "STMusicTestController.h"
 
 #import "DLLampControlRGBModeViewController.h"
 @interface AppDelegate ()

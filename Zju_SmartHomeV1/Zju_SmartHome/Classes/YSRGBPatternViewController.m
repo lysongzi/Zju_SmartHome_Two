@@ -15,6 +15,7 @@
 #import "MBProgressHUD+MJ.h"
 #import "JYChangePatternBGController.h"
 #import "LYSImageStore.h"
+#import "HttpRequest.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -685,11 +686,24 @@
 - (IBAction)musicPreClick:(id)sender
 {
     NSLog(@"这里是上一首");
+    [HttpRequest getMusicActionfromProtol:@"previous" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"请求成功：%@",result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"请求失败：%@",error);
+    }];
 }
 
 - (IBAction)musicNextClick:(id)sender
 {
     NSLog(@"这里是下一首");
+    
+    [HttpRequest getMusicActionfromProtol:@"next" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"请求成功：%@",result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"请求失败：%@",error);
+    }];
 }
 
 - (IBAction)musicPlayClick:(id)sender
@@ -704,7 +718,12 @@
         [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
-        //!!!!!!!!!!!!!!!!!!!!!!!!!
+        [HttpRequest getMusicActionfromProtol:@"stop" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSLog(@"请求成功：%@",result);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"请求失败：%@",error);
+        }];
     }
     else
     {
@@ -712,7 +731,13 @@
         [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
-        //!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+        [HttpRequest getMusicActionfromProtol:@"start" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSLog(@"请求成功：%@",result);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"请求失败：%@",error);
+        }];
     }
 }
 
@@ -836,6 +861,61 @@
     if([pattern.name isEqualToString:@"自定义"])
     {
         
+    }
+    if([pattern.name isEqualToString:@"跳跃"])
+    {
+        [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+             NSLog(@"%@",string);
+         }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             [MBProgressHUD showError:@"请检查网关"];
+         }];
+        
+        [HttpRequest sendRGBColorToServer:self.logic_id redValue:@"255" greenValue:@"0" blueValue:@"0"
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+             NSLog(@"%@",string);
+         }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             [MBProgressHUD showError:@"请检查网关"];
+         }];
+        
+        [HttpRequest sendRGBColorToServer:self.logic_id redValue:@"0" greenValue:@"255" blueValue:@"0"
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+             NSLog(@"%@",string);
+         }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             [MBProgressHUD showError:@"请检查网关"];
+         }];
+        [HttpRequest sendRGBColorToServer:self.logic_id redValue:@"0" greenValue:@"0" blueValue:@"255"
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+             NSLog(@"%@",string);
+         }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             [MBProgressHUD showError:@"请检查网关"];
+         }];
+        [HttpRequest sendRGBColorToServer:self.logic_id redValue:@"100" greenValue:@"200" blueValue:@"200"
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+             NSLog(@"%@",string);
+         }
+                                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             [MBProgressHUD showError:@"请检查网关"];
+         }];
     }
     else
     {

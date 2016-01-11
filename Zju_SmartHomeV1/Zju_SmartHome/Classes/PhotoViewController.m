@@ -39,6 +39,10 @@
 {
   [super viewDidLoad];
   [self setNavigationBar];
+    UIView *view=[[UIView alloc]init];
+    view.backgroundColor=[UIColor orangeColor];
+    view.frame=CGRectMake(0,64, 20, 20);
+    [self.view addSubview:view];
     
 }
 -(void)setNavigationBar
@@ -121,11 +125,11 @@
 
   UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     UIImage *fixImage = [self getThumbailFromImage:image];
-    NSLog(@"%f  %f",image.size.width,image.size.height);
-  //将照片放入UIImageView对象中；
- // self.imageView.image = image;
+    
+    //将照片放入UIImageView对象中；
     UIImageView *imageView=[[UIImageView alloc]init];
-    imageView.frame=CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
+
+    imageView.frame=CGRectMake(0, 64, fixImage.size.width, fixImage.size.height);
     [imageView setImage:fixImage];
     [self.view addSubview:imageView];
     self.imageView=imageView;
@@ -157,7 +161,7 @@
 - (UIImage *)getThumbailFromImage:(UIImage *)image
 {
     CGSize origImageSize = image.size;
-    CGRect newRect = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    CGRect newRect = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
     
     float ratio = MAX(newRect.size.width / origImageSize.width, newRect.size.height / origImageSize.height);
     
@@ -183,6 +187,8 @@
     
     //清理图形上下文
     UIGraphicsEndImageContext();
+    
+    NSLog(@"8888 %f %f",smallImage.size.width,smallImage.size.height);
     
     return smallImage;
 }
