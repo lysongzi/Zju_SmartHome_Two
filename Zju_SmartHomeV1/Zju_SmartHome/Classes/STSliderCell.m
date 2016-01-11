@@ -12,12 +12,6 @@
 @implementation STSliderCell
 
 
-- (IBAction)cellBtnClick:(UIButton *)sender
-{
-    NSLog(@"==%@",sender.titleLabel.text);
-   
-}
-
 +(instancetype)initWithSTSliderCell
 {
     STSliderCell *sliderCell=[[[NSBundle mainBundle]loadNibNamed:@"STSliderCell" owner:nil options:nil]lastObject];

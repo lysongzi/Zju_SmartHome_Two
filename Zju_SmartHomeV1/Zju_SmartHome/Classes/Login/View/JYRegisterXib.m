@@ -41,6 +41,12 @@
     registerXib.emailView.layer.cornerRadius=20;
     registerXib.emailView.clipsToBounds=YES;
     
+    [registerXib.username setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [registerXib.username setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [registerXib.password setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [registerXib.password setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [registerXib.email setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [registerXib.email setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
     return registerXib;
 }
 
@@ -62,7 +68,7 @@
     }
     else
     {
-       [self.eyePicture setImage:[UIImage imageNamed:@"login_unBrowse"] forState:UIControlStateNormal];
+       [self.eyePicture setImage:[UIImage imageNamed:@"login_icon_unBrowse"] forState:UIControlStateNormal];
         self.password.secureTextEntry=YES;
     }
 }

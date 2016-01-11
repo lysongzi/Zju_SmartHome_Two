@@ -43,6 +43,13 @@
     self.surePwdView.layer.cornerRadius=20;
     self.surePwdView.clipsToBounds=YES;
     
+    [self.oldPwd setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.oldPwd setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [self.password setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.password setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    [self.confirmNewPwd setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.confirmNewPwd setValue:[UIFont systemFontOfSize:13] forKeyPath:@"_placeholderLabel.font"];
+    
 }
 
 -(void)setNavigationBar
@@ -81,25 +88,25 @@
 }
 
 //UITextField监听事件
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if([textField.text isEqualToString:@"请输入原密码"])
-    {
-        [textField setText:@""];
-        textField.secureTextEntry=YES;
-    }
-    else if([textField.text isEqualToString:@"请输入新密码"])
-    {
-        
-        [textField setText:@""];
-        textField.secureTextEntry=YES;
-    }
-    else if([textField.text isEqualToString:@"请确认新密码"])
-    {
-        [textField setText:@""];
-        textField.secureTextEntry=YES;
-    }
-}
+//-(void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//    if([textField.text isEqualToString:@"请输入原密码"])
+//    {
+//        [textField setText:@""];
+//        textField.secureTextEntry=YES;
+//    }
+//    else if([textField.text isEqualToString:@"请输入新密码"])
+//    {
+//        
+//        [textField setText:@""];
+//        textField.secureTextEntry=YES;
+//    }
+//    else if([textField.text isEqualToString:@"请确认新密码"])
+//    {
+//        [textField setText:@""];
+//        textField.secureTextEntry=YES;
+//    }
+//}
 - (IBAction)changePwd:(id)sender
 {
     //显示一个蒙板
