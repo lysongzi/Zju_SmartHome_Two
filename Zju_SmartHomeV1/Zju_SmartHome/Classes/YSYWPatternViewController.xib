@@ -46,35 +46,35 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                 </scrollView>
                 <view contentMode="scaleToFill" id="4x4-PD-prw">
-                    <rect key="frame" x="101" y="463" width="200" height="45"/>
+                    <rect key="frame" x="116" y="463" width="185" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yinyuekuangdi" id="vqB-EA-PoU">
-                            <rect key="frame" x="0.0" y="0.0" width="200" height="45"/>
+                            <rect key="frame" x="0.0" y="0.0" width="185" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P9g-pS-fEK">
-                            <rect key="frame" x="5" y="3" width="40" height="40"/>
+                            <rect key="frame" x="6" y="5" width="35" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <state key="normal" backgroundImage="music_shangyishou_icon_unpress"/>
                             <connections>
                                 <action selector="musicPreClick:" destination="-1" eventType="touchUpInside" id="sg0-gM-ybb"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ath-58-lgu">
-                            <rect key="frame" x="56" y="3" width="40" height="40"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <state key="normal" backgroundImage="music_bofang"/>
-                            <connections>
-                                <action selector="musicPlayClick:" destination="-1" eventType="touchUpInside" id="Uyq-TT-F82"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="18N-nL-pr1">
-                            <rect key="frame" x="107" y="3" width="40" height="40"/>
+                            <rect key="frame" x="99" y="5" width="35" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <state key="normal" backgroundImage="music_xiayishou_icon_unpress"/>
                             <connections>
                                 <action selector="musicNextClick:" destination="-1" eventType="touchUpInside" id="ZMU-6l-Yrf"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ath-58-lgu">
+                            <rect key="frame" x="53" y="5" width="35" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" backgroundImage="music_zanting"/>
+                            <connections>
+                                <action selector="musicPlayClick:" destination="-1" eventType="touchUpInside" id="Uyq-TT-F82"/>
                             </connections>
                         </button>
                     </subviews>
@@ -91,7 +91,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uRn-0M-O3Z">
                     <rect key="frame" x="22" y="465" width="40" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="switch_unpress"/>
+                    <state key="normal" backgroundImage="switch_icon_off"/>
                     <connections>
                         <action selector="pictureClick:" destination="-1" eventType="touchUpInside" id="fk6-r3-ySM"/>
                     </connections>
@@ -109,11 +109,11 @@
     <resources>
         <image name="mengban" width="320" height="568"/>
         <image name="mingliang_bg" width="320" height="568"/>
-        <image name="music_bofang" width="26" height="26"/>
         <image name="music_shangyishou_icon_unpress" width="26" height="26"/>
         <image name="music_unpress" width="40" height="40"/>
         <image name="music_xiayishou_icon_unpress" width="26" height="26"/>
-        <image name="switch_unpress" width="38" height="38"/>
+        <image name="music_zanting" width="26" height="26"/>
+        <image name="switch_icon_off" width="38" height="38"/>
         <image name="yinyuekuangdi" width="137" height="35"/>
     </resources>
 </document>
