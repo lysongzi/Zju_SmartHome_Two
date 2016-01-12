@@ -23,5 +23,8 @@
 //模式名称
 @property(nonatomic,copy)NSString *patternName;
 
+//表名
+@property(nonatomic,copy)NSString *tableName;
+
 @property(nonatomic,weak)id<DLLampControlRGBModeViewDelegate>delegate;
 @end

@@ -17,7 +17,7 @@
 //用户email
 @property(nonatomic,copy)NSString *email;
 //用户id
-@property(nonatomic,assign)int id;
+@property(nonatomic,copy)NSString *ID;
 
 +(instancetype)dataWithDict:(NSDictionary *)dict;
 -(instancetype)initWithDict:(NSDictionary *)dict;

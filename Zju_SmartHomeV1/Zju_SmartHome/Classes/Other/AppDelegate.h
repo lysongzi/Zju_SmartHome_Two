@@ -31,6 +31,8 @@
 @property(nonatomic,copy)NSString *username;
 //用户email
 @property(nonatomic,copy)NSString *email;
+//用户id
+@property(nonatomic,copy)NSString *user_id;
 
 @end
 

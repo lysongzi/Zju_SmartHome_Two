@@ -292,8 +292,6 @@ static BOOL _isPoping;
             }
         }
     }
-    
-    NSLog(@"hdgsahjgdsah %ld",svc.furnitureArray.count);
     [self.navigationController pushViewController:svc animated:YES];
 }
 
@@ -438,17 +436,23 @@ static BOOL _isPoping;
             //设备为RGB灯，则进入RGB控制界面
             if([furniture.deviceType isEqualToString:@"40"])
             {
-                DLLampControlGuestModeViewController *dlVc = (DLLampControlGuestModeViewController *)furniture.controller;
-                dlVc.logic_id = furniture.logic_id;
-                [self.navigationController pushViewController:dlVc animated:YES];
+               
+//                DLLampControlGuestModeViewController *dlVc = (DLLampControlGuestModeViewController *)furniture.controller;
+//                NSLog(@"%@",dlVc);
+//                dlVc.logic_id = furniture.logic_id;
+                YSRGBPatternViewController *vc=(YSRGBPatternViewController *)furniture.controller;
+                vc.logic_id=furniture.logic_id;
+                [self.navigationController pushViewController:vc animated:YES];
                 
             }
             //设备为YW灯，则进入YW控制界面
             else if([furniture.deviceType isEqualToString:@"41"])
             {
-                DLLampControllYWModeViewController *cyfVc = (DLLampControllYWModeViewController *)furniture.controller;
-                cyfVc.logic_id=furniture.logic_id;
-                [self.navigationController pushViewController:cyfVc animated:YES];
+//                DLLampControllYWModeViewController *cyfVc = (DLLampControllYWModeViewController *)furniture.controller;
+                //cyfVc.logic_id=furniture.logic_id;
+                YSYWPatternViewController *vc=(YSYWPatternViewController *)furniture.controller;
+                vc.logic_id=furniture.logic_id;
+                [self.navigationController pushViewController:vc animated:YES];
             }
             else
             {
@@ -645,7 +649,7 @@ static BOOL _isPoping;
              
              if([logicIdXMLParser.result isEqualToString:@"fail"])
              {
-                 NSLog(@"注册电器失败");
+                 //NSLog(@"注册电器失败");
                  [MBProgressHUD showError:@"设备注册失败"];
              }
              else
@@ -667,7 +671,7 @@ static BOOL _isPoping;
                          
                          if([furniture.deviceType isEqualToString:@"40"])
                          {
-                             //furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
+
                              YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
                              vc.logic_id=furniture.logic_id;
                              vc.furnitureName=furniture.descLabel;
@@ -703,7 +707,6 @@ static BOOL _isPoping;
                          else if([furniture.deviceType isEqualToString:@"41"])
                          {
                              furniture.imageStr = self.imageHighArray[4];
-                             //furniture.controller = [[DLLampControllYWModeViewController alloc]init];
                              YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
                              vc.logic_id=furniture.logic_id;
                              vc.furnitureName=furniture.descLabel;
@@ -807,7 +810,6 @@ static BOOL _isPoping;
             
                         if([furniture.deviceType isEqualToString:@"40"])
                         {
-                            //furniture.controller = [[DLLampControlGuestModeViewController alloc]init];
                             YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
                             vc.logic_id=furniture.logic_id;
                             vc.furnitureName=furniture.descLabel;
@@ -842,8 +844,6 @@ static BOOL _isPoping;
                     if([furniture.deviceType isEqualToString:@"40"])
                     {
                         furniture.imageStr = self.imageHighArray[3];
-                        //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
-                        
                         YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
                         vc.logic_id=furniture.logic_id;
                         vc.furnitureName=furniture.descLabel;
@@ -852,7 +852,6 @@ static BOOL _isPoping;
                     else if([furniture.deviceType isEqualToString:@"41"])
                     {
                         furniture.imageStr=self.imageHighArray[4];
-                        //furniture.controller=[[DLLampControllYWModeViewController alloc]init];
                         YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
                         vc.logic_id=furniture.logic_id;
                         vc.furnitureName=furniture.descLabel;

@@ -99,10 +99,11 @@
         JYLoginStatus *status=[JYLoginStatus statusWithDict:responseObject];
         
         JYUserData *data=status.data;
-        
         AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
         appDelegate.username=data.account;
         appDelegate.email=data.email;
+        appDelegate.user_id=data.ID;
+        
         
         //5.存储模型数据
         //归档

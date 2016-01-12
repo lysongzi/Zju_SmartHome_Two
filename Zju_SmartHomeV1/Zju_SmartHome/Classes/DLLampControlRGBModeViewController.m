@@ -452,6 +452,7 @@
       PhotoViewController *showPhoto = [[PhotoViewController alloc] init];
       showPhoto.logic_id=self.logic_id;
       showPhoto.furnitureName=self.furnitureName;
+      showPhoto.tableName=self.tableName;
       showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
       [self.navigationController pushViewController:showPhoto animated:true];
     }
@@ -474,6 +475,7 @@
       PhotoViewController *showPhoto = [[PhotoViewController alloc] init];
       showPhoto.logic_id=self.logic_id;
         showPhoto.furnitureName=self.furnitureName;
+        showPhoto.tableName=self.tableName;
       showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;//从图库打开；
       [self.navigationController pushViewController:showPhoto animated:true];
     }
@@ -644,24 +646,57 @@
     self.navigationItem.rightBarButtonItem.enabled=YES;
     NSLog(@"－－－－%@",sceneName);
     
-    JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
-    jySqlite.patterns=[[NSMutableArray alloc]init];
+    //1.创建请求管理对象
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
-    //打开数据库
-    [jySqlite openDB];
-   
-    //柔和模式
-    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue.text andField5:@"param2" field5Value:self.gValue.text andField6:@"param3" field6Value:self.bValue.text];
-
-    for (UIViewController *controller in self.navigationController.viewControllers)
-    {
-        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
-        {
-            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
-            vc.tag_Back=2;
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
+    //2.说明服务器返回的是json参数
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    
+    //3.封装请求参数
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    params[@"is_app"]=@"1";
+    params[@"sceneconfig.room_name"]=@"-1";
+    params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+    params[@"sceneconfig.scene_name"]=sceneName;
+    params[@"sceneconfig.param1"]=self.rValue.text;
+    params[@"sceneconfig.param2"]=self.gValue.text;
+    params[@"sceneconfig.param3"]=self.bValue.text;
+    params[@"sceneconfig.image"]=@"rouhe_bg";
+    NSLog(@"---%@ %@ %@",self.rValue.text,self.gValue.text,self.bValue.text);
+    
+    //4.发送请求
+    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+         if([responseObject[@"code"] isEqualToString:@"0"])
+         {
+             JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
+             jySqlite.patterns=[[NSMutableArray alloc]init];
+             
+             //打开数据库
+             [jySqlite openDB];
+             
+             [jySqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue.text andField5:@"param2" field5Value:self.gValue.text andField6:@"param3" field6Value:self.bValue.text];
+             
+             for (UIViewController *controller in self.navigationController.viewControllers)
+             {
+                 if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+                 {
+                     YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+                     vc.tag_Back=2;
+                     [self.navigationController popToViewController:controller animated:YES];
+                 }
+             }
+         }
+         else
+         {
+            [MBProgressHUD showError:@"增加模式失败"];
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         [MBProgressHUD showError:@"增加模式失败"];
+     }];
 }
 
 

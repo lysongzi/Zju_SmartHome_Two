@@ -17,6 +17,7 @@
 #import "LYSImageStore.h"
 #import "HttpRequest.h"
 #import "JYPatternBackStatus.h"
+#import "AppDelegate.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -81,71 +82,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if([self.room_name isEqualToString:@"-1"])
-    {
-        NSLog(@"走的是单品");
-        //1.创建请求管理对象
-        AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-        
-        //2.说明服务器返回的是json参数
-        mgr.responseSerializer=[AFJSONResponseSerializer serializer];
-        
-        //3.封装请求参数
-        NSMutableDictionary *params=[NSMutableDictionary dictionary];
-        params[@"is_app"]=@"1";
-        params[@"sceneconfig.room_name"]=@"-1";
-        params[@"sceneconfig.equipment_logicid"]=self.logic_id;
-        
-        //4.发送请求
-        [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-         {
-             NSLog(@"看看返回的数据是啥呢？%@",responseObject);
-             JYPatternBackStatus *backStatus=[JYPatternBackStatus statusWithDict:responseObject];
-             self.patterns=backStatus.patternArray;
-             NSLog(@"6666 %@ %@",backStatus.code,backStatus.msg);
-             for(int i=0;i<backStatus.patternArray.count;i++)
-             {
-                 JYPattern *pattern=backStatus.patternArray[i];
-                 NSLog(@"%@ %@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
-             }
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"返回失败了吧：%@",error);
-         }];
-        
-    }
-    else
-    {
-        NSLog(@"走的是家居");
-        //1.创建请求管理对象
-        AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-        
-        //2.说明服务器返回的是json参数
-        mgr.responseSerializer=[AFJSONResponseSerializer serializer];
-        
-        //3.封装请求参数
-        NSMutableDictionary *params=[NSMutableDictionary dictionary];
-        params[@"is_app"]=@"1";
-        //params[@"sceneconfig.room_name"]=@"-1";
-        params[@"sceneconfig.equipment_logicid"]=self.logic_id;
-        
-        //4.发送请求
-        [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-         {
-             NSLog(@"看看返回的数据是啥呢？%@",responseObject);
-             
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"返回失败了吧：%@",error);
-         }];
-    }
     
-
-    
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     //专门存储模式的表
-    self.tableName=@"patternTable";
+    self.tableName=[NSString stringWithFormat:@"patternTable%@",appDelegate.user_id];
+    NSLog(@"看看表明%@",self.tableName);
     
     [self setNaviBarItemButton];
     
@@ -157,8 +98,6 @@
     
     //初始化默认模型数据
     [self initPatternData];
-    //初始化scrollView
-    [self initScrollView];
     
     //初始化音乐框
     float gap = self.musicButton.frame.size.width / 2;
@@ -225,7 +164,7 @@
         //初始化默认模型数据
         [self initPatternData];
         //初始化scrollView
-        [self initScrollView];
+       // [self initScrollView];
         
         //定位到新添加的模式
         [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.patterns.count - 2), 0)];
@@ -259,38 +198,182 @@
     if(self.jynewSqlite.patterns.count == 0)
     {
         NSLog(@"刚开始进来数据库没有数据的");
-//        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"柔和" andField2:@"logoName" field2Value:@"rouhe_icon" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"rValue" field4Value:@"255" andField5:@"gValue" field5Value:@"254" andField6:@"bValue" field6Value:@"253"];
-//
-        //柔和模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"柔和" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:@"10" andField5:@"param2" field5Value:@"10" andField6:@"param3" field6Value:@"10"];
-        
-//        //舒适模式
-//        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"name" field1Value:@"舒适" andField2:@"logoName" field2Value:@"shushi_icon" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"rValue" field4Value:@"233" andField5:@"gValue" field5Value:@"234" andField6:@"bValue" field6Value:@"235"];
-        
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"舒适" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"param1" field4Value:@"100" andField5:@"param2" field5Value:@"101" andField6:@"param3" field6Value:@"103"];
-        
-        //明亮模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"明亮" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"param1" field4Value:@"200" andField5:@"param2" field5Value:@"201" andField6:@"param3" field6Value:@"203"];
-      
-        //跳跃模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"跳跃" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"param1" field4Value:@"1" andField5:@"param2" field5Value:@"2" andField6:@"param3" field6Value:@"3"];
-     
-        //R模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"R" andField3:@"bkgName" field3Value:@"R_bg" andField4:@"param1" field4Value:@"255" andField5:@"param2" field5Value:@"0" andField6:@"param3" field6Value:@"0"];
-        
-        //G模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"G" andField3:@"bkgName" field3Value:@"G_bg" andField4:@"param1" field4Value:@"0" andField5:@"param2" field5Value:@"255" andField6:@"param3" field6Value:@"0"];
-      
-        //B模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"B" andField3:@"bkgName" field3Value:@"B_bg" andField4:@"param1" field4Value:@"0" andField5:@"param2" field5Value:@"0" andField6:@"param3" field6Value:@"255"];
-        
-
-        [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
-        self.patterns=self.jynewSqlite.patterns;
-        for(int i=0;i<self.patterns.count;i++)
+        if([self.room_name isEqualToString:@"-1"])
         {
-            JYPattern *pattern=self.patterns[i];
-            NSLog(@"======%@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+            NSLog(@"走的是单品");
+            //1.创建请求管理对象
+            AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+            
+            //2.说明服务器返回的是json参数
+            mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+            
+            //3.封装请求参数
+            NSMutableDictionary *params=[NSMutableDictionary dictionary];
+            params[@"is_app"]=@"1";
+            params[@"sceneconfig.room_name"]=@"-1";
+            params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+            
+            //4.发送请求
+            [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+             {
+                 
+                 JYPatternBackStatus *backStatus=[JYPatternBackStatus statusWithDict:responseObject];
+                 for(int i=0;i<backStatus.patternArray.count;i++)
+                 {
+                     JYPattern *pattern=backStatus.patternArray[i];
+                     NSLog(@"%@ %@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                     
+                     [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:pattern.logic_id andField2:@"name" field2Value:pattern.name andField3:@"bkgName" field3Value:pattern.bkgName andField4:@"param1" field4Value:pattern.param1 andField5:@"param2" field5Value:pattern.param2 andField6:@"param3" field6Value:pattern.param3];
+                 }
+                 
+                 [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
+                 self.patterns=self.jynewSqlite.patterns;
+                 //最后一个自定义按钮
+                 JYPattern *pattern=[[JYPattern alloc]init];
+                 pattern.name=@"自定义";
+                 [self.patterns addObject:pattern];
+                 
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     if([pattern.name isEqualToString:@"柔和"])
+                     {
+                         pattern.logoName=@"rouhe_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"舒适"])
+                     {
+                         pattern.logoName=@"shushi_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"明亮"])
+                     {
+                         pattern.logoName=@"mingliang_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"跳跃"])
+                     {
+                         pattern.logoName=@"tiaoyue_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"R"])
+                     {
+                         pattern.logoName=@"R";
+                     }
+                     else if([pattern.name isEqualToString:@"G"])
+                     {
+                         pattern.logoName=@"G";
+                     }
+                     else if([pattern.name isEqualToString:@"B"])
+                     {
+                         pattern.logoName=@"B";
+                     }
+                     else if([pattern.name isEqualToString:@"自定义"])
+                     {
+                         pattern.logoName=@"zidingyi";
+                     }
+                     else
+                     {
+                         pattern.logoName=@"rouhe_icon";
+                     }
+                 }
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     NSLog(@"======%@ %@ %@  %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                 }
+                 //初始化scrollView
+                 [self initScrollView];
+                 
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+             {
+                 [MBProgressHUD showError:@"服务器加载数据失败"];
+             }];
+            
+        }
+        else
+        {
+            NSLog(@"走的是家居");
+            //1.创建请求管理对象
+            AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+            
+            //2.说明服务器返回的是json参数
+            mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+            
+            //3.封装请求参数
+            NSMutableDictionary *params=[NSMutableDictionary dictionary];
+            params[@"is_app"]=@"1";
+            //params[@"sceneconfig.room_name"]=@"-1";
+            params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+            
+            //4.发送请求
+            [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+             {
+                 JYPatternBackStatus *backStatus=[JYPatternBackStatus statusWithDict:responseObject];
+                 for(int i=0;i<backStatus.patternArray.count;i++)
+                 {
+                     JYPattern *pattern=backStatus.patternArray[i];
+                     NSLog(@"%@ %@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                     
+                     [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:pattern.logic_id andField2:@"name" field2Value:pattern.name andField3:@"bkgName" field3Value:pattern.bkgName andField4:@"param1" field4Value:pattern.param1 andField5:@"param2" field5Value:pattern.param2 andField6:@"param3" field6Value:pattern.param3];
+                 }
+                 
+                 [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
+                 self.patterns=self.jynewSqlite.patterns;
+                 //最后一个自定义按钮
+                 JYPattern *pattern=[[JYPattern alloc]init];
+                 pattern.name=@"自定义";
+                 [self.patterns addObject:pattern];
+                 
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     if([pattern.name isEqualToString:@"柔和"])
+                     {
+                         pattern.logoName=@"rouhe_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"舒适"])
+                     {
+                         pattern.logoName=@"shushi_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"明亮"])
+                     {
+                         pattern.logoName=@"mingliang_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"跳跃"])
+                     {
+                         pattern.logoName=@"tiaoyue_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"R"])
+                     {
+                         pattern.logoName=@"R";
+                     }
+                     else if([pattern.name isEqualToString:@"G"])
+                     {
+                         pattern.logoName=@"G";
+                     }
+                     else if([pattern.name isEqualToString:@"B"])
+                     {
+                         pattern.logoName=@"B";
+                     }
+                     else if([pattern.name isEqualToString:@"自定义"])
+                     {
+                         pattern.logoName=@"zidingyi";
+                     }
+                     else
+                     {
+                         pattern.logoName=@"rouhe_icon";
+                     }
+                 }
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     NSLog(@"======%@ %@ %@  %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                 }
+                 //初始化scrollView
+                 [self initScrollView];
+                 
+                 
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+             {
+                 [MBProgressHUD showError:@"服务器加载数据失败"];
+             }];
         }
     }
     else
@@ -302,53 +385,55 @@
             JYPattern *pattern=self.patterns[i];
             NSLog(@"======%@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
         }
+        //最后一个自定义按钮
+        JYPattern *pattern=[[JYPattern alloc]init];
+        pattern.name=@"自定义";
+        [self.patterns addObject:pattern];
+        
+        for(int i=0;i<self.patterns.count;i++)
+        {
+            JYPattern *pattern=self.patterns[i];
+            if([pattern.name isEqualToString:@"柔和"])
+            {
+                pattern.logoName=@"rouhe_icon";
+            }
+            else if([pattern.name isEqualToString:@"舒适"])
+            {
+                pattern.logoName=@"shushi_icon";
+            }
+            else if([pattern.name isEqualToString:@"明亮"])
+            {
+                pattern.logoName=@"mingliang_icon";
+            }
+            else if([pattern.name isEqualToString:@"跳跃"])
+            {
+                pattern.logoName=@"tiaoyue_icon";
+            }
+            else if([pattern.name isEqualToString:@"R"])
+            {
+                pattern.logoName=@"R";
+            }
+            else if([pattern.name isEqualToString:@"G"])
+            {
+                pattern.logoName=@"G";
+            }
+            else if([pattern.name isEqualToString:@"B"])
+            {
+                pattern.logoName=@"B";
+            }
+            else if([pattern.name isEqualToString:@"自定义"])
+            {
+                pattern.logoName=@"zidingyi";
+            }
+            else
+            {
+                pattern.logoName=@"rouhe_icon";
+            }
+        }
+        //初始化scrollView
+        [self initScrollView];
     }
     
-    //最后一个自定义按钮
-    JYPattern *pattern=[[JYPattern alloc]init];
-    pattern.name=@"自定义";
-    [self.patterns addObject:pattern];
-    
-    for(int i=0;i<self.patterns.count;i++)
-    {
-        JYPattern *pattern=self.patterns[i];
-        if([pattern.name isEqualToString:@"柔和"])
-        {
-            pattern.logoName=@"rouhe_icon";
-        }
-        else if([pattern.name isEqualToString:@"舒适"])
-        {
-            pattern.logoName=@"shushi_icon";
-        }
-        else if([pattern.name isEqualToString:@"明亮"])
-        {
-            pattern.logoName=@"mingliang_icon";
-        }
-        else if([pattern.name isEqualToString:@"跳跃"])
-        {
-            pattern.logoName=@"tiaoyue_icon";
-        }
-        else if([pattern.name isEqualToString:@"R"])
-        {
-            pattern.logoName=@"R";
-        }
-        else if([pattern.name isEqualToString:@"G"])
-        {
-            pattern.logoName=@"G";
-        }
-        else if([pattern.name isEqualToString:@"B"])
-        {
-            pattern.logoName=@"B";
-        }
-        else if([pattern.name isEqualToString:@"自定义"])
-        {
-            pattern.logoName=@"zidingyi";
-        }
-        else
-        {
-            pattern.logoName=@"rouhe_icon";
-        }
-    }
 }
 
 //初始化scrollView的内容
@@ -455,6 +540,7 @@
         //传这两个值用于通过逻辑id控制灯，通过逻辑id和电器名进行表的添加操作
         rgbVc.logic_id=self.logic_id;
         rgbVc.furnitureName=self.furnitureName;
+        rgbVc.tableName=self.tableName;
         [self.navigationController pushViewController:rgbVc animated:YES];
     }
 }
@@ -494,34 +580,42 @@
     //从模型中删除
     [self.patterns removeObjectAtIndex:view.tag];
     
-    [self.cellsView[view.tag] setHidden:YES];
-    
-    UIView * changeView;
-    for (long i = view.tag + 1; i < self.cellsView.count; i++)
-    {
-        changeView = (UIView *)self.cellsView[i];
-        changeView.tag -= 1;
-        UIImageView *subImage = [[changeView subviews] lastObject];
-        subImage.tag -= 1;
-        
-        CGPoint point = changeView.center;
-        point.x -= self.cellWidth;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        [changeView setCenter:point];
-        [UIView commitAnimations];
-    }
-    
-    //移除该cell的视图
-    [self.cellsView removeObjectAtIndex:view.tag];
-    //更新scrollview的内容宽度
-    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
-    //更新背景和文字
-    [self updateCellBackground:(int)view.tag];
-    [self.jynewSqlite deleteRecordWithLogicID:self.logic_id andWithName:pattern.name inTable:self.tableName];
-    //[self.jynewSqlite deleteRecordWithName:pattern.name inTable:self.tableName];
+    [HttpRequest deletePatternFromServerProduct:self.logic_id andWithPatternName:pattern.name success:^(AFHTTPRequestOperation *operation, id responseObject)
+     
+     {
+         NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+         NSLog(@"看看返回的数据是啥呢？%@",str);
+         [MBProgressHUD showSuccess:@"删除模式成功"];
+         [self.cellsView[view.tag] setHidden:YES];
+         
+         UIView * changeView;
+         for (long i = view.tag + 1; i < self.cellsView.count; i++)
+         {
+             changeView = (UIView *)self.cellsView[i];
+             changeView.tag -= 1;
+             UIImageView *subImage = [[changeView subviews] lastObject];
+             subImage.tag -= 1;
+             
+             CGPoint point = changeView.center;
+             point.x -= self.cellWidth;
+             [UIView beginAnimations:nil context:nil];
+             [UIView setAnimationDuration:0.3];
+             [changeView setCenter:point];
+             [UIView commitAnimations];
+         }
+         
+         //移除该cell的视图
+         [self.cellsView removeObjectAtIndex:view.tag];
+         //更新scrollview的内容宽度
+         self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
+         //更新背景和文字
+         [self updateCellBackground:(int)view.tag];
+         [self.jynewSqlite deleteRecordWithLogicID:pattern.logic_id andWithName:pattern.name inTable:self.tableName];
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         [MBProgressHUD showError:@"删除模式失败"];
+     }];
 }
-
 
 //弹出选择更换背景图
 - (void)changeBkg:(UIGestureRecognizer *)gr

@@ -431,7 +431,6 @@ static BOOL _isPoping;
 {
     [HttpRequest findAllDeviceFromServerProduct:^(AFHTTPRequestOperation *operation, id responseObject)
     {
-        NSLog(@"00000 %@",responseObject);
         
         self.furnitureBackStatus = [JYFurnitureBackStatus statusWithDict:responseObject];
         

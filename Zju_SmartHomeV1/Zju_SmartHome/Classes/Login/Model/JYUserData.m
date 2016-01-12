@@ -22,7 +22,7 @@
         self.account=dict[@"account"];
         self.avatar=dict[@"avatar"];
         self.email=dict[@"email"];
-        self.id=[dict[@"id"] intValue];
+        self.ID=dict[@"id"];
     }
     return self;
 }

@@ -17,4 +17,6 @@
 @property(nonatomic,copy)NSString *logic_id;
 //电器名称
 @property(nonatomic,copy)NSString *furnitureName;
+//表名
+@property(nonatomic,copy)NSString *tableName;
 @end

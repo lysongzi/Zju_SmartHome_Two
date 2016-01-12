@@ -38,6 +38,8 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+    
+    NSLog(@"/.... %@",self.tableName);
   [self setNavigationBar];
     UIView *view=[[UIView alloc]init];
     view.backgroundColor=[UIColor orangeColor];
@@ -392,25 +394,77 @@
     self.navigationController.navigationBar.hidden=NO;
     self.navigationItem.rightBarButtonItem.enabled=YES;
     NSLog(@"－－－－%@",sceneName);
+    //1.创建请求管理对象
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
-    JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
-    jySqlite.patterns=[[NSMutableArray alloc]init];
+    //2.说明服务器返回的是json参数
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     
-    //打开数据库
-    [jySqlite openDB];
-   
-   
-    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue andField5:@"param2" field5Value:self.gValue andField6:@"param3" field6Value:self.bValue];
+    //3.封装请求参数
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    params[@"is_app"]=@"1";
+    params[@"sceneconfig.room_name"]=@"-1";
+    params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+    params[@"sceneconfig.scene_name"]=sceneName;
+    params[@"sceneconfig.param1"]=self.rValue;
+    params[@"sceneconfig.param2"]=self.gValue;
+    params[@"sceneconfig.param3"]=self.bValue;
+    params[@"sceneconfig.image"]=@"rouhe_bg";
+    NSLog(@"---%@ %@ %@",self.rValue,self.gValue,self.bValue);
     
-    for (UIViewController *controller in self.navigationController.viewControllers)
-    {
-        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
-        {
-            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
-            vc.tag_Back=2;
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
+    //4.发送请求
+    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+         if([responseObject[@"code"] isEqualToString:@"0"])
+         {
+             JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
+             jySqlite.patterns=[[NSMutableArray alloc]init];
+             
+             //打开数据库
+             [jySqlite openDB];
+             
+             [jySqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue andField5:@"param2" field5Value:self.gValue andField6:@"param3" field6Value:self.bValue];
+             
+             for (UIViewController *controller in self.navigationController.viewControllers)
+             {
+                 if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+                 {
+                     YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+                     vc.tag_Back=2;
+                     [self.navigationController popToViewController:controller animated:YES];
+                 }
+             }
+         }
+         else
+         {
+             [MBProgressHUD showError:@"增加模式失败"];
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         [MBProgressHUD showError:@"增加模式失败"];
+     }];
+
+    
+//    JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
+//    jySqlite.patterns=[[NSMutableArray alloc]init];
+//    
+//    //打开数据库
+//    [jySqlite openDB];
+//   
+//   
+//    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue andField5:@"param2" field5Value:self.gValue andField6:@"param3" field6Value:self.bValue];
+//    
+//    for (UIViewController *controller in self.navigationController.viewControllers)
+//    {
+//        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+//        {
+//            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+//            vc.tag_Back=2;
+//            [self.navigationController popToViewController:controller animated:YES];
+//        }
+//    }
 }
 
 -(void)leftBtnClicked
