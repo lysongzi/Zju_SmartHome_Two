@@ -139,7 +139,6 @@
     
     self.musicPreFrame = CGRectMake(self.musicPreFrame.origin.x * ratio, self.musicPreFrame.origin.y * ratio, self.musicPreFrame.size.width * ratio, self.musicPreFrame.size.height * ratio);
     
-    
     //0表示未弹出状态，1表示弹出状态
     self.musicView.tag = 0;
     //0表示暂停状态，1表示播放状态
@@ -155,6 +154,8 @@
     
     self.pictureButton.tag = 0;
     
+    //获取灯的状态
+    [self getLightStatus];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -270,7 +271,7 @@
                      }
                      else
                      {
-                         pattern.logoName=@"rouhe_icon";
+                         pattern.logoName=@"zidingyi_icon";
                      }
                  }
                  for(int i=0;i<self.patterns.count;i++)
@@ -358,7 +359,7 @@
                      }
                      else
                      {
-                         pattern.logoName=@"rouhe_icon";
+                         pattern.logoName=@"zidingyi_icon";
                      }
                  }
                  for(int i=0;i<self.patterns.count;i++)
@@ -380,6 +381,8 @@
     {
         NSLog(@"数据库已经有数据");
         self.patterns=self.jynewSqlite.patterns;
+        NSLog(@"%ld", self.patterns.count);
+        
         for(int i=0;i<self.patterns.count;i++)
         {
             JYPattern *pattern=self.patterns[i];
@@ -427,13 +430,13 @@
             }
             else
             {
-                pattern.logoName=@"rouhe_icon";
+                pattern.logoName=@"zidingyi_icon";
             }
         }
         //初始化scrollView
         [self initScrollView];
     }
-    
+
 }
 
 //初始化scrollView的内容
@@ -545,6 +548,31 @@
     }
 }
 
+//获取灯的状态
+- (void)getLightStatus
+{
+    AFHTTPRequestOperationManager *mgr = [AFHTTPRequestOperationManager manager];
+    
+    //2.说明服务器返回的是json参数
+    mgr.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    //3.封装请求参数
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"is_app"] = @"1";
+    params[@"logic_id"] = self.logic_id;
+    
+    //4.发送请求
+    [mgr POST:@"http://60.12.220.16:8888/Weixin/Device/getStatus" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"这里是获取灯的状态%@",responseObject);
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"返回失败了吧：%@",error);
+     }];
+
+}
+
 //编辑模式事件
 - (void)patternTapGestureEvent:(UIGestureRecognizer *)gr
 {
@@ -601,6 +629,20 @@
              [UIView beginAnimations:nil context:nil];
              [UIView setAnimationDuration:0.3];
              [changeView setCenter:point];
+             
+             if (i == view.tag + 1)
+             {
+                 [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+             }
+             else if (i == view.tag + 2)
+             {
+                 [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
+             }
+             else
+             {
+                 [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
+             }
+             
              [UIView commitAnimations];
          }
          
@@ -703,7 +745,7 @@
     if (!swichButton.tag)
     {
         swichButton.tag = 1;
-        
+        [swichButton setBackgroundImage:[UIImage imageNamed:@"switch_unpress"] forState:UIControlStateNormal];
         //做网络请求
         [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"100"
                                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -721,7 +763,7 @@
     else
     {
         swichButton.tag = 0;
-        
+        [swichButton setBackgroundImage:[UIImage imageNamed:@"switch_icon_off"] forState:UIControlStateNormal];
         //做网络请求
         [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"0"
                                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -814,14 +856,15 @@
 
 - (IBAction)musicPlayClick:(id)sender
 {
-    NSLog(@"这里是播放");
+    
     UIButton *play = (UIButton *)sender;
     
     //暂停变播放
     if (!play.tag)
     {
+        NSLog(@"这里是播放");
         play.tag = 1;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
         [HttpRequest getMusicActionfromProtol:@"stop" success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -833,8 +876,9 @@
     }
     else
     {
+        NSLog(@"这里是暂停");
         play.tag = 0;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
         
@@ -1104,15 +1148,6 @@
     [titleView setTextColor:[UIColor whiteColor]];
     titleView.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titleView;
-    
-//    UIButton *rightButton = [[UIButton alloc] init];
-//    [rightButton setImage:[UIImage imageNamed:@"ct_icon_switch-unpress"] forState:UIControlStateNormal];
-//    rightButton.frame = CGRectMake(0, 0, 40, 40);
-//    rightButton.tag = 1;
-//    [rightButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -20)];
-//    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    
     UIButton *leftButton = [[UIButton alloc] init];
     [leftButton setImage:[UIImage imageNamed:@"ct_icon_leftbutton"] forState:UIControlStateNormal];
     leftButton.frame = CGRectMake(0, 0, 25, 25);
@@ -1120,7 +1155,6 @@
     [leftButton addTarget:self action:@selector(leftBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
-    //self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 

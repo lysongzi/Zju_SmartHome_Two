@@ -231,7 +231,7 @@
         }
         else
         {
-            pattern.logoName=@"rouhe_icon";
+            pattern.logoName=@"zidingyi_icon";
         }
     }
 }
@@ -394,8 +394,23 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.3];
         [changeView setCenter:point];
+        
+        if (i == view.tag + 1)
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+        }
+        else if (i == view.tag + 2)
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
+        }
+        else
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
+        }
+        
         [UIView commitAnimations];
     }
+
     
     //移除该cell的视图
     [self.cellsView removeObjectAtIndex:view.tag];
@@ -494,7 +509,7 @@
     if (!swichButton.tag)
     {
         swichButton.tag = 1;
-        
+        [swichButton setBackgroundImage:[UIImage imageNamed:@"switch_unpress"] forState:UIControlStateNormal];
         //做网络请求
 //        [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"100"
 //                                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -512,7 +527,7 @@
     else
     {
         swichButton.tag = 0;
-        
+        [swichButton setBackgroundImage:[UIImage imageNamed:@"switch_icon_off"] forState:UIControlStateNormal];
         //做网络请求
 //        [HttpRequest sendRGBBrightnessToServer:self.logic_id brightnessValue:@"0"
 //                                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -573,22 +588,24 @@
 
 - (IBAction)musicPlayClick:(id)sender
 {
-    NSLog(@"这里是播放");
+    
     UIButton *play = (UIButton *)sender;
     
     //暂停变播放
     if (!play.tag)
     {
+        NSLog(@"这里是播放");
         play.tag = 1;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
         //!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     else
     {
+        NSLog(@"这里是暂停");
         play.tag = 0;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
         //!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -781,14 +798,6 @@
     titleView.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = titleView;
     
-    UIButton *rightButton = [[UIButton alloc] init];
-    [rightButton setImage:[UIImage imageNamed:@"ct_icon_switch-unpress"] forState:UIControlStateNormal];
-    rightButton.frame = CGRectMake(0, 0, 40, 40);
-    rightButton.tag = 1;
-    [rightButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -20)];
-    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    
     UIButton *leftButton = [[UIButton alloc] init];
     [leftButton setImage:[UIImage imageNamed:@"ct_icon_leftbutton"] forState:UIControlStateNormal];
     leftButton.frame = CGRectMake(0, 0, 25, 25);
@@ -796,7 +805,6 @@
     [leftButton addTarget:self action:@selector(leftBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
-    self.navigationItem.rightBarButtonItem = rightItem;
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 

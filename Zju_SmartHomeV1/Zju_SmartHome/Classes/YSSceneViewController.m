@@ -287,6 +287,8 @@
     //设置各种按钮点击图片
     [self.musicNext setBackgroundImage:[UIImage imageNamed:@"music_xiayishou_icon_press"] forState:UIControlStateHighlighted];
     [self.musicPre setBackgroundImage:[UIImage imageNamed:@"music_shangyishou_icon_press"] forState:UIControlStateHighlighted];
+    
+    self.switchButton.tag = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -547,8 +549,23 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.3];
         [changeView setCenter:point];
+        
+        if (i == view.tag + 1)
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+        }
+        else if (i == view.tag + 2)
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
+        }
+        else
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
+        }
+        
         [UIView commitAnimations];
     }
+
     
     //移除该cell的视图
     [self.cellsView removeObjectAtIndex:view.tag];
@@ -563,7 +580,19 @@
 //点击开关灯按钮的响应事件
 - (IBAction)switchClick:(id)sender
 {
-    NSLog(@"正在开关灯");
+    UIButton *switchButton = (UIButton *)sender;
+    
+    //关灯变开灯
+    if (!switchButton.tag)
+    {
+        switchButton.tag = 1;
+        [switchButton setBackgroundImage:[UIImage imageNamed:@"switch_unpress"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        switchButton.tag = 0;
+        [switchButton setBackgroundImage:[UIImage imageNamed:@"switch_icon_off"] forState:UIControlStateNormal];
+    }
 }
 
 //修改背景图片的代理方法
@@ -629,22 +658,24 @@
 
 - (IBAction)musicPlayClick:(id)sender
 {
-    NSLog(@"这里是播放");
+    
     UIButton *play = (UIButton *)sender;
     
     //暂停变播放
     if (!play.tag)
     {
+        NSLog(@"这里是播放");
         play.tag = 1;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
         //!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     else
     {
+        NSLog(@"这里是暂停");
         play.tag = 0;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
         //!!!!!!!!!!!!!!!!!!!!!!!!!
