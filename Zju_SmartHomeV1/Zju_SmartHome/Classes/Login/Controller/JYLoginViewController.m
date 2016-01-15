@@ -95,6 +95,7 @@
     [mgr POST:@"http://60.12.220.16:8888/paladin/Passport/dologin" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
 
     {
+        NSLog(@"%@",responseObject);
         //请求成功
         JYLoginStatus *status=[JYLoginStatus statusWithDict:responseObject];
         

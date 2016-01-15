@@ -191,25 +191,27 @@
 //左边头像点击事件
 -(void)leftPortraitClick
 {
-    STLeftSliderView *leftView=[STLeftSliderView initWithSliderView];
-    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-    leftView.uesername.text=appDelegate.username;
-    leftView.userEmail.text=appDelegate.email;
-    
-    leftView.frame=CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
-    [UIView animateWithDuration:0.5 animations:^{
-        leftView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    }];
-    leftView.delegate=self;
-    [leftView.portraitBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
-    
-    leftView.sliderTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    leftView.sliderTableView.bounces=NO;
-    leftView.sliderTableView.dataSource=self;
-    leftView.sliderTableView.delegate=self;
-    self.leftView=leftView;
-    [self.view addSubview:leftView];
-
+    if (!self.leftView) {
+        self.leftView=[STLeftSliderView initWithSliderView];
+        AppDelegate *
+        appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+        _leftView.uesername.text=appDelegate.username;
+        _leftView.userEmail.text=appDelegate.email;
+        
+        _leftView.frame=CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+        [UIView animateWithDuration:0.5 animations:^{
+            _leftView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+        _leftView.delegate=self;
+        [_leftView.portraitBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
+        
+        _leftView.sliderTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+        _leftView.sliderTableView.bounces=NO;
+        _leftView.sliderTableView.dataSource=self;
+        _leftView.sliderTableView.delegate=self;
+        //self.leftView=_leftView;
+        [self.view addSubview:_leftView];
+    }
 }
 
 //STLeftSliderView代理方法
@@ -219,6 +221,7 @@
         [self.leftView setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
     } completion:^(BOOL finished) {
         [self.leftView removeFromSuperview];
+        self.leftView=nil;
     }];
     
 }

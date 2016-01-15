@@ -125,8 +125,11 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
 
-  UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    NSLog(@"123  %f %f",image.size.width,image.size.height);
+    
     UIImage *fixImage = [self getThumbailFromImage:image];
+    NSLog(@"321 %f %f",fixImage.size.width,fixImage.size.height);
     
     //将照片放入UIImageView对象中；
     UIImageView *imageView=[[UIImageView alloc]init];
