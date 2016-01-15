@@ -124,6 +124,12 @@
 		9DDC64F81C25782C00C3872A /* YSProductView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64F61C25782C00C3872A /* YSProductView.xib */; };
 		9DDC64FC1C25783D00C3872A /* YSProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC64FA1C25783D00C3872A /* YSProductViewController.m */; };
 		9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */; };
+		9DE0C3031C48E2C600250D0F /* YSSceneBackStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE0C3021C48E2C600250D0F /* YSSceneBackStatus.m */; };
+		9DE0C3061C48E37D00250D0F /* STNewSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE0C3051C48E37D00250D0F /* STNewSceneController.m */; };
+		9DE0C30A1C48E39700250D0F /* YSNewSceneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE0C3071C48E39700250D0F /* YSNewSceneView.xib */; };
+		9DE0C30B1C48E39700250D0F /* YSNewSceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE0C3081C48E39700250D0F /* YSNewSceneView.m */; };
+		9DE0C30F1C48E3AD00250D0F /* STNewSceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE0C30D1C48E3AD00250D0F /* STNewSceneCell.m */; };
+		9DE0C3101C48E3AD00250D0F /* STNewSceneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE0C30E1C48E3AD00250D0F /* STNewSceneCell.xib */; };
 		9DE6E11D1C2790450035E8DC /* CYFYWControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E11B1C2790450035E8DC /* CYFYWControllerViewController.m */; };
 		9DE6E11E1C2790450035E8DC /* CYFYWControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E11C1C2790450035E8DC /* CYFYWControllerViewController.xib */; };
 		9DE6E1221C2790660035E8DC /* JYOtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6E1201C2790660035E8DC /* JYOtherViewController.m */; };
@@ -359,6 +365,16 @@
 		9DDC64F91C25783D00C3872A /* YSProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSProductViewController.h; sourceTree = "<group>"; };
 		9DDC64FA1C25783D00C3872A /* YSProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSProductViewController.m; sourceTree = "<group>"; };
 		9DDC64FB1C25783D00C3872A /* YSProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSProductViewController.xib; sourceTree = "<group>"; };
+		9DE0C3011C48E2C600250D0F /* YSSceneBackStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSSceneBackStatus.h; sourceTree = "<group>"; };
+		9DE0C3021C48E2C600250D0F /* YSSceneBackStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSSceneBackStatus.m; sourceTree = "<group>"; };
+		9DE0C3041C48E37D00250D0F /* STNewSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STNewSceneController.h; sourceTree = "<group>"; };
+		9DE0C3051C48E37D00250D0F /* STNewSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STNewSceneController.m; sourceTree = "<group>"; };
+		9DE0C3071C48E39700250D0F /* YSNewSceneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSNewSceneView.xib; sourceTree = "<group>"; };
+		9DE0C3081C48E39700250D0F /* YSNewSceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSNewSceneView.m; sourceTree = "<group>"; };
+		9DE0C3091C48E39700250D0F /* YSNewSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSNewSceneView.h; sourceTree = "<group>"; };
+		9DE0C30C1C48E3AD00250D0F /* STNewSceneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STNewSceneCell.h; sourceTree = "<group>"; };
+		9DE0C30D1C48E3AD00250D0F /* STNewSceneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STNewSceneCell.m; sourceTree = "<group>"; };
+		9DE0C30E1C48E3AD00250D0F /* STNewSceneCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STNewSceneCell.xib; sourceTree = "<group>"; };
 		9DE6E11A1C2790450035E8DC /* CYFYWControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYFYWControllerViewController.h; sourceTree = "<group>"; };
 		9DE6E11B1C2790450035E8DC /* CYFYWControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYFYWControllerViewController.m; sourceTree = "<group>"; };
 		9DE6E11C1C2790450035E8DC /* CYFYWControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CYFYWControllerViewController.xib; sourceTree = "<group>"; };
@@ -704,6 +720,8 @@
 				61BE5C821C3FEA1A00A7FEF3 /* JYSceneFurniture.m */,
 				6178295F1C40E4930063EAB9 /* JYFurnitureParam.h */,
 				617829601C40E4930063EAB9 /* JYFurnitureParam.m */,
+				9DE0C3011C48E2C600250D0F /* YSSceneBackStatus.h */,
+				9DE0C3021C48E2C600250D0F /* YSSceneBackStatus.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -711,6 +729,12 @@
 		9D1B1BB01C3CFD7E0048B8A3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9DE0C3071C48E39700250D0F /* YSNewSceneView.xib */,
+				9DE0C3081C48E39700250D0F /* YSNewSceneView.m */,
+				9DE0C3091C48E39700250D0F /* YSNewSceneView.h */,
+				9DE0C30C1C48E3AD00250D0F /* STNewSceneCell.h */,
+				9DE0C30D1C48E3AD00250D0F /* STNewSceneCell.m */,
+				9DE0C30E1C48E3AD00250D0F /* STNewSceneCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -721,6 +745,8 @@
 				9D1B1BA91C3CFD6B0048B8A3 /* YSSceneViewController.h */,
 				9D1B1BAA1C3CFD6B0048B8A3 /* YSSceneViewController.m */,
 				9D1B1BAB1C3CFD6B0048B8A3 /* YSSceneViewController.xib */,
+				9DE0C3041C48E37D00250D0F /* STNewSceneController.h */,
+				9DE0C3051C48E37D00250D0F /* STNewSceneController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1200,7 +1226,7 @@
 				TargetAttributes = {
 					9D7D5A401BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = 66F9B76GET;
+						DevelopmentTeam = R5G98FQWCS;
 					};
 					9D7D5A5C1BE472D300E1E1EF = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -1260,11 +1286,13 @@
 				615C37D51C2D0A9D002663C5 /* STSaveSceneView.xib in Resources */,
 				616A5E691C42422F009A72C5 /* STUserInfoView.xib in Resources */,
 				617C75C51C34BB0900E8AD6E /* DLLampControlRGBModeViewController.xib in Resources */,
+				9DE0C30A1C48E39700250D0F /* YSNewSceneView.xib in Resources */,
 				9DFF73721C08781C0061EFBF /* DLAddDeviceViewXib.xib in Resources */,
 				446AF3321C003FB10081C798 /* country.plist in Resources */,
 				9D4F31B91C3693A10096B3FD /* STSliderCell.xib in Resources */,
 				610452B41C32C31E00753411 /* STHomeView.xib in Resources */,
 				446AF3291C002FB70081C798 /* Localizable.strings in Resources */,
+				9DE0C3101C48E3AD00250D0F /* STNewSceneCell.xib in Resources */,
 				9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */,
 				9D5A5F821C3F49DE006EAD37 /* STNewSceneView.xib in Resources */,
 				9D5292131C118F5800205CFD /* DLLampControlGuestModeViewController.xib in Resources */,
@@ -1359,6 +1387,7 @@
 				9D5FF5B41BEA2C2E004371E5 /* JYNavigationController.m in Sources */,
 				616A5E661C42422F009A72C5 /* STUserInfoCell.m in Sources */,
 				9D1B1BAD1C3CFD6B0048B8A3 /* YSSceneViewController.m in Sources */,
+				9DE0C30B1C48E39700250D0F /* YSNewSceneView.m in Sources */,
 				446AF3211C0025330081C798 /* SMS_MBProgressHUD.m in Sources */,
 				9D5A5F7D1C3F4559006EAD37 /* STAddDeviceView.m in Sources */,
 				9D41EA601C33FEF400E31239 /* YSRGBPatternViewController.m in Sources */,
@@ -1374,6 +1403,7 @@
 				9D4F31BF1C3693C10096B3FD /* UIImage+ST.m in Sources */,
 				442E7EB41C07402300E3C84C /* RESideMenu.m in Sources */,
 				9DFF73781C0932F80061EFBF /* JYFurnitureBack.m in Sources */,
+				9DE0C3031C48E2C600250D0F /* YSSceneBackStatus.m in Sources */,
 				9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */,
 				6176B08F1C43A2A300981252 /* JYPatternBackStatus.m in Sources */,
 				9DB7CC941BE8FD7C0044AA75 /* JYRegisterViewController.m in Sources */,
@@ -1413,9 +1443,11 @@
 				714854F01C127C300001347F /* CYFChangeMailViewController.m in Sources */,
 				71A7988E1C0D8C0B006F8D7B /* AllUtils.m in Sources */,
 				71E7A2EF1C1489B40091B86A /* CYFImageStore.m in Sources */,
+				9DE0C3061C48E37D00250D0F /* STNewSceneController.m in Sources */,
 				446AF3241C0025C90081C798 /* SectionsViewController.m in Sources */,
 				446AF34B1C005F180081C798 /* DLLeftSlideMenuViewController.m in Sources */,
 				9D564DBE1BFF69A10062700D /* CYFFurnitureViewController.m in Sources */,
+				9DE0C30F1C48E3AD00250D0F /* STNewSceneCell.m in Sources */,
 				61645BB91C10827E007462EC /* DLLampControllYWModeViewController.m in Sources */,
 				9D564DB71BFF688A0062700D /* CYFCollectionViewCell.m in Sources */,
 				9D564DC51C0007290062700D /* JYFurniture.m in Sources */,
@@ -1602,7 +1634,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = lysongzi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1623,7 +1655,7 @@
 				INFOPLIST_FILE = Zju_SmartHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = gujinyue1;
+				PRODUCT_BUNDLE_IDENTIFIER = lysongzi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
