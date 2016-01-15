@@ -640,6 +640,7 @@
     self.navigationItem.rightBarButtonItem.enabled=YES;
     self.navigationController.navigationBar.hidden=NO;
 }
+
 -(void)saveNewScene:(NSString *)sceneName
 {
     self.navigationController.navigationBar.hidden=NO;

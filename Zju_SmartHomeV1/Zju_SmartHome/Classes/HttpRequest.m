@@ -61,7 +61,7 @@
 #pragma mark-根据协议和值得到具体对音乐的操作
 + (void)getMusicActionfromProtol:(NSString*)protolName success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure
 {
-//    [MBProgressHUD showMessage:@"正在注册..."];
+    //    [MBProgressHUD showMessage:@"正在注册..."];
     NSLog(@"%@",protolName);
     //增加这几行代码；
     AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
@@ -90,9 +90,9 @@
         
         NSLog(@"内网获取逻辑ID的IP：%@",[[NSString alloc] initWithFormat:@"http://%@/phone/background_music.php",app.globalInternalIP]);
         
-        NSString *url  = [[NSString alloc] initWithFormat:@"http://%@/phone/background_music.php",app.globalInternalIP];
+        //NSString *url  = [[NSString alloc] initWithFormat:@"http://%@/phone/background_music.php",app.globalInternalIP];
         
-        [manager POST:url
+        [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/background_music.php"
            parameters:parameters
               success:success
               failure:failure];
@@ -100,10 +100,15 @@
     }else{
         //外网；
         //默认使用外网；
-        [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/background_music.php"
+        //http://test.ngrok.joyingtec.com:8000/phone/background_music.php
+        [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/background_music.php"
            parameters:parameters
               success:success
               failure:failure];
+        //        [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/background_music.php"
+        //           parameters:parameters
+        //              success:success
+        //              failure:failure];
         
         NSLog(@"使用外网 向网关发送Mac值");
         

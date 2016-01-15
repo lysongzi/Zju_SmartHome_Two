@@ -38,6 +38,8 @@
 @property (assign) NSInteger cellWidth;
 @property (assign) NSInteger cellHeight;
 
+//音乐盒当前状态
+@property (copy, nonatomic) NSString *musicBox_State;
 
 //记录当前居中的模式索引
 @property (assign) NSInteger selectedIndex;
@@ -141,6 +143,7 @@
     [self.lightView addGestureRecognizer:tapLight];
     
     self.pictureButton.tag = 0;
+    [self initMusicBox];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -150,6 +153,36 @@
     
     //初始化scrollView
     [self initScrollView];
+}
+
+- (void)initMusicBox
+{
+    NSUserDefaults *userDefault = [[NSUserDefaults alloc] init];
+    self.musicBox_State = [userDefault valueForKey:@"music_state"];
+    
+    
+    //NSLog(@"sadasd%@", self.musicBox_State);
+    if ([self.musicBox_State isEqualToString:@"stop"])
+    {
+        self.musicPlay.tag = 0;
+        
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+    }
+    else if ([self.musicBox_State isEqualToString:@"start"])
+    {
+        self.musicPlay.tag = 1;
+        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        //默认开启音乐盒并播放
+        [HttpRequest getMusicActionfromProtol:@"power_on" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSLog(@"请求成功：%@",result);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"请求失败：%@",error);
+        }];
+    }
 }
 
 //初始化模式的数据
@@ -579,39 +612,67 @@
 - (IBAction)musicPreClick:(id)sender
 {
     NSLog(@"这里是上一首");
+    [HttpRequest getMusicActionfromProtol:@"power_on" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"请求成功：%@",result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"请求失败：%@",error);
+    }];
 }
 
 - (IBAction)musicNextClick:(id)sender
 {
     NSLog(@"这里是下一首");
+    
+    [HttpRequest getMusicActionfromProtol:@"power_off" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"请求成功：%@",result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"请求失败：%@",error);
+    }];
 }
 
 - (IBAction)musicPlayClick:(id)sender
 {
     
     UIButton *play = (UIButton *)sender;
+    NSUserDefaults *userDefault = [[NSUserDefaults alloc] init];
     
     //暂停变播放
     if (!play.tag)
     {
         NSLog(@"这里是播放");
-        play.tag = 1;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
-        //!!!!!!!!!!!!!!!!!!!!!!!!!
+        [HttpRequest getMusicActionfromProtol:@"start" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSLog(@"请求成功：%@",result);
+            
+            [userDefault setObject:@"start" forKey:@"music_state"];
+            play.tag = 1;
+            [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_bofang"] forState:UIControlStateNormal];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"请求失败：%@",error);
+        }];
     }
     else
     {
         NSLog(@"这里是暂停");
-        play.tag = 0;
-        [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
         
         //接下来在这里写播放的代码
-        //!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+        [HttpRequest getMusicActionfromProtol:@"stop" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSLog(@"请求成功：%@",result);
+            
+            [userDefault setObject:@"stop" forKey:@"music_state"];
+            play.tag = 0;
+            [self.musicPlay setBackgroundImage:[UIImage imageNamed:@"music_zanting"] forState:UIControlStateNormal];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"请求失败：%@",error);
+        }];
     }
 }
-
 
 #pragma mark - scrollView中cell的动态操作
 

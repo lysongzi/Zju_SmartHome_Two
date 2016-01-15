@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fJB-qK-NIn" customClass="STNewSceneCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fJB-qK-NIn" id="zB9-Sq-VDi">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" id="2eT-Rx-vux">
+                        <rect key="frame" x="25" y="10" width="270" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cO5-ij-3CK">
+                                <rect key="frame" x="0.0" y="0.0" width="270" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" backgroundImage="changjing_edit_linegrey_bg"/>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="h4a-fT-z1G">
+                                <rect key="frame" x="10" y="5" width="11" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YW灯" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ARV-Nn-pAD">
+                                <rect key="frame" x="47" y="0.0" width="100" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Cmm-T1-rqw" userLabel="switch">
+                        <rect key="frame" x="269" y="10" width="25" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <animations/>
+                        <state key="normal" backgroundImage="changjing_edit_btn_equipment_added"/>
+                        <connections>
+                            <action selector="switchBtn:" destination="fJB-qK-NIn" eventType="touchUpInside" id="6Mc-of-WEJ"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <animations/>
+                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="bgButton" destination="cO5-ij-3CK" id="yFx-FM-nix"/>
+                <outlet property="cellView" destination="2eT-Rx-vux" id="6N9-oC-Zhv"/>
+                <outlet property="deviceName" destination="ARV-Nn-pAD" id="aRk-0S-98V"/>
+                <outlet property="iconView" destination="h4a-fT-z1G" id="L3j-pV-MbQ"/>
+                <outlet property="up_down" destination="Cmm-T1-rqw" id="GpP-qd-WQI"/>
+            </connections>
+            <point key="canvasLocation" x="342" y="329.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="changjing_edit_btn_equipment_added" width="28" height="28"/>
+        <image name="changjing_edit_linegrey_bg" width="270" height="25"/>
+    </resources>
+</document>

@@ -29,4 +29,7 @@
 @property(nonatomic,copy)NSString *param2;
 @property(nonatomic,copy)NSString *param3;
 
++(instancetype)statusWithDict:(NSDictionary *)dict;
+-(instancetype)initWithDict:(NSDictionary *)dict;
+
 @end
