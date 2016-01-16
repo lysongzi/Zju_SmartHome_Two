@@ -74,7 +74,7 @@
   NSLog(@"%@", NSStringFromCGRect(imgView.frame));
   BOOL pointInRound = [self touchPointInsideCircle:CGPointMake(imgView.frame.size.width / 2, imgView.frame.size.height / 2)
                                          bigRadius:imgView.frame.size.width * 0.48
-                                       smallRadius:imgView.frame.size.width * 0.38
+                                       smallRadius:imgView.frame.size.width * 0.40
                                        targetPoint:point];
   
   if (pointInRound) {
@@ -110,7 +110,7 @@
 
   BOOL pointInRound = [self touchPointInsideCircle:CGPointMake(imgView.frame.size.width / 2, imgView.frame.size.height / 2)
                                          bigRadius:imgView.frame.size.width * 0.48
-                                       smallRadius:imgView.frame.size.width * 0.38
+                                       smallRadius:imgView.frame.size.width * 0.40
                                        targetPoint:touchLocation];
   if (pointInRound) {
     UIImageView *colorImageView = (UIImageView *)[self.view viewWithTag:10086];
@@ -123,7 +123,7 @@
     
     if ([self touchPointInsideCircle:CGPointMake(colorImageView.frame.size.width / 2, colorImageView.frame.size.height / 2)
                            bigRadius:colorImageView.frame.size.width * 0.48
-                         smallRadius:colorImageView.frame.size.width * 0.38        //0.39
+                         smallRadius:colorImageView.frame.size.width * 0.40        //0.39
                          targetPoint:touchLocation]) {
      
       self.rValue.text = [NSString stringWithFormat:@"%d", (int)(components[0] * 255)];
@@ -174,7 +174,7 @@
   UIImageView *imgView = (UIImageView *)[self.view viewWithTag:10086];
   BOOL pointInRound = [self touchPointInsideCircle:CGPointMake(imgView.frame.size.width / 2, imgView.frame.size.height / 2)
                                          bigRadius:imgView.frame.size.width * 0.48
-                                       smallRadius:imgView.frame.size.width * 0.38
+                                       smallRadius:imgView.frame.size.width * 0.40
                                        targetPoint:touchLocation];
   if (pointInRound) {
     UIImageView *colorImageView = (UIImageView *)[self.view viewWithTag:10086];
@@ -186,7 +186,7 @@
     
     if ([self touchPointInsideCircle:CGPointMake(colorImageView.frame.size.width / 2, colorImageView.frame.size.height / 2)
                            bigRadius:colorImageView.frame.size.width * 0.48
-                         smallRadius:colorImageView.frame.size.width * 0.38        //0.39
+                         smallRadius:colorImageView.frame.size.width * 0.40        //0.39
                          targetPoint:touchLocation]) {
       
       self.rValue.text = [NSString stringWithFormat:@"%d", (int)(components[0] * 255)];
@@ -244,7 +244,7 @@
   UIImageView *imgView = (UIImageView *)[self.view viewWithTag:10086];
   BOOL pointInRound = [self touchPointInsideCircle:CGPointMake(imgView.frame.size.width / 2, imgView.frame.size.height / 2)
                                          bigRadius:imgView.frame.size.width * 0.48
-                                       smallRadius:imgView.frame.size.width * 0.38
+                                       smallRadius:imgView.frame.size.width * 0.40
                                        targetPoint:touchLocation];
   if (pointInRound) {
     UIImageView *colorImageView = (UIImageView *)[self.view viewWithTag:10086];
@@ -257,7 +257,7 @@
     
     if ([self touchPointInsideCircle:CGPointMake(colorImageView.frame.size.width / 2, colorImageView.frame.size.height / 2)
                            bigRadius:colorImageView.frame.size.width * 0.48
-                         smallRadius:colorImageView.frame.size.width * 0.38        //0.39
+                         smallRadius:colorImageView.frame.size.width * 0.40        //0.39
                          targetPoint:touchLocation]) {
       
       self.rValue.text = [NSString stringWithFormat:@"%d", (int)(components[0] * 255)];
@@ -573,8 +573,8 @@
         viewColorPickerPositionIndicator.layer.cornerRadius = 8;
         viewColorPickerPositionIndicator.layer.borderWidth = 2;
         btnPlay.frame = CGRectMake(111, 111, 60, 60);
-        self.mySlider.frame=CGRectMake(50, 440, 220, 8);
-        self.mySlider2.frame=CGRectMake(50, 483, 220, 8);
+        self.mySlider.frame=CGRectMake(50, 440, 220, 10);
+        self.mySlider2.frame=CGRectMake(50, 483, 220, 10);
         
     }else if (fabs(([[UIScreen mainScreen] bounds].size.height - 667)) < 1) {
         // 6 & 6s
@@ -583,8 +583,8 @@
         viewColorPickerPositionIndicator.layer.cornerRadius = 10;
         viewColorPickerPositionIndicator.layer.borderWidth = 2;
         btnPlay.frame = CGRectMake(135, 135, 60, 60);
-        self.mySlider.frame=CGRectMake(55, 516, 265, 9);
-        self.mySlider2.frame=CGRectMake(55, 565, 265, 9);
+        self.mySlider.frame=CGRectMake(55, 516, 265, 12);
+        self.mySlider2.frame=CGRectMake(55, 565, 265, 12);
         
     }else if (fabs(([[UIScreen mainScreen] bounds].size.height - 736)) < 1){
         // 6p & 6sp
@@ -593,8 +593,8 @@
         viewColorPickerPositionIndicator.layer.cornerRadius = 12;
         viewColorPickerPositionIndicator.layer.borderWidth = 2;
         btnPlay.frame = CGRectMake(150, 150, 60, 60);
-        self.mySlider.frame=CGRectMake(60, 571, 295, 10);
-        self.mySlider2.frame=CGRectMake(60, 624, 295, 10);
+        self.mySlider.frame=CGRectMake(60, 571, 295, 13);
+        self.mySlider2.frame=CGRectMake(60, 624, 295, 13);
         
     }
     

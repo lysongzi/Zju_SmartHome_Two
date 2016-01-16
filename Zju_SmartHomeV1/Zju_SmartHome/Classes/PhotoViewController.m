@@ -11,7 +11,6 @@
 #import "PhotoViewController.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
-//#import "STSaveSceneView.h"
 #import "STNewSceneView.h"
 #import "JYPatternSqlite.h"
 #import "YSRGBPatternViewController.h"
@@ -31,6 +30,9 @@
 @property(nonatomic,copy)NSString *gValue;
 @property(nonatomic,copy)NSString *bValue;
 
+//显示当前选择颜色的UIView
+@property(nonatomic,strong)UIView *viewCircle;
+
 @end
 
 @implementation PhotoViewController
@@ -41,11 +43,6 @@
     
     NSLog(@"/.... %@",self.tableName);
   [self setNavigationBar];
-    UIView *view=[[UIView alloc]init];
-    view.backgroundColor=[UIColor orangeColor];
-    view.frame=CGRectMake(0,64, 20, 20);
-    [self.view addSubview:view];
-    
 }
 -(void)setNavigationBar
 {
@@ -138,6 +135,16 @@
     [imageView setImage:fixImage];
     [self.view addSubview:imageView];
     self.imageView=imageView;
+    
+    UIView *viewCircle=[[UIView alloc]init];
+    viewCircle.backgroundColor=[UIColor clearColor];
+    viewCircle.layer.borderColor=[[UIColor blackColor]CGColor];
+    viewCircle.layer.borderWidth=1.5;
+    viewCircle.frame=CGRectMake(0,64, 25, 25);
+    [viewCircle.layer setCornerRadius:CGRectGetHeight([viewCircle bounds]) / 2];
+    viewCircle.layer.masksToBounds=YES;
+    self.viewCircle=viewCircle;
+    [self.imageView addSubview:self.viewCircle];
 
   if (self.openType == UIImagePickerControllerSourceTypeCamera) {
 
@@ -173,7 +180,7 @@
     //创建透明位图上下文
     UIGraphicsBeginImageContextWithOptions(newRect.size, NO, 0.0);
     //创建圆角矩形的对象
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:newRect cornerRadius:5.0];
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:newRect cornerRadius:0.0];
     //裁剪图形上下文
     [path addClip];
     
@@ -220,6 +227,9 @@
     NSString *gValue=[NSString stringWithFormat:@"%d",(int)(components[1]*255)];
     NSString *bValue=[NSString stringWithFormat:@"%d",(int)(components[2]*255)];
     NSLog(@"我看看结果:%@ %@ %@",rValue,gValue,bValue);
+    
+    self.viewCircle.center = CGPointMake(touchLocation.x, touchLocation.y);
+    self.viewCircle.backgroundColor = [self getPixelColorAtLocation:touchLocation];
     
     self.rValue=rValue;
     self.gValue=gValue;
@@ -449,25 +459,6 @@
          [MBProgressHUD showError:@"增加模式失败"];
      }];
 
-    
-//    JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
-//    jySqlite.patterns=[[NSMutableArray alloc]init];
-//    
-//    //打开数据库
-//    [jySqlite openDB];
-//   
-//   
-//    [jySqlite insertRecordIntoTableName:@"patternTable" withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue andField5:@"param2" field5Value:self.gValue andField6:@"param3" field6Value:self.bValue];
-//    
-//    for (UIViewController *controller in self.navigationController.viewControllers)
-//    {
-//        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
-//        {
-//            YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
-//            vc.tag_Back=2;
-//            [self.navigationController popToViewController:controller animated:YES];
-//        }
-//    }
 }
 
 -(void)leftBtnClicked
