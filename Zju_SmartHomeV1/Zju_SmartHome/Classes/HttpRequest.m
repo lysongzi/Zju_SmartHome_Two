@@ -292,6 +292,7 @@
     
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
+    params[@"sceneconfig.tag"]=@"0";
     params[@"sceneconfig.room_name"]=@"-1";
     params[@"sceneconfig.equipment_logic_id"]=logicId;
     params[@"sceneconfig.scene_name"]=patternName;

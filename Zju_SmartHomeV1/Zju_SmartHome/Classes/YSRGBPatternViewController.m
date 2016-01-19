@@ -246,6 +246,7 @@
             NSMutableDictionary *params=[NSMutableDictionary dictionary];
             params[@"is_app"]=@"1";
             params[@"sceneconfig.room_name"]=@"-1";
+            params[@"sceneconfig.tag"]=@"0";
             params[@"sceneconfig.equipment_logicid"]=self.logic_id;
             
             //4.发送请求
@@ -820,16 +821,46 @@
     //为新图片创建一个标示文件名的值
     NSUUID *uuid = [[NSUUID alloc] init];
     NSString *imageName = [uuid UUIDString];
-    
     //接下来存储改文件到本地，以及更新模型的数据
     JYPattern *pattern = self.patterns[self.selectedIndex];
     pattern.bkgName = imageName;
     [[LYSImageStore sharedStore] setImage:image forKey:imageName];
-    //更新图片到sqlite
-    [self.jynewSqlite updateRecordByLogicID:self.logic_id andByName:pattern.name withNewBKG:imageName inTable:self.tableName];
     
-    //这里显示图片
-    [self updateCellBackground:(int)self.selectedIndex];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //NSDictionary *parameters = @;
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    
+    params[@"is_app"]=@"1";
+    params[@"sceneconfig.scene_name"]=pattern.name;
+    params[@"sceneconfig.tag"]=@"0";
+    params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+
+    
+    NSString *string=[[LYSImageStore sharedStore]imagePathForKey:imageName];
+    NSLog(@"999 %@",string);
+    //NSURL *filePath = [NSURL fileURLWithPath:@"file://path/to/image.png"];
+    
+    NSURL *filePath = [NSURL fileURLWithPath:string];
+    
+    [manager POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/portrait" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+    {
+        [formData appendPartWithFileURL:filePath name:@"sceneconfig.file" error:nil];
+    }
+        success:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        NSLog(@"Success: %@ %@", responseObject,responseObject[@"msg"]);
+    }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
+//    //更新图片到sqlite
+//    [self.jynewSqlite updateRecordByLogicID:self.logic_id andByName:pattern.name withNewBKG:imageName inTable:self.tableName];
+//    //这里显示图片
+//    [self updateCellBackground:(int)self.selectedIndex];
 }
 
 //点击播放音乐的响应事件

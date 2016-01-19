@@ -218,6 +218,7 @@
     UITouch *touch=touches.anyObject;
     //触点位置
     CGPoint touchLocation=[touch locationInView:self.imageView];
+    NSLog(@"%f %f",touchLocation.x,touchLocation.y);
     //触点颜色
     UIColor *positionColor=[self getPixelColorAtLocation:touchLocation];
     

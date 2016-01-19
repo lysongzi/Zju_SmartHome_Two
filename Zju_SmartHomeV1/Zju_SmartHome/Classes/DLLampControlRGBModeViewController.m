@@ -657,6 +657,7 @@
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
     params[@"sceneconfig.room_name"]=@"-1";
+    params[@"sceneconfig.tag"]=@"0";
     params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
     params[@"sceneconfig.scene_name"]=sceneName;
     params[@"sceneconfig.param1"]=self.rValue.text;
