@@ -53,8 +53,9 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"控制rgb灯的界面逻辑id值和电器名称和模式值传递过来了吗?%@ %@ %@",self.logic_id,self.furnitureName,self.patternName);
   [super viewDidLoad];
+    NSLog(@"看看区域有没有从模式界面传到自定义界面: %@",self.area);
+    
     self.view.backgroundColor=[UIColor blackColor];
    //设置导航条
   [self setNavigationBar];
@@ -657,14 +658,6 @@
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
     params[@"sceneconfig.room_name"]=self.area;
-    if([self.area isEqualToString:@"-1"])
-    {
-        params[@"sceneconfig.tag"]=@"0";
-    }
-    else
-    {
-        params[@"sceneconfig.tag"]=@"1";
-    }
     params[@"sceneconfig.tag"]=@"0";
     params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
     params[@"sceneconfig.scene_name"]=sceneName;

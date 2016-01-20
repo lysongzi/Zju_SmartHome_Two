@@ -84,6 +84,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"看看是从哪里进到这个模式界面：%@",self.room_name);
 
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     //专门存储模式的表
@@ -335,8 +336,11 @@
             //3.封装请求参数
             NSMutableDictionary *params=[NSMutableDictionary dictionary];
             params[@"is_app"]=@"1";
-            //params[@"sceneconfig.room_name"]=@"-1";
+            params[@"sceneconfig.room_name"]=self.room_name;
+            params[@"sceneconfig.tag"]=@"0";
             params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+            
+            NSLog(@"%@ %@ %@",self.room_name, params[@"sceneconfig.tag"],self.logic_id);
             
             //4.发送请求
             [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

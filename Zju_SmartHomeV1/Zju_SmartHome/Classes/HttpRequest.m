@@ -292,19 +292,12 @@
     
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
-    if([area isEqualToString:@"-1"])
-    {
-        params[@"sceneconfig.tag"]=@"0";
-    }
-    else
-    {
-        params[@"sceneconfig.tag"]=@"1";
-    }
-    params[@"sceneconfig.room_name"]=@"-1";
+    params[@"sceneconfig.tag"]=@"0";
+    params[@"sceneconfig.room_name"]=area;
     params[@"sceneconfig.equipment_logic_id"]=logicId;
     params[@"sceneconfig.scene_name"]=patternName;
     
-    NSLog(@"ooooouytuyutuyto %@ %@  %@",logicId, patternName,params[@"sceneconfig.tag"]);
+    NSLog(@"删除电器所传参数: %@ %@  %@ %@",logicId, patternName,params[@"sceneconfig.tag"],area);
     
     //外网发送请求
     [manager POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/delete"

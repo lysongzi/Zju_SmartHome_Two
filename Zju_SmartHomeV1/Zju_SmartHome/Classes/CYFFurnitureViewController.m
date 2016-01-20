@@ -442,6 +442,7 @@ static BOOL _isPoping;
 //                dlVc.logic_id = furniture.logic_id;
                 YSRGBPatternViewController *vc=(YSRGBPatternViewController *)furniture.controller;
                 vc.logic_id=furniture.logic_id;
+                vc.room_name=section.sectionName;
                 [self.navigationController pushViewController:vc animated:YES];
                 
             }
@@ -452,6 +453,7 @@ static BOOL _isPoping;
                 //cyfVc.logic_id=furniture.logic_id;
                 YSYWPatternViewController *vc=(YSYWPatternViewController *)furniture.controller;
                 vc.logic_id=furniture.logic_id;
+                vc.room_name=section.sectionName;
                 [self.navigationController pushViewController:vc animated:YES];
             }
             else
