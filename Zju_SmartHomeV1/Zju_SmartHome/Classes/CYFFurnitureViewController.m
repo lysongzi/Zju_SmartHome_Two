@@ -675,8 +675,8 @@ static BOOL _isPoping;
                          {
 
                              YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
-                             vc.logic_id=furniture.logic_id;
-                             vc.furnitureName=furniture.descLabel;
+                             //vc.logic_id=furniture.logic_id;
+                             //vc.furnitureName=furniture.descLabel;
                              furniture.controller=vc;
                          }
                          else if([furniture.deviceType isEqualToString:@"41"])
@@ -781,7 +781,6 @@ static BOOL _isPoping;
 
 -(void)judge
 {
-    NSLog(@"judge");
     //遍历从服务器返回的电器的所属区域
     for(int i = 0; i < self.furnitureBackStatus.furnitureArray.count; i++)
     {
@@ -813,16 +812,16 @@ static BOOL _isPoping;
                         if([furniture.deviceType isEqualToString:@"40"])
                         {
                             YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
-                            vc.logic_id=furniture.logic_id;
-                            vc.furnitureName=furniture.descLabel;
+                            //vc.logic_id=furniture.logic_id;
+                           // vc.furnitureName=furniture.descLabel;
                             furniture.controller=vc;
                         }
                         else if([furniture.deviceType isEqualToString:@"41"])
                         {
                             //furniture.controller = [[DLLampControllYWModeViewController alloc]init];
                             YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
-                            vc.logic_id=furniture.logic_id;
-                            vc.furnitureName=furniture.descLabel;
+                            //vc.logic_id=furniture.logic_id;
+                            //vc.furnitureName=furniture.descLabel;
                             furniture.controller=vc;
                             
                         }
@@ -847,16 +846,16 @@ static BOOL _isPoping;
                     {
                         furniture.imageStr = self.imageHighArray[3];
                         YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
-                        vc.logic_id=furniture.logic_id;
-                        vc.furnitureName=furniture.descLabel;
+                       // vc.logic_id=furniture.logic_id;
+                       // vc.furnitureName=furniture.descLabel;
                         furniture.controller=vc;
                     }
                     else if([furniture.deviceType isEqualToString:@"41"])
                     {
                         furniture.imageStr=self.imageHighArray[4];
                         YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
-                        vc.logic_id=furniture.logic_id;
-                        vc.furnitureName=furniture.descLabel;
+                       // vc.logic_id=furniture.logic_id;
+                        //vc.furnitureName=furniture.descLabel;
                         furniture.controller=vc;
 
                     }
@@ -911,7 +910,6 @@ static BOOL _isPoping;
                     [self.furnitureArray addObject:furniture];
                 }
                 
-                
                 JYFurniture *furniture=[[JYFurniture alloc]init];
                 furniture.descLabel=furnitureBack.name;
                 furniture.registed=YES;
@@ -923,8 +921,8 @@ static BOOL _isPoping;
                     furniture.imageStr=self.imageHighArray[3];
                     //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
                     YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
-                    vc.logic_id=furniture.logic_id;
-                    vc.furnitureName=furniture.descLabel;
+                    //vc.logic_id=furniture.logic_id;
+                    //vc.furnitureName=furniture.descLabel;
                     furniture.controller=vc;
                 }
                 else if([furniture.deviceType isEqualToString:@"41"])
@@ -932,8 +930,8 @@ static BOOL _isPoping;
                     furniture.imageStr=self.imageHighArray[4];
                     // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
                     YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
-                    vc.logic_id=furniture.logic_id;
-                    vc.furnitureName=furniture.descLabel;
+                    //vc.logic_id=furniture.logic_id;
+                    //vc.furnitureName=furniture.descLabel;
                     furniture.controller=vc;
                     
                 }
@@ -988,16 +986,16 @@ static BOOL _isPoping;
                             if([furniture.deviceType isEqualToString:@"40"])
                             {
                                 YSRGBPatternViewController *vc=[[YSRGBPatternViewController alloc]init];
-                                vc.logic_id=furniture.logic_id;
-                                vc.furnitureName=furniture.descLabel;
+                               // vc.logic_id=furniture.logic_id;
+                                //vc.furnitureName=furniture.descLabel;
                                 furniture.controller=vc;
                                 //furniture.controller=[[DLLampControlGuestModeViewController alloc]init];
                             }
                             else if([furniture.deviceType isEqualToString:@"41"])
                             {
                                 YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
-                                vc.logic_id=furniture.logic_id;
-                                vc.furnitureName=furniture.descLabel;
+                               // vc.logic_id=furniture.logic_id;
+                                //vc.furnitureName=furniture.descLabel;
                                 furniture.controller=vc;
                                 // furniture.controller=[[DLLampControllYWModeViewController alloc]init];
                             }
@@ -1099,7 +1097,8 @@ static BOOL _isPoping;
         params[@"is_app"]=@"1";
         params[@"equipment.logic_id"]=furniture.logic_id;
         params[@"equipment.name"]=furnitureName;
-        params[@"equipment.scene_name"]=section.sectionName;
+        params[@"equipment.room_name"]=section.sectionName;
+       // params[@"equipment.scene_name"]=section.sectionName;
         
         //4.发送请求
         [mgr POST:@"http://60.12.220.16:8888/paladin/Equipment/update" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -1131,7 +1130,7 @@ static BOOL _isPoping;
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
              [MBProgressHUD hideHUD];
-             [MBProgressHUD showError:@"修改电器名称失败"];
+             [MBProgressHUD showError:@"修改电器名称失败,请检查服务器"];
              
          }];
     }
