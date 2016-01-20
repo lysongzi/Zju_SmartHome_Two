@@ -885,7 +885,7 @@ static BOOL _isPoping;
             NSLog(@"---%@",furnitureBack.scene_name);
             if([furnitureBack.scene_name isEqualToString:@"-1"])
             {
-                 NSLog(@"12345678900000");
+                // NSLog(@"12345678900000");
             }
             else
             {

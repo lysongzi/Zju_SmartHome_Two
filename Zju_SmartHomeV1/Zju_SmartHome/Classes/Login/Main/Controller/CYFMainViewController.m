@@ -282,10 +282,31 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"%ld$%^^$%^$%^$%^$^$%$%",(long)indexPath.row);
-    if (indexPath.row == 3)
+    //修改内外网
+    if(indexPath.row==0)
+    {
+        NSLog(@"修改内外网");
+        [self changeNetwork];
+    }
+    //一键场景
+    else if(indexPath.row==1)
+    {
+        NSLog(@"一件场景");
+    }
+    //一键设备
+    else if(indexPath.row==2)
+    {
+        NSLog(@"一件设备");
+    }
+    //软件说明
+    else if (indexPath.row == 3)
     {
         [self goToSoftware];
+    }
+    //公司简介
+    else if(indexPath.row==4)
+    {
+        NSLog(@"公司简介");
     }
 }
 
@@ -397,6 +418,30 @@
 }
 
 
+-(void)changeNetwork
+{
+    NSLog(@"点击切换内外网按钮");
+    
+    AppDelegate *app = [[UIApplication sharedApplication] delegate];
+    
+    [AllUtils showPromptDialog:@"提示" andMessage:@"请选择网络环境" OKButton:@"外部网络" OKButtonAction:^(UIAlertAction *action) {
+        //外网；
+        app.isInternalNetworkGate = false;
+        
+        [MBProgressHUD showSuccess:@"您选择了外网"];
+        
+        NSLog(@"你选择了外网");
+        
+    } cancelButton:@"内部网络" cancelButtonAction:^(UIAlertAction *action) {
+        
+        //内网；
+        app.isInternalNetworkGate = true;
+        [MBProgressHUD showSuccess:@"您选择了内网"];
+        
+        NSLog(@"你选择了内网");
+        
+    } contextViewController:self];
+}
 @end
 
 

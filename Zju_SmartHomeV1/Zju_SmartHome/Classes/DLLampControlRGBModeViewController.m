@@ -656,7 +656,15 @@
     //3.封装请求参数
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
-    params[@"sceneconfig.room_name"]=@"-1";
+    params[@"sceneconfig.room_name"]=self.area;
+    if([self.area isEqualToString:@"-1"])
+    {
+        params[@"sceneconfig.tag"]=@"0";
+    }
+    else
+    {
+        params[@"sceneconfig.tag"]=@"1";
+    }
     params[@"sceneconfig.tag"]=@"0";
     params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
     params[@"sceneconfig.scene_name"]=sceneName;
@@ -664,7 +672,7 @@
     params[@"sceneconfig.param2"]=self.gValue.text;
     params[@"sceneconfig.param3"]=self.bValue.text;
     params[@"sceneconfig.image"]=@"rouhe_bg";
-    NSLog(@"---%@ %@ %@",self.rValue.text,self.gValue.text,self.bValue.text);
+    NSLog(@"---%@ %@ %@ %@",self.rValue.text,self.gValue.text,self.bValue.text,params[@"sceneconfig.tag"]);
     
     //4.发送请求
     [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)

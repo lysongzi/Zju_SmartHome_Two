@@ -281,8 +281,8 @@
 
 //模式的查询,该方法没有封装
 
-//单品模式的删除
-+ (void)deletePatternFromServerProduct:(NSString*)logicId andWithPatternName:(NSString *)patternName success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
+//电器模式的删除
++ (void)deletePatternFromServerProduct:(NSString*)logicId andWithPatternName:(NSString *)patternName withArea:(NSString *)area success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
     
     //1.创建请求管理对象
     AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
@@ -292,12 +292,19 @@
     
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"is_app"]=@"1";
-    params[@"sceneconfig.tag"]=@"0";
+    if([area isEqualToString:@"-1"])
+    {
+        params[@"sceneconfig.tag"]=@"0";
+    }
+    else
+    {
+        params[@"sceneconfig.tag"]=@"1";
+    }
     params[@"sceneconfig.room_name"]=@"-1";
     params[@"sceneconfig.equipment_logic_id"]=logicId;
     params[@"sceneconfig.scene_name"]=patternName;
     
-    NSLog(@"oooooo %@ %@",logicId, patternName);
+    NSLog(@"ooooouytuyutuyto %@ %@  %@",logicId, patternName,params[@"sceneconfig.tag"]);
     
     //外网发送请求
     [manager POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/delete"
@@ -306,7 +313,7 @@
           failure:failure];
 }
 
-//单品模式的增加，该方法没有封装
+//电器模式的增加，该方法没有封装
 
 #pragma mark - 向服务器发送YW灯冷暖的方法
 + (void)sendYWWarmColdToServer:(NSString *)logicId warmcoldValue:(NSString*)warmcoldValue success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{

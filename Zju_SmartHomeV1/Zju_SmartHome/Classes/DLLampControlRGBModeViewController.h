@@ -22,6 +22,8 @@
 @property(nonatomic,copy)NSString *furnitureName;
 //模式名称
 @property(nonatomic,copy)NSString *patternName;
+//区域
+@property(nonatomic,copy)NSString *area;
 
 //表名
 @property(nonatomic,copy)NSString *tableName;

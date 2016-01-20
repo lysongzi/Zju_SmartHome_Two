@@ -84,7 +84,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     //专门存储模式的表
     self.tableName=[NSString stringWithFormat:@"patternTable%@",appDelegate.user_id];
@@ -579,6 +579,7 @@
         rgbVc.logic_id=self.logic_id;
         rgbVc.furnitureName=self.furnitureName;
         rgbVc.tableName=self.tableName;
+        rgbVc.area=self.room_name;
         [self.navigationController pushViewController:rgbVc animated:YES];
     }
 }
@@ -643,7 +644,7 @@
     //从模型中删除
     [self.patterns removeObjectAtIndex:view.tag];
     
-    [HttpRequest deletePatternFromServerProduct:self.logic_id andWithPatternName:pattern.name success:^(AFHTTPRequestOperation *operation, id responseObject)
+    [HttpRequest deletePatternFromServerProduct:self.logic_id andWithPatternName:pattern.name withArea:self.room_name success:^(AFHTTPRequestOperation *operation, id responseObject)
      
      {
          NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -833,8 +834,19 @@
     
     params[@"is_app"]=@"1";
     params[@"sceneconfig.scene_name"]=pattern.name;
-    params[@"sceneconfig.tag"]=@"0";
-    params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+    if([self.room_name isEqualToString:@"-1"])
+    {
+        params[@"sceneconfig.tag"]=@"0";
+    }
+    else
+    {
+        params[@"sceneconfig.tag"]=@"1";
+    }
+    
+    params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+    params[@"sceneconfig.image_name"]=imageName;
+    
+    NSLog(@"%@ %@ %@ %@",pattern.name,self.logic_id,imageName,params[@"sceneconfig.tag"]);
 
     
     NSString *string=[[LYSImageStore sharedStore]imagePathForKey:imageName];
