@@ -190,7 +190,6 @@
     NSUserDefaults *userDefault = [[NSUserDefaults alloc] init];
     self.musicBox_State = [userDefault valueForKey:@"music_state"];
     
-    
     //NSLog(@"sadasd%@", self.musicBox_State);
     if ([self.musicBox_State isEqualToString:@"stop"])
     {
@@ -475,7 +474,6 @@
         //初始化scrollView
         [self initScrollView];
     }
-
 }
 
 //初始化scrollView的内容

@@ -97,14 +97,14 @@ static NSMutableArray* _userData2;
             if (!error) {
                 
                 NSLog(@"验证成功");
-                NSString* str = [NSString stringWithFormat:NSLocalizedString(@"verifycoderightmsg", nil)];
-                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"verifycoderighttitle", nil)
-                                                                message:str
-                                                               delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"sure", nil)
-                                                      otherButtonTitles:nil, nil];
-                [alert show];
-                _alert3 = alert;
+//                NSString* str = [NSString stringWithFormat:NSLocalizedString(@"verifycoderightmsg", nil)];
+//                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"verifycoderighttitle", nil)
+//                                                                message:str
+//                                                               delegate:self
+//                                                      cancelButtonTitle:NSLocalizedString(@"sure", nil)
+//                                                      otherButtonTitles:nil, nil];
+//                [alert show];
+//                _alert3 = alert;
                 //!!!:如果来到这里说明用户输入的验证码经系统进行核对后已经验证成功了,可以在这里插入成功之后的应该做的事情的代码
             }
             else
@@ -234,7 +234,7 @@ static NSMutableArray* _userData2;
     //创建一个导航栏
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0+statusBarHeight, self.view.frame.size.width, 44)];
     UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:@""];
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"back", nil)
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"返回", nil)
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(clickLeftButton)];
@@ -284,10 +284,10 @@ static NSMutableArray* _userData2;
     [self.view addSubview:_repeatSMSBtn];
     
     _submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    [_submitBtn setTitle:NSLocalizedString(@"submit", nil) forState:UIControlStateNormal];
+    [_submitBtn setTitle:NSLocalizedString(@"提交", nil) forState:UIControlStateNormal];
 //    NSString *icon = [NSString stringWithFormat:@"smssdk.bundle/button4.png"];
 //    [_submitBtn setBackgroundImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
-    [_submitBtn setBackgroundColor:[UIColor colorWithRed:0.102 green:0.718 blue:0.031 alpha:1.000]];
+    [_submitBtn setBackgroundColor:[UIColor colorWithRed:(202/255.0) green:(0/255.0) blue:(73/255.0) alpha:1.000]];
     _submitBtn.frame = CGRectMake(15, 220 + statusBarHeight, self.view.frame.size.width - 30, 42);
     [_submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_submitBtn addTarget:self action:@selector(submit) forControlEvents:UIControlEventTouchUpInside];

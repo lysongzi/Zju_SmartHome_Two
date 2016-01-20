@@ -302,7 +302,6 @@ static BOOL _isPoping;
         {
             //还没有实现其他智能电器
         }
-
     }
 }
 

@@ -176,12 +176,12 @@
     //创建一个导航栏
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0 + statusBarHeight, self.view.frame.size.width, 44)];
     UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:@""];
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"back", nil)
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"返回", nil)
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(clickLeftButton)];
 
-    [navigationItem setTitle:NSLocalizedString(@"register", nil)];
+    [navigationItem setTitle:NSLocalizedString(@"短信验证", nil)];
     [navigationBar pushNavigationItem:navigationItem animated:NO];
     [navigationItem setLeftBarButtonItem:leftButton];
     [self.view addSubview:navigationBar];
@@ -224,7 +224,7 @@
     [nextBtn setTitle:NSLocalizedString(@"下一步", nil) forState:UIControlStateNormal];
 //    NSString *icon = [NSString stringWithFormat:@"smssdk.bundle/button4.png"];
 //    [nextBtn setBackgroundImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
-    [nextBtn setBackgroundColor:[UIColor colorWithRed:0.102 green:0.718 blue:0.031 alpha:1.000]];
+    [nextBtn setBackgroundColor:[UIColor colorWithRed:(202/255.0) green:(0/255.0) blue:(73/255.0) alpha:1.000]];
     nextBtn.frame = CGRectMake(10, 220 + statusBarHeight, self.view.frame.size.width - 20, 42);
     [nextBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [nextBtn addTarget:self action:@selector(nextStep) forControlEvents:UIControlEventTouchUpInside];
