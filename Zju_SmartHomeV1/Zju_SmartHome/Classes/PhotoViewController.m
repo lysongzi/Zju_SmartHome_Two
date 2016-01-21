@@ -14,8 +14,8 @@
 #import "STNewSceneView.h"
 #import "JYPatternSqlite.h"
 #import "YSRGBPatternViewController.h"
-#define SCREEN_WIDTH self.view.frame.size.width
-#define SCREEN_HEIGHT self.view.frame.size.height
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 @interface PhotoViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate,STSaveNewSceneDelegate>
 
 
@@ -32,7 +32,8 @@
 
 //显示当前选择颜色的UIView
 @property(nonatomic,strong)UIView *viewCircle;
-
+@property(nonatomic,strong)UIImageView *backgroundImageV;
+@property(nonatomic,assign)CGFloat scale;
 @end
 
 @implementation PhotoViewController
@@ -118,23 +119,105 @@
   }
 
 }
-
+//计算imageView的frame
+-(CGRect)getImageByScaleFromImage:(UIImage *)image
+{
+    CGFloat widthScale = image.size.width / SCREEN_WIDTH;
+    CGFloat heightScale = image.size.height / SCREEN_HEIGHT;
+    self.scale = MAX(widthScale, heightScale);
+    return CGRectMake(0, (SCREEN_HEIGHT - (image.size.height - 64) / self.scale) / 2.0, image.size.width / self.scale, image.size.height / self.scale);
+}
+//修正图片的旋转方向
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;  
+    }  
+    
+    // And now we just create a new UIImage from the drawing context  
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);  
+    UIImage *img = [UIImage imageWithCGImage:cgimg];  
+    CGContextRelease(ctx);  
+    CGImageRelease(cgimg);  
+    return img;  
+}
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
 
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *firstImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [self fixOrientation:firstImage];
     NSLog(@"123  %f %f",image.size.width,image.size.height);
     
-    UIImage *fixImage = [self getThumbailFromImage:image];
-    NSLog(@"321 %f %f",fixImage.size.width,fixImage.size.height);
-    
-    //将照片放入UIImageView对象中；
-    UIImageView *imageView=[[UIImageView alloc]init];
+        //将照片放入UIImageView对象中；
+    self.imageView=[[UIImageView alloc]init];
 
-    imageView.frame=CGRectMake(0, 64, fixImage.size.width, fixImage.size.height);
-    [imageView setImage:fixImage];
-    [self.view addSubview:imageView];
-    self.imageView=imageView;
+    self.imageView.frame=[self getImageByScaleFromImage:image];
+    self.imageView.image = image;
+    self.backgroundImageV = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.imageView.frame.origin.y, image.size.width, image.size.height)];
+    self.backgroundImageV.image = image;
+    UIView *coverView = [[UIView alloc]initWithFrame:self.backgroundImageV.frame];
+    coverView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.backgroundImageV];
+    [self.view addSubview:coverView];
+    [self.view addSubview:self.imageView];
+   // self.imageView=imageView;
     
     UIView *viewCircle=[[UIView alloc]init];
     viewCircle.backgroundColor=[UIColor clearColor];
@@ -149,7 +232,7 @@
   if (self.openType == UIImagePickerControllerSourceTypeCamera) {
 
     //将图片保存到图库
-    UIImageWriteToSavedPhotosAlbum(fixImage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 
   }else if(self.openType == UIImagePickerControllerSourceTypePhotoLibrary){
 
@@ -261,59 +344,62 @@
 
 - (UIColor*) getPixelColorAtLocation:(CGPoint)point
 {
-    UIColor* color = nil;
-    UIImageView *colorImageView=self.imageView;
-    CGImageRef inImage = colorImageView.image.CGImage;
-    // Create off screen bitmap context to draw the image into. Format ARGB is 4 bytes for each pixel: Alpa, Red, Green, Blue
-    CGContextRef cgctx = [self createARGBBitmapContextFromImage:inImage];
-    if (cgctx == NULL)
-    {
-        return nil;
-    }
-    size_t w = CGImageGetWidth(inImage);
-    size_t h = CGImageGetHeight(inImage);
-    CGRect rect = {{0,0},{w,h}};
-    
-    // Draw the image to the bitmap context. Once we draw, the memory
-    // allocated for the context for rendering will then contain the
-    // raw image data in the specified color space.
-    CGContextDrawImage(cgctx, rect, inImage);
-    
-    // Now we can get a pointer to the image data associated with the bitmap
-    // context.
-    unsigned char* data = CGBitmapContextGetData (cgctx);
-    if (data != NULL)
-    {
-        //offset locates the pixel in the data from x,y.
-        //4 for 4 bytes of data per pixel, w is width of one row of data.
-        @try
+    UIColor* color = [UIColor whiteColor];
+    if (point.x < self.imageView.frame.size.width && point.x > 0 && point.y < self.imageView.frame.size.height && point.y > 0) {
+        UIImageView *colorImageView=self.backgroundImageV;
+        CGImageRef inImage = colorImageView.image.CGImage;
+        // Create off screen bitmap context to draw the image into. Format ARGB is 4 bytes for each pixel: Alpa, Red, Green, Blue
+        CGContextRef cgctx = [self createARGBBitmapContextFromImage:inImage];
+        if (cgctx == NULL)
         {
-            int offset = 4*((w*round(point.y))+round(point.x));
-            //NSLog(@"offset: %d", offset);
-            int alpha =  data[offset];
-            int red = data[offset+1];
-            int green = data[offset+2];
-            int blue = data[offset+3];
-            //            NSLog(@"offset: %i colors: RGB A %i %i %i  %i",offset,red,green,blue,alpha);
-            color = [UIColor colorWithRed:(red/255.0f) green:(green/255.0f) blue:(blue/255.0f) alpha:(alpha/255.0f)];
+            return nil;
         }
-        @catch (NSException * e)
+        size_t w = CGImageGetWidth(inImage);
+        size_t h = CGImageGetHeight(inImage);
+        CGRect rect = {{0,0},{w,h}};
+        
+        // Draw the image to the bitmap context. Once we draw, the memory
+        // allocated for the context for rendering will then contain the
+        // raw image data in the specified color space.
+        CGContextDrawImage(cgctx, rect, inImage);
+        
+        // Now we can get a pointer to the image data associated with the bitmap
+        // context.
+        unsigned char* data = CGBitmapContextGetData (cgctx);
+        if (data != NULL)
         {
-            NSLog(@"%@",[e reason]);
-        }
-        @finally
-        {
+            //offset locates the pixel in the data from x,y.
+            //4 for 4 bytes of data per pixel, w is width of one row of data.
+            @try
+            {
+                int offset = 4*((w*round(point.y * self.scale))+round(point.x * self.scale));
+                //NSLog(@"offset: %d", offset);
+                int alpha =  data[offset];
+                int red = data[offset+1];
+                int green = data[offset+2];
+                int blue = data[offset+3];
+                //            NSLog(@"offset: %i colors: RGB A %i %i %i  %i",offset,red,green,blue,alpha);
+                color = [UIColor colorWithRed:(red/255.0f) green:(green/255.0f) blue:(blue/255.0f) alpha:(alpha/255.0f)];
+            }
+            @catch (NSException * e)
+            {
+                NSLog(@"%@",[e reason]);
+            }
+            @finally
+            {
+                
+            }
             
         }
         
-    }
-    
-    // When finished, release the context
-    CGContextRelease(cgctx);
-    // Free image data memory for the context
-    if (data)
-    {
-        free(data);
+        // When finished, release the context
+        CGContextRelease(cgctx);
+        // Free image data memory for the context
+        if (data)
+        {
+            free(data);
+        }
+
     }
     
     return color;
