@@ -15,10 +15,19 @@
 #import "CYFMainViewController.h"
 #import "AppDelegate.h"
 #import "JYLoginViewController.h"
+#import "YSChangeUserPhotoViewController.h"
+#import "SDWebImageManager.h"
+#import "LYSImageStore.h"
+#import "AFNetworking.h"
 
-@interface STUserInfoController ()<UITableViewDataSource,UITableViewDelegate,STUserInfoViewDelegate>
+@interface STUserInfoController ()<UITableViewDataSource,UITableViewDelegate,STUserInfoViewDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate, YSChangeUserPhotoViewController>
+
 @property(nonatomic,strong)STUserInfoView *userView;
 @property(nonatomic,strong)NSArray *optionArray;
+//有关照片切换背景图的属性；
+@property (nonatomic,strong) UIPopoverController *imagePickerPopover;
+@property (nonatomic,strong) UIAlertController *alert;
+
 @end
 
 @implementation STUserInfoController
@@ -93,6 +102,48 @@
     {
         NSLog(@"修改头像");
         //从图库或者拍照取照片
+        if ([self.imagePickerPopover isPopoverVisible]) {
+            [self.imagePickerPopover dismissPopoverAnimated:YES];
+            self.imagePickerPopover = nil;
+            return;
+        }
+        
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.editing = YES;
+        //imagePicker.delegate = self;
+        //这里可以设置是否允许编辑图片；
+        imagePicker.allowsEditing = false;
+        
+        /**
+         *  应该在这里让用户选择是打开摄像头还是图库；
+         */
+        //初始化提示框；
+        self.alert = [UIAlertController alertControllerWithTitle:@"更换头像" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+        
+        [self.alert addAction:[UIAlertAction actionWithTitle:@"照相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+        {
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            //跳到ShowPhoto页面；
+            YSChangeUserPhotoViewController *showPhoto = [[YSChangeUserPhotoViewController alloc] init];
+            showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
+            showPhoto.delegate=self;
+            [self.navigationController pushViewController:showPhoto animated:true];
+        }]];
+        
+        [self.alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+        {
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            //跳到ShowPhoto页面；
+            YSChangeUserPhotoViewController *showPhoto = [[YSChangeUserPhotoViewController alloc] init];
+            showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;
+            showPhoto.delegate=self;
+            [self.navigationController pushViewController:showPhoto animated:true];
+        }]];
+        
+        [self.alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:nil]];
+        
+        //弹出提示框；
+        [self presentViewController:self.alert animated:true completion:nil];
     }
     else if (indexPath.row==1)
     {
@@ -117,6 +168,44 @@
     [fileManager removeItemAtPath:file error:nil];
     
     self.view.window.rootViewController=[[JYLoginViewController alloc]init];
+}
+
+-(void)changeUserPhoto:(UIImage *)image
+{
+    //为新图片创建一个标示文件名的值
+    //NSUUID *uuid = [[NSUUID alloc] init];
+    NSString *imageName = @"YSUserPhoto";
+    
+    [[LYSImageStore sharedStore] setImage:image forKey:imageName];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    
+    params[@"is_app"]=@"1";
+    params[@"image_name"] = imageName;
+    
+    NSString *string=[[LYSImageStore sharedStore]imagePathForKey:imageName];
+    NSURL *filePath = [NSURL fileURLWithPath:string];
+    NSLog(@"%@", filePath);
+    
+    [manager POST:@"http://60.12.220.16:8888/paladin/portrait" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         [formData appendPartWithFileURL:filePath name:@"file" error:nil];
+     }
+          success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"Success: %@ %@", responseObject,responseObject[@"msg"]);
+         NSLog(@"这里发送完图片了");
+         [[LYSImageStore sharedStore] setImage:image forKey:imageName];
+         
+         //这里显示图片
+         //[self updateCellBackground:(int)self.selectedIndex];
+     }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+
 }
 
 - (void)setNaviBarItemButton

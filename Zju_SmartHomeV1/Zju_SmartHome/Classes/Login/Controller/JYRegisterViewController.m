@@ -31,6 +31,7 @@
     self.registerXib=registerXib;
     self.view=registerXib;
 }
+
 -(void)registerXib:(NSString *)username and:(NSString *)password and:(NSString *)email
 {
     //显示一个蒙板
