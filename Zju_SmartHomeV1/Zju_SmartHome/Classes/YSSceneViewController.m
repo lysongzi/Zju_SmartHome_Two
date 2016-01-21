@@ -193,8 +193,6 @@
     NSUserDefaults *userDefault = [[NSUserDefaults alloc] init];
     self.musicBox_State = [userDefault valueForKey:@"music_state"];
     
-    
-    //NSLog(@"sadasd%@", self.musicBox_State);
     if ([self.musicBox_State isEqualToString:@"stop"])
     {
         self.musicPlay.tag = 0;
@@ -258,8 +256,6 @@
              for(int i = 0; i < backStatus.sceneArray.count; i++)
              {
                  YSScene *scene = backStatus.sceneArray[i];
-//                 NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.area, scene.bkgName,scene.param1,scene.param2,scene.param3);
-                 
                  [self.jySceneSqlite insertRecordIntoTableName:self.tableName
                                                     withField1:@"area" field1Value:scene.area
                                                      andField2:@"scene" field2Value:scene.name
@@ -325,7 +321,7 @@
              for(int i = 0; i < self.scenes.count; i++)
              {
                  YSScene *scene = self.scenes[i];
-                 NSLog(@"======%@ %@ %@  %@ %@ %@ %@",scene.logic_id,scene.name,scene.logoName, scene.bkgName,scene.param1,scene.param2,scene.param3);
+                 NSLog(@"======%@ %@ %@  %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.area, scene.logoName, scene.bkgName,scene.param1,scene.param2,scene.param3);
              }
              //初始化scrollView
              [self initScrollView];
@@ -403,7 +399,6 @@
 //初始化scrollView的内容
 - (void)initScrollView
 {
-    //NSLog(@"%lu", (unsigned long)self.sceneArray.count);
     self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenesOnly.count + 4), self.cellHeight);
     
     //清楚scrollView的子视图
@@ -502,6 +497,8 @@
     //否则就是点击了居中的元素
     else
     {
+        NSLog(@"进入添加新场景界面, 将该区域的电器传递过去");
+        
         STNewSceneController *svc = [[STNewSceneController alloc] init];
         svc.furnitures = self.furnitureArray;
         svc.sectionName = self.sectionName;
@@ -762,32 +759,11 @@
     {
         //变得太快了
         [self updateCellBackground:0];
-        //YSScene *scene=self.scenes[0];
+        NSLog(@"这里应该要进行灯的控制了");
         
-        //NSLog(@"lllssdsdds %@,%@,%@",pattern.name,pattern.rValue,pattern.bValue);
-        //        NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
-        //        NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.gValue intValue]]];
-        //
-        //        NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.bValue intValue]]];
-        //
-        //        // NSLog(@"---- %@ %@ %@ %@",self.logic_id,r,g,b);
-        //
-        //        [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
-        //                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //
-        //                                      NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        //                                      NSLog(@"成功: %@", string);
-        //
-        //                                  }
-        //                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //
-        //                                      [MBProgressHUD showError:@"请检查网关"];
-        //
-        //                                  }];
     }
 }
 
-//滑动的时候就会调用的函数，在这里写动画？
 //滑动的时候就会调用的函数，在这里写动画？
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -844,35 +820,48 @@
     
     [self.scrollView setUserInteractionEnabled:YES];
     
-    YSScene *scene = self.scenesOnly[(int)self.selectedIndex];
-    // NSLog(@"我看看划到的是哪个模式:%@ %@ %@ %@,这里进行灯的控制请求",pattern.name,pattern.rValue,pattern.gValue,pattern.bValue);
+    NSLog(@"应该要控制灯了");
+    JYSceneOnly *sceneOnly=self.scenesOnly[(int)self.selectedIndex];
+    NSLog(@"qqq %@ %@",sceneOnly.name,sceneOnly.area);
     
-    //    NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
-    //    NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.gValue intValue]]];
-    //
-    //    NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.bValue intValue]]];
-    //
-    //    // NSLog(@"---- %@ %@ %@ %@",self.logic_id,r,g,b);
-    //    if([pattern.name isEqualToString:@"自定义"])
-    //    {
-    //
-    //    }
-    //    else
-    //    {
-    //        [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
-    //                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    //
-    //                                      NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-    //                                      NSLog(@"成功: %@", string);
-    //
-    //                                  }
-    //                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    //
-    //                                      [MBProgressHUD showError:@"请检查网关"];
-    //
-    //                                  }];
+    //滑动到哪个场景后，应该要得到出该场景下有哪些灯并且获取灯的参数值
     
-    //    }
+    for(int i=0;i<self.scenes.count;i++)
+    {
+        YSScene *scene=self.scenes[i];
+        //NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+        if([sceneOnly.name isEqualToString:scene.name])
+        {
+            NSLog(@"找到对应场景下的灯了，开始发送请求");
+             NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+            
+//            NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param1 intValue]]];
+//            NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param2 intValue]]];
+//            NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param3 intValue]]];
+//            
+//            if([scene.name isEqualToString:@"自定义"])
+//            {
+//            
+//            }
+//            else
+//            {
+//                [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
+//                                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            
+//                                                  NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//                                                  NSLog(@"成功: %@", string);
+//            
+//                                              }
+//                                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            
+//                                                  [MBProgressHUD showError:@"请检查网关"];
+//            
+//                                              }];
+//            
+//                }
+//            
+        }
+    }
 }
 
 //计算位置，居中选中的cell

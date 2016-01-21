@@ -37,27 +37,29 @@
     }
     return _iconArray;
 }
--(NSArray *)deviceArray
-{
-    if (_deviceArray==nil) {
-        NSArray *deviceArr=[NSArray arrayWithObjects:@"YW灯", @"RGB灯",@"音响",@"空调",nil];
-        _deviceArray=deviceArr;
-    }
-    return _deviceArray;
-}
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     self.tableName = [NSString stringWithFormat:@"sceneTable%@",appDelegate.user_id];
     NSLog(@"看看表明%@",self.tableName);
     
+    NSLog(@"看看有区域名称:%@",self.sectionName);
+    NSLog(@"看看传递过来几盏灯了");
+    for(int i=0;i<self.furnitures.count;i++)
+    {
+        JYFurniture *furniture=self.furnitures[i];
+        NSLog(@"%@ %@",furniture.descLabel,furniture.logic_id);
+    }
+    
     YSNewSceneView *newSceneView=[YSNewSceneView initWithNewSceneView];
     newSceneView.frame=self.view.bounds;
     
-    //头像
-    [newSceneView.sceneIcon setImage:[UIImage circleImageWithName:@"头像.jpg" borderWith:0 borderColor:nil]];
+    //场景背景图片
+   //[newSceneView.sceneIcon setImage:[UIImage circleImageWithName:@"zidingyi_icon" borderWith:0 borderColor:nil]];
+    newSceneView.sceneIcon.image=[UIImage imageNamed:@"zidingyi_icon"];
     
     //tableView的代理
     newSceneView.devicesTableView.delegate=self;
@@ -86,11 +88,13 @@
     //获取电器
     JYFurniture *furniture = self.furnitures[indexPath.row];
     
-    if (deviceCell==nil) {
+    if (deviceCell==nil)
+    {
         deviceCell = [STNewSceneCell initWithNewSceneCell];
         
         //判断设备类型设置图标
-        if ([furniture.deviceType isEqualToString:@"40"]) {
+        if ([furniture.deviceType isEqualToString:@"40"])
+        {
             [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_rgb"]];
         }
         else if ([furniture.deviceType isEqualToString:@"41"])
@@ -101,7 +105,7 @@
         {
             [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_ac"]];
         }
-        
+     
         deviceCell.deviceName.text = furniture.descLabel;
         UIColor *color=[[UIColor alloc]initWithRed:(0/255.0f) green:(0/255.0f) blue:(0/255.0f) alpha:1.0];
         deviceCell.selectedBackgroundView=[[UIView alloc]initWithFrame:deviceCell.frame];
@@ -109,6 +113,7 @@
     }
     return deviceCell;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat originH=45;
@@ -122,66 +127,69 @@
     self.navigationController.navigationBar.hidden=NO;
     self.navigationItem.rightBarButtonItem.enabled=YES;
     sceneName = self.xinSceneView.xinSceneName.text;
-    NSLog(@"－－－－%@",sceneName);
-    
-    //1.创建请求管理对象
-    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-    
-    //2.说明服务器返回的是json参数
-    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
-    
-    //3.封装请求参数
-    NSMutableDictionary *params=[NSMutableDictionary dictionary];
-    params[@"is_app"]=@"1";
-    params[@"sceneconfig.room_name"] = self.sectionName;
-    params[@"sceneconfig.equipment_logic_id"] = ((JYFurniture *)self.furnitures[0]).logic_id;
-    params[@"sceneconfig.scene_name"] = sceneName;
-    params[@"sceneconfig.param1"] = @"110";
-    params[@"sceneconfig.param2"] = @"110";
-    params[@"sceneconfig.param3"] = @"110";
-    params[@"sceneconfig.image"]=@"rouhe_bg";
+    NSLog(@"看看区域和新建场景名称:%@ %@",self.sectionName,sceneName);
     
     
-    //4.发送请求
-    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
-         if([responseObject[@"code"] isEqualToString:@"0"])
-         {
-             JYSceneSqlite *jySqlite=[[JYSceneSqlite alloc]init];
-             jySqlite.patterns=[[NSMutableArray alloc]init];
-             
-             //打开数据库
-             [jySqlite openDB];
-             
-             [jySqlite insertRecordIntoTableName:self.tableName
-                                                withField1:@"area" field1Value:self.sectionName
-                                                 andField2:@"scene" field2Value:sceneName
-                                                 andField3:@"bkgName" field3Value:@"rouhe_bg"
-                                                 andField4:@"logic_id" field4Value:@"110"
-                                                 andField5:@"param1" field5Value:@"110"
-                                                 andField6:@"param2" field6Value:@"110"
-                                                 andField7:@"param3" field7Value:@"110"];
-             
-             for (UIViewController *controller in self.navigationController.viewControllers)
-             {
-                 if ([controller isKindOfClass:[YSSceneViewController class]])
-                 {
-                     YSSceneViewController *vc=(YSSceneViewController *)controller;
-                     vc.tag_Back = 2;
-                     [self.navigationController popToViewController:controller animated:YES];
-                 }
-             }
-         }
-         else
-         {
-             [MBProgressHUD showError:@"增加模式失败"];
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         [MBProgressHUD showError:@"增加模式失败"];
-     }];
+    
+    
+//    //1.创建请求管理对象
+//    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+//    
+//    //2.说明服务器返回的是json参数
+//    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+//    
+//    //3.封装请求参数
+//    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+//    params[@"is_app"]=@"1";
+//    params[@"sceneconfig.room_name"] = self.sectionName;
+//    params[@"sceneconfig.equipment_logic_id"] = ((JYFurniture *)self.furnitures[0]).logic_id;
+//    params[@"sceneconfig.scene_name"] = sceneName;
+//    params[@"sceneconfig.param1"] = @"110";
+//    params[@"sceneconfig.param2"] = @"110";
+//    params[@"sceneconfig.param3"] = @"110";
+//    params[@"sceneconfig.image"]=@"rouhe_bg";
+//    
+//    
+//    //4.发送请求
+//    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+//     {
+//         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+//         if([responseObject[@"code"] isEqualToString:@"0"])
+//         {
+//             JYSceneSqlite *jySqlite=[[JYSceneSqlite alloc]init];
+//             jySqlite.patterns=[[NSMutableArray alloc]init];
+//             
+//             //打开数据库
+//             [jySqlite openDB];
+//             
+//             [jySqlite insertRecordIntoTableName:self.tableName
+//                                                withField1:@"area" field1Value:self.sectionName
+//                                                 andField2:@"scene" field2Value:sceneName
+//                                                 andField3:@"bkgName" field3Value:@"rouhe_bg"
+//                                                 andField4:@"logic_id" field4Value:@"110"
+//                                                 andField5:@"param1" field5Value:@"110"
+//                                                 andField6:@"param2" field6Value:@"110"
+//                                                 andField7:@"param3" field7Value:@"110"];
+//             
+//             for (UIViewController *controller in self.navigationController.viewControllers)
+//             {
+//                 if ([controller isKindOfClass:[YSSceneViewController class]])
+//                 {
+//                     YSSceneViewController *vc=(YSSceneViewController *)controller;
+//                     vc.tag_Back = 2;
+//                     [self.navigationController popToViewController:controller animated:YES];
+//                 }
+//             }
+//         }
+//         else
+//         {
+//             [MBProgressHUD showError:@"增加场景失败"];
+//         }
+//         
+//     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+//     {
+//         [MBProgressHUD showError:@"增加场景失败,请检查服务器"];
+//     }];
 }
 
 

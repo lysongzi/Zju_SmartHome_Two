@@ -21,12 +21,15 @@
 
 - (IBAction)switchBtn:(id)sender
 {
-    if (self.up_down.tag==0) {
+    if (self.up_down.tag==1)
+    {
         [self.up_down setBackgroundImage:[UIImage imageNamed:@"changjing_edit_btn_equipment_notadded"] forState:UIControlStateNormal];
-        self.up_down.tag=-1;
-    }else if (self.up_down.tag==-1){
-        [self.up_down setBackgroundImage:[UIImage imageNamed:@"changjing_edit_btn_equipment_added"] forState:UIControlStateNormal];
         self.up_down.tag=0;
+    }
+    else if (self.up_down.tag==0)
+    {
+        [self.up_down setBackgroundImage:[UIImage imageNamed:@"changjing_edit_btn_equipment_added"] forState:UIControlStateNormal];
+        self.up_down.tag=1;
     }
     
 }

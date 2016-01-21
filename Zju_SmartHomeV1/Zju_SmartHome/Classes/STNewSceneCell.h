@@ -16,6 +16,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *up_down;
 
+@property (weak, nonatomic) IBOutlet UIButton *isNeed;
+
 - (IBAction)switchBtn:(id)sender;
 
 +(instancetype)initWithNewSceneCell;
