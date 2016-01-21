@@ -768,6 +768,12 @@
 //弹出选择更换背景图
 - (void)changeBkg:(UIGestureRecognizer *)gr
 {
+    if (self.selectedIndex < DEFAULT_CELL_NUMBER) {
+        //默认模式不允许修改背景图
+        [MBProgressHUD showError:@"默认模式不允许修改背景图"];
+        return;
+    }
+    
     if ([self.imagePickerPopover isPopoverVisible]) {
         [self.imagePickerPopover dismissPopoverAnimated:YES];
         self.imagePickerPopover = nil;
@@ -972,11 +978,11 @@
 - (IBAction)musicPreClick:(id)sender
 {
     NSLog(@"这里是上一首");
-    [HttpRequest getMusicActionfromProtol:@"power_on" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [HttpRequest getMusicActionfromProtol:@"previous" success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"请求成功：%@",result);
+        NSLog(@"音乐请求成功：%@",result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"请求失败：%@",error);
+        NSLog(@"音乐请求失败：%@",error);
     }];
 }
 
@@ -984,11 +990,11 @@
 {
     NSLog(@"这里是下一首");
     
-    [HttpRequest getMusicActionfromProtol:@"power_off" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [HttpRequest getMusicActionfromProtol:@"next" success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"请求成功：%@",result);
+        NSLog(@"音乐请求成功：%@",result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"请求失败：%@",error);
+        NSLog(@"音乐请求失败：%@",error);
     }];
 }
 

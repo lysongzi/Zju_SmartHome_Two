@@ -258,11 +258,41 @@ static BOOL _isPoping;
     view.title.text=furnitureSection.sectionName;
     view.tag = indexPath.section;
     
-    //添加点击事件
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTap:)];
-    [view addGestureRecognizer:tap];
+    //该区域必定注册了电器
+    UITapGestureRecognizer *tap;
+    if (furnitureSection.furnitureArray.count > 6)
+    {
+        //添加点击事件
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTap:)];
+        
+    }
+    else
+    {
+        int count = 0;
+        for (JYFurniture *furniture in furnitureSection.furnitureArray)
+        {
+            if (furniture.registed)
+                count++;
+        }
+        
+        if (count > 0)
+        {
+            //添加点击事件
+            tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTap:)];
+        }
+        else
+        {
+            tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerWarningTap:)];
+        }
+    }
     
+    [view addGestureRecognizer:tap];
     return view;
+}
+
+- (void)headerWarningTap:(UITapGestureRecognizer *)gr
+{
+    [MBProgressHUD showError:@"请先注册电器!"];
 }
 
 - (void)headerTap:(UITapGestureRecognizer *)gr
