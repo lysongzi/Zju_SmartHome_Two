@@ -405,6 +405,7 @@
   {
     //第一次安装;
     //因为第一次安装，所以应该是直接从服务器下载头像并保存在本地
+    
     [self.leftBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
     [defaults setValue:@"installed" forKey:@"isFirstInstall"];
     

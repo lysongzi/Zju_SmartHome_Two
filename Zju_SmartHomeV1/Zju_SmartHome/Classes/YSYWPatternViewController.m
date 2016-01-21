@@ -12,6 +12,7 @@
 #import "JYPattern.h"
 #import "DLLampControllYWModeViewController.h"
 #import "HttpRequest.h"
+#import "MBProgressHUD+MJ.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -458,6 +459,12 @@
 //弹出选择更换背景图
 - (void)changeBkg:(UIGestureRecognizer *)gr
 {
+    if (self.selectedIndex < DEFAULT_CELL_NUMBER) {
+        //默认模式不允许修改背景图
+        [MBProgressHUD showError:@"默认模式不允许修改背景图"];
+        return;
+    }
+    
     if ([self.imagePickerPopover isPopoverVisible]) {
         [self.imagePickerPopover dismissPopoverAnimated:YES];
         self.imagePickerPopover = nil;
