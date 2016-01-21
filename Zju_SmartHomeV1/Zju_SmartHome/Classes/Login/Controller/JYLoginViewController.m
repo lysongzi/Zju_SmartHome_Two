@@ -21,7 +21,7 @@
 #import "DLLeftSlideMenuViewController.h"
 #import "AppDelegate.h"
 #import "Reachability.h"
-#import "STResetPwdController.h"
+//#import "STResetPwdController.h"
 
 
 @interface JYLoginViewController ()<LoginXibDelegate,UITextFieldDelegate>
@@ -163,8 +163,8 @@
 
 //代理忘记密码方法
 - (void)forgetPasswordGO{
-  //RegViewController* reg = [[RegViewController alloc] init];
-    STResetPwdController *reg=[[STResetPwdController alloc]init];
+  RegViewController* reg = [[RegViewController alloc] init];
+//    STResetPwdController *reg=[[STResetPwdController alloc]init];
   [self presentViewController:reg animated:YES completion:^{
     
   }];

@@ -19,10 +19,11 @@
 @interface STResetPwdView : UIView
 
 +(instancetype)resetPwdView;
+//用户名
+@property (weak, nonatomic) IBOutlet UITextField *userName;
 
 //密码
 @property (weak, nonatomic) IBOutlet UITextField *password;
-@property (weak, nonatomic) IBOutlet UIButton *eyePicture;
 
 @property(nonatomic,weak)id<STResetPwdViewDelegate>delegate;
 @end

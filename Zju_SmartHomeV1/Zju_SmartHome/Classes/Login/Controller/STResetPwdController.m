@@ -10,7 +10,7 @@
 #import "STResetPwdView.h"
 #import "VerifyViewController.h"
 
-@interface STResetPwdController ()<UITextFieldDelegate,STResetPwdViewDelegate>
+@interface STResetPwdController ()<STResetPwdViewDelegate>
 @property(nonatomic,strong)STResetPwdView *resetPwdView;
 @end
 
@@ -46,20 +46,9 @@
     resetPwdView.frame=CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
     self.resetPwdView=resetPwdView;
     resetPwdView.delegate=self;
-    resetPwdView.password.delegate=self;
     [self.view addSubview:resetPwdView];
 }
 
-//UITextField监听事件
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if([textField.placeholder isEqualToString:@"请输入密码"])
-    {
-        self.resetPwdView.eyePicture.hidden=NO;
-        textField.secureTextEntry=YES;
-        [self.resetPwdView.eyePicture setImage:[UIImage imageNamed:@"login_icon_unBrowse"] forState:UIControlStateNormal];
-    }
-}
 -(void)clickLeftButton
 {
     [self dismissViewControllerAnimated:YES completion:^{
@@ -67,41 +56,6 @@
     }];
 }
 
--(void)setNavigationBar
-{
-    self.navigationController.navigationBar.hidden=NO;
-    
-    UIButton *leftButton=[[UIButton alloc]init];
-    [leftButton setImage:[UIImage imageNamed:@"ct_icon_leftbutton"] forState:UIControlStateNormal];
-    leftButton.frame=CGRectMake(0, 0, 25, 25);
-    [leftButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
-    [leftButton addTarget:self action:@selector(leftBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    UILabel *titleView=[[UILabel alloc]init];
-    [titleView setText:@"重置密码"];
-    titleView.frame=CGRectMake(0, 0, 100, 16);
-    titleView.font=[UIFont systemFontOfSize:16];
-    [titleView setTextColor:[UIColor whiteColor]];
-    titleView.textAlignment=NSTextAlignmentCenter;
-    self.navigationItem.titleView=titleView;
-    
-}
-
-- (void)leftBtnClicked{
-    
-    for (UIViewController *controller in self.navigationController.viewControllers)
-    {
-        
-        if ([controller isKindOfClass:[VerifyViewController class]])
-        {
-            [self.navigationController popToViewController:controller animated:YES];
-            
-        }
-        
-    }
-}
 #pragma mark-STResetPwdViewDelegate
 -(void)resetPwdGoGoGo
 {
