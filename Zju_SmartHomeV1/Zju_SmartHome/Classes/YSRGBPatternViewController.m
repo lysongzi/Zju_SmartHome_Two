@@ -312,6 +312,7 @@
                          {
                              //做加载图片
                              NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
+                             
                              SDWebImageManager *manager = [SDWebImageManager sharedManager];
                              NSString *imageStr=[NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg",pattern.bkgName];
                              NSURL *imageUrl=[NSURL URLWithString:imageStr];
@@ -326,7 +327,7 @@
                                                      if (image)
                                                      {
                                                          // do something with image
-                                                         NSLog(@"hhhhh");
+                                                         //NSLog(@"hhhhh");
                                                          NSData *data = UIImageJPEGRepresentation(image, 1.0);
                                                          NSString *path = [[LYSImageStore sharedStore] imagePathForKey:pattern.bkgName];
                                                          NSLog(@"%@",path);

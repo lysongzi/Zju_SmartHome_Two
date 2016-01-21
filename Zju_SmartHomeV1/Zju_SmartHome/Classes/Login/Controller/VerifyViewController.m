@@ -18,6 +18,8 @@
 #import <SMS_SDK/SMSSDKAddressBook.h>
 #import <SMS_SDK/SMSSDK+DeprecatedMethods.h>
 
+#import "STResetPwdController.h"
+
 @interface VerifyViewController ()
 {
     NSString* _phone;
@@ -106,6 +108,11 @@ static NSMutableArray* _userData2;
 //                [alert show];
 //                _alert3 = alert;
                 //!!!:如果来到这里说明用户输入的验证码经系统进行核对后已经验证成功了,可以在这里插入成功之后的应该做的事情的代码
+                STResetPwdController *resetPwdVc=[[STResetPwdController alloc]init];
+                [self presentViewController:resetPwdVc animated:YES completion:^{
+                    
+                }];
+                
             }
             else
             {
