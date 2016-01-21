@@ -18,6 +18,7 @@
 #import "HttpRequest.h"
 #import "JYPatternBackStatus.h"
 #import "AppDelegate.h"
+#import "SDWebImageManager.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 7
@@ -307,6 +308,38 @@
                      else
                      {
                          pattern.logoName=@"zidingyi_icon";
+                         if(![pattern.bkgName isEqualToString:@"rouhe_bg"])
+                         {
+                             //做加载图片
+                             NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
+                             SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                             NSString *imageStr=[NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg",pattern.bkgName];
+                             NSURL *imageUrl=[NSURL URLWithString:imageStr];
+                    
+                             [manager downloadImageWithURL:imageUrl
+                                                   options:0
+                                                  progress:^(NSInteger receivedSize, NSInteger expectedSize)
+                                                  {
+                                                      // progression tracking code
+                                                  }
+                                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                     if (image)
+                                                     {
+                                                         // do something with image
+                                                         NSLog(@"hhhhh");
+                                                         NSData *data = UIImageJPEGRepresentation(image, 1.0);
+                                                         NSString *path = [[LYSImageStore sharedStore] imagePathForKey:pattern.bkgName];
+                                                         NSLog(@"%@",path);
+                                                         [data writeToFile:path atomically:YES];
+                                                     }
+                                                     else
+                                                     {
+                                                         NSLog(@"这里没收到图片.");
+                                                     }
+                                                 }];
+                         }
+                         
+                         
                      }
                  }
                  for(int i=0;i<self.patterns.count;i++)
@@ -398,6 +431,36 @@
                      else
                      {
                          pattern.logoName=@"zidingyi_icon";
+                         if(![pattern.bkgName isEqualToString:@"rouhe_bg"])
+                         {
+                             //做加载图片
+                             NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
+                             SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                             NSString *imageStr=[NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg",pattern.bkgName];
+                             NSURL *imageUrl=[NSURL URLWithString:imageStr];
+                             
+                             [manager downloadImageWithURL:imageUrl
+                                                   options:0
+                                                  progress:^(NSInteger receivedSize, NSInteger expectedSize)
+                              {
+                                  // progression tracking code
+                              }
+                                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                     if (image)
+                                                     {
+                                                         // do something with image
+                                                         NSLog(@"hhhhh");
+                                                         NSData *data = UIImageJPEGRepresentation(image, 1.0);
+                                                         NSString *path = [[LYSImageStore sharedStore] imagePathForKey:pattern.bkgName];
+                                                         NSLog(@"%@",path);
+                                                         [data writeToFile:path atomically:YES];
+                                                     }
+                                                     else
+                                                     {
+                                                         NSLog(@"这里没收到图片.");
+                                                     }
+                                                 }];
+                         }
                      }
                  }
                  for(int i=0;i<self.patterns.count;i++)
@@ -836,15 +899,7 @@
     
     params[@"is_app"]=@"1";
     params[@"sceneconfig.scene_name"]=pattern.name;
-    if([self.room_name isEqualToString:@"-1"])
-    {
-        params[@"sceneconfig.tag"]=@"0";
-    }
-    else
-    {
-        params[@"sceneconfig.tag"]=@"1";
-    }
-    
+    params[@"sceneconfig.tag"]=@"0";
     params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
     params[@"sceneconfig.image_name"]=imageName;
     
@@ -864,17 +919,16 @@
         success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         NSLog(@"Success: %@ %@", responseObject,responseObject[@"msg"]);
+        //更新图片到sqlite
+        [self.jynewSqlite updateRecordByLogicID:self.logic_id andByName:pattern.name withNewBKG:imageName inTable:self.tableName];
+        //这里显示图片
+        [self updateCellBackground:(int)self.selectedIndex];
+        
     }
           failure:^(AFHTTPRequestOperation *operation, NSError *error)
     {
         NSLog(@"Error: %@", error);
     }];
-    
-    
-//    //更新图片到sqlite
-//    [self.jynewSqlite updateRecordByLogicID:self.logic_id andByName:pattern.name withNewBKG:imageName inTable:self.tableName];
-//    //这里显示图片
-//    [self updateCellBackground:(int)self.selectedIndex];
 }
 
 //点击播放音乐的响应事件
@@ -1194,7 +1248,7 @@
     //如果是添加模式按钮则不修改图片
     if (index != self.patterns.count - 1)
     {
-        //为默认模式，家在默认图片
+        //为默认模式，加载默认图片
         if (self.selectedIndex < DEFAULT_CELL_NUMBER)
         {
             self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
@@ -1204,13 +1258,14 @@
         {
             JYPattern * selectedPattern = self.patterns[self.selectedIndex];
             UIImage *image = [[LYSImageStore sharedStore] imageForKey:selectedPattern.bkgName];
-            
             if (!image)
             {
+                //这里加载的是自定义默认图片
                 self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
             }
             else
             {
+                //这里加载的是修改过的图片
                 self.bkgImageView.image = image;
             }
         }
