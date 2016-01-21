@@ -9,6 +9,7 @@
 #import "JYSceneSqlite.h"
 #import "sqlite3.h"
 #import "YSScene.h"
+#import "JYSceneOnly.h"
 
 
 @interface JYSceneSqlite()
@@ -209,6 +210,26 @@
             char *param33 =(char *)sqlite3_column_text(statement, 5);
             NSString *param3=[[NSString alloc]initWithUTF8String:param33];
             
+            
+            JYSceneOnly *jysceneOnly=[[JYSceneOnly alloc]init];
+            jysceneOnly.area=area;
+            jysceneOnly.name=scene;
+            jysceneOnly.bkgName=bkgName;
+            
+            int i=0;
+            for(i=0;i<self.scenesOnly.count;i++)
+            {
+                JYSceneOnly *jysceneOnly=self.scenesOnly[i];
+                if ([jysceneOnly.name isEqualToString:scene])
+                {
+                    break;
+                }
+            }
+            if(i>=self.scenesOnly.count)
+            {
+                [self.scenesOnly addObject:jysceneOnly];
+                
+            }
             
             YSScene *ysScene=[[YSScene alloc]init];
             ysScene.area=area;

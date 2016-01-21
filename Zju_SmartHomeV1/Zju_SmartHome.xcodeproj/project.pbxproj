@@ -55,6 +55,7 @@
 		61BE5C7D1C3F88BE00A7FEF3 /* JYPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE5C7C1C3F88BE00A7FEF3 /* JYPattern.m */; };
 		61BE5C801C3FE6DB00A7FEF3 /* JYSceneSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE5C7F1C3FE6DB00A7FEF3 /* JYSceneSqlite.m */; };
 		61BE5C831C3FEA1A00A7FEF3 /* JYSceneFurniture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE5C821C3FEA1A00A7FEF3 /* JYSceneFurniture.m */; };
+		61C7B5491C50A40A00098CCF /* JYSceneOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7B5481C50A40A00098CCF /* JYSceneOnly.m */; };
 		61CD73761C4F63B7007B719F /* STResetPwdView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CD73741C4F63B7007B719F /* STResetPwdView.m */; };
 		61CD73771C4F63B7007B719F /* STResetPwdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CD73751C4F63B7007B719F /* STResetPwdView.xib */; };
 		61CD737B1C4F63FE007B719F /* STResetPwdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CD737A1C4F63FE007B719F /* STResetPwdController.m */; };
@@ -249,6 +250,8 @@
 		61BE5C7F1C3FE6DB00A7FEF3 /* JYSceneSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSceneSqlite.m; sourceTree = "<group>"; };
 		61BE5C811C3FEA1A00A7FEF3 /* JYSceneFurniture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSceneFurniture.h; sourceTree = "<group>"; };
 		61BE5C821C3FEA1A00A7FEF3 /* JYSceneFurniture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSceneFurniture.m; sourceTree = "<group>"; };
+		61C7B5471C50A40A00098CCF /* JYSceneOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSceneOnly.h; sourceTree = "<group>"; };
+		61C7B5481C50A40A00098CCF /* JYSceneOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSceneOnly.m; sourceTree = "<group>"; };
 		61CD73731C4F639F007B719F /* STResetPwdView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STResetPwdView.h; sourceTree = "<group>"; };
 		61CD73741C4F63B7007B719F /* STResetPwdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STResetPwdView.m; sourceTree = "<group>"; };
 		61CD73751C4F63B7007B719F /* STResetPwdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STResetPwdView.xib; sourceTree = "<group>"; };
@@ -740,6 +743,8 @@
 			children = (
 				9D1B1BA71C3CFD6B0048B8A3 /* YSScene.h */,
 				9D1B1BA81C3CFD6B0048B8A3 /* YSScene.m */,
+				61C7B5471C50A40A00098CCF /* JYSceneOnly.h */,
+				61C7B5481C50A40A00098CCF /* JYSceneOnly.m */,
 				61BE5C811C3FEA1A00A7FEF3 /* JYSceneFurniture.h */,
 				61BE5C821C3FEA1A00A7FEF3 /* JYSceneFurniture.m */,
 				6178295F1C40E4930063EAB9 /* JYFurnitureParam.h */,
@@ -1440,6 +1445,7 @@
 				617829611C40E4930063EAB9 /* JYFurnitureParam.m in Sources */,
 				446AF31F1C0025330081C798 /* SMS_HYZBadgeView.m in Sources */,
 				61BE5C801C3FE6DB00A7FEF3 /* JYSceneSqlite.m in Sources */,
+				61C7B5491C50A40A00098CCF /* JYSceneOnly.m in Sources */,
 				61726E631C33B08D000BF2C6 /* STHomeView.m in Sources */,
 				9D1CB9D81C0B0F8600725A63 /* LogicIdXMLParser.m in Sources */,
 				61CD737B1C4F63FE007B719F /* STResetPwdController.m in Sources */,

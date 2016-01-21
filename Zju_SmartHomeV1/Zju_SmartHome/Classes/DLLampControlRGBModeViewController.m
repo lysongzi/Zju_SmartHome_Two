@@ -644,7 +644,7 @@
 
 -(void)saveNewScene:(NSString *)sceneName
 {
-    self.navigationController.navigationBar.hidden=NO;
+    //self.navigationController.navigationBar.hidden=NO;
     self.navigationItem.rightBarButtonItem.enabled=YES;
     NSLog(@"－－－－%@",sceneName);
     
@@ -671,6 +671,7 @@
     [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+         self.navigationController.navigationBar.hidden=NO;
          if([responseObject[@"code"] isEqualToString:@"0"])
          {
              JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
@@ -698,7 +699,7 @@
          
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         [MBProgressHUD showError:@"增加模式失败"];
+         [MBProgressHUD showError:@"增加模式失败,请检查服务器"];
      }];
 }
 
