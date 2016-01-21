@@ -759,8 +759,8 @@
 			isa = PBXGroup;
 			children = (
 				9DE0C3071C48E39700250D0F /* YSNewSceneView.xib */,
-				9DE0C3081C48E39700250D0F /* YSNewSceneView.m */,
 				9DE0C3091C48E39700250D0F /* YSNewSceneView.h */,
+				9DE0C3081C48E39700250D0F /* YSNewSceneView.m */,
 				9DE0C30C1C48E3AD00250D0F /* STNewSceneCell.h */,
 				9DE0C30D1C48E3AD00250D0F /* STNewSceneCell.m */,
 				9DE0C30E1C48E3AD00250D0F /* STNewSceneCell.xib */,

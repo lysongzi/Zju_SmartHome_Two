@@ -17,8 +17,11 @@
 #import "YSSceneBackStatus.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD+MJ.h"
+#import "STNewSceneCell.h"
+#import "STNewSceneView.h"
 
-@interface STNewSceneController ()<UITableViewDataSource,UITableViewDelegate>
+@interface STNewSceneController ()<UITableViewDataSource,UITableViewDelegate
+>
 
 @property(nonatomic,strong)YSNewSceneView *xinSceneView;
 @property(nonatomic,strong)NSArray *iconArray;
@@ -64,6 +67,8 @@
     //tableView的代理
     newSceneView.devicesTableView.delegate=self;
     newSceneView.devicesTableView.dataSource=self;
+    
+    
     self.xinSceneView=newSceneView;
     [self.view addSubview:newSceneView];
     
@@ -87,7 +92,8 @@
     
     //获取电器
     JYFurniture *furniture = self.furnitures[indexPath.row];
-    
+    furniture.isNeeded=(int)deviceCell.isNeed.tag;
+
     if (deviceCell==nil)
     {
         deviceCell = [STNewSceneCell initWithNewSceneCell];
@@ -105,13 +111,66 @@
         {
             [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_ac"]];
         }
-     
+        
         deviceCell.deviceName.text = furniture.descLabel;
         UIColor *color=[[UIColor alloc]initWithRed:(0/255.0f) green:(0/255.0f) blue:(0/255.0f) alpha:1.0];
         deviceCell.selectedBackgroundView=[[UIView alloc]initWithFrame:deviceCell.frame];
         deviceCell.selectedBackgroundView.backgroundColor=color;
+        
+        [deviceCell.isNeed addTarget:self action:@selector(switchBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
     return deviceCell;
+}
+-(void)switchBtn:(id)sender
+{
+    UIButton *button=sender;
+    
+   
+    
+    if(button.tag==0)
+    {
+        button.tag=-1;
+        [button setBackgroundImage:[UIImage imageNamed:@"changjing_edit_btn_equipment_notadded"] forState:UIControlStateNormal];
+    }
+    else if(button.tag==-1)
+    {
+        button.tag=0;
+        [button setBackgroundImage:[UIImage imageNamed:@"changjing_edit_btn_equipment_added"] forState:UIControlStateNormal];
+    }
+    
+    UIView *v = [sender superview];//获取父类view
+    STNewSceneCell *cell = (STNewSceneCell *)[v superview];//获取cell
+    NSIndexPath *indexpath = [self.xinSceneView.devicesTableView indexPathForCell:cell];//获取cell对应的indexpath;
+    //NSLog(@"看看点击的是哪行：%ld",indexpath.row);
+    JYFurniture *furniture=self.furnitures[indexpath.row];
+    furniture.isNeeded=(int)button.tag;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    JYFurniture *furniture=self.furnitures[indexPath.row];
+    if(furniture.isNeeded==-1)
+    {
+        NSLog(@"说明此灯没选中");
+    }
+    else if(furniture.isNeeded==0)
+    {
+        //说明是RGB灯
+        if([furniture.deviceType isEqualToString:@"40"])
+        {
+            NSLog(@"跳转到RGB自定义颜色界面");
+        }
+        //说明是YW灯
+        else if([furniture.deviceType isEqualToString:@"41"])
+        {
+            NSLog(@"跳转到YW灯自定义颜色界面");
+        }
+        //说明是其他
+        else
+        {
+            
+        }
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,6 +188,11 @@
     sceneName = self.xinSceneView.xinSceneName.text;
     NSLog(@"看看区域和新建场景名称:%@ %@",self.sectionName,sceneName);
     
+    for(int i=0;i<self.furnitures.count;i++)
+    {
+        JYFurniture *furniture=self.furnitures[i];
+        NSLog(@"jjj %d",furniture.isNeeded);
+    }
     
     
     

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol YSNewSceneViewDelegate <NSObject>
-
-@optional
--(void)getNewSceneName:(NSString *)xinSceneName;
-
-@end
+//@protocol YSNewSceneViewDelegate <NSObject>
+//
+//@optional
+//-(void)getNewSceneName:(NSString *)xinSceneName;
+//
+//@end
 
 @interface YSNewSceneView : UIView
 @property (weak, nonatomic) IBOutlet UIImageView *sceneIcon;
@@ -24,6 +24,6 @@
 
 +(instancetype)initWithNewSceneView;
 
-@property(nonatomic,weak)id<YSNewSceneViewDelegate> delegate;
+//@property(nonatomic,weak)id<YSNewSceneViewDelegate> delegate;
 
 @end

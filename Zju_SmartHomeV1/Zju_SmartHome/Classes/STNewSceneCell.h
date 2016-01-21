@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface STNewSceneCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *cellView;
 @property (weak, nonatomic) IBOutlet UILabel *deviceName;
@@ -17,8 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *up_down;
 
 @property (weak, nonatomic) IBOutlet UIButton *isNeed;
-
-- (IBAction)switchBtn:(id)sender;
 
 +(instancetype)initWithNewSceneCell;
 @end

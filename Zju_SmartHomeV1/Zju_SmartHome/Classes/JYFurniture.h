@@ -26,5 +26,6 @@
 //点击后进入的controller
 @property(nonatomic,strong)UIViewController *controller;
 
-
+//只在场景中需要使用该属性
+@property(nonatomic,assign)int isNeeded;
 @end

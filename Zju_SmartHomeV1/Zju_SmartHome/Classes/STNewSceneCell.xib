@@ -41,14 +41,11 @@
                         </subviews>
                         <animations/>
                     </view>
-                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Cmm-T1-rqw" userLabel="switch">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Cmm-T1-rqw" userLabel="switch">
                         <rect key="frame" x="269" y="10" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <state key="normal" backgroundImage="changjing_edit_btn_equipment_added"/>
-                        <connections>
-                            <action selector="switchBtn:" destination="fJB-qK-NIn" eventType="touchUpInside" id="6Mc-of-WEJ"/>
-                        </connections>
                     </button>
                 </subviews>
                 <animations/>
