@@ -243,7 +243,6 @@
         params[@"is_app"] = @"1";
         params[@"sceneconfig.tag"]=@"1";
         params[@"sceneconfig.room_name"] = self.sectionName;
-        //params[@"sceneconfig.equipment_logicid"] = self.logic_id;
         
         //4.发送请求
         [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -266,6 +265,14 @@
              
              [self.jySceneSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
              self.scenes = self.jySceneSqlite.patterns;
+             
+             NSLog(@"********************************************");
+//             for (int i=0; i<self.scenes.count; i++)
+//             {
+//                 <#statements#>
+//             }
+//             
+             NSLog(@"********************************************");
              
              //最后一个自定义按钮
              YSScene *scene = [[YSScene alloc] init];

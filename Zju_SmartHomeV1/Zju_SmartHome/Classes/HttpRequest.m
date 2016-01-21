@@ -92,7 +92,7 @@
         
         //NSString *url  = [[NSString alloc] initWithFormat:@"http://%@/phone/background_music.php",app.globalInternalIP];
         
-        [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/background_music.php"
+        [manager POST:@"http://%@/phone/background_music.php"
            parameters:parameters
               success:success
               failure:failure];
@@ -101,7 +101,7 @@
         //外网；
         //默认使用外网；
         //http://test.ngrok.joyingtec.com:8000/phone/background_music.php
-        [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/background_music.php"
+        [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/background_music.php"
            parameters:parameters
               success:success
               failure:failure];
