@@ -158,10 +158,8 @@
   self.leftBtn.frame=CGRectMake(0, 0, 35, 35);
   [self.leftBtn.layer setCornerRadius:CGRectGetHeight([self.leftBtn bounds]) / 2];
   self.leftBtn.layer.masksToBounds = true;
-    self.leftBtn.layer.borderWidth=1;
-    self.leftBtn.layer.borderColor=[[UIColor whiteColor]CGColor];
-  
-  
+  self.leftBtn.layer.borderWidth=1;
+  self.leftBtn.layer.borderColor=[[UIColor whiteColor]CGColor];
   
   
   //  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -393,7 +391,8 @@
 }
 
 #pragma mark - 系统事件回调
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated
+{
   
   [super viewDidAppear:animated];
   
@@ -404,15 +403,16 @@
   //重新设置头像；
   if (isFirstInstall  == nil || isSettedPhoto == nil)
   {
-    //第一次安装；
+    //第一次安装;
+    //因为第一次安装，所以应该是直接从服务器下载头像并保存在本地
     [self.leftBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
     [defaults setValue:@"installed" forKey:@"isFirstInstall"];
     
   }
   else
   {
-    
-    //已经安装；
+    //已经安装;
+    //因为已经安装过，所以可以直接从本地读取图片
     [self.leftBtn setBackgroundImage:[[CYFImageStore sharedStore] imageForKey:@"CYFStore"] forState:UIControlStateNormal];
   }
 }

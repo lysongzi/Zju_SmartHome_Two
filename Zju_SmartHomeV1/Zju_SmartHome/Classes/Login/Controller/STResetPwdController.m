@@ -9,6 +9,7 @@
 #import "STResetPwdController.h"
 #import "STResetPwdView.h"
 #import "VerifyViewController.h"
+#import "JYLoginViewController.h"
 
 @interface STResetPwdController ()<STResetPwdViewDelegate>
 @property(nonatomic,strong)STResetPwdView *resetPwdView;
@@ -57,8 +58,9 @@
 }
 
 #pragma mark-STResetPwdViewDelegate
--(void)resetPwdGoGoGo
+-(void)resetPwdWithUserName:(NSString *)userName andPwd:(NSString *)xinPwd
 {
-    NSLog(@"密码重置了");
+    NSLog(@"--%@--%@",userName,xinPwd);
+    self.view.window.rootViewController=[[JYLoginViewController alloc]init];
 }
 @end

@@ -35,9 +35,9 @@
 - (IBAction)resetPwdGo:(id)sender
 {
     [self.resetPwdBtn setBackgroundImage:[UIImage imageNamed:@"btn_login_pressed"] forState:UIControlStateHighlighted];
-    if([self.delegate respondsToSelector:@selector(resetPwdGoGoGo)])
+    if([self.delegate respondsToSelector:@selector(resetPwdWithUserName:andPwd:)])
     {
-        [self.delegate resetPwdGoGoGo];
+        [self.delegate resetPwdWithUserName:self.userName.text andPwd:self.password.text];
     }
     [self.password resignFirstResponder];
 }

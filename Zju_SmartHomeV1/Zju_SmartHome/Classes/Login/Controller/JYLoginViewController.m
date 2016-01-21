@@ -97,6 +97,7 @@
 
     {
         NSLog(@"%@",responseObject);
+        
         //请求成功
         JYLoginStatus *status=[JYLoginStatus statusWithDict:responseObject];
         
@@ -105,6 +106,7 @@
         appDelegate.username=data.account;
         appDelegate.email=data.email;
         appDelegate.user_id=data.ID;
+        appDelegate.avator=data.avatar;
         
         
         //5.存储模型数据

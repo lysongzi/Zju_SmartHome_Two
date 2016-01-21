@@ -92,6 +92,7 @@
     if (indexPath.row==0)
     {
         NSLog(@"修改头像");
+        //从图库或者拍照取照片
     }
     else if (indexPath.row==1)
     {

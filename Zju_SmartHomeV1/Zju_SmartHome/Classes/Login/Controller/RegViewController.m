@@ -226,7 +226,7 @@
 //    [nextBtn setBackgroundImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
     [nextBtn setBackgroundColor:[UIColor colorWithRed:(202/255.0) green:(0/255.0) blue:(73/255.0) alpha:1.000]];
     nextBtn.frame = CGRectMake(10, 220 + statusBarHeight, self.view.frame.size.width - 20, 42);
-    [nextBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [nextBtn addTarget:self action:@selector(nextStep) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBtn];
     

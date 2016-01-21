@@ -12,7 +12,7 @@
 
 @optional
 // 重置密码
--(void)resetPwdGoGoGo;
+-(void)resetPwdWithUserName:(NSString *)userName andPwd:(NSString *)xinPwd;
 
 @end
 

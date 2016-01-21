@@ -84,7 +84,7 @@
     //存储某区域某场景下电器的表
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     self.tableName=[NSString stringWithFormat:@"sceneTable%@",appDelegate.user_id];
-    NSLog(@"看看表明%@",self.tableName);
+    NSLog(@"看看表名%@",self.tableName);
     NSLog(@"看看区域名称传过来没%@",self.sectionName);
     
     //查看当前区域下有哪些电器
@@ -241,6 +241,7 @@
         //3.封装请求参数
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         params[@"is_app"] = @"1";
+        params[@"sceneconfig.tag"]=@"1";
         params[@"sceneconfig.room_name"] = self.sectionName;
         //params[@"sceneconfig.equipment_logicid"] = self.logic_id;
         
@@ -274,21 +275,29 @@
              for(int i = 0; i < self.scenes.count; i++)
              {
                  YSScene *scene = self.scenes[i];
-                 if([scene.name isEqualToString:@"柔和"])
+                 if([scene.name isEqualToString:@"观影"])
                  {
-                     scene.logoName=@"rouhe_icon";
+                     scene.logoName=@"guanying_icon";
                  }
-                 else if([scene.name isEqualToString:@"舒适"])
+                 else if([scene.name isEqualToString:@"会客"])
                  {
-                     scene.logoName=@"shushi_icon";
+                     scene.logoName=@"huike_icon";
                  }
-                 else if([scene.name isEqualToString:@"明亮"])
+                 else if([scene.name isEqualToString:@"浪漫"])
                  {
-                     scene.logoName=@"mingliang_icon";
+                     scene.logoName=@"langman_icon";
                  }
-                 else if([scene.name isEqualToString:@"跳跃"])
+                 else if([scene.name isEqualToString:@"睡眠"])
                  {
-                     scene.logoName=@"tiaoyue_icon";
+                     scene.logoName=@"shuimian_icon";
+                 }
+                 else if([scene.name isEqualToString:@"晚餐"])
+                 {
+                     scene.logoName=@"wancan_icon";
+                 }
+                 else if([scene.name isEqualToString:@"阅读"])
+                 {
+                     scene.logoName=@"yuedu_icon";
                  }
                  else if([scene.name isEqualToString:@"自定义"])
                  {
@@ -332,21 +341,29 @@
         for(int i = 0; i < self.scenes.count; i++)
         {
             YSScene *scene = self.scenes[i];
-            if([scene.name isEqualToString:@"柔和"])
+            if([scene.name isEqualToString:@"观影"])
             {
-                scene.logoName=@"rouhe_icon";
+                scene.logoName=@"guanying_icon";
             }
-            else if([scene.name isEqualToString:@"舒适"])
+            else if([scene.name isEqualToString:@"会客"])
             {
-                scene.logoName=@"shushi_icon";
+                scene.logoName=@"huike_icon";
             }
-            else if([scene.name isEqualToString:@"明亮"])
+            else if([scene.name isEqualToString:@"浪漫"])
             {
-                scene.logoName=@"mingliang_icon";
+                scene.logoName=@"langman_icon";
             }
-            else if([scene.name isEqualToString:@"跳跃"])
+            else if([scene.name isEqualToString:@"睡眠"])
             {
-                scene.logoName=@"tiaoyue_icon";
+                scene.logoName=@"shuimian_icon";
+            }
+            else if([scene.name isEqualToString:@"晚餐"])
+            {
+                scene.logoName=@"wancan_icon";
+            }
+            else if([scene.name isEqualToString:@"阅读"])
+            {
+                scene.logoName=@"yuedu_icon";
             }
             else if([scene.name isEqualToString:@"自定义"])
             {

@@ -33,6 +33,8 @@
 @property(nonatomic,copy)NSString *email;
 //用户id
 @property(nonatomic,copy)NSString *user_id;
+//用户头像
+@property(nonatomic,copy)NSString *avator;
 
 @end
 
