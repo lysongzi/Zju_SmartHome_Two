@@ -140,6 +140,7 @@
 		9DE6E1231C2790660035E8DC /* JYOtherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DE6E1211C2790660035E8DC /* JYOtherViewController.xib */; };
 		9DEEFDA21C3773E900C33305 /* YSYWPatternViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DEEFDA01C3773E900C33305 /* YSYWPatternViewController.m */; };
 		9DEEFDA31C3773E900C33305 /* YSYWPatternViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DEEFDA11C3773E900C33305 /* YSYWPatternViewController.xib */; };
+		9DFC845C1C50D011002D993F /* YSChangeUserPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFC845B1C50D011002D993F /* YSChangeUserPhotoViewController.m */; };
 		9DFCF3971C05A208004F7124 /* JYFurnitureSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFCF3961C05A208004F7124 /* JYFurnitureSection.m */; };
 		9DFF735E1C07E4B00061EFBF /* JYFurnitureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFF735D1C07E4B00061EFBF /* JYFurnitureView.m */; };
 		9DFF73601C07E4C80061EFBF /* JYFurnitureViewXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DFF735F1C07E4C80061EFBF /* JYFurnitureViewXib.xib */; };
@@ -395,6 +396,8 @@
 		9DEEFD9F1C3773E900C33305 /* YSYWPatternViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSYWPatternViewController.h; sourceTree = "<group>"; };
 		9DEEFDA01C3773E900C33305 /* YSYWPatternViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSYWPatternViewController.m; sourceTree = "<group>"; };
 		9DEEFDA11C3773E900C33305 /* YSYWPatternViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSYWPatternViewController.xib; sourceTree = "<group>"; };
+		9DFC845A1C50D011002D993F /* YSChangeUserPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSChangeUserPhotoViewController.h; sourceTree = "<group>"; };
+		9DFC845B1C50D011002D993F /* YSChangeUserPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSChangeUserPhotoViewController.m; sourceTree = "<group>"; };
 		9DFCF3951C05A208004F7124 /* JYFurnitureSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYFurnitureSection.h; sourceTree = "<group>"; };
 		9DFCF3961C05A208004F7124 /* JYFurnitureSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYFurnitureSection.m; sourceTree = "<group>"; };
 		9DFF735C1C07E4B00061EFBF /* JYFurnitureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYFurnitureView.h; sourceTree = "<group>"; };
@@ -1090,6 +1093,8 @@
 				617CCF561C39FE1100B08CFB /* JYChangePatternBGController.h */,
 				617CCF571C39FE1100B08CFB /* JYChangePatternBGController.m */,
 				617CCF581C39FE1100B08CFB /* JYChangePatternBGController.xib */,
+				9DFC845A1C50D011002D993F /* YSChangeUserPhotoViewController.h */,
+				9DFC845B1C50D011002D993F /* YSChangeUserPhotoViewController.m */,
 			);
 			name = Photo;
 			sourceTree = "<group>";
@@ -1430,6 +1435,7 @@
 				9D4F31BF1C3693C10096B3FD /* UIImage+ST.m in Sources */,
 				442E7EB41C07402300E3C84C /* RESideMenu.m in Sources */,
 				9DFF73781C0932F80061EFBF /* JYFurnitureBack.m in Sources */,
+				9DFC845C1C50D011002D993F /* YSChangeUserPhotoViewController.m in Sources */,
 				9DE0C3031C48E2C600250D0F /* YSSceneBackStatus.m in Sources */,
 				9DBE55631C1EAFE800A91E6D /* PhotoViewController.m in Sources */,
 				6176B08F1C43A2A300981252 /* JYPatternBackStatus.m in Sources */,

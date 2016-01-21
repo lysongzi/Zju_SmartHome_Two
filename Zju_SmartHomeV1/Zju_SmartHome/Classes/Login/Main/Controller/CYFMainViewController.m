@@ -24,6 +24,8 @@
 #import "CYFImageStore.h"
 #import "STUserInfoController.h"
 #import "YSSoftwareViewController.h"
+#import "SDWebImageManager.h"
+#import "LYSImageStore.h"
 
 @interface CYFMainViewController ()<STHomeViewDelegate,CLLocationManagerDelegate,STLeftSliderViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -356,12 +358,10 @@
     }
     else
     {
-      
       CLPlacemark* placemark = placemarks.firstObject;
       
       NSString *city = [[placemark addressDictionary] objectForKey:@"City"];
       NSString *country = [[placemark addressDictionary] objectForKey:@"Country"];
-      
       
       self.homeView.cityLabel.text = [NSString stringWithFormat:@"%@，",city];
       self.homeView.countryLabel.text = country;
@@ -406,15 +406,42 @@
     //第一次安装;
     //因为第一次安装，所以应该是直接从服务器下载头像并保存在本地
     
-    [self.leftBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
+    //[self.leftBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
     [defaults setValue:@"installed" forKey:@"isFirstInstall"];
     
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSString *imageStr = appDelegate.avator;
+    NSURL *imageUrl=[NSURL URLWithString:imageStr];
+    
+    [manager downloadImageWithURL:imageUrl
+                          options:0
+                         progress:^(NSInteger receivedSize, NSInteger expectedSize)
+    {
+           // progression tracking code
+    }
+                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
+    {
+        if (image)
+        {
+            NSLog(@"收到了图片");
+            [self.leftBtn setBackgroundImage:image forState:UIControlStateNormal];
+            NSData *data = UIImageJPEGRepresentation(image, 1.0);
+            NSString *path = [[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"];
+            //NSLog(@"%@",path);
+            [data writeToFile:path atomically:YES];
+        }
+        else
+        {
+            NSLog(@"这里没收到图片.");
+        }
+    }];
   }
   else
   {
     //已经安装;
     //因为已经安装过，所以可以直接从本地读取图片
-    [self.leftBtn setBackgroundImage:[[CYFImageStore sharedStore] imageForKey:@"CYFStore"] forState:UIControlStateNormal];
+    [self.leftBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
   }
 }
 

@@ -23,3 +23,4 @@
 
 @property(nonatomic,weak)id<ChangePatternBGDelegate>delegate;
 @end
+

@@ -108,7 +108,6 @@
         appDelegate.user_id=data.ID;
         appDelegate.avator=data.avatar;
         
-        
         //5.存储模型数据
         //归档
 //        NSString *doc=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject];
