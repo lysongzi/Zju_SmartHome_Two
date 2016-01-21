@@ -92,7 +92,7 @@
         
         //NSString *url  = [[NSString alloc] initWithFormat:@"http://%@/phone/background_music.php",app.globalInternalIP];
         
-        [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/background_music.php"
+        [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/background_music.php"
            parameters:parameters
               success:success
               failure:failure];
@@ -232,7 +232,7 @@
   NSDictionary *params = @{@"test" : str};
   
   //通过外网来获取内网的IP地址；
-  [manager POST:@"http://test.ngrok.joyingtec.com:8000/ip.php"
+  [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/ip.php"
      parameters:params
         success:success
         failure:failure];
@@ -342,7 +342,7 @@
   }else{
     
     //外网；
-    [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/yw_light.php"
+    [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/yw_light.php"
        parameters:parameters
           success:success
           failure:failure];
@@ -386,7 +386,7 @@
           failure:failure];
   }else{
     //外网；
-    [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/yw_light.php"
+    [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/yw_light.php"
        parameters:parameters
           success:success
           failure:failure];
@@ -433,7 +433,7 @@
   }else{
     
     //外网
-    [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/yw_light.php"
+    [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/yw_light.php"
        parameters:parameters
           success:success
           failure:failure];
@@ -479,7 +479,7 @@
   }else{
     
     //外网
-    [manager POST:@"http://test.ngrok.joyingtec.com:8000/phone/color_light.php"
+    [manager POST:@"http://iphone.ngrok.joyingtec.com:8000/phone/color_light.php"
        parameters:parameters
           success:success
           failure:failure];
