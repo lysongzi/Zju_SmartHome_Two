@@ -550,6 +550,11 @@ static BOOL _isPoping;
                     qrCatcherVC.section = self.section;
                     [self.navigationController pushViewController:qrCatcherVC animated:YES];
                 }]];//扫码
+                
+                //取消
+                [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }]];
         
                 //显示注册电器弹出窗口
                 [self presentViewController:alertController animated:true completion:nil];

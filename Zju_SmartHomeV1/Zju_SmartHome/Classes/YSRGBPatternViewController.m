@@ -440,6 +440,7 @@
                              NSLog(@"hahahahahah");
                              //做加载图片
                              NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
+                             
                              SDWebImageManager *manager = [SDWebImageManager sharedManager];
                              NSString *imageStr=[NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg",pattern.bkgName];
                              NSURL *imageUrl=[NSURL URLWithString:imageStr];

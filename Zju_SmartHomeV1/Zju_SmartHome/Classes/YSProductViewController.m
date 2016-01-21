@@ -269,8 +269,12 @@ static BOOL _isPoping;
             qrCatcherVC.tag=1;
             [self.navigationController pushViewController:qrCatcherVC animated:YES];
         }];
-        
         [alertController addAction:actionCode];
+        
+        UIAlertAction *actionCancel=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alertController addAction:actionCancel];
         
         [self presentViewController:alertController animated:true completion:nil];
     }

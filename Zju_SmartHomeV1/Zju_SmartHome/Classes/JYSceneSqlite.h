@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface JYSceneSqlite : NSObject
+//存放场景数组(包括电器参数值)
 @property(nonatomic,strong)NSMutableArray *patterns;
+//单纯存放场谨防数组
+@property(nonatomic,strong)NSMutableArray *scenesOnly;
 
 //区域
 @property(nonatomic,copy)NSString *area;

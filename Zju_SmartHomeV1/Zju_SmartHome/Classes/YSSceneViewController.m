@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "YSSceneBackStatus.h"
 #import "STNewSceneController.h"
+#import "JYSceneOnly.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 6
@@ -44,7 +45,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *musicBkg;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
+//存放场景的数组(包括了灯的参数值)
 @property (strong, nonatomic) NSMutableArray *scenes;
+//单纯存放场景的数组
+@property(nonatomic,strong)NSMutableArray *scenesOnly;
+
 @property (strong, nonatomic) NSMutableArray *cellsView;
 
 @property (assign) NSInteger cellWidth;
@@ -169,9 +175,9 @@
         [self initScrollView];
         
         //定位到新添加的模式
-        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.scenes.count - 2), 0)];
+        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.scenesOnly.count - 2), 0)];
         //设置当前居中为新添加的模式，并更新背景和文字
-        self.selectedIndex = self.scenes.count - 2;
+        self.selectedIndex = self.scenesOnly.count - 2;
         [self updateCellBackground:(int)self.selectedIndex];
         self.tag_Back = 0;
     }
@@ -218,6 +224,7 @@
     //初始化
     JYSceneSqlite *jySceneSqlite = [[JYSceneSqlite alloc]init];
     jySceneSqlite.patterns = [[NSMutableArray alloc]init];
+    jySceneSqlite.scenesOnly=[[NSMutableArray alloc]init];
     self.jySceneSqlite = jySceneSqlite;
     
     //打开数据库
@@ -251,7 +258,7 @@
              for(int i = 0; i < backStatus.sceneArray.count; i++)
              {
                  YSScene *scene = backStatus.sceneArray[i];
-                 NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.area, scene.bkgName,scene.param1,scene.param2,scene.param3);
+//                 NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.area, scene.bkgName,scene.param1,scene.param2,scene.param3);
                  
                  [self.jySceneSqlite insertRecordIntoTableName:self.tableName
                                                     withField1:@"area" field1Value:scene.area
@@ -264,24 +271,18 @@
              }
              
              [self.jySceneSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
+             
+             
              self.scenes = self.jySceneSqlite.patterns;
-             
-             NSLog(@"********************************************");
-//             for (int i=0; i<self.scenes.count; i++)
-//             {
-//                 <#statements#>
-//             }
-//             
-             NSLog(@"********************************************");
-             
+             self.scenesOnly=self.jySceneSqlite.scenesOnly;
+
              //最后一个自定义按钮
-             YSScene *scene = [[YSScene alloc] init];
+             JYSceneOnly *scene = [[JYSceneOnly alloc] init];
              scene.name=@"自定义";
-             [self.scenes addObject:scene];
-             
-             for(int i = 0; i < self.scenes.count; i++)
+             [self.scenesOnly addObject:scene];
+             for(int i=0;i<self.scenesOnly.count;i++)
              {
-                 YSScene *scene = self.scenes[i];
+                 JYSceneOnly *scene=self.scenesOnly[i];
                  if([scene.name isEqualToString:@"观影"])
                  {
                      scene.logoName=@"guanying_icon";
@@ -314,6 +315,11 @@
                  {
                      scene.logoName=@"zidingyi_icon";
                  }
+            }
+             for(int i=0;i<self.scenesOnly.count;i++)
+             {
+                 JYSceneOnly *scene=self.scenesOnly[i];
+                 NSLog(@"%@ %@ %@",scene.name,scene.area,scene.bkgName);
              }
              
              for(int i = 0; i < self.scenes.count; i++)
@@ -333,21 +339,29 @@
     {
         NSLog(@"数据库已经有数据");
         self.scenes = self.jySceneSqlite.patterns;
-        NSLog(@"多少数据？？%ld", self.scenes.count);
+        self.scenesOnly=self.jySceneSqlite.scenesOnly;
+        
+        //最后一个自定义按钮
+        JYSceneOnly *scene = [[JYSceneOnly alloc] init];
+        scene.name=@"自定义";
+        [self.scenesOnly addObject:scene];
+
+        
+        for(int i=0;i<self.scenesOnly.count;i++)
+        {
+            JYSceneOnly *scene=self.scenesOnly[i];
+            NSLog(@"%@ %@ %@",scene.name,scene.area,scene.bkgName);
+        }
         
         for(int i = 0; i < self.scenes.count;i++)
         {
             YSScene *scene = self.scenes[i];
             NSLog(@"======%@ %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.bkgName,scene.param1,scene.param2,scene.param3);
         }
-        //最后一个自定义按钮
-        YSScene *scene = [[YSScene alloc] init];
-        scene.name=@"自定义";
-        [self.scenes addObject:scene];
         
-        for(int i = 0; i < self.scenes.count; i++)
+        for(int i = 0; i < self.scenesOnly.count; i++)
         {
-            YSScene *scene = self.scenes[i];
+            JYSceneOnly *scene = self.scenesOnly[i];
             if([scene.name isEqualToString:@"观影"])
             {
                 scene.logoName=@"guanying_icon";
@@ -390,7 +404,7 @@
 - (void)initScrollView
 {
     //NSLog(@"%lu", (unsigned long)self.sceneArray.count);
-    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenes.count + 4), self.cellHeight);
+    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenesOnly.count + 4), self.cellHeight);
     
     //清楚scrollView的子视图
     [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -420,17 +434,17 @@
     }
     
     //默认的六个块
-    for (int i = 2; i < self.scenes.count + 2; i++)
+    for (int i = 2; i < self.scenesOnly.count + 2; i++)
     {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.cellWidth * i, 0, self.cellWidth, self.cellHeight)];
         UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, self.cellWidth - 10, self.cellWidth - 10)];
-        image.image = [UIImage imageNamed:[self.scenes[i-2] logoName]];
+        image.image = [UIImage imageNamed:[self.scenesOnly[i-2] logoName]];
         image.tag = i - 2;
         view.tag = i - 2;
         [image setUserInteractionEnabled:YES];
         
         //添加按钮添加触摸手势
-        if (i == self.scenes.count + 1)
+        if (i == self.scenesOnly.count + 1)
         {
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTapGestureEvent:)];
             [image addGestureRecognizer:tap];
@@ -454,7 +468,7 @@
     }
     
     //添加两个空白的块
-    for (long i = self.scenes.count + 2; i < self.scenes.count + 4; i++)
+    for (long i = self.scenesOnly.count + 2; i < self.scenesOnly.count + 4; i++)
     {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.cellWidth * i, 0, self.cellWidth, self.cellHeight)];
         UIView *subView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.cellWidth, self.cellWidth)];
@@ -513,7 +527,7 @@
     else
     {
         //NSLog(@"进入编辑模式的界面");
-        if (self.selectedIndex == (self.scenes.count - 1))
+        if (self.selectedIndex == (self.scenesOnly.count - 1))
         {
             //
         }
@@ -526,14 +540,14 @@
     UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
-    if (view.tag != self.selectedIndex || self.selectedIndex < DEFAULT_CELL_NUMBER || view.tag == self.scenes.count - 1)
+    if (view.tag != self.selectedIndex || self.selectedIndex < DEFAULT_CELL_NUMBER || view.tag == self.scenesOnly.count - 1)
     {
         return;
     }
     
-    YSScene *scene = [self.scenes objectAtIndex:view.tag];
+    YSScene *scene = [self.scenesOnly objectAtIndex:view.tag];
     //从模型中删除
-    [self.scenes removeObjectAtIndex:view.tag];
+    [self.scenesOnly removeObjectAtIndex:view.tag];
     
     [self.cellsView[view.tag] setHidden:YES];
     
@@ -571,7 +585,7 @@
     //移除该cell的视图
     [self.cellsView removeObjectAtIndex:view.tag];
     //更新scrollview的内容宽度
-    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenes.count + 4), self.cellHeight);
+    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenesOnly.count + 4), self.cellHeight);
     //更新背景和文字
     [self updateCellBackground:(int)view.tag];
     
@@ -604,7 +618,7 @@
     NSString *imageName = [uuid UUIDString];
     
     //接下来存储改文件到本地，以及更新模型的数据
-    YSScene *scene = self.scenes[self.selectedIndex];
+    YSScene *scene = self.scenesOnly[self.selectedIndex];
     scene.bkgName = imageName;
     
     [[LYSImageStore sharedStore] setImage:image forKey:imageName];
@@ -717,7 +731,7 @@
 - (void)addSceneToScrollView:(YSScene *)scene
 {
     //先把该模式添加到数组中
-    [self.scenes insertObject:scene atIndex:self.scenes.count];
+    [self.scenesOnly insertObject:scene atIndex:self.scenesOnly.count];
     
     //然后添加到scrollView中
     //待定
@@ -740,9 +754,9 @@
 
 -(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    if (targetContentOffset->x >= (self.scenes.count - 1) * self.cellWidth)
+    if (targetContentOffset->x >= (self.scenesOnly.count - 1) * self.cellWidth)
     {
-        [self updateCellBackground:(int)self.scenes.count - 1];
+        [self updateCellBackground:(int)self.scenesOnly.count - 1];
     }
     else if(targetContentOffset->x <= 0)
     {
@@ -830,7 +844,7 @@
     
     [self.scrollView setUserInteractionEnabled:YES];
     
-    YSScene *scene = self.scenes[(int)self.selectedIndex];
+    YSScene *scene = self.scenesOnly[(int)self.selectedIndex];
     // NSLog(@"我看看划到的是哪个模式:%@ %@ %@ %@,这里进行灯的控制请求",pattern.name,pattern.rValue,pattern.gValue,pattern.bValue);
     
     //    NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[pattern.rValue intValue]]];
@@ -868,9 +882,9 @@
     {
         [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     }
-    else if (self.scrollView.contentOffset.x > self.cellWidth * (self.scenes.count + 1.5))
+    else if (self.scrollView.contentOffset.x > self.cellWidth * (self.scenesOnly.count + 1.5))
     {
-        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.scenes.count + 1), 0) animated:YES];
+        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.scenesOnly.count + 1), 0) animated:YES];
     }
     
     int index = (int)(self.scrollView.contentOffset.x / self.cellWidth + 0.5);
@@ -885,25 +899,25 @@
 - (void)updateCellBackground:(int)index
 {
     //NSLog(@"sleectt  %ld", (long)self.selectedIndex);
-    self.patternNameLabel.text = [self.scenes[index] name];
+    self.patternNameLabel.text = [self.scenesOnly[index] name];
     
     //如果是添加模式按钮则不修改图片
-    if (index != self.scenes.count - 1)
+    if (index != self.scenesOnly.count - 1)
     {
         //为默认模式，家在默认图片
         if (self.selectedIndex < DEFAULT_CELL_NUMBER)
         {
-            self.bkgImageView.image = [UIImage imageNamed:[self.scenes[index] bkgName]];
+            self.bkgImageView.image = [UIImage imageNamed:[self.scenesOnly[index] bkgName]];
         }
         //自定义图片加载自定义模式
         else
         {
-            YSScene * selectedScene = self.scenes[self.selectedIndex];
+            YSScene * selectedScene = self.scenesOnly[self.selectedIndex];
             UIImage *image = [[LYSImageStore sharedStore] imageForKey:selectedScene.bkgName];
             
             if (!image)
             {
-                self.bkgImageView.image = [UIImage imageNamed:[self.scenes[index] bkgName]];
+                self.bkgImageView.image = [UIImage imageNamed:[self.scenesOnly[index] bkgName]];
             }
             else
             {
