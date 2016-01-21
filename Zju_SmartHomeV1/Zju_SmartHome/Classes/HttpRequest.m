@@ -157,7 +157,6 @@
                              @"equipment.logic_id":logicId,
                              @"equipment.type":type
                              };
-    
     //外网发送请求
     [manager POST:@"http://60.12.220.16:8888/paladin/Equipment/create"
        parameters:params
@@ -278,6 +277,8 @@
           success:success
           failure:failure];
 }
+
+
 
 //模式的查询,该方法没有封装
 

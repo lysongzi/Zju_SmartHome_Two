@@ -308,8 +308,10 @@
                      else
                      {
                          pattern.logoName=@"zidingyi_icon";
+                         NSLog(@"lalalalal");
                          if(![pattern.bkgName isEqualToString:@"rouhe_bg"])
                          {
+                             NSLog(@"yayayayay");
                              //做加载图片
                              NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
                              
@@ -432,8 +434,10 @@
                      else
                      {
                          pattern.logoName=@"zidingyi_icon";
+                         NSLog(@"lalalalalal");
                          if(![pattern.bkgName isEqualToString:@"rouhe_bg"])
                          {
+                             NSLog(@"hahahahahah");
                              //做加载图片
                              NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
                              SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -1149,9 +1153,9 @@
     
     if([pattern.name isEqualToString:@"自定义"])
     {
-        
+        NSLog(@"这里是自定义，不需要发送网络请求");
     }
-    if([pattern.name isEqualToString:@"跳跃"])
+    else if([pattern.name isEqualToString:@"跳跃"])
     {
         [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
                                   success:^(AFHTTPRequestOperation *operation, id responseObject)
