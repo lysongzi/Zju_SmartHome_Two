@@ -54,7 +54,10 @@
     [userView.userName setTitle:appDelegate.username forState:UIControlStateNormal];
     
     //头像
-    [userView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:@"YSUserPhoto" borderWith:0 borderColor:nil] forState:UIControlStateNormal];
+    
+    [userView.portraitBtn.layer setCornerRadius:CGRectGetHeight([userView.portraitBtn bounds])*0.5];
+    userView.portraitBtn.layer.masksToBounds=YES;
+    [userView.portraitBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
     
     //userView的代理
     userView.delegate=self;
@@ -201,7 +204,7 @@
          {
              NSLog(@"缓存图片");
              //[[LYSImageStore sharedStore] setImage:image forKey:@"YSUserPhoto"];
-             [self.userView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:[[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"] borderWith:0 borderColor:nil] forState:UIControlStateNormal];
+             [self.userView.portraitBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
          }
          
      }
