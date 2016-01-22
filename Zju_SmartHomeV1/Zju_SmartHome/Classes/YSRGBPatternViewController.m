@@ -720,6 +720,7 @@
      {
          NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
          NSLog(@"看看返回的数据是啥呢？%@",str);
+         
          [MBProgressHUD showSuccess:@"删除模式成功"];
          [self.cellsView[view.tag] setHidden:YES];
          

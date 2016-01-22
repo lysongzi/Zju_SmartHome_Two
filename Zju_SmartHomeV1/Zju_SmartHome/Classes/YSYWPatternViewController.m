@@ -463,6 +463,58 @@
 //向上滑动删除
 - (void)swipeToDeletePattern:(UIGestureRecognizer *)gr
 {
+//    UIView *view = (UIView *)gr.self.view;
+//    
+//    //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
+//    if (view.tag != self.selectedIndex || self.selectedIndex < DEFAULT_CELL_NUMBER || view.tag == self.patterns.count - 1)
+//    {
+//        return;
+//    }
+//     JYPattern *pattern=[self.patterns objectAtIndex:view.tag];
+//    //从模型中删除
+//    [self.patterns removeObjectAtIndex:view.tag];
+//    
+//    [self.cellsView[view.tag] setHidden:YES];
+//    
+//    UIView * changeView;
+//    for (long i = view.tag + 1; i < self.cellsView.count; i++)
+//    {
+//        changeView = (UIView *)self.cellsView[i];
+//        changeView.tag -= 1;
+//        UIImageView *subImage = [[changeView subviews] lastObject];
+//        subImage.tag -= 1;
+//        
+//        CGPoint point = changeView.center;
+//        point.x -= self.cellWidth;
+//        [UIView beginAnimations:nil context:nil];
+//        [UIView setAnimationDuration:0.3];
+//        [changeView setCenter:point];
+//        
+//        if (i == view.tag + 1)
+//        {
+//            [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+//        }
+//        else if (i == view.tag + 2)
+//        {
+//            [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
+//        }
+//        else
+//        {
+//            [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
+//        }
+//        
+//        [UIView commitAnimations];
+//    }
+//
+//    
+//    //移除该cell的视图
+//    [self.cellsView removeObjectAtIndex:view.tag];
+//    //更新scrollview的内容宽度
+//    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
+//    //更新背景和文字
+//    [self updateCellBackground:(int)view.tag];
+//    
+//    [self.jynewSqlite deleteRecordWithLogicID:self.logic_id andWithName:pattern.name inTable:self.tableName];
     UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
@@ -470,51 +522,60 @@
     {
         return;
     }
-     JYPattern *pattern=[self.patterns objectAtIndex:view.tag];
+    
+    JYPattern *pattern=[self.patterns objectAtIndex:view.tag];
     //从模型中删除
     [self.patterns removeObjectAtIndex:view.tag];
     
-    [self.cellsView[view.tag] setHidden:YES];
-    
-    UIView * changeView;
-    for (long i = view.tag + 1; i < self.cellsView.count; i++)
-    {
-        changeView = (UIView *)self.cellsView[i];
-        changeView.tag -= 1;
-        UIImageView *subImage = [[changeView subviews] lastObject];
-        subImage.tag -= 1;
-        
-        CGPoint point = changeView.center;
-        point.x -= self.cellWidth;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        [changeView setCenter:point];
-        
-        if (i == view.tag + 1)
-        {
-            [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
-        }
-        else if (i == view.tag + 2)
-        {
-            [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
-        }
-        else
-        {
-            [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
-        }
-        
-        [UIView commitAnimations];
-    }
-
-    
-    //移除该cell的视图
-    [self.cellsView removeObjectAtIndex:view.tag];
-    //更新scrollview的内容宽度
-    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
-    //更新背景和文字
-    [self updateCellBackground:(int)view.tag];
-    
-    [self.jynewSqlite deleteRecordWithLogicID:self.logic_id andWithName:pattern.name inTable:self.tableName];
+    [HttpRequest deletePatternFromServerProduct:self.logic_id andWithPatternName:pattern.name withArea:self.room_name success:^(AFHTTPRequestOperation *operation, id responseObject)
+     
+     {
+         NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+         NSLog(@"看看返回的数据是啥呢？%@",str);
+         [MBProgressHUD showSuccess:@"删除模式成功"];
+         [self.cellsView[view.tag] setHidden:YES];
+         
+         UIView * changeView;
+         for (long i = view.tag + 1; i < self.cellsView.count; i++)
+         {
+             changeView = (UIView *)self.cellsView[i];
+             changeView.tag -= 1;
+             UIImageView *subImage = [[changeView subviews] lastObject];
+             subImage.tag -= 1;
+             
+             CGPoint point = changeView.center;
+             point.x -= self.cellWidth;
+             [UIView beginAnimations:nil context:nil];
+             [UIView setAnimationDuration:0.3];
+             [changeView setCenter:point];
+             
+             if (i == view.tag + 1)
+             {
+                 [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+             }
+             else if (i == view.tag + 2)
+             {
+                 [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
+             }
+             else
+             {
+                 [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
+             }
+             
+             [UIView commitAnimations];
+         }
+         
+         //移除该cell的视图
+         [self.cellsView removeObjectAtIndex:view.tag];
+         //更新scrollview的内容宽度
+         self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.patterns.count + 4), self.cellHeight);
+         //更新背景和文字
+         [self updateCellBackground:(int)view.tag];
+         [self.jynewSqlite deleteRecordWithLogicID:pattern.logic_id andWithName:pattern.name inTable:self.tableName];
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         [MBProgressHUD showError:@"删除模式失败"];
+     }];
 }
 
 //弹出选择更换背景图

@@ -667,12 +667,12 @@
     params[@"sceneconfig.param2"]=@"0";
     params[@"sceneconfig.param3"]=@"0";
     params[@"sceneconfig.image"]=@"rouhe_bg";
-    NSLog(@"---%@ %@ ",sceneName,string);
+    NSLog(@"---%@ %@ %@ %@  ",self.area,self.logic_id, sceneName,string);
     
     //4.发送请求
     [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+         NSLog(@"看看YW增加模式返回的数据是啥呢？%@",responseObject);
          self.navigationController.navigationBar.hidden=NO;
          if([responseObject[@"code"] isEqualToString:@"0"])
          {

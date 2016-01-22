@@ -172,7 +172,7 @@
         //初始化默认模型数据
         [self initPatternData];
         //初始化scrollView
-        [self initScrollView];
+        //[self initScrollView];
         
         //定位到新添加的模式
         [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.scenesOnly.count - 2), 0)];
@@ -534,6 +534,7 @@
 //向上滑动删除
 - (void)swipeToDeletePattern:(UIGestureRecognizer *)gr
 {
+    NSLog(@"这里进行向上滑动删除");
     UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
@@ -542,51 +543,69 @@
         return;
     }
     
-    YSScene *scene = [self.scenesOnly objectAtIndex:view.tag];
+    JYSceneOnly *sceneOnly=[self.scenesOnly objectAtIndex:view.tag];
+    NSLog(@"看看向上滑动的是哪个场景:%@ %@ %@ %@",sceneOnly.area,sceneOnly.name,sceneOnly.bkgName,sceneOnly.logoName);
     //从模型中删除
     [self.scenesOnly removeObjectAtIndex:view.tag];
     
-    [self.cellsView[view.tag] setHidden:YES];
-    
-    UIView * changeView;
-    for (long i = view.tag + 1; i < self.cellsView.count; i++)
+    //接下来应该得到该场景下的所有电器，然后全部删除
+    for(int i=0;i<self.scenes.count;i++)
     {
-        changeView = (UIView *)self.cellsView[i];
-        changeView.tag -= 1;
-        UIImageView *subImage = [[changeView subviews] lastObject];
-        subImage.tag -= 1;
-        
-        CGPoint point = changeView.center;
-        point.x -= self.cellWidth;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        [changeView setCenter:point];
-        
-        if (i == view.tag + 1)
+        YSScene *scene=self.scenes[i];
+        if([scene.name isEqualToString:sceneOnly.name])
         {
-            [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+             NSLog(@"呀呀呀:%@ %@ %@  %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.area, scene.logoName, scene.bkgName,scene.param1,scene.param2,scene.param3);
+            [HttpRequest deleteSceneFromServer:scene.logic_id andWithSceneName:scene.name withArea:scene.area success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+                NSLog(@"看看返回的数据是啥呢？%@",str);
+                
+                [MBProgressHUD showSuccess:@"删除场景成功"];
+                [self.cellsView[view.tag] setHidden:YES];
+                
+                UIView * changeView;
+                for (long i = view.tag + 1; i < self.cellsView.count; i++)
+                {
+                    changeView = (UIView *)self.cellsView[i];
+                    changeView.tag -= 1;
+                    UIImageView *subImage = [[changeView subviews] lastObject];
+                    subImage.tag -= 1;
+                    
+                    CGPoint point = changeView.center;
+                    point.x -= self.cellWidth;
+                    [UIView beginAnimations:nil context:nil];
+                    [UIView setAnimationDuration:0.3];
+                    [changeView setCenter:point];
+                    
+                    if (i == view.tag + 1)
+                    {
+                        [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+                    }
+                    else if (i == view.tag + 2)
+                    {
+                        [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
+                    }
+                    else
+                    {
+                        [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
+                    }
+                    
+                    [UIView commitAnimations];
+                }
+                
+                //移除该cell的视图
+                [self.cellsView removeObjectAtIndex:view.tag];
+                //更新scrollview的内容宽度
+                self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenesOnly.count + 4), self.cellHeight);
+                //更新背景和文字
+                [self updateCellBackground:(int)view.tag];
+                
+                //服务器删除成功后，产出本地缓存
+                [self.jySceneSqlite deleteRecordInArea:scene.area andInScene:scene.name andInLogicID:scene.logic_id inTable:self.tableName];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [MBProgressHUD showError:@"删除场景失败"];
+            }];
         }
-        else if (i == view.tag + 2)
-        {
-            [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
-        }
-        else
-        {
-            [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
-        }
-        
-        [UIView commitAnimations];
     }
-    
-    
-    //移除该cell的视图
-    [self.cellsView removeObjectAtIndex:view.tag];
-    //更新scrollview的内容宽度
-    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenesOnly.count + 4), self.cellHeight);
-    //更新背景和文字
-    [self updateCellBackground:(int)view.tag];
-    
-    //[self.jynewSqlite deleteRecordWithName:scene.name];
 }
 
 //点击开关灯按钮的响应事件
@@ -610,6 +629,7 @@
 //修改背景图片的代理方法
 -(void)changBG:(UIImage *)image
 {
+    NSLog(@"这里修改场景的背景图片");
     //为新图片创建一个标示文件名的值
     NSUUID *uuid = [[NSUUID alloc] init];
     NSString *imageName = [uuid UUIDString];
@@ -760,6 +780,45 @@
         //变得太快了
         [self updateCellBackground:0];
         NSLog(@"这里应该要进行灯的控制了");
+        JYSceneOnly *sceneOnly=self.scenesOnly[0];
+        //滑动到哪个场景后，应该要得到出该场景下有哪些灯并且获取灯的参数值
+        
+        for(int i=0;i<self.scenes.count;i++)
+        {
+            YSScene *scene=self.scenes[i];
+            //NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+            if([sceneOnly.name isEqualToString:scene.name])
+            {
+                //NSLog(@"找到对应场景下的灯了，开始发送请求哦");
+                NSLog(@"!!!找到对应场景下的灯了：%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+                
+                //            NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param1 intValue]]];
+                //            NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param2 intValue]]];
+                //            NSString *b = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param3 intValue]]];
+                //
+                //            if([scene.name isEqualToString:@"自定义"])
+                //            {
+                //
+                //            }
+                //            else
+                //            {
+                //                [HttpRequest sendRGBColorToServer:self.logic_id redValue:r greenValue:g blueValue:b
+                //                                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                //
+                //                                                  NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                //                                                  NSLog(@"成功: %@", string);
+                //
+                //                                              }
+                //                                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                //            
+                //                                                  [MBProgressHUD showError:@"请检查网关"];
+                //            
+                //                                              }];
+                //            
+                //                }
+                //            
+            }
+        }
         
     }
 }
@@ -822,8 +881,6 @@
     
     NSLog(@"应该要控制灯了");
     JYSceneOnly *sceneOnly=self.scenesOnly[(int)self.selectedIndex];
-    NSLog(@"qqq %@ %@",sceneOnly.name,sceneOnly.area);
-    
     //滑动到哪个场景后，应该要得到出该场景下有哪些灯并且获取灯的参数值
     
     for(int i=0;i<self.scenes.count;i++)
@@ -832,8 +889,8 @@
         //NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
         if([sceneOnly.name isEqualToString:scene.name])
         {
-            NSLog(@"找到对应场景下的灯了，开始发送请求");
-             NSLog(@"%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+            //NSLog(@"找到对应场景下的灯了，开始发送请求哦");
+             NSLog(@"找到对应场景下的灯了：%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
             
 //            NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param1 intValue]]];
 //            NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param2 intValue]]];

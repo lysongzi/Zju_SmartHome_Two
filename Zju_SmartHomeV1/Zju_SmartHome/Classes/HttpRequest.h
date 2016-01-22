@@ -52,4 +52,8 @@
 //RGB三种颜色
 + (void)sendRGBColorToServer:(NSString *)logicId redValue:(NSString*)redValue greenValue:(NSString*)greenValue blueValue:(NSString*)blueValue success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
 
+//根据区域,场景名称和电器逻辑id删除指定场景下的电器
++ (void)deleteSceneFromServer:(NSString*)logicId andWithSceneName:(NSString *)sceneName withArea:(NSString *)area success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure;
+    
+
 @end

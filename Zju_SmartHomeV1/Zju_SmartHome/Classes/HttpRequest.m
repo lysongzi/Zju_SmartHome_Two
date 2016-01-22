@@ -309,6 +309,32 @@
 
 //电器模式的增加，该方法没有封装
 
+
+//场景的删除
++ (void)deleteSceneFromServer:(NSString*)logicId andWithSceneName:(NSString *)sceneName withArea:(NSString *)area success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
+    
+    //1.创建请求管理对象
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+    
+    //2.说明服务器返回的是json参数
+    manager.responseSerializer=[AFHTTPResponseSerializer serializer];
+    
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    params[@"is_app"]=@"1";
+    params[@"sceneconfig.tag"]=@"1";
+    params[@"sceneconfig.room_name"]=area;
+    params[@"sceneconfig.equipment_logic_id"]=logicId;
+    params[@"sceneconfig.scene_name"]=sceneName;
+    
+    NSLog(@"删除电器所传参数: %@ %@  %@ %@",logicId, sceneName,params[@"sceneconfig.tag"],area);
+    
+    //外网发送请求
+    [manager POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/delete"
+       parameters:params
+          success:success
+          failure:failure];
+}
+
 #pragma mark - 向服务器发送YW灯冷暖的方法
 + (void)sendYWWarmColdToServer:(NSString *)logicId warmcoldValue:(NSString*)warmcoldValue success:(void(^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void(^)(AFHTTPRequestOperation * operation, NSError * error))failure{
   
