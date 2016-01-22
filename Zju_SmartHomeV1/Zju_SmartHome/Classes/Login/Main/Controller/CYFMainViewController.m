@@ -203,7 +203,8 @@
             _leftView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         }];
         _leftView.delegate=self;
-        [_leftView.portraitBtn setBackgroundImage:[UIImage imageNamed:@"UserPhoto"] forState:UIControlStateNormal];
+        //[_leftView.portraitBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
+        [_leftView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:[[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"] borderWith:0 borderColor:nil] forState:UIControlStateNormal];
         
         _leftView.sliderTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
         _leftView.sliderTableView.bounces=NO;
@@ -398,10 +399,11 @@
   
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSString *isFirstInstall = [defaults valueForKey:@"isFirstInstall"];
-  NSString *isSettedPhoto = [defaults valueForKey:@"isSettedPhoto"];
+  //NSString *isSettedPhoto = [defaults valueForKey:@"isSettedPhoto"];
   
   //重新设置头像；
-  if (isFirstInstall  == nil || isSettedPhoto == nil)
+  //if (isFirstInstall  == nil || isSettedPhoto == nil)
+  if (isFirstInstall  == nil)
   {
     //第一次安装;
     //因为第一次安装，所以应该是直接从服务器下载头像并保存在本地
@@ -411,8 +413,9 @@
     
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-    NSString *imageStr = appDelegate.avator;
+    NSString *imageStr = [NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg", appDelegate.avator] ;
     NSURL *imageUrl=[NSURL URLWithString:imageStr];
+      NSLog(@"%@", imageUrl);
     
     [manager downloadImageWithURL:imageUrl
                           options:0
@@ -442,6 +445,9 @@
     //已经安装;
     //因为已经安装过，所以可以直接从本地读取图片
     [self.leftBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
+    //[self.leftView.portraitBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
+      
+      [self.leftView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:[[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"] borderWith:0 borderColor:nil] forState:UIControlStateNormal];
   }
 }
 
