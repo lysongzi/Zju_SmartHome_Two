@@ -14,14 +14,21 @@
 #import "MBProgressHUD+MJ.h"
 #import "YSYWPatternViewController.h"
 #import "STNewSceneController.h"
+#import "STNewSceneView.h"
+#import "JYPattern.h"
+#import "JYPatternSqlite.h"
+
+#define SCREEN_WIDTH self.view.frame.size.width
+#define SCREEN_HEIGHT self.view.frame.size.height
 
 
-@interface DLLampControllYWModeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
+@interface DLLampControllYWModeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate,STSaveNewSceneDelegate>
 @property (nonatomic, weak) UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UIView *panelView;
 @property (weak, nonatomic) IBOutlet UILabel *LDValue; /**< light-dark-value */
 @property (weak, nonatomic) IBOutlet UILabel *CWValue; /**< cold-warm-value */
 @property (nonatomic, weak) UISlider *slider;
+@property(nonatomic,strong)STNewSceneView *sceneView;
 
 
 //YW控制
@@ -44,7 +51,6 @@
 //有关照片取色的属性；
 @property (strong, nonatomic) UIPopoverController *imagePickerPopover;
 @property (nonatomic,strong) UIAlertController *alert;
-
 - (IBAction)photoClick1:(id)sender;
 
 @end
@@ -54,7 +60,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-   NSLog(@"129183892138912  %@ %@",self.logic_id,self.furnitureName);
+    NSLog(@"看看YW区域有没有过来:%@",self.area);
   
   self.tag=1;
   self.switchTag = 1;
@@ -292,6 +298,7 @@
       }
       
       self.CWValue.text = [NSString stringWithFormat:@"%d", cwValue];
+        NSLog(@"我看看这到底是啥: %@",self.CWValue.text);
       //在这里把cwValuevalue值传给服务器
       cwValue = 100 - cwValue;
       [HttpRequest sendYWWarmColdToServer:self.logic_id warmcoldValue:[NSString stringWithFormat:@"%d", cwValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -376,8 +383,6 @@
         }
       }
       self.CWValue.text = [NSString stringWithFormat:@"%d", cwValue];
-      
-      
       
       int i, j;
       if ((i = arc4random() % 2)) {
@@ -475,7 +480,7 @@
       [HttpRequest sendYWWarmColdToServer:self.logic_id warmcoldValue:[NSString stringWithFormat:@"%d", cwValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"YW冷暖返回成功：%@",result);
+        NSLog(@"YW冷暖返回成功：%@ 实际传送值: %@",result,[NSString stringWithFormat:@"%d", cwValue]);
         
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"YW冷暖返回失败：%@",error);
@@ -595,54 +600,109 @@
   }
 }
 
-//电器开关按钮
+//保存按钮
 -(void)rightBtnClicked
 {
-  NSLog(@"开关按钮点击事件");
-  //说明灯是关着的
-  if(self.switchTag==0)
-  {
-    self.switchTag++;
+    NSLog(@"保存按钮");
+    NSString *string=[NSString stringWithFormat:@"%d",100-[self.CWValue.text intValue]];
+    NSLog(@"===%@ %@",self.logic_id,string);
     
-    [HttpRequest sendYWBrightnessToServer:self.logic_id brightnessValue:@"100"
-                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                    
-                                    NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                    NSLog(@"成功: %@", string);
-                                    
-                                  }
-                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    
-                                    NSLog(@"失败: %@", error);
-                                    [MBProgressHUD showError:@"请检查网关"];
-                                    
-                                    
-                                  }];
+    STNewSceneView *stView=[STNewSceneView saveNewSceneView];
+    stView.frame=CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
     
-  }
-  else if (self.switchTag==1)
-  {
-    self.switchTag--;
+    [UIView animateWithDuration:0.5 animations:^{
+        [stView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        
+    }completion:^(BOOL finished) {
+        self.navigationController.navigationBar.hidden=YES;
+    }];
     
-    [HttpRequest sendYWBrightnessToServer:self.logic_id brightnessValue:@"0"
-                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                    
-                                    NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                    NSLog(@"成功: %@", string);
-                                    
-                                    
-                                  }
-                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    
-                                    NSLog(@"失败: %@", error);
-                                    [MBProgressHUD showError:@"请检查网关"];
-                                    
-                                    
-                                  }];
+    stView.delegate=self;
+    self.sceneView=stView;
+    [self.view addSubview:stView];
+    self.navigationItem.rightBarButtonItem.enabled=NO;
+}
+-(void)cancelSaveScene
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.sceneView setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        [self.sceneView removeFromSuperview];
+    }];
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+    self.navigationController.navigationBar.hidden=NO;
+}
+-(void)noSave
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.sceneView setFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        [self.sceneView removeFromSuperview];
+    }];
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+    self.navigationController.navigationBar.hidden=NO;
+}
+-(void)saveNewScene:(NSString *)sceneName
+{
+    NSLog(@"WWW :%@",sceneName);
+    //self.navigationController.navigationBar.hidden=NO;
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+    NSLog(@"－－－－%@",sceneName);
+     NSString *string=[NSString stringWithFormat:@"%d",100-[self.CWValue.text intValue]];
     
+    //1.创建请求管理对象
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
-  }
-  
+    //2.说明服务器返回的是json参数
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    
+    //3.封装请求参数
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    params[@"is_app"]=@"1";
+    params[@"sceneconfig.room_name"]=self.area;
+    params[@"sceneconfig.tag"]=@"0";
+    params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+    params[@"sceneconfig.scene_name"]=sceneName;
+    params[@"sceneconfig.param1"]=string;
+    params[@"sceneconfig.param2"]=@"0";
+    params[@"sceneconfig.param3"]=@"0";
+    params[@"sceneconfig.image"]=@"rouhe_bg";
+    NSLog(@"---%@ %@ ",sceneName,string);
+    
+    //4.发送请求
+    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+         self.navigationController.navigationBar.hidden=NO;
+         if([responseObject[@"code"] isEqualToString:@"0"])
+         {
+             JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
+             jySqlite.patterns=[[NSMutableArray alloc]init];
+             
+             //打开数据库
+             [jySqlite openDB];
+             
+             [jySqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:string andField5:@"param2" field5Value:@"0" andField6:@"param3" field6Value:@"0"];
+             
+             for (UIViewController *controller in self.navigationController.viewControllers)
+             {
+                 if ([controller isKindOfClass:[YSYWPatternViewController class]])
+                 {
+                     YSYWPatternViewController *vc=(YSYWPatternViewController *)controller;
+                     vc.tag_Back=2;
+                     [self.navigationController popToViewController:controller animated:YES];
+                 }
+             }
+         }
+         else
+         {
+             [MBProgressHUD showError:@"增加模式失败"];
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         [MBProgressHUD showError:@"增加模式失败,请检查服务器"];
+     }];
 }
 
 -(void)setNavigationBar
@@ -655,12 +715,19 @@
     UIBarButtonItem *leftItem=[[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    UIButton *rightButton=[[UIButton alloc]init];
-    [rightButton setImage:[UIImage imageNamed:@"ct_icon_switch"] forState:UIControlStateNormal];
-    rightButton.frame=CGRectMake(0, 0, 30, 30);
-    [rightButton setImageEdgeInsets:UIEdgeInsetsMake(-4, 6, 4, -10)];
-    [rightButton addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
+//    UIButton *rightButton=[[UIButton alloc]init];
+//    [rightButton setImage:[UIImage imageNamed:@"ct_icon_switch"] forState:UIControlStateNormal];
+//    rightButton.frame=CGRectMake(0, 0, 30, 30);
+//    [rightButton setImageEdgeInsets:UIEdgeInsetsMake(-4, 6, 4, -10)];
+//    [rightButton addTarget:self action:@selector(rightBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *rightItem=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
+//    self.navigationItem.rightBarButtonItem=rightItem;
+    
+    //保存按钮
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"保存"
+                                                                  style:UIBarButtonItemStyleDone
+                                                                 target:self
+                                                                 action:@selector(rightBtnClicked)];
     self.navigationItem.rightBarButtonItem=rightItem;
     
     

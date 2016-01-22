@@ -13,9 +13,11 @@
 #import "DLLampControllYWModeViewController.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
+#import "AppDelegate.h"
+#import "LYSImageStore.h"
 
 #define CELL_NUMBER 5
-#define DEFAULT_CELL_NUMBER 7
+#define DEFAULT_CELL_NUMBER 4
 #define UISCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 
 @interface YSYWPatternViewController ()<UIScrollViewDelegate>
@@ -79,8 +81,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //专门存放模式的表
-    self.tableName=@"patternTable";
+     NSLog(@"看看是从哪里进到这个模式界面：%@",self.room_name);
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    //专门存储模式的表
+    self.tableName=[NSString stringWithFormat:@"patternTable%@",appDelegate.user_id];
+    NSLog(@"看看表明%@",self.tableName);
+    
     [self setNaviBarItemButton];
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
@@ -88,6 +94,9 @@
     
     [self.pictureButton setBackgroundImage:[UIImage imageNamed:@"switch_press"] forState:UIControlStateHighlighted];
     [self.musicButton setBackgroundImage:[UIImage imageNamed:@"music_icon_press"] forState:UIControlStateHighlighted];
+    
+    //初始化默认模型数据
+    [self initPatternData];
     
     //初始化音乐框
     float gap = self.musicButton.frame.size.width / 2;
@@ -146,15 +155,29 @@
     self.pictureButton.tag = 0;
     [self initMusicBox];
 }
-
 -(void)viewWillAppear:(BOOL)animated
 {
-    //初始化默认模型数据
-    [self initPatternData];
-    
-    //初始化scrollView
-    [self initScrollView];
+    if(self.tag_Back==2)
+    {
+        NSLog(@"??????");
+        //初始化默认模型数据
+        [self initPatternData];
+        //初始化scrollView
+        // [self initScrollView];
+        
+        //定位到新添加的模式
+        [self.scrollView setContentOffset:CGPointMake(self.cellWidth * (self.patterns.count - 2), 0)];
+        //设置当前居中为新添加的模式，并更新背景和文字
+        self.selectedIndex = self.patterns.count - 2;
+        [self updateCellBackground:(int)self.selectedIndex];
+        self.tag_Back = 0;
+    }
+    else
+    {
+        //NSLog(@"这里应该是修改模式背景图片返回来的");
+    }
 }
+
 
 - (void)initMusicBox
 {
@@ -218,55 +241,91 @@
         
         [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
         self.patterns=self.jynewSqlite.patterns;
+        //最后一个自定义按钮
+        JYPattern *pattern=[[JYPattern alloc]init];
+        pattern.name=@"自定义";
+        [self.patterns addObject:pattern];
+        
+        NSLog(@"看看长度里:%ld",self.patterns.count);
         for(int i=0;i<self.patterns.count;i++)
         {
             JYPattern *pattern=self.patterns[i];
             NSLog(@"======%@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
         }
+        for(int i=0;i<self.patterns.count;i++)
+        {
+            JYPattern *pattern=self.patterns[i];
+            if([pattern.name isEqualToString:@"柔和"])
+            {
+                pattern.logoName=@"rouhe_icon";
+            }
+            else if([pattern.name isEqualToString:@"舒适"])
+            {
+                pattern.logoName=@"shushi_icon";
+            }
+            else if([pattern.name isEqualToString:@"明亮"])
+            {
+                pattern.logoName=@"mingliang_icon";
+            }
+            else if([pattern.name isEqualToString:@"跳跃"])
+            {
+                pattern.logoName=@"tiaoyue_icon";
+            }
+            else if([pattern.name isEqualToString:@"自定义"])
+            {
+                pattern.logoName=@"zidingyi";
+            }
+            else
+            {
+                pattern.logoName=@"zidingyi_icon";
+            }
+        }
+        //初始化scrollView
+        [self initScrollView];
     }
     else
     {
         NSLog(@"数据库已经有数据");
         self.patterns=self.jynewSqlite.patterns;
+        //最后一个自定义按钮
+        JYPattern *pattern=[[JYPattern alloc]init];
+        pattern.name=@"自定义";
+        [self.patterns addObject:pattern];
         for(int i=0;i<self.patterns.count;i++)
         {
             JYPattern *pattern=self.patterns[i];
             NSLog(@"======%@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
         }
-    }
-    
-    //最后一个自定义按钮
-    JYPattern *pattern=[[JYPattern alloc]init];
-    pattern.name=@"自定义";
-    [self.patterns addObject:pattern];
-    
-    for(int i=0;i<self.patterns.count;i++)
-    {
-        JYPattern *pattern=self.patterns[i];
-        if([pattern.name isEqualToString:@"柔和"])
+        for(int i=0;i<self.patterns.count;i++)
         {
-            pattern.logoName=@"rouhe_icon";
+            JYPattern *pattern=self.patterns[i];
+            if([pattern.name isEqualToString:@"柔和"])
+            {
+                pattern.logoName=@"rouhe_icon";
+            }
+            else if([pattern.name isEqualToString:@"舒适"])
+            {
+                pattern.logoName=@"shushi_icon";
+            }
+            else if([pattern.name isEqualToString:@"明亮"])
+            {
+                pattern.logoName=@"mingliang_icon";
+            }
+            else if([pattern.name isEqualToString:@"跳跃"])
+            {
+                pattern.logoName=@"tiaoyue_icon";
+            }
+            else if([pattern.name isEqualToString:@"自定义"])
+            {
+                pattern.logoName=@"zidingyi";
+            }
+            else
+            {
+                pattern.logoName=@"zidingyi_icon";
+            }
         }
-        else if([pattern.name isEqualToString:@"舒适"])
-        {
-            pattern.logoName=@"shushi_icon";
-        }
-        else if([pattern.name isEqualToString:@"明亮"])
-        {
-            pattern.logoName=@"mingliang_icon";
-        }
-        else if([pattern.name isEqualToString:@"跳跃"])
-        {
-            pattern.logoName=@"tiaoyue_icon";
-        }
-               else if([pattern.name isEqualToString:@"自定义"])
-        {
-            pattern.logoName=@"zidingyi";
-        }
-        else
-        {
-            pattern.logoName=@"zidingyi_icon";
-        }
+        //初始化scrollView
+        [self initScrollView];
     }
 }
 
@@ -373,6 +432,8 @@
         DLLampControllYWModeViewController *ywVc=[[DLLampControllYWModeViewController alloc]init];
         ywVc.logic_id=self.logic_id;
         ywVc.furnitureName=self.furnitureName;
+        ywVc.area=self.room_name;
+        ywVc.tableName=self.tableName;
         [self.navigationController pushViewController:ywVc animated:YES];
         
     }
@@ -844,6 +905,18 @@
         //自定义图片加载自定义模式
         else
         {
+            JYPattern * selectedPattern = self.patterns[self.selectedIndex];
+            UIImage *image = [[LYSImageStore sharedStore] imageForKey:selectedPattern.bkgName];
+            if (!image)
+            {
+                //这里加载的是自定义默认图片
+                self.bkgImageView.image = [UIImage imageNamed:[self.patterns[index] bkgName]];
+            }
+            else
+            {
+                //这里加载的是修改过的图片
+                self.bkgImageView.image = image;
+            }
         }
     }
     else
