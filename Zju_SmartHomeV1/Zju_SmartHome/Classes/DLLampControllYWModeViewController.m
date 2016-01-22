@@ -13,6 +13,7 @@
 #import "PhotoViewController.h"
 #import "MBProgressHUD+MJ.h"
 #import "YSYWPatternViewController.h"
+#import "STNewSceneController.h"
 
 
 @interface DLLampControllYWModeViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate>
@@ -566,24 +567,31 @@
 }
 
 //****************************************结束
-- (void)leftBtnClicked{
-  
-  for (UIViewController *controller in self.navigationController.viewControllers)
+- (void)leftBtnClicked
+{
+  if(self.sceneTag==41)
   {
-    
-    if ([controller isKindOfClass:[CYFFurnitureViewController class]])
-    {
-      
-      [self.navigationController popToViewController:controller animated:YES];
-      
-    }
-    if ([controller isKindOfClass:[YSYWPatternViewController class]])
+      for (UIViewController *controller in self.navigationController.viewControllers)
       {
-          
-          [self.navigationController popToViewController:controller animated:YES];
+
+         if ([controller isKindOfClass:[STNewSceneController class]])
+         {
+           [self.navigationController popToViewController:controller animated:YES];
+         }
+      }
+  }
+  else
+  {
+      for (UIViewController *controller in self.navigationController.viewControllers)
+      {
+          if ([controller isKindOfClass:[YSYWPatternViewController class]])
+          {
+              
+              [self.navigationController popToViewController:controller animated:YES];
+              
+          }
           
       }
-    
   }
 }
 

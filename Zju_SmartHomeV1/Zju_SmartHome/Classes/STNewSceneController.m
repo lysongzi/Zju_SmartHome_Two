@@ -17,16 +17,19 @@
 #import "YSSceneBackStatus.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD+MJ.h"
-#import "STNewSceneCell.h"
-#import "STNewSceneView.h"
+#import "DLLampControlRGBModeViewController.h"
+#import "DLLampControllYWModeViewController.h"
+#import "YSScene.h"
 
-@interface STNewSceneController ()<UITableViewDataSource,UITableViewDelegate
+@interface STNewSceneController ()<UITableViewDataSource,UITableViewDelegate,DLLampControlRGBModeViewDelegate
 >
 
 @property(nonatomic,strong)YSNewSceneView *xinSceneView;
 @property(nonatomic,strong)NSArray *iconArray;
 @property(nonatomic,strong)NSArray *deviceArray;
 @property(nonatomic,copy)NSString *tableName;
+
+@property(nonatomic,strong)NSMutableArray *uploadArray;
 
 @end
 
@@ -73,6 +76,7 @@
     [self.view addSubview:newSceneView];
     
     [self setNaviBarItemButton];
+    self.uploadArray=[[NSMutableArray alloc]init];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -148,27 +152,43 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JYFurniture *furniture=self.furnitures[indexPath.row];
-    if(furniture.isNeeded==-1)
+    if([self.xinSceneView.xinSceneName.text isEqualToString:@""])
     {
-        NSLog(@"说明此灯没选中");
+        NSLog(@"请先输入场景名称");
     }
-    else if(furniture.isNeeded==0)
+    else
     {
-        //说明是RGB灯
-        if([furniture.deviceType isEqualToString:@"40"])
+        JYFurniture *furniture=self.furnitures[indexPath.row];
+        if(furniture.isNeeded==-1)
         {
-            NSLog(@"跳转到RGB自定义颜色界面");
+            NSLog(@"说明此灯没选中");
         }
-        //说明是YW灯
-        else if([furniture.deviceType isEqualToString:@"41"])
+        else if(furniture.isNeeded==0)
         {
-            NSLog(@"跳转到YW灯自定义颜色界面");
-        }
-        //说明是其他
-        else
-        {
-            
+            //说明是RGB灯
+            if([furniture.deviceType isEqualToString:@"40"])
+            {
+                NSLog(@"跳转到RGB自定义颜色界面");
+                DLLampControlRGBModeViewController *vc=[[DLLampControlRGBModeViewController alloc]init];
+                vc.sceneTag=40;
+                vc.delegate=self;
+                vc.logic_id=furniture.logic_id;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            //说明是YW灯
+            else if([furniture.deviceType isEqualToString:@"41"])
+            {
+                NSLog(@"跳转到YW灯自定义颜色界面");
+                DLLampControllYWModeViewController *vc=[[DLLampControllYWModeViewController alloc]init];
+                vc.sceneTag=41;
+                vc.logic_id=furniture.logic_id;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            //说明是其他
+            else
+            {
+                
+            }
         }
     }
 }
@@ -186,74 +206,87 @@
     self.navigationController.navigationBar.hidden=NO;
     self.navigationItem.rightBarButtonItem.enabled=YES;
     sceneName = self.xinSceneView.xinSceneName.text;
-    NSLog(@"看看区域和新建场景名称:%@ %@",self.sectionName,sceneName);
+   // NSLog(@"看看区域和新建场景名称:%@ %@",self.sectionName,sceneName);
     
-    for(int i=0;i<self.furnitures.count;i++)
+//    for(int i=0;i<self.furnitures.count;i++)
+//    {
+//        JYFurniture *furniture=self.furnitures[i];
+//        NSLog(@"jjj %d",furniture.isNeeded);
+//    }
+    
+    for(int i=0;i<self.uploadArray.count;i++)
     {
-        JYFurniture *furniture=self.furnitures[i];
-        NSLog(@"jjj %d",furniture.isNeeded);
+        YSScene *scene=self.uploadArray[i];
+//        NSLog(@"??? %@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id, scene.param1,scene.param2,scene.param3);
+        //1.创建请求管理对象
+        AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+        
+        //2.说明服务器返回的是json参数
+        mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+        
+        //3.封装请求参数
+        NSMutableDictionary *params=[NSMutableDictionary dictionary];
+        //移动端
+        params[@"is_app"]=@"1";
+        //标志场景
+        params[@"sceneconfig.tag"]=@"1";
+        //区域
+        params[@"sceneconfig.room_name"] = scene.area;
+        //场景名称
+        params[@"sceneconfig.scene_name"] = scene.name;
+        //场景背景图
+        params[@"sceneconfig.image"]=scene.bkgName;
+        //电器逻辑id
+        params[@"sceneconfig.equipment_logic_id"]=scene.logic_id;
+        //参数值
+        params[@"sceneconfig.param1"] = scene.param1;
+        params[@"sceneconfig.param2"] = scene.param2;
+        params[@"sceneconfig.param3"] = scene.param3;
+        
+        NSLog(@"1111 %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id);
+        
+        //4.发送请求
+        [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+             NSLog(@"%@",responseObject[@"msg"]);
+             if([responseObject[@"code"] isEqualToString:@"0"])
+             {
+                 JYSceneSqlite *jySqlite=[[JYSceneSqlite alloc]init];
+                 jySqlite.patterns=[[NSMutableArray alloc]init];
+                 
+                 //打开数据库
+                 [jySqlite openDB];
+                 
+                 [jySqlite insertRecordIntoTableName:self.tableName
+                                          withField1:@"area" field1Value:scene.area
+                                           andField2:@"scene" field2Value:scene.name
+                                           andField3:@"bkgName" field3Value:scene.bkgName
+                                           andField4:@"logic_id" field4Value:scene.logic_id
+                                           andField5:@"param1" field5Value:scene.param1
+                                           andField6:@"param2" field6Value:scene.param2
+                                           andField7:@"param3" field7Value:scene.param3];
+                 
+                 for (UIViewController *controller in self.navigationController.viewControllers)
+                 {
+                     if ([controller isKindOfClass:[YSSceneViewController class]])
+                     {
+                         YSSceneViewController *vc=(YSSceneViewController *)controller;
+                         vc.tag_Back = 2;
+                         [self.navigationController popToViewController:controller animated:YES];
+                     }
+                 }
+             }
+             else
+             {
+                 [MBProgressHUD showError:@"增加场景失败"];
+             }
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             [MBProgressHUD showError:@"增加场景失败,请检查服务器"];
+         }];
     }
-    
-    
-    
-//    //1.创建请求管理对象
-//    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-//    
-//    //2.说明服务器返回的是json参数
-//    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
-//    
-//    //3.封装请求参数
-//    NSMutableDictionary *params=[NSMutableDictionary dictionary];
-//    params[@"is_app"]=@"1";
-//    params[@"sceneconfig.room_name"] = self.sectionName;
-//    params[@"sceneconfig.equipment_logic_id"] = ((JYFurniture *)self.furnitures[0]).logic_id;
-//    params[@"sceneconfig.scene_name"] = sceneName;
-//    params[@"sceneconfig.param1"] = @"110";
-//    params[@"sceneconfig.param2"] = @"110";
-//    params[@"sceneconfig.param3"] = @"110";
-//    params[@"sceneconfig.image"]=@"rouhe_bg";
-//    
-//    
-//    //4.发送请求
-//    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-//     {
-//         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
-//         if([responseObject[@"code"] isEqualToString:@"0"])
-//         {
-//             JYSceneSqlite *jySqlite=[[JYSceneSqlite alloc]init];
-//             jySqlite.patterns=[[NSMutableArray alloc]init];
-//             
-//             //打开数据库
-//             [jySqlite openDB];
-//             
-//             [jySqlite insertRecordIntoTableName:self.tableName
-//                                                withField1:@"area" field1Value:self.sectionName
-//                                                 andField2:@"scene" field2Value:sceneName
-//                                                 andField3:@"bkgName" field3Value:@"rouhe_bg"
-//                                                 andField4:@"logic_id" field4Value:@"110"
-//                                                 andField5:@"param1" field5Value:@"110"
-//                                                 andField6:@"param2" field6Value:@"110"
-//                                                 andField7:@"param3" field7Value:@"110"];
-//             
-//             for (UIViewController *controller in self.navigationController.viewControllers)
-//             {
-//                 if ([controller isKindOfClass:[YSSceneViewController class]])
-//                 {
-//                     YSSceneViewController *vc=(YSSceneViewController *)controller;
-//                     vc.tag_Back = 2;
-//                     [self.navigationController popToViewController:controller animated:YES];
-//                 }
-//             }
-//         }
-//         else
-//         {
-//             [MBProgressHUD showError:@"增加场景失败"];
-//         }
-//         
-//     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//     {
-//         [MBProgressHUD showError:@"增加场景失败,请检查服务器"];
-//     }];
 }
 
 
@@ -296,5 +329,34 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+//实现代理
+-(void)backParam:(NSString *)param1 andParam2:(NSString *)param2 andParam3:(NSString *)param3 andLogic_Id:(NSString *)logic_id
+{
+   NSLog(@"123 %@ %@ %@ %@ %@ %@",self.sectionName, self.xinSceneView.xinSceneName.text, param1,param2,param3,logic_id);
+    
+    YSScene *scene=[[YSScene alloc]init];
+    scene.area=self.sectionName;
+    scene.name=self.xinSceneView.xinSceneName.text;
+    scene.bkgName=@"guanying";
+    scene.logic_id=logic_id;
+    scene.param1=param1;
+    scene.param2=param2;
+    scene.param3=param3;
+    
+    
+    int i=0;
+    for(i=0;i<self.uploadArray.count;i++)
+    {
+        YSScene *scene1=self.uploadArray[i];
+        if([scene1.logic_id isEqualToString:logic_id])
+        {
+            self.uploadArray[i]=scene;
+            break;
+        }
+    }
+    if(i>=self.uploadArray.count)
+    {
+        [self.uploadArray addObject:scene];
+    }
+}
 @end

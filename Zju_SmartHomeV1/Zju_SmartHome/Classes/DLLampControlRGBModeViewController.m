@@ -17,6 +17,7 @@
 #import "STNewSceneView.h"
 #import "JYPattern.h"
 #import "JYPatternSqlite.h"
+#import "STNewSceneController.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -378,38 +379,74 @@
 
 //****************************************结束
 
-- (void)leftBtnClicked{
-  
-  for (UIViewController *controller in self.navigationController.viewControllers) {
-    
-    if ([controller isKindOfClass:[YSRGBPatternViewController class]]) {
+- (void)leftBtnClicked
+{
+  if(self.sceneTag==40)
+  {
+      for (UIViewController *controller in self.navigationController.viewControllers) {
+          
+          if ([controller isKindOfClass:[STNewSceneController class]]) {
+              
+              [self.navigationController popToViewController:controller animated:YES];
+              
+          }
+          
+      }
       
-      [self.navigationController popToViewController:controller animated:YES];
-      
-    }
-    
+  }
+  else
+  {
+      for (UIViewController *controller in self.navigationController.viewControllers) {
+          
+          if ([controller isKindOfClass:[YSRGBPatternViewController class]]) {
+              
+              [self.navigationController popToViewController:controller animated:YES];
+              
+          }
+          
+      }
   }
 }
 
 -(void)rightBtnClicked
 {
-  NSLog(@"===%@ %@ %@ %@ %@",self.logic_id,self.patternName,self.rValue.text,self.gValue.text,self.bValue.text);
-
-    
-  STNewSceneView *stView=[STNewSceneView saveNewSceneView];
-  stView.frame=CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        [stView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    if(self.sceneTag==40)
+    {
+        NSLog(@"场景中电器自定义只需要返回参数值就行吧");
+        if([self.delegate respondsToSelector:@selector(backParam:andParam2:andParam3:andLogic_Id:)])
+        {
+            [self.delegate backParam:self.rValue.text andParam2:self.gValue.text andParam3:self.bValue.text andLogic_Id:self.logic_id];
+            
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                
+                if ([controller isKindOfClass:[STNewSceneController class]]) {
+                    
+                    [self.navigationController popToViewController:controller animated:YES];
+                    
+                }
+                
+            }
+        }
+    }
+    else
+    {
+        NSLog(@"rgb的模式保存吧?");
+        NSLog(@"===%@ %@ %@ %@ %@",self.logic_id,self.patternName,self.rValue.text,self.gValue.text,self.bValue.text);
+        STNewSceneView *stView=[STNewSceneView saveNewSceneView];
+        stView.frame=CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
         
-    }completion:^(BOOL finished) {
-        self.navigationController.navigationBar.hidden=YES;
-    }];
-    
-  stView.delegate=self;
-  self.sceneView=stView;
-  [self.view addSubview:stView];
-  self.navigationItem.rightBarButtonItem.enabled=NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            [stView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            
+        }completion:^(BOOL finished) {
+            self.navigationController.navigationBar.hidden=YES;
+        }];
+        
+        stView.delegate=self;
+        self.sceneView=stView;
+        [self.view addSubview:stView];
+        self.navigationItem.rightBarButtonItem.enabled=NO;
+    }
 }
 
 #pragma mark - 左上角按钮点击，照片取色

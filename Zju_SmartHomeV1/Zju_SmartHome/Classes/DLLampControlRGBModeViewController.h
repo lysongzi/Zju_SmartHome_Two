@@ -14,6 +14,8 @@
 @optional
 -(void)addPattern:(JYPattern *)pattern;
 
+-(void)backParam:(NSString *)param1 andParam2:(NSString *)param2 andParam3:(NSString *)param3 andLogic_Id:(NSString *)logic_id;
+
 @end
 @interface DLLampControlRGBModeViewController : UIViewController
 //逻辑id
@@ -27,6 +29,9 @@
 
 //表名
 @property(nonatomic,copy)NSString *tableName;
+
+//场景中自定义电器颜色会用到
+@property(nonatomic,assign)int sceneTag;
 
 @property(nonatomic,weak)id<DLLampControlRGBModeViewDelegate>delegate;
 @end

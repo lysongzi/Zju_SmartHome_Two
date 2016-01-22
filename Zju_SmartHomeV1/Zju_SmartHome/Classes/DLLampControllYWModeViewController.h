@@ -13,4 +13,6 @@
 @property(nonatomic,copy)NSString *logic_id;
 //电器名称
 @property(nonatomic,copy)NSString *furnitureName;
+//场景中自定义电器颜色会用到
+@property(nonatomic,assign)int sceneTag;
 @end
