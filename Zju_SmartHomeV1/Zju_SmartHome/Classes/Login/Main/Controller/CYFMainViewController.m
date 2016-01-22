@@ -204,7 +204,10 @@
         }];
         _leftView.delegate=self;
         //[_leftView.portraitBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
-        [_leftView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:[[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"] borderWith:0 borderColor:nil] forState:UIControlStateNormal];
+        
+        [_leftView.portraitBtn.layer setCornerRadius:CGRectGetHeight([_leftView.portraitBtn bounds])*0.5];
+        _leftView.portraitBtn.layer.masksToBounds=YES;
+        [_leftView.portraitBtn setBackgroundImage:[UIImage imageNamed:[[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"]] forState:UIControlStateNormal];
         
         _leftView.sliderTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
         _leftView.sliderTableView.bounces=NO;
@@ -445,9 +448,8 @@
     //已经安装;
     //因为已经安装过，所以可以直接从本地读取图片
     [self.leftBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
-    //[self.leftView.portraitBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
-      
-      [self.leftView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:[[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"] borderWith:0 borderColor:nil] forState:UIControlStateNormal];
+    
+    [self.leftView.portraitBtn setBackgroundImage:[[LYSImageStore sharedStore] imageForKey:@"YSUserPhoto"] forState:UIControlStateNormal];
   }
 }
 
