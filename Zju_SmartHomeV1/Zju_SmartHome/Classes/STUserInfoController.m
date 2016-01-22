@@ -54,7 +54,7 @@
     [userView.userName setTitle:appDelegate.username forState:UIControlStateNormal];
     
     //头像
-    [userView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:@"UserPhoto" borderWith:0 borderColor:nil] forState:UIControlStateNormal];
+    [userView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:@"YSUserPhoto" borderWith:0 borderColor:nil] forState:UIControlStateNormal];
     
     //userView的代理
     userView.delegate=self;
@@ -173,10 +173,10 @@
 -(void)changeUserPhoto:(UIImage *)image
 {
     //为新图片创建一个标示文件名的值
-    //NSUUID *uuid = [[NSUUID alloc] init];
-    NSString *imageName = @"YSUserPhoto";
+    NSUUID *uuid = [[NSUUID alloc] init];
+    NSString *imageName = [uuid UUIDString];
     
-    [[LYSImageStore sharedStore] setImage:image forKey:imageName];
+    [[LYSImageStore sharedStore] setImage:image forKey:@"YSUserPhoto"];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
@@ -184,9 +184,9 @@
     params[@"is_app"]=@"1";
     params[@"image_name"] = imageName;
     
-    NSString *string=[[LYSImageStore sharedStore]imagePathForKey:imageName];
+    NSString *string=[[LYSImageStore sharedStore]imagePathForKey:@"YSUserPhoto"];
     NSURL *filePath = [NSURL fileURLWithPath:string];
-    NSLog(@"%@", filePath);
+    NSLog(@"发送图片%@", filePath);
     
     [manager POST:@"http://60.12.220.16:8888/paladin/portrait" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
      {
@@ -196,10 +196,14 @@
      {
          NSLog(@"Success: %@ %@", responseObject,responseObject[@"msg"]);
          NSLog(@"这里发送完图片了");
-         [[LYSImageStore sharedStore] setImage:image forKey:imageName];
          
-         //这里显示图片
-         //[self updateCellBackground:(int)self.selectedIndex];
+         if ([responseObject[@"msg"] isEqualToString:@"success"])
+         {
+             NSLog(@"缓存图片");
+             //[[LYSImageStore sharedStore] setImage:image forKey:@"YSUserPhoto"];
+             [self.userView.portraitBtn setBackgroundImage:[UIImage circleImageWithName:[[LYSImageStore sharedStore] imagePathForKey:@"YSUserPhoto"] borderWith:0 borderColor:nil] forState:UIControlStateNormal];
+         }
+         
      }
           failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
