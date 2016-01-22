@@ -43,6 +43,11 @@
 		616A5E681C42422F009A72C5 /* STUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A5E641C42422F009A72C5 /* STUserInfoView.m */; };
 		616A5E691C42422F009A72C5 /* STUserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616A5E651C42422F009A72C5 /* STUserInfoView.xib */; };
 		616A5E6C1C42423D009A72C5 /* STUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A5E6B1C42423D009A72C5 /* STUserInfoController.m */; };
+		616F50151C5255DD006FB02E /* STEditSceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616F50141C5255DD006FB02E /* STEditSceneController.m */; };
+		616F50191C525618006FB02E /* STEditSceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616F50171C525618006FB02E /* STEditSceneCell.m */; };
+		616F501A1C525618006FB02E /* STEditSceneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616F50181C525618006FB02E /* STEditSceneCell.xib */; };
+		616F501E1C525633006FB02E /* STEditSceneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 616F501C1C525633006FB02E /* STEditSceneView.m */; };
+		616F501F1C525633006FB02E /* STEditSceneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616F501D1C525633006FB02E /* STEditSceneView.xib */; };
 		61726E631C33B08D000BF2C6 /* STHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61726E621C33B08D000BF2C6 /* STHomeView.m */; };
 		6176B08F1C43A2A300981252 /* JYPatternBackStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 6176B08E1C43A2A300981252 /* JYPatternBackStatus.m */; };
 		617829611C40E4930063EAB9 /* JYFurnitureParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 617829601C40E4930063EAB9 /* JYFurnitureParam.m */; };
@@ -228,6 +233,14 @@
 		616A5E651C42422F009A72C5 /* STUserInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STUserInfoView.xib; sourceTree = "<group>"; };
 		616A5E6A1C42423D009A72C5 /* STUserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STUserInfoController.h; sourceTree = "<group>"; };
 		616A5E6B1C42423D009A72C5 /* STUserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STUserInfoController.m; sourceTree = "<group>"; };
+		616F50131C5255DD006FB02E /* STEditSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STEditSceneController.h; sourceTree = "<group>"; };
+		616F50141C5255DD006FB02E /* STEditSceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STEditSceneController.m; sourceTree = "<group>"; };
+		616F50161C525618006FB02E /* STEditSceneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STEditSceneCell.h; sourceTree = "<group>"; };
+		616F50171C525618006FB02E /* STEditSceneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STEditSceneCell.m; sourceTree = "<group>"; };
+		616F50181C525618006FB02E /* STEditSceneCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STEditSceneCell.xib; sourceTree = "<group>"; };
+		616F501B1C525633006FB02E /* STEditSceneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STEditSceneView.h; sourceTree = "<group>"; };
+		616F501C1C525633006FB02E /* STEditSceneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STEditSceneView.m; sourceTree = "<group>"; };
+		616F501D1C525633006FB02E /* STEditSceneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = STEditSceneView.xib; sourceTree = "<group>"; };
 		61726E611C33B08D000BF2C6 /* STHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHomeView.h; sourceTree = "<group>"; };
 		61726E621C33B08D000BF2C6 /* STHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHomeView.m; sourceTree = "<group>"; };
 		6176B08D1C43A2A300981252 /* JYPatternBackStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPatternBackStatus.h; sourceTree = "<group>"; };
@@ -764,6 +777,12 @@
 				9DE0C30C1C48E3AD00250D0F /* STNewSceneCell.h */,
 				9DE0C30D1C48E3AD00250D0F /* STNewSceneCell.m */,
 				9DE0C30E1C48E3AD00250D0F /* STNewSceneCell.xib */,
+				616F501B1C525633006FB02E /* STEditSceneView.h */,
+				616F501C1C525633006FB02E /* STEditSceneView.m */,
+				616F501D1C525633006FB02E /* STEditSceneView.xib */,
+				616F50161C525618006FB02E /* STEditSceneCell.h */,
+				616F50171C525618006FB02E /* STEditSceneCell.m */,
+				616F50181C525618006FB02E /* STEditSceneCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -776,6 +795,8 @@
 				9D1B1BAB1C3CFD6B0048B8A3 /* YSSceneViewController.xib */,
 				9DE0C3041C48E37D00250D0F /* STNewSceneController.h */,
 				9DE0C3051C48E37D00250D0F /* STNewSceneController.m */,
+				616F50131C5255DD006FB02E /* STEditSceneController.h */,
+				616F50141C5255DD006FB02E /* STEditSceneController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1303,6 +1324,7 @@
 				446AF3011C001F060081C798 /* SMS_SDKLocalizable.strings in Resources */,
 				9D1B1BAE1C3CFD6B0048B8A3 /* YSSceneViewController.xib in Resources */,
 				9DBE55651C1EAFF000A91E6D /* PhotoViewController.xib in Resources */,
+				616F501A1C525618006FB02E /* STEditSceneCell.xib in Resources */,
 				6108792F1C145F3700890CC1 /* JYUpdateFurnitureName.xib in Resources */,
 				9D7D5A8C1BE4748200E1E1EF /* loginXib.xib in Resources */,
 				9DDC64FD1C25783D00C3872A /* YSProductViewController.xib in Resources */,
@@ -1332,6 +1354,7 @@
 				714854F11C127C300001347F /* CYFChangeMailViewController.xib in Resources */,
 				9D5FF5AB1BE9930B004371E5 /* JYRegister.xib in Resources */,
 				61645BBA1C10827E007462EC /* DLLampControllYWModeViewController.xib in Resources */,
+				616F501F1C525633006FB02E /* STEditSceneView.xib in Resources */,
 				617CCF5A1C39FE1100B08CFB /* JYChangePatternBGController.xib in Resources */,
 				9D4F31B41C3693930096B3FD /* STLeftSliderView.xib in Resources */,
 				7174E3A41BEFAEC500170AAA /* MBProgressHUD.bundle in Resources */,
@@ -1413,11 +1436,13 @@
 				61645BBF1C108290007462EC /* ZQSlider.m in Sources */,
 				61BE5C7A1C3F884000A7FEF3 /* JYPatternSqlite.m in Sources */,
 				712C52601C0C29450014F9CB /* InternalGateIPXMLParser.m in Sources */,
+				616F50191C525618006FB02E /* STEditSceneCell.m in Sources */,
 				616A5E681C42422F009A72C5 /* STUserInfoView.m in Sources */,
 				9D7D5A521BE472D300E1E1EF /* Zju_SmartHome.xcdatamodeld in Sources */,
 				9D7D5A8A1BE4744000E1E1EF /* JYLoginViewController.m in Sources */,
 				9D5FF5B41BEA2C2E004371E5 /* JYNavigationController.m in Sources */,
 				616A5E661C42422F009A72C5 /* STUserInfoCell.m in Sources */,
+				616F50151C5255DD006FB02E /* STEditSceneController.m in Sources */,
 				9D1B1BAD1C3CFD6B0048B8A3 /* YSSceneViewController.m in Sources */,
 				9DE0C30B1C48E39700250D0F /* YSNewSceneView.m in Sources */,
 				446AF3211C0025330081C798 /* SMS_MBProgressHUD.m in Sources */,
@@ -1477,6 +1502,7 @@
 				615C37D41C2D0A9D002663C5 /* STSaveSceneView.m in Sources */,
 				61CD73761C4F63B7007B719F /* STResetPwdView.m in Sources */,
 				714854F01C127C300001347F /* CYFChangeMailViewController.m in Sources */,
+				616F501E1C525633006FB02E /* STEditSceneView.m in Sources */,
 				71A7988E1C0D8C0B006F8D7B /* AllUtils.m in Sources */,
 				71E7A2EF1C1489B40091B86A /* CYFImageStore.m in Sources */,
 				9DE0C3061C48E37D00250D0F /* STNewSceneController.m in Sources */,

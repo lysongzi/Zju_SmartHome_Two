@@ -19,6 +19,7 @@
 #import "YSSceneBackStatus.h"
 #import "STNewSceneController.h"
 #import "JYSceneOnly.h"
+#import "STEditSceneController.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 6
@@ -79,6 +80,11 @@
 
 @property(nonatomic,copy)NSString *tableName;
 
+//传递到编辑界面的区域和场景名称和电器数组
+@property(nonatomic,copy)NSString *edit_Area;
+@property(nonatomic,copy)NSString *edit_sceneName;
+@property(nonatomic,strong)NSMutableArray *editFurnitureArray;
+
 @end
 
 @implementation YSSceneViewController
@@ -99,7 +105,7 @@
         JYFurniture *furniture=self.furnitureArray[i];
         NSLog(@"ooooo %@ %@ %@",furniture.logic_id,furniture.descLabel,furniture.deviceType);
     }
-    
+    self.editFurnitureArray=[[NSMutableArray alloc]init];
     [self setNaviBarItemButton];
     
     self.cellWidth = UISCREEN_WIDTH / CELL_NUMBER;
@@ -781,8 +787,8 @@
         [self updateCellBackground:0];
         NSLog(@"这里应该要进行灯的控制了");
         JYSceneOnly *sceneOnly=self.scenesOnly[0];
+
         //滑动到哪个场景后，应该要得到出该场景下有哪些灯并且获取灯的参数值
-        
         for(int i=0;i<self.scenes.count;i++)
         {
             YSScene *scene=self.scenes[i];
@@ -819,7 +825,6 @@
                 //            
             }
         }
-        
     }
 }
 
@@ -878,10 +883,13 @@
     [self updateCellBackground:(int)self.selectedIndex];
     
     [self.scrollView setUserInteractionEnabled:YES];
-    
     NSLog(@"应该要控制灯了");
     JYSceneOnly *sceneOnly=self.scenesOnly[(int)self.selectedIndex];
+    self.edit_Area=sceneOnly.area;
+    self.edit_sceneName=sceneOnly.name;
+    
     //滑动到哪个场景后，应该要得到出该场景下有哪些灯并且获取灯的参数值
+    [self.editFurnitureArray removeAllObjects];
     
     for(int i=0;i<self.scenes.count;i++)
     {
@@ -891,6 +899,7 @@
         {
             //NSLog(@"找到对应场景下的灯了，开始发送请求哦");
              NSLog(@"找到对应场景下的灯了：%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+             [self.editFurnitureArray addObject:scene];
             
 //            NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param1 intValue]]];
 //            NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param2 intValue]]];
@@ -1006,22 +1015,13 @@
 
 - (void)rightButtonClick:(id)sender
 {
-    //0表示为关灯状态，1表示开灯状态
-    UIButton *swichButton = (UIButton *)sender;
-    //NSLog(@"%ld", swichButton.tag);
-    
-    //关灯变开灯
-    if (!swichButton.tag)
-    {
-        swichButton.tag = 1;
-        [swichButton setImage:[UIImage imageNamed:@"edit_icon_unpress"] forState:UIControlStateNormal];
-    }
-    //开灯变关灯
-    else
-    {
-        swichButton.tag = 0;
-        [swichButton setImage:[UIImage imageNamed:@"edit_icon_press"] forState:UIControlStateNormal];
-    }
+    NSLog(@"这里点击的是编辑吧");
+    STEditSceneController *vc=[[STEditSceneController alloc]init];
+    vc.area=self.edit_Area;
+    vc.scene_name=self.edit_sceneName;
+    vc.editFurnitureArray=[[NSMutableArray alloc]init];
+    vc.editFurnitureArray=self.editFurnitureArray;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)leftBtnClicked
