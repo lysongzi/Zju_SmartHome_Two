@@ -375,11 +375,13 @@
             params[@"sceneconfig.tag"]=@"0";
             params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
             
-            NSLog(@"%@ %@ %@",self.room_name, params[@"sceneconfig.tag"],self.logic_id);
+            NSLog(@"纳你");
+            NSLog(@"%@ %@",self.room_name,self.logic_id);
             
             //4.发送请求
             [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
              {
+                 
                  JYPatternBackStatus *backStatus=[JYPatternBackStatus statusWithDict:responseObject];
                  for(int i=0;i<backStatus.patternArray.count;i++)
                  {
@@ -434,10 +436,8 @@
                      else
                      {
                          pattern.logoName=@"zidingyi_icon";
-                         NSLog(@"lalalalalal");
                          if(![pattern.bkgName isEqualToString:@"rouhe_bg"])
                          {
-                             NSLog(@"hahahahahah");
                              //做加载图片
                              NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
                              

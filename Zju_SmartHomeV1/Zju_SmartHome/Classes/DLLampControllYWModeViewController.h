@@ -7,6 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JYPattern.h"
+
+@protocol DLLampControllYWModeViewDelegate <NSObject>
+
+@optional
+-(void)addPatternYW:(JYPattern *)pattern;
+-(void)backParamYW:(NSString *)param1 andParam2:(NSString *)param2 andParam3:(NSString *)param3 andLogic_Id:(NSString *)logic_id andType:(NSString *)type;
+@end
 
 @interface DLLampControllYWModeViewController : UIViewController
 //逻辑id
@@ -20,4 +28,6 @@
 //场景中自定义电器颜色会用到
 @property(nonatomic,assign)int sceneTag;
 @property(nonatomic,copy)NSString *type;
+
+@property(nonatomic,weak)id<DLLampControllYWModeViewDelegate>delegate;
 @end

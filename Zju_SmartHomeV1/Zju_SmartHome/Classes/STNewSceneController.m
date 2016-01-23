@@ -21,7 +21,7 @@
 #import "DLLampControllYWModeViewController.h"
 #import "YSScene.h"
 
-@interface STNewSceneController ()<UITableViewDataSource,UITableViewDelegate,DLLampControlRGBModeViewDelegate
+@interface STNewSceneController ()<UITableViewDataSource,UITableViewDelegate,DLLampControlRGBModeViewDelegate,DLLampControllYWModeViewDelegate
 >
 
 @property(nonatomic,strong)YSNewSceneView *xinSceneView;
@@ -183,6 +183,7 @@
                 NSLog(@"跳转到YW灯自定义颜色界面");
                 DLLampControllYWModeViewController *vc=[[DLLampControllYWModeViewController alloc]init];
                 vc.sceneTag=41;
+                vc.delegate=self;
                 vc.logic_id=furniture.logic_id;
                 vc.type=furniture.deviceType;
                 [self.navigationController pushViewController:vc animated:YES];
@@ -325,10 +326,42 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//实现代理
+//实现RGB灯的代理
 -(void)backParam:(NSString *)param1 andParam2:(NSString *)param2 andParam3:(NSString *)param3 andLogic_Id:(NSString *)logic_id andType:(NSString *)type
 {
    NSLog(@"123 %@ %@ %@ %@ %@ %@",self.sectionName, self.xinSceneView.xinSceneName.text, param1,param2,param3,logic_id);
+    
+    YSScene *scene=[[YSScene alloc]init];
+    scene.area=self.sectionName;
+    scene.name=self.xinSceneView.xinSceneName.text;
+    scene.bkgName=@"guanying";
+    scene.logic_id=logic_id;
+    scene.type=type;
+    scene.param1=param1;
+    scene.param2=param2;
+    scene.param3=param3;
+    
+    
+    int i=0;
+    for(i=0;i<self.uploadArray.count;i++)
+    {
+        YSScene *scene1=self.uploadArray[i];
+        if([scene1.logic_id isEqualToString:logic_id])
+        {
+            self.uploadArray[i]=scene;
+            break;
+        }
+    }
+    if(i>=self.uploadArray.count)
+    {
+        [self.uploadArray addObject:scene];
+    }
+}
+
+//实现YW灯的代理
+-(void)backParamYW:(NSString *)param1 andParam2:(NSString *)param2 andParam3:(NSString *)param3 andLogic_Id:(NSString *)logic_id andType:(NSString *)type
+{
+    NSLog(@"看看YW的值是:%@ %@ %@ %@ %@",self.sectionName,self.xinSceneView.xinSceneName.text,param1,param2,param3);
     
     YSScene *scene=[[YSScene alloc]init];
     scene.area=self.sectionName;

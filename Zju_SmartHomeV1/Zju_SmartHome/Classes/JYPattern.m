@@ -54,7 +54,6 @@
         self.param2=dict[@"param2"];
         self.param3=dict[@"param3"];
     }
-    
     return  self;
 }
 @end

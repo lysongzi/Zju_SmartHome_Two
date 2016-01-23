@@ -684,60 +684,66 @@
     //self.navigationController.navigationBar.hidden=NO;
     self.navigationItem.rightBarButtonItem.enabled=YES;
     NSLog(@"－－－－%@",sceneName);
-    
-    //1.创建请求管理对象
-    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-    
-    //2.说明服务器返回的是json参数
-    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
-    
-    //3.封装请求参数
-    NSMutableDictionary *params=[NSMutableDictionary dictionary];
-    params[@"is_app"]=@"1";
-    params[@"sceneconfig.room_name"]=self.area;
-    params[@"sceneconfig.tag"]=@"0";
-    params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
-    params[@"sceneconfig.scene_name"]=sceneName;
-    params[@"sceneconfig.param1"]=self.rValue.text;
-    params[@"sceneconfig.param2"]=self.gValue.text;
-    params[@"sceneconfig.param3"]=self.bValue.text;
-    params[@"sceneconfig.image"]=@"rouhe_bg";
-    NSLog(@"---%@ %@ %@ %@",self.rValue.text,self.gValue.text,self.bValue.text,params[@"sceneconfig.tag"]);
-    
-    //4.发送请求
-    [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSLog(@"看看返回的数据是啥呢？%@",responseObject);
-         self.navigationController.navigationBar.hidden=NO;
-         if([responseObject[@"code"] isEqualToString:@"0"])
+    if([sceneName isEqualToString:@""])
+    {
+        [MBProgressHUD showError:@"请先输入新模式名称"];
+    }
+    else
+    {
+        //1.创建请求管理对象
+        AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+        
+        //2.说明服务器返回的是json参数
+        mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+        
+        //3.封装请求参数
+        NSMutableDictionary *params=[NSMutableDictionary dictionary];
+        params[@"is_app"]=@"1";
+        params[@"sceneconfig.room_name"]=self.area;
+        params[@"sceneconfig.tag"]=@"0";
+        params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+        params[@"sceneconfig.scene_name"]=sceneName;
+        params[@"sceneconfig.param1"]=self.rValue.text;
+        params[@"sceneconfig.param2"]=self.gValue.text;
+        params[@"sceneconfig.param3"]=self.bValue.text;
+        params[@"sceneconfig.image"]=@"rouhe_bg";
+        NSLog(@"---%@ %@ %@ %@",self.rValue.text,self.gValue.text,self.bValue.text,params[@"sceneconfig.tag"]);
+        
+        //4.发送请求
+        [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/create" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
-             JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
-             jySqlite.patterns=[[NSMutableArray alloc]init];
-             
-             //打开数据库
-             [jySqlite openDB];
-             
-             [jySqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue.text andField5:@"param2" field5Value:self.gValue.text andField6:@"param3" field6Value:self.bValue.text];
-             
-             for (UIViewController *controller in self.navigationController.viewControllers)
+             NSLog(@"看看返回的数据是啥呢？%@",responseObject);
+             self.navigationController.navigationBar.hidden=NO;
+             if([responseObject[@"code"] isEqualToString:@"0"])
              {
-                 if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+                 JYPatternSqlite *jySqlite=[[JYPatternSqlite alloc]init];
+                 jySqlite.patterns=[[NSMutableArray alloc]init];
+                 
+                 //打开数据库
+                 [jySqlite openDB];
+                 
+                 [jySqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:sceneName andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:self.rValue.text andField5:@"param2" field5Value:self.gValue.text andField6:@"param3" field6Value:self.bValue.text];
+                 
+                 for (UIViewController *controller in self.navigationController.viewControllers)
                  {
-                     YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
-                     vc.tag_Back=2;
-                     [self.navigationController popToViewController:controller animated:YES];
+                     if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+                     {
+                         YSRGBPatternViewController *vc=(YSRGBPatternViewController *)controller;
+                         vc.tag_Back=2;
+                         [self.navigationController popToViewController:controller animated:YES];
+                     }
                  }
              }
-         }
-         else
+             else
+             {
+                 [MBProgressHUD showError:@"增加模式失败"];
+             }
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
-            [MBProgressHUD showError:@"增加模式失败"];
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         [MBProgressHUD showError:@"增加模式失败,请检查服务器"];
-     }];
+             [MBProgressHUD showError:@"增加模式失败,请检查服务器"];
+         }];
+    }
 }
 
 
