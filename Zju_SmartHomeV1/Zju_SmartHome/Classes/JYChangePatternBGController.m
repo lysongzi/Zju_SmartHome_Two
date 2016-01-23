@@ -8,6 +8,7 @@
 
 #import "JYChangePatternBGController.h"
 #import "YSRGBPatternViewController.h"
+#import "YSYWPatternViewController.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -177,6 +178,7 @@
     NSLog(@"点击保存了");
     if([self.delegate respondsToSelector:@selector(changBG:)])
     {
+        NSLog(@"回到RGB的模式界面");
         [self.delegate changBG:self.image];
         for (UIViewController *controller in self.navigationController.viewControllers)
         {
@@ -185,6 +187,19 @@
                 [self.navigationController popToViewController:controller animated:YES];
             }
         }
+    }
+    else if([self.delegate respondsToSelector:@selector(changBG_YW:)])
+    {
+        NSLog(@"回到YW的模式界面");
+        [self.delegate changBG_YW:self.image];
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[YSYWPatternViewController class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+        
     }
 }
 @end

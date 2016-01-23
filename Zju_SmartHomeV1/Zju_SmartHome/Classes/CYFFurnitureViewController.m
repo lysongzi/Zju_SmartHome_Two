@@ -720,7 +720,9 @@ static BOOL _isPoping;
                          }
                          else if([furniture.deviceType isEqualToString:@"41"])
                          {
-                             furniture.controller = [[DLLampControllYWModeViewController alloc]init];
+                            // furniture.controller = [[DLLampControllYWModeViewController alloc]init];
+                             YSYWPatternViewController *vc=[[YSYWPatternViewController alloc]init];
+                             furniture.controller=vc;
                          }
                          else
                          {

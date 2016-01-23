@@ -248,7 +248,7 @@
             params[@"is_app"]=@"1";
             params[@"sceneconfig.room_name"]=@"-1";
             params[@"sceneconfig.tag"]=@"0";
-            params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+            params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
             
             //4.发送请求
             [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -373,7 +373,7 @@
             params[@"is_app"]=@"1";
             params[@"sceneconfig.room_name"]=self.room_name;
             params[@"sceneconfig.tag"]=@"0";
-            params[@"sceneconfig.equipment_logicid"]=self.logic_id;
+            params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
             
             NSLog(@"%@ %@ %@",self.room_name, params[@"sceneconfig.tag"],self.logic_id);
             

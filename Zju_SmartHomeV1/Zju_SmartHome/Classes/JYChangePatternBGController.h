@@ -11,7 +11,10 @@
 @protocol ChangePatternBGDelegate <NSObject>
 
 @optional
+//RGB模式中修改背景图片
 -(void)changBG:(UIImage *)image;
+//YW模式中修改背景图片
+-(void)changBG_YW:(UIImage *)image;
 
 @end
 

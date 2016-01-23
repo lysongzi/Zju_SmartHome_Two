@@ -15,12 +15,15 @@
 #import "MBProgressHUD+MJ.h"
 #import "AppDelegate.h"
 #import "LYSImageStore.h"
+#import "JYPatternBackStatus.h"
+#import "SDWebImageManager.h"
+#import "JYChangePatternBGController.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 4
 #define UISCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 
-@interface YSYWPatternViewController ()<UIScrollViewDelegate>
+@interface YSYWPatternViewController ()<UIScrollViewDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate,UINavigationControllerDelegate,ChangePatternBGDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UILabel *patternNameLabel;
@@ -159,7 +162,6 @@
 {
     if(self.tag_Back==2)
     {
-        NSLog(@"??????");
         //初始化默认模型数据
         [self initPatternData];
         //初始化scrollView
@@ -228,74 +230,257 @@
     if(self.jynewSqlite.patterns.count == 0)
     {
         NSLog(@"刚开始进来数据库没有数据的");
-        //柔和模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"柔和" andField3:@"bkgName" field3Value:@"rouhe_bg" andField4:@"param1" field4Value:@"10" andField5:@"param2" field5Value:@"10" andField6:@"param3" field6Value:@"0"];
-        
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"舒适" andField3:@"bkgName" field3Value:@"shushi_bg" andField4:@"param1" field4Value:@"90" andField5:@"param2" field5Value:@"30" andField6:@"param3" field6Value:@"0"];
-        
-        //明亮模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"明亮" andField3:@"bkgName" field3Value:@"mingliang_bg" andField4:@"param1" field4Value:@"40" andField5:@"param2" field5Value:@"50" andField6:@"param3" field6Value:@"0"];
-        
-        //跳跃模式
-        [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:self.logic_id andField2:@"name" field2Value:@"跳跃" andField3:@"bkgName" field3Value:@"tiaoyue_bg" andField4:@"param1" field4Value:@"100" andField5:@"param2" field5Value:@"90" andField6:@"param3" field6Value:@"0"];
-        
-        [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
-        self.patterns=self.jynewSqlite.patterns;
-        //最后一个自定义按钮
-        JYPattern *pattern=[[JYPattern alloc]init];
-        pattern.name=@"自定义";
-        [self.patterns addObject:pattern];
-        
-        NSLog(@"看看长度里:%ld",self.patterns.count);
-        for(int i=0;i<self.patterns.count;i++)
+        if([self.room_name isEqualToString:@"-1"])
         {
-            JYPattern *pattern=self.patterns[i];
-            NSLog(@"======%@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+            NSLog(@"走的是单品");
+            //1.创建请求管理对象
+            AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+            
+            //2.说明服务器返回的是json参数
+            mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+            
+            //3.封装请求参数
+            NSMutableDictionary *params=[NSMutableDictionary dictionary];
+            params[@"is_app"]=@"1";
+            params[@"sceneconfig.room_name"]=@"-1";
+            params[@"sceneconfig.tag"]=@"0";
+            params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+            
+            //4.发送请求
+            [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+             {
+                 
+                 JYPatternBackStatus *backStatus=[JYPatternBackStatus statusWithDict:responseObject];
+                 for(int i=0;i<backStatus.patternArray.count;i++)
+                 {
+                     JYPattern *pattern=backStatus.patternArray[i];
+                     NSLog(@"%@ %@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                     NSLog(@"&&&&& 7777 :%@",pattern.name);
+                     if([pattern.name isEqualToString:@"R"]||[pattern.name isEqualToString:@"G"]||[pattern.name isEqualToString:@"B"])
+                     {
+                         NSLog(@"是RGB中的一种吧");
+                     }
+                     else
+                     {
+                         [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:pattern.logic_id andField2:@"name" field2Value:pattern.name andField3:@"bkgName" field3Value:pattern.bkgName andField4:@"param1" field4Value:pattern.param1 andField5:@"param2" field5Value:pattern.param2 andField6:@"param3" field6Value:pattern.param3];
+                     }
+                 }
+                 
+                 [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
+                 self.patterns=self.jynewSqlite.patterns;
+                 //最后一个自定义按钮
+                 JYPattern *pattern=[[JYPattern alloc]init];
+                 pattern.name=@"自定义";
+                 [self.patterns addObject:pattern];
+                 
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     if([pattern.name isEqualToString:@"柔和"])
+                     {
+                         pattern.logoName=@"rouhe_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"舒适"])
+                     {
+                         pattern.logoName=@"shushi_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"明亮"])
+                     {
+                         pattern.logoName=@"mingliang_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"跳跃"])
+                     {
+                         pattern.logoName=@"tiaoyue_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"自定义"])
+                     {
+                         pattern.logoName=@"zidingyi";
+                     }
+                     else
+                     {
+                         pattern.logoName=@"zidingyi_icon";
+                         if(![pattern.bkgName isEqualToString:@"rouhe_bg"])
+                         {
+                             //做加载图片
+                             NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
+                             
+                             SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                             NSString *imageStr=[NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg",pattern.bkgName];
+                             NSURL *imageUrl=[NSURL URLWithString:imageStr];
+                             
+                             [manager downloadImageWithURL:imageUrl
+                                                   options:0
+                                                  progress:^(NSInteger receivedSize, NSInteger expectedSize)
+                              {
+                                  // progression tracking code
+                              }
+                                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                     if (image)
+                                                     {
+                                                         // do something with image
+                                                         //NSLog(@"hhhhh");
+                                                         NSData *data = UIImageJPEGRepresentation(image, 1.0);
+                                                         NSString *path = [[LYSImageStore sharedStore] imagePathForKey:pattern.bkgName];
+                                                         NSLog(@"%@",path);
+                                                         [data writeToFile:path atomically:YES];
+                                                     }
+                                                     else
+                                                     {
+                                                         NSLog(@"这里没收到图片.");
+                                                     }
+                                                 }];
+                         }
+                         
+                         
+                     }
+                 }
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     NSLog(@"======%@ %@ %@  %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                 }
+                 //初始化scrollView
+                 [self initScrollView];
+                 
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+             {
+                 [MBProgressHUD showError:@"服务器加载数据失败"];
+             }];
+            
         }
-        for(int i=0;i<self.patterns.count;i++)
+        else
         {
-            JYPattern *pattern=self.patterns[i];
-            if([pattern.name isEqualToString:@"柔和"])
-            {
-                pattern.logoName=@"rouhe_icon";
-            }
-            else if([pattern.name isEqualToString:@"舒适"])
-            {
-                pattern.logoName=@"shushi_icon";
-            }
-            else if([pattern.name isEqualToString:@"明亮"])
-            {
-                pattern.logoName=@"mingliang_icon";
-            }
-            else if([pattern.name isEqualToString:@"跳跃"])
-            {
-                pattern.logoName=@"tiaoyue_icon";
-            }
-            else if([pattern.name isEqualToString:@"自定义"])
-            {
-                pattern.logoName=@"zidingyi";
-            }
-            else
-            {
-                pattern.logoName=@"zidingyi_icon";
-            }
+            NSLog(@"走的是家居");
+            //1.创建请求管理对象
+            AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+            
+            //2.说明服务器返回的是json参数
+            mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+            
+            //3.封装请求参数
+            NSMutableDictionary *params=[NSMutableDictionary dictionary];
+            params[@"is_app"]=@"1";
+            params[@"sceneconfig.room_name"]=self.room_name;
+            params[@"sceneconfig.tag"]=@"0";
+            params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+            
+            NSLog(@"222: %@ %@ %@",self.room_name, params[@"sceneconfig.tag"],self.logic_id);
+            
+            //4.发送请求
+            [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+             {
+                 JYPatternBackStatus *backStatus=[JYPatternBackStatus statusWithDict:responseObject];
+                 for(int i=0;i<backStatus.patternArray.count;i++)
+                 {
+                     JYPattern *pattern=backStatus.patternArray[i];
+                     NSLog(@"%@ %@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                     if([pattern.name isEqualToString:@"R"]||[pattern.name isEqualToString:@"G"]||[pattern.name isEqualToString:@"B"])
+                     {
+                         NSLog(@"是RGB中的一种吧");
+                     }
+                     else
+                     {
+                         [self.jynewSqlite insertRecordIntoTableName:self.tableName withField1:@"logic_id" field1Value:pattern.logic_id andField2:@"name" field2Value:pattern.name andField3:@"bkgName" field3Value:pattern.bkgName andField4:@"param1" field4Value:pattern.param1 andField5:@"param2" field5Value:pattern.param2 andField6:@"param3" field6Value:pattern.param3];
+                     }
+                 }
+                 
+                 [self.jynewSqlite getAllRecordFromTable:self.tableName ByLogic_id:self.logic_id];
+                 self.patterns=self.jynewSqlite.patterns;
+                 //最后一个自定义按钮
+                 JYPattern *pattern=[[JYPattern alloc]init];
+                 pattern.name=@"自定义";
+                 [self.patterns addObject:pattern];
+                 
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     if([pattern.name isEqualToString:@"柔和"])
+                     {
+                         pattern.logoName=@"rouhe_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"舒适"])
+                     {
+                         pattern.logoName=@"shushi_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"明亮"])
+                     {
+                         pattern.logoName=@"mingliang_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"跳跃"])
+                     {
+                         pattern.logoName=@"tiaoyue_icon";
+                     }
+                     else if([pattern.name isEqualToString:@"自定义"])
+                     {
+                         pattern.logoName=@"zidingyi";
+                     }
+                     else
+                     {
+                         pattern.logoName=@"zidingyi_icon";
+                         if(![pattern.bkgName isEqualToString:@"rouhe_bg"])
+                         {
+                             //做加载图片
+                             NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",pattern.bkgName, pattern.bkgName);
+                             
+                             SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                             NSString *imageStr=[NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg",pattern.bkgName];
+                             NSURL *imageUrl=[NSURL URLWithString:imageStr];
+                             
+                             [manager downloadImageWithURL:imageUrl
+                                                   options:0
+                                                  progress:^(NSInteger receivedSize, NSInteger expectedSize)
+                              {
+                                  // progression tracking code
+                              }
+                                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                     if (image)
+                                                     {
+                                                         // do something with image
+                                                         NSLog(@"hhhhh");
+                                                         NSData *data = UIImageJPEGRepresentation(image, 1.0);
+                                                         NSString *path = [[LYSImageStore sharedStore] imagePathForKey:pattern.bkgName];
+                                                         NSLog(@"%@",path);
+                                                         [data writeToFile:path atomically:YES];
+                                                     }
+                                                     else
+                                                     {
+                                                         NSLog(@"这里没收到图片.");
+                                                     }
+                                                 }];
+                         }
+                     }
+                 }
+                 for(int i=0;i<self.patterns.count;i++)
+                 {
+                     JYPattern *pattern=self.patterns[i];
+                     NSLog(@"======%@ %@ %@  %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.logoName, pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
+                 }
+                 //初始化scrollView
+                 [self initScrollView];
+                 
+                 
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+             {
+                 [MBProgressHUD showError:@"服务器加载数据失败"];
+             }];
         }
-        //初始化scrollView
-        [self initScrollView];
     }
     else
     {
         NSLog(@"数据库已经有数据");
         self.patterns=self.jynewSqlite.patterns;
-        //最后一个自定义按钮
-        JYPattern *pattern=[[JYPattern alloc]init];
-        pattern.name=@"自定义";
-        [self.patterns addObject:pattern];
+        NSLog(@"%ld", self.patterns.count);
+        
         for(int i=0;i<self.patterns.count;i++)
         {
             JYPattern *pattern=self.patterns[i];
             NSLog(@"======%@ %@ %@ %@ %@ %@",pattern.logic_id,pattern.name,pattern.bkgName,pattern.param1,pattern.param2,pattern.param3);
         }
+        //最后一个自定义按钮
+        JYPattern *pattern=[[JYPattern alloc]init];
+        pattern.name=@"自定义";
+        [self.patterns addObject:pattern];
+        
         for(int i=0;i<self.patterns.count;i++)
         {
             JYPattern *pattern=self.patterns[i];
@@ -622,10 +807,10 @@
         else
         {
             //跳到ShowPhoto页面；
-//            JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
-//            showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
-//            showPhoto.delegate=self;
-//            [self.navigationController pushViewController:showPhoto animated:true];
+            JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+            showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
+            showPhoto.delegate=self;
+            [self.navigationController pushViewController:showPhoto animated:true];
         }
     }]];
     
@@ -645,12 +830,12 @@
                                else
                                {
                                    //跳到ShowPhoto页面；
-//                                   JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
-//                                   showPhoto.logic_id=self.logic_id;
-//                                   showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;
-//                                   //从图库打开；
-//                                   showPhoto.delegate=self;
-//                                   [self.navigationController pushViewController:showPhoto animated:true];
+                                   JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+                                   showPhoto.logic_id=self.logic_id;
+                                   showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                   //从图库打开；
+                                   showPhoto.delegate=self;
+                                   [self.navigationController pushViewController:showPhoto animated:true];
                                }
                            }]];
     
@@ -1034,4 +1219,53 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
+-(void)changBG_YW:(UIImage *)image
+{
+    //为新图片创建一个标示文件名的值
+    NSUUID *uuid = [[NSUUID alloc] init];
+    NSString *imageName = [uuid UUIDString];
+    //接下来存储改文件到本地，以及更新模型的数据
+    JYPattern *pattern = self.patterns[self.selectedIndex];
+    pattern.bkgName = imageName;
+    [[LYSImageStore sharedStore] setImage:image forKey:imageName];
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //NSDictionary *parameters = @;
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    
+    params[@"is_app"]=@"1";
+    params[@"sceneconfig.scene_name"]=pattern.name;
+    params[@"sceneconfig.tag"]=@"0";
+    params[@"sceneconfig.equipment_logic_id"]=self.logic_id;
+    params[@"sceneconfig.image_name"]=imageName;
+    
+    NSLog(@"%@ %@ %@ %@",pattern.name,self.logic_id,imageName,params[@"sceneconfig.tag"]);
+    
+    
+    NSString *string=[[LYSImageStore sharedStore]imagePathForKey:imageName];
+    NSLog(@"999 %@",string);
+    //NSURL *filePath = [NSURL fileURLWithPath:@"file://path/to/image.png"];
+    
+    NSURL *filePath = [NSURL fileURLWithPath:string];
+    
+    [manager POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/portrait" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         [formData appendPartWithFileURL:filePath name:@"sceneconfig.file" error:nil];
+     }
+          success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"Success: %@ %@", responseObject,responseObject[@"msg"]);
+         //更新图片到sqlite
+         [self.jynewSqlite updateRecordByLogicID:self.logic_id andByName:pattern.name withNewBKG:imageName inTable:self.tableName];
+         //这里显示图片
+         [self updateCellBackground:(int)self.selectedIndex];
+         
+     }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+}
 @end
