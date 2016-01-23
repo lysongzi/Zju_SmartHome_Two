@@ -88,6 +88,8 @@
 @property(nonatomic,copy)NSString *edit_sceneName;
 @property(nonatomic,strong)NSMutableArray *editFurnitureArray;
 
+@property (assign,nonatomic) int deleteTag;
+
 @end
 
 @implementation YSSceneViewController
@@ -577,7 +579,7 @@
     UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
-    if (view.tag != self.selectedIndex || self.selectedIndex < DEFAULT_CELL_NUMBER || view.tag == self.scenesOnly.count - 1)
+    if (view.tag != self.selectedIndex || self.selectedIndex < DEFAULT_CELL_NUMBER || view.tag == (self.scenesOnly.count - 1))
     {
         return;
     }
@@ -599,7 +601,7 @@
                 NSLog(@"看看返回的数据是啥呢？%@",str);
                 
                 [MBProgressHUD showSuccess:@"删除场景成功"];
-                [self.cellsView[view.tag] setHidden:YES];
+                self.deleteTag++;
                 
                 //服务器删除成功后，产出本地缓存
                 [self.jySceneSqlite deleteRecordInArea:scene.area andInScene:scene.name andInLogicID:scene.logic_id inTable:self.tableName];
@@ -609,6 +611,7 @@
         }
     }
     
+    [self.cellsView[view.tag] setHidden:YES];
     UIView * changeView;
     for (long i = view.tag + 1; i < self.cellsView.count; i++)
     {
