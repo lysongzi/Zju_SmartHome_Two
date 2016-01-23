@@ -20,12 +20,14 @@
 #import "STNewSceneController.h"
 #import "JYSceneOnly.h"
 #import "STEditSceneController.h"
+#import "JYChangePatternBGController.h"
+#import "SDWebImageManager.h"
 
 #define CELL_NUMBER 5
 #define DEFAULT_CELL_NUMBER 6
 #define UISCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 
-@interface YSSceneViewController ()<UIScrollViewDelegate>
+@interface YSSceneViewController ()<UIScrollViewDelegate,UIImagePickerControllerDelegate, UIPopoverControllerDelegate,UINavigationControllerDelegate,ChangePatternBGDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *patternNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bkgImageView;
@@ -33,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *switchButton;
 //音乐播放按钮
 @property (weak, nonatomic) IBOutlet UIButton *musicButton;
+@property (weak, nonatomic) IBOutlet UIView *lightView;
 
 //音乐播放框
 @property (weak, nonatomic) IBOutlet UIView *musicView;
@@ -169,6 +172,10 @@
     
     self.switchButton.tag = 0;
     [self initMusicBox];
+    
+    UITapGestureRecognizer * tapLight = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changBkG:)];
+    [self.lightView setUserInteractionEnabled:YES];
+    [self.lightView addGestureRecognizer:tapLight];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -311,6 +318,38 @@
                  else
                  {
                      scene.logoName=@"zidingyi_icon";
+                     if(![scene.bkgName isEqualToString:@"guanying"])
+                     {
+                         //做加载图片
+                         NSLog(@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@, %@",scene.bkgName, scene.bkgName);
+                         
+                         SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                         NSString *imageStr=[NSString stringWithFormat:@"http://60.12.220.16:8888/paladin/Static/images/protrait/%@.jpg",scene.bkgName];
+                         NSURL *imageUrl=[NSURL URLWithString:imageStr];
+                         
+                         [manager downloadImageWithURL:imageUrl
+                                               options:0
+                                              progress:^(NSInteger receivedSize, NSInteger expectedSize)
+                          {
+                              // progression tracking code
+                          }
+                                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                                 if (image)
+                                                 {
+                                                     // do something with image
+                                                     //NSLog(@"hhhhh");
+                                                     NSData *data = UIImageJPEGRepresentation(image, 1.0);
+                                                     NSString *path = [[LYSImageStore sharedStore] imagePathForKey:scene.bkgName];
+                                                     NSLog(@"%@",path);
+                                                     [data writeToFile:path atomically:YES];
+                                                 }
+                                                 else
+                                                 {
+                                                     NSLog(@"这里没收到图片.");
+                                                 }
+                                             }];
+                     }
+
                  }
             }
              for(int i=0;i<self.scenesOnly.count;i++)
@@ -535,7 +574,6 @@
 //向上滑动删除
 - (void)swipeToDeletePattern:(UIGestureRecognizer *)gr
 {
-    NSLog(@"这里进行向上滑动删除");
     UIView *view = (UIView *)gr.self.view;
     
     //想删除的不是居中的元素，或者默认模式不允许删除，或者是添加按钮键
@@ -563,43 +601,6 @@
                 [MBProgressHUD showSuccess:@"删除场景成功"];
                 [self.cellsView[view.tag] setHidden:YES];
                 
-                UIView * changeView;
-                for (long i = view.tag + 1; i < self.cellsView.count; i++)
-                {
-                    changeView = (UIView *)self.cellsView[i];
-                    changeView.tag -= 1;
-                    UIImageView *subImage = [[changeView subviews] lastObject];
-                    subImage.tag -= 1;
-                    
-                    CGPoint point = changeView.center;
-                    point.x -= self.cellWidth;
-                    [UIView beginAnimations:nil context:nil];
-                    [UIView setAnimationDuration:0.3];
-                    [changeView setCenter:point];
-                    
-                    if (i == view.tag + 1)
-                    {
-                        [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
-                    }
-                    else if (i == view.tag + 2)
-                    {
-                        [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
-                    }
-                    else
-                    {
-                        [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
-                    }
-                    
-                    [UIView commitAnimations];
-                }
-                
-                //移除该cell的视图
-                [self.cellsView removeObjectAtIndex:view.tag];
-                //更新scrollview的内容宽度
-                self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenesOnly.count + 4), self.cellHeight);
-                //更新背景和文字
-                [self updateCellBackground:(int)view.tag];
-                
                 //服务器删除成功后，产出本地缓存
                 [self.jySceneSqlite deleteRecordInArea:scene.area andInScene:scene.name andInLogicID:scene.logic_id inTable:self.tableName];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -607,6 +608,43 @@
             }];
         }
     }
+    
+    UIView * changeView;
+    for (long i = view.tag + 1; i < self.cellsView.count; i++)
+    {
+        changeView = (UIView *)self.cellsView[i];
+        changeView.tag -= 1;
+        UIImageView *subImage = [[changeView subviews] lastObject];
+        subImage.tag -= 1;
+        
+        CGPoint point = changeView.center;
+        point.x -= self.cellWidth;
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+        [changeView setCenter:point];
+        
+        if (i == view.tag + 1)
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(1.0f, 1.0f)];
+        }
+        else if (i == view.tag + 2)
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(0.85f, 0.85f)];
+        }
+        else
+        {
+            [subImage setTransform:CGAffineTransformMakeScale(0.6f, 0.6f)];
+        }
+        
+        [UIView commitAnimations];
+    }
+    
+    //移除该cell的视图
+    [self.cellsView removeObjectAtIndex:view.tag];
+    //更新scrollview的内容宽度
+    self.scrollView.contentSize = CGSizeMake(self.cellWidth * (self.scenesOnly.count + 4), self.cellHeight);
+    //更新背景和文字
+    [self updateCellBackground:(int)view.tag];
 }
 
 //点击开关灯按钮的响应事件
@@ -627,25 +665,137 @@
     }
 }
 
-//修改背景图片的代理方法
--(void)changBG:(UIImage *)image
+-(void)changeBG_Scene:(UIImage *)image
 {
-    NSLog(@"这里修改场景的背景图片");
     //为新图片创建一个标示文件名的值
     NSUUID *uuid = [[NSUUID alloc] init];
     NSString *imageName = [uuid UUIDString];
-    
     //接下来存储改文件到本地，以及更新模型的数据
-    YSScene *scene = self.scenesOnly[self.selectedIndex];
+    JYSceneOnly *scene = self.scenesOnly[self.selectedIndex];
     scene.bkgName = imageName;
-    
     [[LYSImageStore sharedStore] setImage:image forKey:imageName];
     
-    //这里把该YSScene更新到数据库
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    //NSDictionary *parameters = @;
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
     
-    //这里显示图片
-    [self updateCellBackground:(int)self.selectedIndex];
+    params[@"is_app"]=@"1";
+    params[@"sceneconfig.scene_name"]=scene.name;
+    params[@"sceneconfig.tag"]=@"1";
+    params[@"sceneconfig.image_name"]=imageName;
+    
+    NSLog(@"%@ %@ %@ %@",scene.name,self.logic_id,imageName,params[@"sceneconfig.tag"]);
+    
+    
+    NSString *string=[[LYSImageStore sharedStore]imagePathForKey:imageName];
+    NSLog(@"999 %@",string);
+    //NSURL *filePath = [NSURL fileURLWithPath:@"file://path/to/image.png"];
+    
+    NSURL *filePath = [NSURL fileURLWithPath:string];
+    
+    [manager POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/portrait" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         [formData appendPartWithFileURL:filePath name:@"sceneconfig.file" error:nil];
+     }
+          success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"Success: %@ %@", responseObject,responseObject[@"msg"]);
+         //更新图片到sqlite
+         //[self.jynewSqlite updateRecordByLogicID:self.logic_id andByName:pattern.name withNewBKG:imageName inTable:self.tableName];
+         //这里显示图片
+         [self updateCellBackground:(int)self.selectedIndex];
+         
+     }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+     }];
+}
+
+//修改背景图片的代理方法
+-(void)changBkG:(UIImage *)image
+{
+    if (self.selectedIndex == (self.scenesOnly.count - 1)) {
+        return;
+    }
+    
+    if (self.selectedIndex < DEFAULT_CELL_NUMBER) {
+        //默认模式不允许修改背景图
+        [MBProgressHUD showError:@"默认场景不允许修改背景图"];
+        return;
+    }
+    
+    if ([self.imagePickerPopover isPopoverVisible]) {
+        [self.imagePickerPopover dismissPopoverAnimated:YES];
+        self.imagePickerPopover = nil;
+        return;
+    }
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.editing = YES;
+    imagePicker.delegate=self;
+    //这里可以设置是否允许编辑图片；
+    imagePicker.allowsEditing = false;
+    
+    
+    /**
+     *  应该在这里让用户选择是打开摄像头还是图库；
+     */
+    //初始化提示框；
+    self.alert = [UIAlertController alertControllerWithTitle:@"更换背景图片" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"照相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        //创建UIPopoverController对象前先检查当前设备是不是ipad
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+        {
+            //            self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+            //            self.imagePickerPopover.delegate = self;
+            //            [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
+            //                                            permittedArrowDirections:UIPopoverArrowDirectionAny
+            //                                                            animated:YES];
+        }
+        else
+        {
+            //跳到ShowPhoto页面；
+            JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+            showPhoto.openType = UIImagePickerControllerSourceTypeCamera;//从照相机打开；
+            showPhoto.delegate=self;
+            [self.navigationController pushViewController:showPhoto animated:true];
+        }
+    }]];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                           {
+                               imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                               
+                               //创建UIPopoverController对象前先检查当前设备是不是ipad
+                               if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+                               {
+                                   //                                   self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
+                                   //                                   self.imagePickerPopover.delegate = self;
+                                   //                                   [self.imagePickerPopover presentPopoverFromBarButtonItem:sender
+                                   //                                                                   permittedArrowDirections:UIPopoverArrowDirectionAny
+                                   //                                                                                   animated:YES];
+                               }
+                               else
+                               {
+                                   //跳到ShowPhoto页面；
+                                   JYChangePatternBGController *showPhoto = [[JYChangePatternBGController alloc] init];
+                                   showPhoto.logic_id=self.logic_id;
+                                   showPhoto.openType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                   //从图库打开；
+                                   showPhoto.delegate=self;
+                                   [self.navigationController pushViewController:showPhoto animated:true];
+                               }
+                           }]];
+    
+    [self.alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:nil]];
+    
+    //弹出提示框；
+    [self presentViewController:self.alert animated:true completion:nil];
 }
 //点击播放音乐的响应事件
 - (IBAction)musicClick:(id)sender
@@ -682,7 +832,7 @@
 - (IBAction)musicPreClick:(id)sender
 {
     NSLog(@"这里是上一首");
-    [HttpRequest getMusicActionfromProtol:@"power_on" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [HttpRequest getMusicActionfromProtol:@"previous" success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSLog(@"请求成功：%@",result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -694,7 +844,7 @@
 {
     NSLog(@"这里是下一首");
     
-    [HttpRequest getMusicActionfromProtol:@"power_off" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [HttpRequest getMusicActionfromProtol:@"next" success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSLog(@"请求成功：%@",result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -15,6 +15,8 @@
 -(void)changBG:(UIImage *)image;
 //YW模式中修改背景图片
 -(void)changBG_YW:(UIImage *)image;
+//场景中修改背景图片
+-(void)changeBG_Scene:(UIImage *)image;
 
 @end
 

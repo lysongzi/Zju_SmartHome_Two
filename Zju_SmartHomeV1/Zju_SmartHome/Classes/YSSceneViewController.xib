@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YSSceneViewController">
             <connections>
                 <outlet property="bkgImageView" destination="pdj-T3-v5Z" id="dtb-fp-IMv"/>
+                <outlet property="lightView" destination="419-Cm-IhY" id="Jxd-J7-eXm"/>
                 <outlet property="musicBkg" destination="NWe-L5-heg" id="Poh-2J-taK"/>
                 <outlet property="musicButton" destination="xeu-N0-KGh" id="bgT-fX-NEp"/>
                 <outlet property="musicNext" destination="joz-3A-2sl" id="CPk-aN-wM0"/>
@@ -95,6 +96,11 @@
                         <action selector="musicClick:" destination="-1" eventType="touchUpInside" id="fCJ-h5-Dh7"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" id="419-Cm-IhY">
+                    <rect key="frame" x="63" y="228" width="192" height="191"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="483" y="332"/>

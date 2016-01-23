@@ -9,6 +9,7 @@
 #import "JYChangePatternBGController.h"
 #import "YSRGBPatternViewController.h"
 #import "YSYWPatternViewController.h"
+#import "YSSceneViewController.h"
 
 #define SCREEN_WIDTH self.view.frame.size.width
 #define SCREEN_HEIGHT self.view.frame.size.height
@@ -165,13 +166,38 @@
 }
 -(void)leftBtnClicked
 {
-    for (UIViewController *controller in self.navigationController.viewControllers)
+    if([self.delegate respondsToSelector:@selector(changBG:)])
     {
-        if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+        for (UIViewController *controller in self.navigationController.viewControllers)
         {
-            [self.navigationController popToViewController:controller animated:YES];
+            if ([controller isKindOfClass:[YSRGBPatternViewController class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
         }
     }
+    else if([self.delegate respondsToSelector:@selector(changBG_YW:)])
+    {
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[YSYWPatternViewController class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+        
+    }
+    else if([self.delegate respondsToSelector:@selector(changeBG_Scene:)])
+    {
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[YSSceneViewController class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+    }
+
 }
 -(void)rightBtnClicked
 {
@@ -195,6 +221,19 @@
         for (UIViewController *controller in self.navigationController.viewControllers)
         {
             if ([controller isKindOfClass:[YSYWPatternViewController class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+        
+    }
+    else if([self.delegate respondsToSelector:@selector(changeBG_Scene:)])
+    {
+        NSLog(@"回到场景的模式界面");
+        [self.delegate changeBG_Scene:self.image];
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[YSSceneViewController class]])
             {
                 [self.navigationController popToViewController:controller animated:YES];
             }
