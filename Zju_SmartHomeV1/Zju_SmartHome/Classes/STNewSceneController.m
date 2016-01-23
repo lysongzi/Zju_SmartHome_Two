@@ -213,8 +213,8 @@
 //        JYFurniture *furniture=self.furnitures[i];
 //        NSLog(@"jjj %d",furniture.isNeeded);
 //    }
-    
-    for(int i=0;i<self.uploadArray.count;i++)
+    int i=0;
+    for(i=0;i<self.uploadArray.count;i++)
     {
         YSScene *scene=self.uploadArray[i];
 //        NSLog(@"??? %@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id, scene.param1,scene.param2,scene.param3);
@@ -267,15 +267,6 @@
                                            andField6:@"param2" field6Value:scene.param2
                                            andField7:@"param3" field7Value:scene.param3];
                  
-                 for (UIViewController *controller in self.navigationController.viewControllers)
-                 {
-                     if ([controller isKindOfClass:[YSSceneViewController class]])
-                     {
-                         YSSceneViewController *vc=(YSSceneViewController *)controller;
-                         vc.tag_Back = 2;
-                         [self.navigationController popToViewController:controller animated:YES];
-                     }
-                 }
              }
              else
              {
@@ -286,6 +277,18 @@
          {
              [MBProgressHUD showError:@"增加场景失败,请检查服务器"];
          }];
+    }
+    if(i>=self.uploadArray.count)
+    {
+        for (UIViewController *controller in self.navigationController.viewControllers)
+        {
+            if ([controller isKindOfClass:[YSSceneViewController class]])
+            {
+                YSSceneViewController *vc=(YSSceneViewController *)controller;
+                vc.tag_Back = 2;
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
     }
 }
 
