@@ -926,7 +926,7 @@
 - (IBAction)musicPreClick:(id)sender
 {
     NSLog(@"这里是上一首");
-    [HttpRequest getMusicActionfromProtol:@"power_on" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [HttpRequest getMusicActionfromProtol:@"previous" success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSLog(@"请求成功：%@",result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -938,7 +938,7 @@
 {
     NSLog(@"这里是下一首");
     
-    [HttpRequest getMusicActionfromProtol:@"power_off" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [HttpRequest getMusicActionfromProtol:@"next" success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSLog(@"请求成功：%@",result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
