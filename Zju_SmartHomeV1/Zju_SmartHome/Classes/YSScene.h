@@ -23,6 +23,8 @@
 
 //电器逻辑id
 @property(nonatomic,copy)NSString *logic_id;
+//电器的类型
+@property(nonatomic,copy)NSString *type;
 
 //三个参数
 @property(nonatomic,copy)NSString *param1;

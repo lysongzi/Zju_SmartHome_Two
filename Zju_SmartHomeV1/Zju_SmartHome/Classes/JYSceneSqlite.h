@@ -39,7 +39,8 @@
                        andField4:(NSString *)field4 field4Value:(NSString *)field4Value
                        andField5:(NSString *)field5 field5Value:(NSString *)field5Value
                        andField6:(NSString *)field6 field6Value:(NSString *)field6Value
-                       andField7:(NSString *)field7 field7Value:(NSString *)field7Value;
+                       andField7:(NSString *)field7 field7Value:(NSString *)field7Value
+                       andField8:(NSString *)field8 field8Value:(NSString *)field8Value;
 
 //根据区域和场景名称来删除场景
 -(void)deleteRecordWithArea:(NSString *)area andWithScene:(NSString *)sceneName inTable:(NSString *)tableName;

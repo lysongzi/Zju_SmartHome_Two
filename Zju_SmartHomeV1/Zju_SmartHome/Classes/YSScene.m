@@ -21,6 +21,7 @@
     if(self = [super init])
     {
         self.logic_id = dict[@"equipment_logic_id"];
+        self.type=dict[@"type"];
         self.name = dict[@"scene_name"];
         self.area = dict[@"room_name"];
         

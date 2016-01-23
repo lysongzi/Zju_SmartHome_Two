@@ -11,6 +11,8 @@
 #import "STEditSceneCell.h"
 #import "UIImage+ST.h"
 #import "YSScene.h"
+#import "STNewSceneCell.h"
+#import "JYFurniture.h"
 @interface STEditSceneController ()<UITableViewDataSource,UITableViewDelegate,STEditSceneViewDelegate>
 @property(nonatomic,strong)STEditSceneView *editSceneView;
 @property(nonatomic,strong)NSArray *iconArray;
@@ -75,42 +77,48 @@
     return self.editFurnitureArray.count;
 }
 
-//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *ID=@"deviceCell";
-//    STEditSceneCell *deviceCell=[tableView dequeueReusableCellWithIdentifier:ID];
-//    
-//    //获取电器
-//    YSScene *furniture = self.editFurnitureArray[indexPath.row];
-//    //furniture.isNeeded=(int)deviceCell.isNeed.tag;
-//    
-//    if (deviceCell==nil)
-//    {
-//        deviceCell = [STEditSceneCell initWithEditSceneCell];
-////        
-////        //判断设备类型设置图标
-////        if ([furniture.deviceType isEqualToString:@"40"])
-////        {
-////            [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_rgb"]];
-////        }
-////        else if ([furniture.deviceType isEqualToString:@"41"])
-////        {
-////            [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_yw"]];
-////        }
-////        else
-////        {
-////            [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_ac"]];
-////        }
-//        
-//        deviceCell.deviceName.text = furniture.;
-//        UIColor *color=[[UIColor alloc]initWithRed:(0/255.0f) green:(0/255.0f) blue:(0/255.0f) alpha:1.0];
-//        deviceCell.selectedBackgroundView=[[UIView alloc]initWithFrame:deviceCell.frame];
-//        deviceCell.selectedBackgroundView.backgroundColor=color;
-//        
-////        [deviceCell.isNeed addTarget:self action:@selector(switchBtn:) forControlEvents:UIControlEventTouchUpInside];
-//    }
-   //return deviceCell;
-//}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID=@"deviceCell";
+    STEditSceneCell *deviceCell=[tableView dequeueReusableCellWithIdentifier:ID];
+    
+    //获取电器
+    YSScene *scene = self.editFurnitureArray[indexPath.row];
+    //furniture.isNeeded=(int)deviceCell.isNeed.tag;
+    
+    if (deviceCell==nil)
+    {
+        deviceCell = [STEditSceneCell initWithEditSceneCell];
+        
+        //判断设备类型设置图标
+        if ([scene.type isEqualToString:@"40"])
+        {
+            [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_rgb"]];
+        }
+        else if ([scene.type isEqualToString:@"41"])
+        {
+            [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_yw"]];
+        }
+        else
+        {
+            [deviceCell.iconView setImage:[UIImage imageNamed:@"changjing_edit_icon_ac"]];
+        }
+        for(int i=0;i<self.furnitureArray.count;i++)
+        {
+            JYFurniture *furniture=self.furnitureArray[i];
+            if([furniture.logic_id isEqualToString:scene.logic_id])
+            {
+                  deviceCell.deviceName.text =furniture.descLabel;
+            }
+        }
+        UIColor *color=[[UIColor alloc]initWithRed:(0/255.0f) green:(0/255.0f) blue:(0/255.0f) alpha:1.0];
+        deviceCell.selectedBackgroundView=[[UIView alloc]initWithFrame:deviceCell.frame];
+        deviceCell.selectedBackgroundView.backgroundColor=color;
+        
+       [deviceCell.up_down addTarget:self action:@selector(switchBtn:) forControlEvents:UIControlEventTouchUpInside];
+    }
+   return deviceCell;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat originH=45;
@@ -160,5 +168,22 @@
 - (void)leftBtnClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)switchBtn:(id)sender
+{
+    UIButton *button=sender;
+    
+    if(button.tag==0)
+    {
+        button.tag=-1;
+        [button setBackgroundImage:[UIImage imageNamed:@"changjing_edit_btn_equipment_notadded"] forState:UIControlStateNormal];
+    }
+    else if(button.tag==-1)
+    {
+        button.tag=0;
+        [button setBackgroundImage:[UIImage imageNamed:@"changjing_edit_btn_equipment_added"] forState:UIControlStateNormal];
+    }
+    
 }
 @end

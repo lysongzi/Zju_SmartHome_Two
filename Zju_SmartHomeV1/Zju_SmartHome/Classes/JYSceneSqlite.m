@@ -41,7 +41,7 @@
 //根据表明创建表
 -(void)createTable:(NSString *)tableName
 {
-    NSString *sql=[NSString stringWithFormat:@"create TABLE if not EXISTS %@(area NSString,scene NSString,bkgName NSString,logic_id NSString, param1 NSString,param2 NSString,param3 NSString);",tableName];
+    NSString *sql=[NSString stringWithFormat:@"create TABLE if not EXISTS %@(area NSString,scene NSString,bkgName NSString,logic_id NSString,type NSString,param1 NSString,param2 NSString,param3 NSString);",tableName];
     NSLog(@"看看创建场景表的sql语句:%@",sql);
     
     char *errorMesg=NULL;
@@ -64,8 +64,9 @@
                        andField5:(NSString *)field5 field5Value:(NSString *)field5Value
                        andField6:(NSString *)field6 field6Value:(NSString *)field6Value
                        andField7:(NSString *)field7 field7Value:(NSString *)field7Value
+                       andField8:(NSString *)field8 field8Value:(NSString *)field8Value
 {
-    NSString *sql=[NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@') VALUES('%@','%@','%@','%@','%@','%@','%@')",tableName,field1,field2,field3,field4,field5,field6,field7,field1Value,field2Value,field3Value,field4Value,field5Value,field6Value,field7Value];
+    NSString *sql=[NSString stringWithFormat:@"INSERT INTO '%@'('%@','%@','%@','%@','%@','%@','%@','%@') VALUES('%@','%@','%@','%@','%@','%@','%@','%@')",tableName,field1,field2,field3,field4,field5,field6,field7,field8,field1Value,field2Value,field3Value,field4Value,field5Value,field6Value,field7Value,field8Value];
     char *err;
     if(sqlite3_exec(db, [sql UTF8String], NULL, NULL, &err)!=SQLITE_OK)
     {
@@ -98,6 +99,7 @@
     }
 }
 
+//删除指定区域和指定场景下的指定电器
 -(void)deleteRecordInArea:(NSString *)area andInScene:(NSString *)sceneName andInLogicID:(NSString *)logic_id inTable:(NSString *)tableName
 {
     sqlite3_stmt *stmt;
@@ -201,13 +203,16 @@
             char *logic_id1 =(char *)sqlite3_column_text(statement, 3);
             NSString *logic_id=[[NSString alloc]initWithUTF8String:logic_id1];
             
-            char *param11 =(char *)sqlite3_column_text(statement, 4);
+            char *type1 =(char *)sqlite3_column_text(statement, 4);
+            NSString *type=[[NSString alloc]initWithUTF8String:type1];
+            
+            char *param11 =(char *)sqlite3_column_text(statement, 5);
             NSString *param1=[[NSString alloc]initWithUTF8String:param11];
             
-            char *param22 =(char *)sqlite3_column_text(statement, 5);
+            char *param22 =(char *)sqlite3_column_text(statement, 6);
             NSString *param2=[[NSString alloc]initWithUTF8String:param22];
             
-            char *param33 =(char *)sqlite3_column_text(statement, 5);
+            char *param33 =(char *)sqlite3_column_text(statement, 7);
             NSString *param3=[[NSString alloc]initWithUTF8String:param33];
             
             
@@ -236,6 +241,7 @@
             ysScene.name=scene;
             ysScene.bkgName=bkgName;
             ysScene.logic_id=logic_id;
+            ysScene.type=type;
             ysScene.param1=param1;
             ysScene.param2=param2;
             ysScene.param3=param3;

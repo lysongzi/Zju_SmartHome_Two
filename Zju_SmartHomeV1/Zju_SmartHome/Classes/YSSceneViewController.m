@@ -175,6 +175,7 @@
 {
     if(self.tag_Back==2)
     {
+        NSLog(@"???/????");
         //初始化默认模型数据
         [self initPatternData];
         //初始化scrollView
@@ -258,18 +259,12 @@
         //4.发送请求
         [mgr POST:@"http://60.12.220.16:8888/paladin/Sceneconfig/find" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
+             
              YSSceneBackStatus *backStatus = [YSSceneBackStatus statusWithDict:responseObject];
              for(int i = 0; i < backStatus.sceneArray.count; i++)
              {
                  YSScene *scene = backStatus.sceneArray[i];
-                 [self.jySceneSqlite insertRecordIntoTableName:self.tableName
-                                                    withField1:@"area" field1Value:scene.area
-                                                     andField2:@"scene" field2Value:scene.name
-                                                     andField3:@"bkgName" field3Value:scene.bkgName
-                                                     andField4:@"logic_id" field4Value:scene.logic_id
-                                                     andField5:@"param1" field5Value:scene.param1
-                                                     andField6:@"param2" field6Value:scene.param2
-                                                     andField7:@"param3" field7Value:scene.param3];
+                 [self.jySceneSqlite insertRecordIntoTableName:self.tableName withField1:@"area" field1Value:scene.area andField2:@"scene" field2Value:scene.name andField3:@"bkgName" field3Value:scene.bkgName andField4:@"logic_id" field4Value:scene.logic_id andField5:@"type" field5Value:scene.type andField6:@"param1" field6Value:scene.param1 andField7:@"param2" field7Value:scene.param2 andField8:@"param3" field8Value:scene.param3];
              }
              
              [self.jySceneSqlite getAllRecordFromTable:self.tableName ByArea:self.sectionName];
@@ -327,7 +322,7 @@
              for(int i = 0; i < self.scenes.count; i++)
              {
                  YSScene *scene = self.scenes[i];
-                 NSLog(@"======%@ %@ %@  %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.area, scene.logoName, scene.bkgName,scene.param1,scene.param2,scene.param3);
+                 NSLog(@"======%@ %@ %@  %@ %@ %@ %@ %@ %@",scene.logic_id,scene.type,scene.name,scene.area, scene.logoName, scene.bkgName,scene.param1,scene.param2,scene.param3);
              }
              //初始化scrollView
              [self initScrollView];
@@ -358,7 +353,7 @@
         for(int i = 0; i < self.scenes.count;i++)
         {
             YSScene *scene = self.scenes[i];
-            NSLog(@"======%@ %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.bkgName,scene.param1,scene.param2,scene.param3);
+            NSLog(@"为什么呢？%@ %@ %@ %@ %@ %@ %@",scene.logic_id,scene.type,scene.name, scene.bkgName,scene.param1,scene.param2,scene.param3);
         }
         
         for(int i = 0; i < self.scenesOnly.count; i++)
@@ -560,7 +555,7 @@
         YSScene *scene=self.scenes[i];
         if([scene.name isEqualToString:sceneOnly.name])
         {
-             NSLog(@"呀呀呀:%@ %@ %@  %@ %@ %@ %@ %@",scene.logic_id,scene.name,scene.area, scene.logoName, scene.bkgName,scene.param1,scene.param2,scene.param3);
+             NSLog(@"%@ %@ %@  %@ %@ %@ %@ %@ %@",scene.logic_id, scene.type, scene.name,scene.area, scene.logoName, scene.bkgName,scene.param1,scene.param2,scene.param3);
             [HttpRequest deleteSceneFromServer:scene.logic_id andWithSceneName:scene.name withArea:scene.area success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSLog(@"看看返回的数据是啥呢？%@",str);
@@ -796,7 +791,7 @@
             if([sceneOnly.name isEqualToString:scene.name])
             {
                 //NSLog(@"找到对应场景下的灯了，开始发送请求哦");
-                NSLog(@"!!!找到对应场景下的灯了：%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+                NSLog(@"!!!找到对应场景下的灯了：%@ %@ %@ %@ %@ %@ %@ %@",scene.area,scene.type,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
                 
                 //            NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param1 intValue]]];
                 //            NSString *g = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param2 intValue]]];
@@ -898,7 +893,7 @@
         if([sceneOnly.name isEqualToString:scene.name])
         {
             //NSLog(@"找到对应场景下的灯了，开始发送请求哦");
-             NSLog(@"找到对应场景下的灯了：%@ %@ %@ %@ %@ %@ %@",scene.area,scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
+             NSLog(@"找到对应场景下的灯了：%@ %@ %@ %@ %@ %@ %@ %@",scene.area,scene.type, scene.name,scene.bkgName,scene.logic_id,scene.param1,scene.param2,scene.param3);
              [self.editFurnitureArray addObject:scene];
             
 //            NSString *r = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithFormat:@"%1x",[scene.param1 intValue]]];
@@ -1021,6 +1016,8 @@
     vc.scene_name=self.edit_sceneName;
     vc.editFurnitureArray=[[NSMutableArray alloc]init];
     vc.editFurnitureArray=self.editFurnitureArray;
+    vc.furnitureArray=[[NSMutableArray alloc]init];
+    vc.furnitureArray=self.furnitureArray;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

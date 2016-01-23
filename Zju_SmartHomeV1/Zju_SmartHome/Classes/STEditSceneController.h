@@ -15,4 +15,6 @@
 @property(nonatomic,copy)NSString *scene_name;
 //该区域该场景下的灯
 @property(nonatomic,strong)NSMutableArray *editFurnitureArray;
+//该区域下所有灯
+@property(nonatomic,strong)NSMutableArray *furnitureArray;
 @end

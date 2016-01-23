@@ -413,9 +413,9 @@
     if(self.sceneTag==40)
     {
         NSLog(@"场景中电器自定义只需要返回参数值就行吧");
-        if([self.delegate respondsToSelector:@selector(backParam:andParam2:andParam3:andLogic_Id:)])
+        if([self.delegate respondsToSelector:@selector(backParam:andParam2:andParam3:andLogic_Id:andType:)])
         {
-            [self.delegate backParam:self.rValue.text andParam2:self.gValue.text andParam3:self.bValue.text andLogic_Id:self.logic_id];
+            [self.delegate backParam:self.rValue.text andParam2:self.gValue.text andParam3:self.bValue.text andLogic_Id:self.logic_id andType:self.type];
             
             for (UIViewController *controller in self.navigationController.viewControllers) {
                 

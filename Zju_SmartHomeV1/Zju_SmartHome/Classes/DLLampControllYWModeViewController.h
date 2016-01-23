@@ -19,4 +19,5 @@
 @property(nonatomic,copy)NSString *tableName;
 //场景中自定义电器颜色会用到
 @property(nonatomic,assign)int sceneTag;
+@property(nonatomic,copy)NSString *type;
 @end

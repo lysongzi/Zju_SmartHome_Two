@@ -45,7 +45,7 @@
                         <rect key="frame" x="269" y="10" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <animations/>
-                        <state key="normal" backgroundImage="changjing_edit_btn_equipment_notadded"/>
+                        <state key="normal" backgroundImage="changjing_edit_btn_equipment_added"/>
                     </button>
                 </subviews>
                 <animations/>
@@ -63,7 +63,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="changjing_edit_btn_equipment_notadded" width="28" height="28"/>
+        <image name="changjing_edit_btn_equipment_added" width="28" height="28"/>
         <image name="changjing_edit_linegrey_bg" width="270" height="25"/>
     </resources>
 </document>
