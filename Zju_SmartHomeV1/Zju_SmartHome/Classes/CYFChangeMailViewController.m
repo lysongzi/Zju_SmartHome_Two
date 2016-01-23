@@ -88,28 +88,6 @@
   }
 }
 
-//UITextField监听事件
-//-(void)textFieldDidBeginEditing:(UITextField *)textField
-//{
-//  if([textField.text isEqualToString:@"请输入原邮箱"])
-//  {
-//    [textField setText:@""];
-////    textField.secureTextEntry=false;
-//  }
-//  else if([textField.text isEqualToString:@"请输入新邮箱"])
-//  {
-//    
-//    [textField setText:@""];
-////    textField.secureTextEntry=YES;
-//  }
-//  else if([textField.text isEqualToString:@"请确认新邮箱"])
-//  {
-//    [textField setText:@""];
-////    textField.secureTextEntry=YES;
-//  }
-//}
-
-
 - (IBAction)changeMail:(id)sender
 {
   
@@ -182,7 +160,12 @@
    }];
   
 }
-
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    
+    [self.oldMail resignFirstResponder];
+    [self.mail resignFirstResponder];
+    [self.confirmNewMail resignFirstResponder];
+}
 @end
 
 

@@ -166,4 +166,10 @@
      }];
 
 }
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    
+    [self.oldPwd resignFirstResponder];
+    [self.password resignFirstResponder];
+    [self.confirmNewPwd resignFirstResponder];
+}
 @end
