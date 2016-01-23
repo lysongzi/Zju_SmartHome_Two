@@ -45,6 +45,38 @@
     [self setNaviBarItemButton];
 }
 
+/**
+ *  是否正在手势返回中的标示状态
+ */
+static BOOL _isPoping;
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (!_isPoping)
+    {
+        _isPoping = YES;
+        return YES;
+    }
+    return NO;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //开启ios右滑返回
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
+    {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+    [super viewDidAppear:animated];
+    //在didAppear时置为NO
+    _isPoping = NO;
+}
+
 #pragma mark - 设置导航栏的按钮
 - (void)setNaviBarItemButton{
     

@@ -102,7 +102,4 @@
   [self.username resignFirstResponder];
   [self.password resignFirstResponder];
 }
-
-
-
 @end
